@@ -1,0 +1,168 @@
+/* LevSha.co.ua — business card page, from Figma node 3932:10682 */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: -apple-system, "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+.page {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* ---- background grid & bands ---- */
+.grid span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(0, 172, 237, 0.2);
+}
+
+.band-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 48px;
+  height: 4px;
+  background: rgba(0, 172, 237, 0.05);
+}
+
+.band-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 75.47%;
+  width: 8px;
+  background: rgba(0, 172, 237, 0.05);
+}
+
+/* ---- header ---- */
+.header {
+  position: absolute;
+  top: 8px;
+  left: 5.63%;
+}
+
+.logo {
+  display: block;
+  height: 44px;
+}
+
+/* ---- centered copy ---- */
+.about {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 226px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a8acb3;
+}
+
+.value {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.value a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.value a:hover { color: #00aced; }
+
+.tg {
+  display: block;
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  transition: opacity 0.2s;
+}
+
+.tg:hover { opacity: 0.7; }
+
+.tg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- rotated copyright ---- */
+.copyright {
+  position: absolute;
+  right: 3.44%;
+  bottom: 40px;
+  writing-mode: vertical-rl;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  color: #a8acb3;
+  white-space: nowrap;
+}
+
+/* ---- geometric illustration, anchored bottom-right ---- */
+.illo {
+  position: absolute;
+  right: -80px;
+  bottom: -36px;
+  width: 320px;
+  height: 276px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.illo .shape {
+  position: absolute;
+  display: block;
+}
+
+.illo .diamond {
+  position: absolute;
+  left: 89px;
+  top: 45px;
+  width: 190px;
+  height: 190px;
+  border: 0.4px solid #00aced;
+  transform: rotate(45deg);
+}
+
+/* ---- small screens ---- */
+@media (max-width: 600px) {
+  .header { left: 24px; }
+  .logo { height: 36px; }
+  .copyright { right: 12px; }
+  .band-v { display: none; }
+}
