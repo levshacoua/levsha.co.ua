@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<article class="app">
+  <header class="app-hero">
+    {% if page.icon %}<img class="app-icon" src="{{ page.icon }}" alt="{{ page.app_name }} app icon" width="96" height="96">{% endif %}
+    <div class="app-hero-text">
+      <h1 class="app-name">{{ page.app_name }}</h1>
+      {% if page.tagline %}<p class="app-tagline">{{ page.tagline }}</p>{% endif %}
+      <div class="store-badges" aria-label="Availability">
+        <span class="badge badge-soon">App Store — coming soon</span>
+        <span class="badge badge-soon">Google Play — coming soon</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <nav class="app-legal" aria-label="Legal and support">
+    <a href="{{ page.permalink }}privacy-policy/">Privacy Policy</a>
+    <a href="{{ page.permalink }}terms-of-use/">Terms of Use</a>
+    <a href="{{ page.permalink }}support/">Support</a>
+  </nav>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": {{ page.app_name | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "applicationCategory": {{ page.app_category | default: "UtilitiesApplication" | jsonify }},
+  "operatingSystem": "iOS, Android",
+  "image": "{{ page.icon | absolute_url }}",
+  "url": "{{ page.url | absolute_url }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Lefty design",
+    "email": {{ site.email | jsonify }}
+  }
+}
+</script>

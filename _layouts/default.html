@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  {% seo %}
+</head>
+<body class="doc">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Lefty design — home">
+      <img class="brand-logo" src="/assets/logo.svg" alt="Lefty design">
+    </a>
+    <nav class="site-nav">
+      <a href="/apps/">Apps</a>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <nav class="footer-nav">
+      <a href="/">Home</a>
+      <a href="/apps/">Apps</a>
+      <a href="mailto:{{ site.email }}">Contact</a>
+    </nav>
+    <p class="footer-meta">
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a><br>
+      © {{ 'now' | date: '%Y' }} Lefty design · EST. 2016
+    </p>
+  </footer>
+</body>
+</html>

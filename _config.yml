@@ -1,0 +1,31 @@
+title: Lefty design
+description: >-
+  Lefty design — small, private-by-design mobile apps and product design.
+  No accounts, no ads, no data collection.
+url: https://levsha.co.ua
+lang: en
+
+author: Lefty design
+email: lefty.ss.design@gmail.com
+
+# GitHub Pages-supported plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Pretty URLs with trailing slash
+permalink: pretty
+
+# The hand-written business card and site chrome must pass through untouched.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+# Per-path layout defaults (files may still override in their own front matter).
+defaults:
+  - scope:
+      path: "apps"
+    values:
+      layout: page
