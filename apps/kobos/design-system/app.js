@@ -96,6 +96,29 @@ const navItems = [
   { key: 'spacing', label: 'Spacing' }
 ];
 
+function getColorDocName(token) {
+  let name = token.replace('--kobos-', '');
+  if (name.startsWith('bg-')) {
+    name = 'background/' + name.slice(3);
+  } else if (name.startsWith('neutral-strong-')) {
+    name = 'neutral-strong/' + name.slice(14);
+  } else {
+    const idx = name.indexOf('-');
+    if (idx !== -1) {
+      name = name.slice(0, idx) + '/' + name.slice(idx + 1);
+    }
+  }
+  return name;
+}
+
+function getTypographyDocName(token) {
+  return token.replace('--kobos-type-', 'typography/');
+}
+
+function getSpacingDocName(token) {
+  return token.replace('--kobos-space-', 'space/space-');
+}
+
 function showToast(message) {
   const toast = document.getElementById('toast');
   if (!toast) return;
@@ -122,11 +145,13 @@ function copyToClipboard(text) {
 
 function createColorCard(token) {
   const hex = colorTokens[token] || '#000000';
+  const docName = getColorDocName(token);
   const card = document.createElement('div');
   card.className = 'color-card';
   card.innerHTML = `
     <div class="swatch" style="background-color: var(${token});"></div>
     <div class="info">
+      <div class="doc-name">${docName}</div>
       <div class="token-name">${token}</div>
       <div class="hex">${hex}</div>
     </div>
@@ -172,9 +197,8 @@ function renderBusinessColors(container) {
     group.appendChild(h2);
     const swatchRow = document.createElement('div');
     swatchRow.className = 'swatches-row';
-    const labels = ['Default', 'Subtle', 'Border'];
     const keys = ['default', 'subtle', 'border'];
-    keys.forEach((key, i) => {
+    keys.forEach((key) => {
       const token = vars[key];
       const wrapper = document.createElement('div');
       wrapper.className = 'swatch-wrapper';
@@ -182,10 +206,15 @@ function renderBusinessColors(container) {
       sw.className = 'swatch-small';
       sw.style.backgroundColor = `var(${token})`;
       wrapper.appendChild(sw);
+      const docName = getColorDocName(token);
       const label = document.createElement('div');
       label.className = 'swatch-label';
-      label.textContent = labels[i];
+      label.textContent = docName;
       wrapper.appendChild(label);
+      const varCap = document.createElement('div');
+      varCap.className = 'swatch-var';
+      varCap.textContent = token;
+      wrapper.appendChild(varCap);
       swatchRow.appendChild(wrapper);
     });
     group.appendChild(swatchRow);
@@ -223,7 +252,8 @@ function renderTypography(container) {
     }
     const meta = document.createElement('div');
     meta.className = 'meta';
-    meta.innerHTML = `${token}<br>${caption}`;
+    const docName = getTypographyDocName(token);
+    meta.innerHTML = `${docName}<br><span class="mono-caption">${token}</span>`;
     row.appendChild(specimen);
     row.appendChild(meta);
     container.appendChild(row);
@@ -338,26 +368,39 @@ function renderSpacing(container) {
     const row = document.createElement('div');
     row.className = 'spacing-row';
 
-    const name = document.createElement('div');
-    name.className = 'spacing-name';
-    name.textContent = token;
+    const docName = getSpacingDocName(token);
+
+    const nameCol = document.createElement('div');
+    nameCol.className = 'spacing-name';
+    const docDiv = document.createElement('div');
+    docDiv.className = 'doc-name';
+    docDiv.textContent = docName;
+    nameCol.appendChild(docDiv);
+    const varDiv = document.createElement('div');
+    varDiv.className = 'token-name';
+    varDiv.textContent = token;
+    nameCol.appendChild(varDiv);
 
     const val = document.createElement('div');
     val.className = 'spacing-value';
     val.textContent = value;
 
+    const barTrack = document.createElement('div');
+    barTrack.className = 'spacing-bar-track';
     const bar = document.createElement('div');
     bar.className = 'spacing-bar';
     const px = parseInt(value, 10);
-    bar.style.width = (px * 10) + 'px';
+    const barWidth = Math.min(px * 10, 480);
+    bar.style.width = barWidth + 'px';
+    barTrack.appendChild(bar);
 
     const use = document.createElement('div');
     use.className = 'spacing-usage';
     use.textContent = usage;
 
-    row.appendChild(name);
+    row.appendChild(nameCol);
     row.appendChild(val);
-    row.appendChild(bar);
+    row.appendChild(barTrack);
     row.appendChild(use);
     table.appendChild(row);
   });
