@@ -93,7 +93,8 @@ const navItems = [
   { key: 'business-colors', label: 'Business Colors' },
   { key: 'typography', label: 'Typography' },
   { key: 'radius-elevation', label: 'Radius & Elevation' },
-  { key: 'spacing', label: 'Spacing' }
+  { key: 'spacing', label: 'Spacing' },
+  { key: 'buttons', label: 'Buttons' }
 ];
 
 function getColorDocName(token) {
@@ -452,12 +453,227 @@ function renderSpacing(container) {
   container.appendChild(table);
 }
 
+function renderButtons(container) {
+  container.innerHTML = '<h1>Buttons</h1>';
+
+  // 1. Variants
+  const variantsH2 = document.createElement('h2');
+  variantsH2.textContent = 'Variants';
+  container.appendChild(variantsH2);
+
+  const variantsContainer = document.createElement('div');
+  variantsContainer.className = 'button-variants';
+
+  const variants = [
+    { name: 'Primary', modifier: 'primary', copyClass: 'kobos-btn kobos-btn--primary' },
+    { name: 'Secondary', modifier: 'secondary', copyClass: 'kobos-btn kobos-btn--secondary' },
+    { name: 'Tertiary', modifier: 'tertiary', copyClass: 'kobos-btn kobos-btn--tertiary' },
+    { name: 'Destructive', modifier: 'destructive', copyClass: 'kobos-btn kobos-btn--destructive' },
+    { name: 'Success', modifier: 'success', copyClass: 'kobos-btn kobos-btn--success' },
+    { name: 'Warning', modifier: 'warning', copyClass: 'kobos-btn kobos-btn--warning' },
+    { name: 'Link', modifier: 'link', copyClass: 'kobos-btn kobos-btn--link' }
+  ];
+
+  variants.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'button-card';
+
+    const btn = document.createElement('button');
+    btn.className = `kobos-btn kobos-btn--${v.modifier}`;
+    btn.textContent = v.name;
+    card.appendChild(btn);
+
+    const caption = document.createElement('div');
+    caption.className = 'button-caption';
+    caption.textContent = v.name;
+    card.appendChild(caption);
+
+    const copyBtn = createCopyButton(v.copyClass);
+    card.appendChild(copyBtn);
+
+    variantsContainer.appendChild(card);
+  });
+
+  container.appendChild(variantsContainer);
+
+  // 2. Sizes
+  const sizesH2 = document.createElement('h2');
+  sizesH2.textContent = 'Sizes';
+  container.appendChild(sizesH2);
+
+  const sizesContainer = document.createElement('div');
+  sizesContainer.className = 'button-sizes';
+
+  const sizes = [
+    { label: 'XS — 28px', sizeClass: 'kobos-btn--xs' },
+    { label: 'SM — 32px', sizeClass: 'kobos-btn--sm' },
+    { label: 'MD — 40px', sizeClass: '' },
+    { label: 'LG — 44px', sizeClass: 'kobos-btn--lg' }
+  ];
+
+  sizes.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'button-card';
+
+    const btn = document.createElement('button');
+    btn.className = `kobos-btn kobos-btn--primary ${s.sizeClass}`.trim();
+    btn.textContent = s.label.split(' — ')[0];
+    card.appendChild(btn);
+
+    const caption = document.createElement('div');
+    caption.className = 'button-caption';
+    caption.textContent = s.label;
+    card.appendChild(caption);
+
+    sizesContainer.appendChild(card);
+  });
+
+  container.appendChild(sizesContainer);
+
+  // 3. States
+  const statesH2 = document.createElement('h2');
+  statesH2.textContent = 'States';
+  container.appendChild(statesH2);
+
+  const statesContainer = document.createElement('div');
+  statesContainer.className = 'button-states';
+
+  const states = [
+    { label: 'Default', extra: '' },
+    { label: 'Hover', extra: 'is-hover' },
+    { label: 'Active', extra: 'is-active' },
+    { label: 'Disabled', extra: '', disabled: true },
+    { label: 'Loading', extra: '', loading: true }
+  ];
+
+  states.forEach(st => {
+    const card = document.createElement('div');
+    card.className = 'button-card';
+
+    const btn = document.createElement('button');
+    btn.className = `kobos-btn kobos-btn--primary ${st.extra}`.trim();
+
+    if (st.disabled) {
+      btn.disabled = true;
+      btn.textContent = 'Disabled';
+    } else if (st.loading) {
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Loading…`;
+    } else {
+      btn.textContent = st.label;
+    }
+
+    card.appendChild(btn);
+
+    const caption = document.createElement('div');
+    caption.className = 'button-caption';
+    caption.textContent = st.label;
+    card.appendChild(caption);
+
+    statesContainer.appendChild(card);
+  });
+
+  container.appendChild(statesContainer);
+
+  // 4. Icon buttons
+  const iconH2 = document.createElement('h2');
+  iconH2.textContent = 'Icon buttons';
+  container.appendChild(iconH2);
+
+  const iconContainer = document.createElement('div');
+  iconContainer.className = 'button-icons';
+
+  const iconExamples = [
+    { label: 'Default', extra: '' },
+    { label: 'Ghost', extra: 'kobos-icon-btn--ghost' },
+    { label: 'Hover', extra: 'is-hover' },
+    { label: 'Disabled', extra: '', disabled: true }
+  ];
+
+  iconExamples.forEach(ex => {
+    const card = document.createElement('div');
+    card.className = 'button-card';
+
+    const btn = document.createElement('button');
+    let btnClass = 'kobos-icon-btn';
+    if (ex.extra === 'kobos-icon-btn--ghost') {
+      btnClass = 'kobos-icon-btn kobos-icon-btn--ghost';
+    } else if (ex.extra === 'is-hover') {
+      btnClass = 'kobos-icon-btn is-hover';
+    }
+    btn.className = btnClass;
+
+    if (ex.disabled) {
+      btn.disabled = true;
+    }
+
+    btn.innerHTML = copyIconSVG;
+    card.appendChild(btn);
+
+    const caption = document.createElement('div');
+    caption.className = 'button-caption';
+    caption.textContent = ex.label;
+    card.appendChild(caption);
+
+    iconContainer.appendChild(card);
+  });
+
+  container.appendChild(iconContainer);
+
+  // 5. Business examples
+  const businessH2 = document.createElement('h2');
+  businessH2.textContent = 'Business examples';
+  container.appendChild(businessH2);
+
+  const businessGrid = document.createElement('div');
+  businessGrid.className = 'business-examples';
+
+  const examples = [
+    { text: 'Create Quote', variant: 'Primary MD', classes: 'kobos-btn kobos-btn--primary' },
+    { text: 'Convert to Order', variant: 'Success MD', classes: 'kobos-btn kobos-btn--success' },
+    { text: 'Send Invoice', variant: 'Primary MD', classes: 'kobos-btn kobos-btn--primary' },
+    { text: 'Mark Paid', variant: 'Success MD', classes: 'kobos-btn kobos-btn--success' },
+    { text: 'Release to Production', variant: 'Primary MD', classes: 'kobos-btn kobos-btn--primary' },
+    { text: 'Complete Task', variant: 'Success MD', classes: 'kobos-btn kobos-btn--success' },
+    { text: 'Approve Invoice Cost', variant: 'Success MD', classes: 'kobos-btn kobos-btn--success' },
+    { text: 'Unlock Cost', variant: 'Warning SM', classes: 'kobos-btn kobos-btn--warning kobos-btn--sm' },
+    { text: 'Request Review', variant: 'Warning MD', classes: 'kobos-btn kobos-btn--warning' },
+    { text: 'Generate PDF', variant: 'Secondary MD', classes: 'kobos-btn kobos-btn--secondary' },
+    { text: 'Cancel Order', variant: 'Destructive MD', classes: 'kobos-btn kobos-btn--destructive' }
+  ];
+
+  examples.forEach(ex => {
+    const card = document.createElement('div');
+    card.className = 'business-example';
+
+    const label = document.createElement('div');
+    label.className = 'example-label';
+    label.textContent = ex.text;
+    card.appendChild(label);
+
+    const btn = document.createElement('button');
+    btn.className = ex.classes;
+    btn.textContent = ex.text;
+    card.appendChild(btn);
+
+    const variant = document.createElement('div');
+    variant.className = 'example-variant';
+    variant.textContent = ex.variant;
+    card.appendChild(variant);
+
+    businessGrid.appendChild(card);
+  });
+
+  container.appendChild(businessGrid);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
   'typography': renderTypography,
   'radius-elevation': renderRadiusElevation,
-  'spacing': renderSpacing
+  'spacing': renderSpacing,
+  'buttons': renderButtons
 };
 
 function updateActiveNav(pageKey) {
