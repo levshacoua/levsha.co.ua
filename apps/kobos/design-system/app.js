@@ -95,7 +95,8 @@ const navItems = [
   { key: 'radius-elevation', label: 'Radius & Elevation' },
   { key: 'spacing', label: 'Spacing' },
   { key: 'buttons', label: 'Buttons' },
-  { key: 'inputs', label: 'Inputs' }
+  { key: 'inputs', label: 'Inputs' },
+  { key: 'badges', label: 'Badges & Chips' }
 ];
 
 function getColorDocName(token) {
@@ -1224,6 +1225,367 @@ function renderInputs(container) {
   container.appendChild(card);
 }
 
+function createSectionHeading(title, copyText) {
+  const h2 = document.createElement('h2');
+  h2.textContent = title;
+  const copyBtn = createCopyButton(copyText);
+  h2.appendChild(copyBtn);
+  return h2;
+}
+
+function renderBadges(container) {
+  container.innerHTML = '<h1>Badges &amp; Chips</h1>';
+
+  const styles = ['neutral', 'info', 'success', 'warning', 'error', 'brand'];
+  const styleLabels = {
+    neutral: 'Neutral',
+    info: 'Info',
+    success: 'Success',
+    warning: 'Warning',
+    error: 'Error',
+    brand: 'Brand'
+  };
+
+  // 1. Core Badge
+  container.appendChild(createSectionHeading('Core Badge', '.kobos-badge'));
+
+  const sizeRows = [
+    { label: 'XS', className: 'kobos-badge--xs' },
+    { label: 'SM (default)', className: '' },
+    { label: 'MD', className: 'kobos-badge--md' }
+  ];
+
+  sizeRows.forEach(row => {
+    const rowDiv = document.createElement('div');
+    rowDiv.style.marginBottom = '12px';
+
+    const label = document.createElement('div');
+    label.style.font = 'var(--kobos-type-caption)';
+    label.style.color = 'var(--kobos-text-muted)';
+    label.style.marginBottom = '4px';
+    label.textContent = row.label;
+    rowDiv.appendChild(label);
+
+    const badgesDiv = document.createElement('div');
+    badgesDiv.style.display = 'flex';
+    badgesDiv.style.gap = '8px';
+    badgesDiv.style.flexWrap = 'wrap';
+
+    styles.forEach(s => {
+      const b = document.createElement('span');
+      b.className = `kobos-badge kobos-badge--${s} ${row.className}`.trim();
+      b.textContent = styleLabels[s];
+      badgesDiv.appendChild(b);
+    });
+
+    rowDiv.appendChild(badgesDiv);
+    container.appendChild(rowDiv);
+  });
+
+  // 2. Status badges
+  container.appendChild(createSectionHeading('Status badges', '.kobos-badge'));
+
+  const statusList = [
+    {label: 'Draft', style: 'neutral'},
+    {label: 'New', style: 'info'},
+    {label: 'Sent', style: 'info'},
+    {label: 'Approved', style: 'success'},
+    {label: 'In-Production', style: 'info'},
+    {label: 'QC', style: 'warning'},
+    {label: 'Ready-to-Ship', style: 'success'},
+    {label: 'Completed', style: 'success'},
+    {label: 'Paid', style: 'success'},
+    {label: 'Partial', style: 'warning'},
+    {label: 'Unpaid', style: 'error'},
+    {label: 'Pending', style: 'warning'},
+    {label: 'Refunded', style: 'neutral'},
+    {label: 'Canceled', style: 'neutral'},
+    {label: 'On-Hold', style: 'warning'},
+    {label: 'Failed', style: 'error'},
+    {label: 'Needs-Review', style: 'warning'},
+    {label: 'Locked', style: 'brand'},
+    {label: 'Parsed', style: 'info'},
+    {label: 'Stripe-Verified', style: 'success'},
+    {label: 'Stripe-Failed', style: 'error'}
+  ];
+
+  const statusRow = document.createElement('div');
+  statusRow.style.display = 'flex';
+  statusRow.style.flexWrap = 'wrap';
+  statusRow.style.gap = '6px';
+  statusList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    statusRow.appendChild(b);
+  });
+  container.appendChild(statusRow);
+
+  // 3. Priority
+  container.appendChild(createSectionHeading('Priority', '.kobos-badge'));
+
+  const priorityList = [
+    {label: 'Low', style: 'neutral'},
+    {label: 'Normal', style: 'info'},
+    {label: 'High', style: 'warning'},
+    {label: 'Urgent', style: 'error'},
+    {label: 'Rush', style: 'error'},
+    {label: 'Overdue', style: 'error'}
+  ];
+
+  const prioRow = document.createElement('div');
+  prioRow.style.display = 'flex';
+  prioRow.style.gap = '6px';
+  prioRow.style.flexWrap = 'wrap';
+  priorityList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    prioRow.appendChild(b);
+  });
+  container.appendChild(prioRow);
+
+  // 4. Roles
+  container.appendChild(createSectionHeading('Roles', '.kobos-badge'));
+
+  const rolesList = [
+    {label: 'Admin', style: 'brand'},
+    {label: 'Manager', style: 'info'},
+    {label: 'Sales', style: 'success'},
+    {label: 'Production', style: 'warning'},
+    {label: 'Dealer', style: 'neutral'},
+    {label: 'Customer', style: 'neutral'},
+    {label: 'Viewer', style: 'neutral'}
+  ];
+
+  const rolesRow = document.createElement('div');
+  rolesRow.style.display = 'flex';
+  rolesRow.style.gap = '6px';
+  rolesRow.style.flexWrap = 'wrap';
+  rolesList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    rolesRow.appendChild(b);
+  });
+  container.appendChild(rolesRow);
+
+  // 5. Permissions
+  container.appendChild(createSectionHeading('Permissions', '.kobos-badge'));
+
+  const permList = [
+    {label: 'View-Only', style: 'neutral'},
+    {label: 'Can-Edit', style: 'info'},
+    {label: 'Can-Approve', style: 'success'},
+    {label: 'Admin-Only', style: 'brand'},
+    {label: 'No-Access', style: 'error'},
+    {label: 'Locked', style: 'warning'}
+  ];
+
+  const permRow = document.createElement('div');
+  permRow.style.display = 'flex';
+  permRow.style.gap = '6px';
+  permRow.style.flexWrap = 'wrap';
+  permList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    permRow.appendChild(b);
+  });
+  container.appendChild(permRow);
+
+  // 6. Sources
+  container.appendChild(createSectionHeading('Sources', '.kobos-badge'));
+
+  const sourcesList = [
+    {label: 'Trello', style: 'info'},
+    {label: 'Shopify', style: 'success'},
+    {label: 'Stripe', style: 'brand'},
+    {label: 'Gmail', style: 'error'},
+    {label: 'PDF', style: 'warning'},
+    {label: 'CSV', style: 'neutral'},
+    {label: 'Manual', style: 'neutral'},
+    {label: 'Automation', style: 'info'}
+  ];
+
+  const srcRow = document.createElement('div');
+  srcRow.style.display = 'flex';
+  srcRow.style.gap = '6px';
+  srcRow.style.flexWrap = 'wrap';
+  sourcesList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    srcRow.appendChild(b);
+  });
+  container.appendChild(srcRow);
+
+  // 7. Cost Source (Cost Engine)
+  container.appendChild(createSectionHeading('Cost Source (Cost Engine)', '.kobos-badge'));
+
+  const costList = [
+    {label: 'Engine-Estimate', style: 'info'},
+    {label: 'Manual-Override', style: 'warning'},
+    {label: 'Vendor-Invoice', style: 'success'},
+    {label: 'Estimated', style: 'neutral'},
+    {label: 'Actual', style: 'success'},
+    {label: 'Unknown', style: 'neutral'},
+    {label: 'Needs-Review', style: 'warning'},
+    {label: 'Locked', style: 'brand'}
+  ];
+
+  const costRow = document.createElement('div');
+  costRow.style.display = 'flex';
+  costRow.style.gap = '6px';
+  costRow.style.flexWrap = 'wrap';
+  costList.forEach(item => {
+    const b = document.createElement('span');
+    b.className = `kobos-badge kobos-badge--${item.style}`;
+    b.textContent = item.label;
+    costRow.appendChild(b);
+  });
+  container.appendChild(costRow);
+
+  // 8. Tag chips
+  container.appendChild(createSectionHeading('Tag chips', '.kobos-chip'));
+
+  const tagChips = ['Rush', 'Reorder', 'Warranty', 'Claim', 'Custom', 'Oversized', 'Paint-Match', 'Dealer-Job', 'Manual-Review'];
+  const tagRow = document.createElement('div');
+  tagRow.style.display = 'flex';
+  tagRow.style.flexWrap = 'wrap';
+  tagRow.style.gap = '6px';
+  tagChips.forEach(text => {
+    const chip = document.createElement('span');
+    chip.className = 'kobos-chip';
+    chip.textContent = text;
+    tagRow.appendChild(chip);
+  });
+  container.appendChild(tagRow);
+
+  // 9. Filter chips
+  container.appendChild(createSectionHeading('Filter chips', '.kobos-chip'));
+
+  const filterChips = [
+    {text: 'Status: In Production', active: true},
+    {text: 'Payment: Unpaid', active: false},
+    {text: 'Dealer: Anderson', active: true},
+    {text: 'Source: Gmail', active: true},
+    {text: 'Date: 30 Days', active: false},
+    {text: 'Department: CNC', active: true},
+    {text: 'Cost: Needs Review', active: true}
+  ];
+
+  const filterRow = document.createElement('div');
+  filterRow.style.display = 'flex';
+  filterRow.style.flexWrap = 'wrap';
+  filterRow.style.gap = '6px';
+  filterChips.forEach(item => {
+    const chip = document.createElement('span');
+    chip.className = 'kobos-chip' + (item.active ? ' is-active' : '');
+    chip.textContent = item.text;
+    filterRow.appendChild(chip);
+  });
+  container.appendChild(filterRow);
+
+  // 10. Removable chips
+  container.appendChild(createSectionHeading('Removable chips', '.kobos-chip'));
+
+  const removableContainer = document.createElement('div');
+  removableContainer.style.display = 'flex';
+  removableContainer.style.flexWrap = 'wrap';
+  removableContainer.style.gap = '6px';
+
+  const removableItems = [
+    {text: 'Oversized', removable: true},
+    {text: 'Rush', removable: true},
+    {text: 'Paint-Match', removable: true},
+    {text: 'Disabled', removable: false, disabled: true},
+    {text: 'Locked', removable: false, locked: true}
+  ];
+
+  removableItems.forEach(item => {
+    const chip = document.createElement('span');
+    chip.className = 'kobos-chip' + (item.disabled ? ' is-disabled' : '');
+    chip.textContent = item.text;
+
+    if (item.removable) {
+      const xBtn = document.createElement('button');
+      xBtn.className = 'kobos-chip__x';
+      xBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+      xBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        chip.remove();
+        showToast('Removed');
+      });
+      chip.appendChild(xBtn);
+    } else if (item.locked) {
+      const lock = document.createElement('span');
+      lock.style.marginRight = '4px';
+      lock.style.fontSize = '10px';
+      lock.textContent = '🔒';
+      chip.insertBefore(lock, chip.firstChild);
+    }
+
+    removableContainer.appendChild(chip);
+  });
+
+  container.appendChild(removableContainer);
+
+  // 11. Key caps
+  container.appendChild(createSectionHeading('Key caps', '.kobos-keycap'));
+
+  const keyRow = document.createElement('div');
+  keyRow.style.display = 'flex';
+  keyRow.style.gap = '8px';
+  keyRow.style.alignItems = 'center';
+  keyRow.style.flexWrap = 'wrap';
+
+  const singleKeys = ['⌘', 'K', '/', 'Esc', '↵'];
+  singleKeys.forEach(k => {
+    const kc = document.createElement('span');
+    kc.className = 'kobos-keycap';
+    kc.textContent = k;
+    keyRow.appendChild(kc);
+  });
+
+  const shift = document.createElement('span');
+  shift.className = 'kobos-keycap';
+  shift.textContent = 'Shift';
+  shift.style.padding = '0 12px';
+  keyRow.appendChild(shift);
+
+  container.appendChild(keyRow);
+
+  const combo = document.createElement('div');
+  combo.style.marginTop = '8px';
+  combo.style.font = 'var(--kobos-type-caption)';
+  combo.style.color = 'var(--kobos-text-muted)';
+  combo.textContent = '⌘ + K opens Command Palette';
+  container.appendChild(combo);
+
+  // 12. Business examples
+  container.appendChild(createSectionHeading('Business examples', '.kobos-badge'));
+
+  const bizContainer = document.createElement('div');
+  bizContainer.style.font = 'var(--kobos-type-body-small)';
+  bizContainer.style.lineHeight = '1.6';
+
+  const bizExamples = [
+    'KO-SO-000124 · <span class="kobos-badge kobos-badge--success">Paid</span> <span class="kobos-badge kobos-badge--info">In-Production</span> <span class="kobos-chip">Rush</span> · Stripe',
+    'KO-SO-000125 · <span class="kobos-badge kobos-badge--warning">Partial</span> <span class="kobos-badge kobos-badge--neutral">On-Hold</span> <span class="kobos-chip">Oversized</span> · Manual',
+    'KO-SO-000126 · <span class="kobos-badge kobos-badge--success">Completed</span> <span class="kobos-badge kobos-badge--success">Paid</span> <span class="kobos-chip">Warranty</span> · Shopify'
+  ];
+
+  bizExamples.forEach(ex => {
+    const row = document.createElement('div');
+    row.style.marginBottom = '6px';
+    row.innerHTML = ex;
+    bizContainer.appendChild(row);
+  });
+
+  container.appendChild(bizContainer);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -1231,7 +1593,8 @@ const renderers = {
   'radius-elevation': renderRadiusElevation,
   'spacing': renderSpacing,
   'buttons': renderButtons,
-  'inputs': renderInputs
+  'inputs': renderInputs,
+  'badges': renderBadges
 };
 
 function updateActiveNav(pageKey) {
