@@ -124,7 +124,6 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
-  cursor: pointer;
   transition: box-shadow 0.1s;
 }
 
@@ -219,8 +218,6 @@ h2 {
   font: var(--kobos-type-caption);
   color: var(--kobos-text-muted);
   white-space: nowrap;
-  text-align: right;
-  min-width: 180px;
 }
 
 .mono-caption {
@@ -241,12 +238,9 @@ h2 {
   border-radius: 6px;
   min-height: 110px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  gap: 8px;
   border: 1px solid var(--kobos-border-subtle);
-  cursor: pointer;
 }
 
 .elev-doc {
@@ -294,7 +288,7 @@ h2 {
 
 .spacing-row {
   display: grid;
-  grid-template-columns: 180px 56px 520px minmax(280px, 1fr);
+  grid-template-columns: 180px 56px 520px minmax(280px, 1fr) 32px;
   gap: 12px;
   padding: var(--kobos-space-3) 0;
   border-bottom: 1px solid var(--kobos-border-subtle);
@@ -342,10 +336,8 @@ h2 {
   border-radius: 6px;
   padding: 12px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
 }
 
 .radius-sample {
@@ -355,7 +347,6 @@ h2 {
 
 .radius-info {
   text-align: center;
-  width: 100%;
 }
 
 .doc-name {
@@ -378,4 +369,33 @@ h2 {
   font: var(--kobos-type-body-small);
   color: var(--kobos-text-muted);
   margin: calc(var(--kobos-space-2) * -1) 0 var(--kobos-space-6) 0;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  color: var(--kobos-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.1s;
+}
+
+.copy-btn:hover {
+  color: var(--kobos-text-primary);
+}
+
+.copy-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.swatch-with-copy {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }

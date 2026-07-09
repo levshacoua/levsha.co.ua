@@ -143,22 +143,41 @@ function copyToClipboard(text) {
   });
 }
 
+const copyIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
+
+function createCopyButton(cssVar) {
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.innerHTML = copyIconSVG;
+  btn.setAttribute('aria-label', 'Copy CSS variable');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    copyToClipboard(cssVar);
+  });
+  return btn;
+}
+
+function getItemName(docPath) {
+  if (!docPath) return '';
+  const lastSegment = docPath.split('/').pop();
+  return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+}
+
 function createColorCard(token) {
   const hex = colorTokens[token] || '#000000';
   const docName = getColorDocName(token);
+  const displayName = getItemName(docName);
   const card = document.createElement('div');
   card.className = 'color-card';
   card.innerHTML = `
     <div class="swatch" style="background-color: var(${token});"></div>
     <div class="info">
-      <div class="doc-name">${docName}</div>
-      <div class="token-name">${token}</div>
+      <div class="doc-name">${displayName}</div>
       <div class="hex">${hex}</div>
     </div>
   `;
-  card.addEventListener('click', () => {
-    copyToClipboard(token);
-  });
+  const copyBtn = createCopyButton(token);
+  card.appendChild(copyBtn);
   return card;
 }
 
@@ -202,19 +221,21 @@ function renderBusinessColors(container) {
       const token = vars[key];
       const wrapper = document.createElement('div');
       wrapper.className = 'swatch-wrapper';
+      const swatchWithCopy = document.createElement('div');
+      swatchWithCopy.className = 'swatch-with-copy';
       const sw = document.createElement('div');
       sw.className = 'swatch-small';
       sw.style.backgroundColor = `var(${token})`;
-      wrapper.appendChild(sw);
+      swatchWithCopy.appendChild(sw);
+      const copyBtn = createCopyButton(token);
+      swatchWithCopy.appendChild(copyBtn);
+      wrapper.appendChild(swatchWithCopy);
       const docName = getColorDocName(token);
+      const displayName = getItemName(docName);
       const label = document.createElement('div');
       label.className = 'swatch-label';
-      label.textContent = docName;
+      label.textContent = displayName;
       wrapper.appendChild(label);
-      const varCap = document.createElement('div');
-      varCap.className = 'swatch-var';
-      varCap.textContent = token;
-      wrapper.appendChild(varCap);
       swatchRow.appendChild(wrapper);
     });
     group.appendChild(swatchRow);
@@ -253,9 +274,17 @@ function renderTypography(container) {
     const meta = document.createElement('div');
     meta.className = 'meta';
     const docName = getTypographyDocName(token);
-    meta.innerHTML = `${docName}<br><span class="mono-caption">${token}</span>`;
+    const displayName = getItemName(docName);
+    meta.innerHTML = `${displayName}<br><span class="mono-caption">${caption}</span>`;
+    const rightCol = document.createElement('div');
+    rightCol.style.display = 'flex';
+    rightCol.style.alignItems = 'center';
+    rightCol.style.gap = '8px';
+    rightCol.appendChild(meta);
+    const copyBtn = createCopyButton(token);
+    rightCol.appendChild(copyBtn);
     row.appendChild(specimen);
-    row.appendChild(meta);
+    row.appendChild(rightCol);
     container.appendChild(row);
   });
 }
@@ -292,14 +321,14 @@ function renderRadiusElevation(container) {
       sample.style.width = '60px';
       sample.style.height = '60px';
     }
-    card.appendChild(sample);
 
     const info = document.createElement('div');
     info.className = 'radius-info';
 
+    const displayName = getItemName(item.doc);
     const docName = document.createElement('div');
     docName.className = 'doc-name';
-    docName.textContent = item.doc;
+    docName.textContent = displayName;
 
     const usage = document.createElement('div');
     usage.className = 'usage';
@@ -312,9 +341,19 @@ function renderRadiusElevation(container) {
     info.appendChild(docName);
     info.appendChild(usage);
     info.appendChild(px);
-    card.appendChild(info);
 
-    card.addEventListener('click', () => copyToClipboard(item.css));
+    const content = document.createElement('div');
+    content.style.display = 'flex';
+    content.style.flexDirection = 'column';
+    content.style.alignItems = 'center';
+    content.style.flex = '1';
+    content.appendChild(sample);
+    content.appendChild(info);
+    card.appendChild(content);
+
+    const copyBtn = createCopyButton(item.css);
+    card.appendChild(copyBtn);
+
     radiusGrid.appendChild(card);
   });
 
@@ -346,14 +385,18 @@ function renderRadiusElevation(container) {
     }
 
     const content = document.createElement('div');
+    content.style.flex = '1';
+    content.style.textAlign = 'center';
+    const displayName = getItemName(item.doc);
     content.innerHTML = `
-      <div class="elev-doc">${item.doc}</div>
+      <div class="elev-doc">${displayName}</div>
       <div class="elev-usage">${item.usage}</div>
       <div class="elev-spec">${item.spec}</div>
     `;
     card.appendChild(content);
 
-    card.addEventListener('click', () => copyToClipboard(item.css));
+    const copyBtn = createCopyButton(item.css);
+    card.appendChild(copyBtn);
     elevGrid.appendChild(card);
   });
 
@@ -371,17 +414,14 @@ function renderSpacing(container) {
     row.className = 'spacing-row';
 
     const docName = getSpacingDocName(token);
+    const displayName = getItemName(docName);
 
     const nameCol = document.createElement('div');
     nameCol.className = 'spacing-name';
     const docDiv = document.createElement('div');
     docDiv.className = 'doc-name';
-    docDiv.textContent = docName;
+    docDiv.textContent = displayName;
     nameCol.appendChild(docDiv);
-    const varDiv = document.createElement('div');
-    varDiv.className = 'token-name';
-    varDiv.textContent = token;
-    nameCol.appendChild(varDiv);
 
     const val = document.createElement('div');
     val.className = 'spacing-value';
@@ -404,6 +444,9 @@ function renderSpacing(container) {
     row.appendChild(val);
     row.appendChild(barTrack);
     row.appendChild(use);
+
+    const copyBtn = createCopyButton(token);
+    row.appendChild(copyBtn);
     table.appendChild(row);
   });
   container.appendChild(table);
