@@ -94,7 +94,8 @@ const navItems = [
   { key: 'typography', label: 'Typography' },
   { key: 'radius-elevation', label: 'Radius & Elevation' },
   { key: 'spacing', label: 'Spacing' },
-  { key: 'buttons', label: 'Buttons' }
+  { key: 'buttons', label: 'Buttons' },
+  { key: 'inputs', label: 'Inputs' }
 ];
 
 function getColorDocName(token) {
@@ -145,6 +146,14 @@ function copyToClipboard(text) {
 }
 
 const copyIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
+
+const validIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`;
+
+const warningIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
+
+const errorIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 15 6-6"/></svg>`;
+
+const searchIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -667,13 +676,562 @@ function renderButtons(container) {
   container.appendChild(businessGrid);
 }
 
+function renderInputs(container) {
+  container.innerHTML = '<h1>Inputs</h1>';
+
+  // 1. Input types
+  const h2_1 = document.createElement('h2');
+  h2_1.textContent = 'Input types';
+  const copy1 = createCopyButton('.kobos-input');
+  h2_1.appendChild(copy1);
+  container.appendChild(h2_1);
+
+  const grid1 = document.createElement('div');
+  grid1.className = 'input-grid';
+
+  const inputTypes = [
+    { label: 'Text', value: 'David Miller' },
+    { label: 'Number', value: '48', suffix: 'pcs' },
+    { label: 'Currency', prefix: '$', value: '1,248.50' },
+    { label: 'Percentage', value: '7.5', suffix: '%' },
+    { label: 'Dimension', value: '24 1/2', suffix: 'in' },
+    { label: 'SKU', value: 'M-DO-S-225-F-S-U', mono: true },
+    { label: 'Email', value: 'cust@acme.com', validIcon: true },
+    { label: 'Phone', value: '(662) 555-0142' },
+    { label: 'Search', placeholder: 'Search orders...', searchIcon: true },
+    { label: 'Password', value: 'password', type: 'password' },
+    { label: 'URL', value: 'https://shopify.com/orders' }
+  ];
+
+  inputTypes.forEach(item => {
+    const tile = document.createElement('div');
+    tile.className = 'input-tile';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input';
+    if (item.mono) wrap.classList.add('kobos-input--mono');
+
+    if (item.prefix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix';
+      affix.textContent = item.prefix;
+      wrap.appendChild(affix);
+    }
+
+    if (item.searchIcon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = searchIconSVG;
+      icon.style.color = 'var(--kobos-text-muted)';
+      wrap.appendChild(icon);
+    }
+
+    const inp = document.createElement('input');
+    inp.type = item.type || 'text';
+    if (item.value) inp.value = item.value;
+    if (item.placeholder) inp.placeholder = item.placeholder;
+    wrap.appendChild(inp);
+
+    if (item.suffix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix kobos-input__affix--suffix';
+      affix.textContent = item.suffix;
+      wrap.appendChild(affix);
+    }
+
+    if (item.validIcon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = validIconSVG;
+      icon.style.color = 'var(--kobos-success-default)';
+      wrap.appendChild(icon);
+    }
+
+    tile.appendChild(wrap);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'input-label';
+    lbl.textContent = item.label;
+    tile.appendChild(lbl);
+
+    grid1.appendChild(tile);
+  });
+
+  container.appendChild(grid1);
+
+  // 2. States
+  const h2_2 = document.createElement('h2');
+  h2_2.textContent = 'States';
+  const copy2 = createCopyButton('.kobos-input');
+  h2_2.appendChild(copy2);
+  container.appendChild(h2_2);
+
+  const grid2 = document.createElement('div');
+  grid2.className = 'input-grid';
+
+  const stateItems = [
+    { label: 'Empty', placeholder: 'Enter value' },
+    { label: 'Hover', value: 'Hover state', hover: true },
+    { label: 'Focus', value: 'Focus state', focus: true, helper: 'focus: info/default 2px border' },
+    { label: 'Error', value: 'bad@', error: true, icon: errorIconSVG, iconColor: 'var(--kobos-danger-default)', helper: 'Invalid email format', helperClass: 'is-error' },
+    { label: 'Warning', value: '48 1/4', warning: true, icon: warningIconSVG, iconColor: 'var(--kobos-warning-default)', helper: 'Unusual dimension — verify', helperClass: 'is-warning' },
+    { label: 'Valid', value: 'cust@email.com', valid: true, icon: validIconSVG, iconColor: 'var(--kobos-success-default)', helper: 'Email verified', helperClass: 'is-valid' },
+    { label: 'Disabled', value: 'Unavailable', disabled: true },
+    { label: 'Read-only', value: 'KO-SO-000124', readonly: true, helper: 'Read-only — system value' }
+  ];
+
+  stateItems.forEach(item => {
+    const tile = document.createElement('div');
+    tile.className = 'input-tile';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input';
+    if (item.hover) wrap.classList.add('is-hover');
+    if (item.focus) wrap.classList.add('is-focus');
+    if (item.error) wrap.classList.add('is-error');
+    if (item.warning) wrap.classList.add('is-warning');
+    if (item.valid) wrap.classList.add('is-valid');
+
+    if (item.disabled) {
+      wrap.classList.add('is-disabled');
+      const inp = document.createElement('input');
+      inp.value = item.value;
+      inp.disabled = true;
+      wrap.appendChild(inp);
+    } else if (item.readonly) {
+      wrap.classList.add('is-readonly');
+      const inp = document.createElement('input');
+      inp.value = item.value;
+      inp.readOnly = true;
+      wrap.appendChild(inp);
+    } else {
+      const inp = document.createElement('input');
+      if (item.value) inp.value = item.value;
+      if (item.placeholder) inp.placeholder = item.placeholder;
+      wrap.appendChild(inp);
+    }
+
+    if (item.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = item.icon;
+      icon.style.color = item.iconColor;
+      wrap.appendChild(icon);
+    }
+
+    tile.appendChild(wrap);
+
+    if (item.helper) {
+      const helper = document.createElement('div');
+      helper.className = 'kobos-input-helper';
+      if (item.helperClass) helper.classList.add(item.helperClass);
+      helper.textContent = item.helper;
+      tile.appendChild(helper);
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'input-label';
+    lbl.textContent = item.label;
+    tile.appendChild(lbl);
+
+    grid2.appendChild(tile);
+  });
+
+  container.appendChild(grid2);
+
+  // 3. Currency / Percentage / Dimension — business row
+  const h2_3 = document.createElement('h2');
+  h2_3.textContent = 'Currency / Percentage / Dimension';
+  const copy3 = createCopyButton('.kobos-input');
+  h2_3.appendChild(copy3);
+  container.appendChild(h2_3);
+
+  const grid3 = document.createElement('div');
+  grid3.className = 'input-grid';
+
+  const bizItems = [
+    { label: 'Unit Price', prefix: '$', value: '1,248.50' },
+    { label: 'Cost', prefix: '$', value: '482.16' },
+    { label: 'Discount', value: '10', suffix: '%' },
+    { label: 'Coverage', value: '42', suffix: '%', warning: true, icon: warningIconSVG, iconColor: 'var(--kobos-warning-default)', helper: 'Below 60% — review', helperClass: 'is-warning' },
+    { label: 'Width', value: '24 1/2', suffix: 'in', valid: true, icon: validIconSVG, iconColor: 'var(--kobos-success-default)' },
+    { label: 'Height', value: '34 1/2', suffix: 'in', valid: true, icon: validIconSVG, iconColor: 'var(--kobos-success-default)' },
+    { label: 'Depth', value: '24', suffix: 'in' },
+    { label: 'Dimension Error', value: 'abc', suffix: 'in', error: true, icon: errorIconSVG, iconColor: 'var(--kobos-danger-default)', helper: 'Use: 24, 24.5, or 24 1/2', helperClass: 'is-error' }
+  ];
+
+  bizItems.forEach(item => {
+    const tile = document.createElement('div');
+    tile.className = 'input-tile';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input';
+    if (item.error) wrap.classList.add('is-error');
+    if (item.warning) wrap.classList.add('is-warning');
+    if (item.valid) wrap.classList.add('is-valid');
+
+    if (item.prefix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix';
+      affix.textContent = item.prefix;
+      wrap.appendChild(affix);
+    }
+
+    const inp = document.createElement('input');
+    inp.value = item.value;
+    wrap.appendChild(inp);
+
+    if (item.suffix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix kobos-input__affix--suffix';
+      affix.textContent = item.suffix;
+      wrap.appendChild(affix);
+    }
+
+    if (item.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = item.icon;
+      icon.style.color = item.iconColor;
+      wrap.appendChild(icon);
+    }
+
+    tile.appendChild(wrap);
+
+    if (item.helper) {
+      const helper = document.createElement('div');
+      helper.className = 'kobos-input-helper';
+      if (item.helperClass) helper.classList.add(item.helperClass);
+      helper.textContent = item.helper;
+      tile.appendChild(helper);
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'input-label';
+    lbl.textContent = item.label;
+    tile.appendChild(lbl);
+
+    grid3.appendChild(tile);
+  });
+
+  container.appendChild(grid3);
+
+  // 4. SKU validation lifecycle
+  const h2_4 = document.createElement('h2');
+  h2_4.textContent = 'SKU validation lifecycle';
+  const copy4 = createCopyButton('.kobos-input');
+  h2_4.appendChild(copy4);
+  container.appendChild(h2_4);
+
+  const grid4 = document.createElement('div');
+  grid4.className = 'input-grid';
+
+  const skuItems = [
+    { label: 'SKU Code', value: 'M-DO-S-225-F-S-U', mono: true },
+    { label: 'SKU Code', value: 'Checking...', mono: true, helper: 'Checking SKU availability...' },
+    { label: 'SKU Code', value: 'M-DO-S-225-F-S-U', mono: true, warning: true, helper: 'Possible duplicate SKU', helperClass: 'is-warning' },
+    { label: 'SKU Code', value: 'INVALID!!', mono: true, error: true, helper: 'Invalid SKU format', helperClass: 'is-error' },
+    { label: 'SKU Code', value: 'B-PP-23.5-32-22', mono: true, valid: true, helper: 'SKU validated ✓', helperClass: 'is-valid' }
+  ];
+
+  skuItems.forEach(item => {
+    const tile = document.createElement('div');
+    tile.className = 'input-tile';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input kobos-input--mono';
+    if (item.error) wrap.classList.add('is-error');
+    if (item.warning) wrap.classList.add('is-warning');
+    if (item.valid) wrap.classList.add('is-valid');
+
+    const inp = document.createElement('input');
+    inp.value = item.value;
+    wrap.appendChild(inp);
+
+    tile.appendChild(wrap);
+
+    if (item.helper) {
+      const helper = document.createElement('div');
+      helper.className = 'kobos-input-helper';
+      if (item.helperClass) helper.classList.add(item.helperClass);
+      helper.textContent = item.helper;
+      tile.appendChild(helper);
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'input-label';
+    lbl.textContent = item.label;
+    tile.appendChild(lbl);
+
+    grid4.appendChild(tile);
+  });
+
+  container.appendChild(grid4);
+
+  // 5. Dimension pairs
+  const h2_5 = document.createElement('h2');
+  h2_5.textContent = 'Dimension pairs';
+  const copy5 = createCopyButton('.kobos-input');
+  h2_5.appendChild(copy5);
+  container.appendChild(h2_5);
+
+  // valid pair
+  const pair1 = document.createElement('div');
+  pair1.className = 'dimension-pair';
+  const w1 = document.createElement('div');
+  w1.className = 'kobos-input';
+  const i1 = document.createElement('input');
+  i1.value = '24 1/2';
+  w1.appendChild(i1);
+  const a1 = document.createElement('span');
+  a1.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a1.textContent = 'in';
+  w1.appendChild(a1);
+  pair1.appendChild(w1);
+  const x1 = document.createElement('span');
+  x1.textContent = '×';
+  x1.style.color = 'var(--kobos-text-muted)';
+  pair1.appendChild(x1);
+  const h1 = document.createElement('div');
+  h1.className = 'kobos-input';
+  const i2 = document.createElement('input');
+  i2.value = '35';
+  h1.appendChild(i2);
+  const a2 = document.createElement('span');
+  a2.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a2.textContent = 'in';
+  h1.appendChild(a2);
+  pair1.appendChild(h1);
+  container.appendChild(pair1);
+  const cap1 = document.createElement('div');
+  cap1.className = 'pair-caption';
+  cap1.textContent = 'Door size valid';
+  container.appendChild(cap1);
+
+  // invalid
+  const pair2 = document.createElement('div');
+  pair2.className = 'dimension-pair';
+  const w2 = document.createElement('div');
+  w2.className = 'kobos-input is-error';
+  const i3 = document.createElement('input');
+  i3.value = 'abc';
+  w2.appendChild(i3);
+  const a3 = document.createElement('span');
+  a3.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a3.textContent = 'in';
+  w2.appendChild(a3);
+  pair2.appendChild(w2);
+  const x2 = document.createElement('span');
+  x2.textContent = '×';
+  x2.style.color = 'var(--kobos-text-muted)';
+  pair2.appendChild(x2);
+  const h2 = document.createElement('div');
+  h2.className = 'kobos-input is-error';
+  const i4 = document.createElement('input');
+  i4.value = '35';
+  h2.appendChild(i4);
+  const a4 = document.createElement('span');
+  a4.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a4.textContent = 'in';
+  h2.appendChild(a4);
+  pair2.appendChild(h2);
+  container.appendChild(pair2);
+  const cap2 = document.createElement('div');
+  cap2.className = 'kobos-input-helper is-error';
+  cap2.textContent = 'Use: 24, 24.5, or 24 1/2';
+  container.appendChild(cap2);
+
+  // oversized
+  const pair3 = document.createElement('div');
+  pair3.className = 'dimension-pair';
+  const w3 = document.createElement('div');
+  w3.className = 'kobos-input';
+  const i5 = document.createElement('input');
+  i5.value = '72';
+  w3.appendChild(i5);
+  const a5 = document.createElement('span');
+  a5.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a5.textContent = 'in';
+  w3.appendChild(a5);
+  pair3.appendChild(w3);
+  const x3 = document.createElement('span');
+  x3.textContent = '×';
+  x3.style.color = 'var(--kobos-text-muted)';
+  pair3.appendChild(x3);
+  const h3 = document.createElement('div');
+  h3.className = 'kobos-input';
+  const i6 = document.createElement('input');
+  i6.value = '48';
+  h3.appendChild(i6);
+  const a6 = document.createElement('span');
+  a6.className = 'kobos-input__affix kobos-input__affix--suffix';
+  a6.textContent = 'in';
+  h3.appendChild(a6);
+  pair3.appendChild(h3);
+  container.appendChild(pair3);
+  const cap3 = document.createElement('div');
+  cap3.className = 'kobos-input-helper';
+  cap3.textContent = 'Exceeds max — manual review';
+  container.appendChild(cap3);
+
+  // fractional previews
+  const frac = document.createElement('div');
+  frac.style.marginTop = '16px';
+  frac.innerHTML = `
+    <div class="pair-caption">29 1/2" = 29.5"</div>
+    <div class="pair-caption">28 11/16" = 28.6875"</div>
+    <div class="pair-caption">24 1/4" = 24.25"</div>
+  `;
+  container.appendChild(frac);
+
+  // 6. Dense admin form
+  const h2_6 = document.createElement('h2');
+  h2_6.textContent = 'Dense admin form';
+  const copy6 = createCopyButton('.kobos-input');
+  h2_6.appendChild(copy6);
+  container.appendChild(h2_6);
+
+  const card = document.createElement('div');
+  card.className = 'quote-card';
+
+  const title = document.createElement('h3');
+  title.textContent = 'Quote Item Entry';
+  card.appendChild(title);
+
+  const sub = document.createElement('div');
+  sub.className = 'subtitle';
+  sub.textContent = 'Anderson Cabinets · Quote #QT-0048';
+  card.appendChild(sub);
+
+  const formGrid = document.createElement('div');
+  formGrid.className = 'form-grid';
+
+  // Row 1 fields
+  const fieldsRow1 = [
+    { label: 'Customer*', value: 'David Miller' },
+    { label: 'SKU Code*', value: 'M-DO-S-225-F-S-U', mono: true, warning: true, icon: warningIconSVG, iconColor: 'var(--kobos-warning-default)', helper: 'Possible duplicate' },
+    { label: 'Description', value: 'Wall Cabinet 30"' },
+    { label: 'Search Material', placeholder: 'Search materials...', searchIcon: true }
+  ];
+
+  fieldsRow1.forEach(f => {
+    const field = document.createElement('div');
+    const fl = document.createElement('div');
+    fl.className = 'field-label';
+    fl.textContent = f.label;
+    field.appendChild(fl);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input';
+    if (f.mono) wrap.classList.add('kobos-input--mono');
+    if (f.warning) wrap.classList.add('is-warning');
+
+    if (f.searchIcon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = searchIconSVG;
+      icon.style.color = 'var(--kobos-text-muted)';
+      wrap.appendChild(icon);
+    }
+
+    const inp = document.createElement('input');
+    if (f.value) inp.value = f.value;
+    if (f.placeholder) inp.placeholder = f.placeholder;
+    wrap.appendChild(inp);
+
+    if (f.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = f.icon;
+      icon.style.color = f.iconColor;
+      wrap.appendChild(icon);
+    }
+
+    field.appendChild(wrap);
+
+    if (f.helper) {
+      const helper = document.createElement('div');
+      helper.className = 'kobos-input-helper is-warning';
+      helper.textContent = f.helper;
+      field.appendChild(helper);
+    }
+
+    formGrid.appendChild(field);
+  });
+
+  // Row 2 fields
+  const fieldsRow2 = [
+    { label: 'Width*', value: '30', suffix: 'in', valid: true, icon: validIconSVG, iconColor: 'var(--kobos-success-default)' },
+    { label: 'Height*', value: '34 1/2', suffix: 'in', valid: true, icon: validIconSVG, iconColor: 'var(--kobos-success-default)' },
+    { label: 'Depth', value: '24', suffix: 'in' },
+    { label: 'Quantity', value: '2', suffix: 'pcs' },
+    { label: 'Unit Price*', prefix: '$', value: '482.16' },
+    { label: 'Discount', value: '10', suffix: '%' },
+    { label: 'Cost Coverage', value: '42', suffix: '%', warning: true, icon: warningIconSVG, iconColor: 'var(--kobos-warning-default)', helper: 'Below 60%' }
+  ];
+
+  fieldsRow2.forEach(f => {
+    const field = document.createElement('div');
+    const fl = document.createElement('div');
+    fl.className = 'field-label';
+    fl.textContent = f.label;
+    field.appendChild(fl);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'kobos-input';
+    if (f.warning) wrap.classList.add('is-warning');
+    if (f.valid) wrap.classList.add('is-valid');
+
+    if (f.prefix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix';
+      affix.textContent = f.prefix;
+      wrap.appendChild(affix);
+    }
+
+    const inp = document.createElement('input');
+    inp.value = f.value;
+    wrap.appendChild(inp);
+
+    if (f.suffix) {
+      const affix = document.createElement('span');
+      affix.className = 'kobos-input__affix kobos-input__affix--suffix';
+      affix.textContent = f.suffix;
+      wrap.appendChild(affix);
+    }
+
+    if (f.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'kobos-input__icon';
+      icon.innerHTML = f.icon;
+      icon.style.color = f.iconColor;
+      wrap.appendChild(icon);
+    }
+
+    field.appendChild(wrap);
+
+    if (f.helper) {
+      const helper = document.createElement('div');
+      helper.className = 'kobos-input-helper is-warning';
+      helper.textContent = f.helper;
+      field.appendChild(helper);
+    }
+
+    formGrid.appendChild(field);
+  });
+
+  card.appendChild(formGrid);
+  container.appendChild(card);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
   'typography': renderTypography,
   'radius-elevation': renderRadiusElevation,
   'spacing': renderSpacing,
-  'buttons': renderButtons
+  'buttons': renderButtons,
+  'inputs': renderInputs
 };
 
 function updateActiveNav(pageKey) {
