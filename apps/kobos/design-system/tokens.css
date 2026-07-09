@@ -1,0 +1,71 @@
+/* KOBOS design tokens — synced from Figma "KOBOS" file, 2026-07-09.
+   Pages: 01 Foundations / Color Tokens (7:2), Business Color Tokens (13:2),
+   Typography (26:2), Radius & Elevation (40:2).
+   DO NOT invent values here — sync from Figma. */
+:root {
+  /* brand */
+  --kobos-brand-default: #111827;
+  --kobos-brand-hover: #1f2937;
+  --kobos-brand-active: #000000;
+  /* text */
+  --kobos-text-primary: #1a1d21;
+  --kobos-text-secondary: #4a4d52;
+  --kobos-text-muted: #7a7d85;
+  --kobos-text-disabled: #b0b3bc;
+  --kobos-text-inverse: #ffffff;
+  /* background */
+  --kobos-bg-default: #f8f7f5;
+  --kobos-bg-subtle: #f0eee9;
+  --kobos-bg-elevated: #ffffff;
+  --kobos-bg-inverse: #1a1d21;
+  /* surface */
+  --kobos-surface-default: #ffffff;
+  --kobos-surface-selected: #ebf0f7;
+  --kobos-surface-disabled: #f5f5f3;
+  /* border */
+  --kobos-border-default: #d4d0c8;
+  --kobos-border-subtle: #e8e5df;
+  --kobos-border-strong: #9e9a90;
+  /* semantic (business colors incl. border tier) */
+  --kobos-success-default: #1e7d4a;
+  --kobos-success-subtle: #ebf7f1;
+  --kobos-success-border: #a7d9be;
+  --kobos-warning-default: #b86a00;
+  --kobos-warning-subtle: #fef6e7;
+  --kobos-warning-border: #f5d8a0;
+  --kobos-danger-default: #c23b3b;
+  --kobos-danger-subtle: #fdeeed;
+  --kobos-danger-border: #f0bebe;
+  --kobos-info-default: #1976a8;
+  --kobos-info-subtle: #eaf4fb;
+  --kobos-info-border: #93c5e3;
+  --kobos-neutral-default: #6b7280;
+  --kobos-neutral-subtle: #f3f4f6;
+  --kobos-neutral-border: #d1d5db;
+  --kobos-neutral-strong-default: #374151;
+  --kobos-neutral-strong-subtle: #eaecf0;
+  --kobos-neutral-strong-border: #9ca3af;
+  /* typography (family/size/weight/line-height) */
+  --kobos-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --kobos-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --kobos-type-heading-md: 600 28px/36px var(--kobos-font-sans);
+  --kobos-type-heading-xs: 600 16px/22px var(--kobos-font-sans);
+  --kobos-type-card-title: 600 18px/24px var(--kobos-font-sans);
+  --kobos-type-body-semibold: 600 14px/20px var(--kobos-font-sans);
+  --kobos-type-body-small: 400 13px/18px var(--kobos-font-sans);
+  --kobos-type-body-small-semibold: 600 13px/18px var(--kobos-font-sans);
+  --kobos-type-caption: 400 12px/16px var(--kobos-font-sans);
+  --kobos-type-caption-xs: 400 10px/14px var(--kobos-font-mono);
+  --kobos-type-label-small: 500 11px/16px var(--kobos-font-sans);
+  --kobos-type-label-xs: 600 10px/14px var(--kobos-font-sans);
+  --kobos-type-badge-label: 600 11px/16px var(--kobos-font-sans);
+  --kobos-type-table-header: 600 12px/16px var(--kobos-font-sans); /* +4px letter-spacing */
+  --kobos-type-annotation: 400 9px/12px var(--kobos-font-sans);
+  --kobos-type-mono-value: 500 13px/18px var(--kobos-font-mono);
+  /* elevation */
+  --kobos-elevation-card: 0 1px 3px #0f172a14, 0 1px 2px #0f172a0a;
+  --kobos-elevation-dropdown: 0 8px 24px -4px #0f172a29, 0 2px 6px #0f172a14;
+  --kobos-elevation-modal: 0 20px 48px -12px #0f172a3d, 0 8px 16px -4px #0f172a1f;
+  --kobos-elevation-sticky-header: 0 1px 0 #0f172a1a;
+  /* spacing — TODO: sync numeric scale from Figma page 34:12 (not exposed as variables) */
+}
