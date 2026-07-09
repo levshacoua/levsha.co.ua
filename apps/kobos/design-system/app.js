@@ -361,7 +361,9 @@ function renderRadiusElevation(container) {
 }
 
 function renderSpacing(container) {
-  container.innerHTML = '<h1>Spacing</h1>';
+  container.innerHTML = '<h1>Spacing</h1>'
+    + '<p class="page-subtitle">9 tokens on a 4px base grid — padding, gap, margin, and Auto Layout spacing. '
+    + 'Visual scale: 1&nbsp;px&nbsp;=&nbsp;10&nbsp;px.</p>';
   const table = document.createElement('div');
   table.className = 'spacing-table';
   spacingTokens.forEach(({token, value, usage}) => {

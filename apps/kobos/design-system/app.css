@@ -373,3 +373,9 @@ h2 {
   font: var(--kobos-type-caption-xs);
   color: var(--kobos-text-muted);
 }
+
+.page-subtitle {
+  font: var(--kobos-type-body-small);
+  color: var(--kobos-text-muted);
+  margin: calc(var(--kobos-space-2) * -1) 0 var(--kobos-space-6) 0;
+}
