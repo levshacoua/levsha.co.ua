@@ -13,20 +13,19 @@ body {
 
 .main {
   flex: 1;
-  padding: 32px;
-  padding-right: 300px;
+  padding: 32px 32px 32px 300px;
   max-width: 960px;
   box-sizing: border-box;
 }
 
 .sidebar {
   position: fixed;
-  right: 0;
+  left: 0;
   top: 0;
   width: 280px;
   height: 100vh;
   background-color: var(--kobos-bg-elevated);
-  border-left: 1px solid var(--kobos-border-default);
+  border-right: 1px solid var(--kobos-border-default);
   padding: 24px 16px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -220,22 +219,39 @@ h2 {
 
 .elevation-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .elevation-card {
   background-color: var(--kobos-surface-default);
-  padding: 20px;
+  padding: 12px;
   border-radius: 6px;
-  min-height: 100px;
+  min-height: 110px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  font: var(--kobos-type-caption);
-  color: var(--kobos-text-secondary);
   border: 1px solid var(--kobos-border-subtle);
+  cursor: pointer;
+}
+
+.elev-doc {
+  font: var(--kobos-type-body-small-semibold);
+  color: var(--kobos-text-primary);
+  margin-bottom: 2px;
+}
+
+.elev-usage {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  margin-bottom: 2px;
+}
+
+.elev-spec {
+  font: var(--kobos-type-caption-xs);
+  color: var(--kobos-text-muted);
 }
 
 .toast {
@@ -256,4 +272,93 @@ h2 {
 
 .toast.show {
   opacity: 1;
+}
+
+.spacing-table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spacing-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--kobos-border-subtle);
+}
+
+.spacing-name {
+  font-family: var(--kobos-font-mono);
+  font-size: 12px;
+  color: var(--kobos-text-secondary);
+  width: 170px;
+  flex-shrink: 0;
+}
+
+.spacing-value {
+  font-family: var(--kobos-font-mono);
+  font-size: 12px;
+  color: var(--kobos-text-muted);
+  width: 45px;
+  flex-shrink: 0;
+}
+
+.spacing-bar {
+  height: 6px;
+  background-color: var(--kobos-brand-default);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.spacing-usage {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  flex: 1;
+  min-width: 0;
+}
+
+.radius-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.radius-card {
+  background-color: var(--kobos-surface-default);
+  border: 1px solid var(--kobos-border-subtle);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radius-sample {
+  background-color: var(--kobos-surface-selected);
+  border: 1px solid var(--kobos-border-default);
+}
+
+.radius-info {
+  text-align: center;
+  width: 100%;
+}
+
+.doc-name {
+  font: var(--kobos-type-body-small-semibold);
+  color: var(--kobos-text-primary);
+}
+
+.usage {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  margin: 2px 0;
+}
+
+.px-value {
+  font: var(--kobos-type-caption-xs);
+  color: var(--kobos-text-muted);
 }

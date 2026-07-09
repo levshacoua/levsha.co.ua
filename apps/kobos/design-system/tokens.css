@@ -1,6 +1,6 @@
-/* KOBOS design tokens — synced from Figma "KOBOS" file, 2026-07-09.
-   Pages: 01 Foundations / Color Tokens (7:2), Business Color Tokens (13:2),
-   Typography (26:2), Radius & Elevation (40:2).
+/* KOBOS design tokens — synced from Figma "KOBOS" file, 2026-07-09 (rev 2).
+   Pages: Color Tokens (7:2), Business Color Tokens (13:2), Typography (26:2),
+   Spacing (34:12), Radius & Elevation (40:2).
    DO NOT invent values here — sync from Figma. */
 :root {
   /* brand */
@@ -45,27 +45,56 @@
   --kobos-neutral-strong-default: #374151;
   --kobos-neutral-strong-subtle: #eaecf0;
   --kobos-neutral-strong-border: #9ca3af;
-  /* typography (family/size/weight/line-height) */
+
+  /* font families */
   --kobos-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --kobos-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --kobos-font-display: "Krona One", var(--kobos-font-sans);
+
+  /* typography — full set (Figma page 26:2, 22 styles) */
+  --kobos-type-display-page-title: 400 32px/40px var(--kobos-font-display); /* letter-spacing -2% */
   --kobos-type-heading-md: 600 28px/36px var(--kobos-font-sans);
-  --kobos-type-heading-xs: 600 16px/22px var(--kobos-font-sans);
+  --kobos-type-section-title: 600 24px/32px var(--kobos-font-sans);
   --kobos-type-card-title: 600 18px/24px var(--kobos-font-sans);
+  --kobos-type-heading-xs: 600 16px/22px var(--kobos-font-sans);
+  --kobos-type-body-large: 400 16px/22px var(--kobos-font-sans);
   --kobos-type-body-semibold: 600 14px/20px var(--kobos-font-sans);
-  --kobos-type-body-small: 400 13px/18px var(--kobos-font-sans);
+  --kobos-type-body-medium: 500 14px/20px var(--kobos-font-sans);
+  --kobos-type-body-regular: 400 14px/20px var(--kobos-font-sans);
+  --kobos-type-numeric-accounting: 500 14px/20px var(--kobos-font-sans);
   --kobos-type-body-small-semibold: 600 13px/18px var(--kobos-font-sans);
-  --kobos-type-caption: 400 12px/16px var(--kobos-font-sans);
-  --kobos-type-caption-xs: 400 10px/14px var(--kobos-font-mono);
-  --kobos-type-label-small: 500 11px/16px var(--kobos-font-sans);
-  --kobos-type-label-xs: 600 10px/14px var(--kobos-font-sans);
-  --kobos-type-badge-label: 600 11px/16px var(--kobos-font-sans);
-  --kobos-type-table-header: 600 12px/16px var(--kobos-font-sans); /* +4px letter-spacing */
-  --kobos-type-annotation: 400 9px/12px var(--kobos-font-sans);
+  --kobos-type-body-small-medium: 500 13px/18px var(--kobos-font-sans);
+  --kobos-type-body-small: 400 13px/18px var(--kobos-font-sans);
   --kobos-type-mono-value: 500 13px/18px var(--kobos-font-mono);
-  /* elevation */
-  --kobos-elevation-card: 0 1px 3px #0f172a14, 0 1px 2px #0f172a0a;
-  --kobos-elevation-dropdown: 0 8px 24px -4px #0f172a29, 0 2px 6px #0f172a14;
-  --kobos-elevation-modal: 0 20px 48px -12px #0f172a3d, 0 8px 16px -4px #0f172a1f;
-  --kobos-elevation-sticky-header: 0 1px 0 #0f172a1a;
-  /* spacing — TODO: sync numeric scale from Figma page 34:12 (not exposed as variables) */
+  --kobos-type-caption: 400 12px/16px var(--kobos-font-sans);
+  --kobos-type-table-header: 600 12px/16px var(--kobos-font-sans); /* +4% letter-spacing */
+  --kobos-type-label-small: 500 11px/16px var(--kobos-font-sans);
+  --kobos-type-badge-label: 600 11px/16px var(--kobos-font-sans);
+  --kobos-type-caption-xs: 400 10px/14px var(--kobos-font-mono);
+  --kobos-type-label-xs: 600 10px/14px var(--kobos-font-sans);
+  --kobos-type-annotation: 400 9px/12px var(--kobos-font-sans);
+
+  /* spacing — 9 tokens on a 4px base grid (Figma page 34:12) */
+  --kobos-space-1: 4px;   /* icon gap, compact badge padding, tight table cells */
+  --kobos-space-2: 8px;   /* small gaps, compact controls, badge horizontal padding */
+  --kobos-space-3: 12px;  /* form field gaps, compact card spacing */
+  --kobos-space-4: 16px;  /* default component padding, card inner padding, form sections */
+  --kobos-space-5: 20px;  /* medium layout spacing */
+  --kobos-space-6: 24px;  /* section spacing, dashboard card gaps */
+  --kobos-space-8: 32px;  /* large section spacing */
+  --kobos-space-10: 40px; /* page-level spacing */
+  --kobos-space-12: 48px; /* major page sections and layout separation */
+
+  /* radius — 4 tokens (Figma page 40:2) */
+  --kobos-radius-small-control: 6px; /* inputs, buttons, selects, filters */
+  --kobos-radius-card: 12px;         /* dashboard cards, order cards, table containers */
+  --kobos-radius-modal: 16px;        /* modals, dialogs, large panels */
+  --kobos-radius-pill: 999px;        /* badges, status pills, tags, chips */
+
+  /* elevation — 5 effect styles (KOBOS/elevation/*) */
+  --kobos-elevation-none: none;                                               /* flat surfaces, table rows, base layout */
+  --kobos-elevation-card: 0 1px 3px #0f172a14, 0 1px 2px #0f172a0a;           /* dashboard cards, summary panels */
+  --kobos-elevation-dropdown: 0 8px 24px -4px #0f172a29, 0 2px 6px #0f172a14; /* dropdown menus, popovers */
+  --kobos-elevation-modal: 0 20px 48px -12px #0f172a3d, 0 8px 16px -4px #0f172a1f; /* modals, dialogs, overlays */
+  --kobos-elevation-sticky-header: 0 1px 0 #0f172a1a;                         /* sticky headers, fixed top bars */
 }

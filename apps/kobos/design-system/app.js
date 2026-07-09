@@ -53,20 +53,39 @@ const businessGroups = {
 };
 
 const typographyTokens = [
-  { token: '--kobos-type-heading-md', caption: '600 28px/36px' },
-  { token: '--kobos-type-heading-xs', caption: '600 16px/22px' },
-  { token: '--kobos-type-card-title', caption: '600 18px/24px' },
-  { token: '--kobos-type-body-semibold', caption: '600 14px/20px' },
-  { token: '--kobos-type-body-small', caption: '400 13px/18px' },
-  { token: '--kobos-type-body-small-semibold', caption: '600 13px/18px' },
-  { token: '--kobos-type-caption', caption: '400 12px/16px' },
-  { token: '--kobos-type-caption-xs', caption: '400 10px/14px' },
-  { token: '--kobos-type-label-small', caption: '500 11px/16px' },
-  { token: '--kobos-type-label-xs', caption: '600 10px/14px' },
-  { token: '--kobos-type-badge-label', caption: '600 11px/16px' },
-  { token: '--kobos-type-table-header', caption: '600 12px/16px' },
-  { token: '--kobos-type-annotation', caption: '400 9px/12px' },
-  { token: '--kobos-type-mono-value', caption: '500 13px/18px' }
+  { token: '--kobos-type-display-page-title', caption: '400 32px/40px Krona One' },
+  { token: '--kobos-type-heading-md', caption: '600 28px/36px Inter' },
+  { token: '--kobos-type-section-title', caption: '600 24px/32px Inter' },
+  { token: '--kobos-type-card-title', caption: '600 18px/24px Inter' },
+  { token: '--kobos-type-heading-xs', caption: '600 16px/22px Inter' },
+  { token: '--kobos-type-body-large', caption: '400 16px/22px Inter' },
+  { token: '--kobos-type-body-semibold', caption: '600 14px/20px Inter' },
+  { token: '--kobos-type-body-medium', caption: '500 14px/20px Inter' },
+  { token: '--kobos-type-body-regular', caption: '400 14px/20px Inter' },
+  { token: '--kobos-type-numeric-accounting', caption: '500 14px/20px Inter' },
+  { token: '--kobos-type-body-small-semibold', caption: '600 13px/18px Inter' },
+  { token: '--kobos-type-body-small-medium', caption: '500 13px/18px Inter' },
+  { token: '--kobos-type-body-small', caption: '400 13px/18px Inter' },
+  { token: '--kobos-type-mono-value', caption: '500 13px/18px IBM Plex Mono' },
+  { token: '--kobos-type-caption', caption: '400 12px/16px Inter' },
+  { token: '--kobos-type-table-header', caption: '600 12px/16px Inter' },
+  { token: '--kobos-type-label-small', caption: '500 11px/16px Inter' },
+  { token: '--kobos-type-badge-label', caption: '600 11px/16px Inter' },
+  { token: '--kobos-type-caption-xs', caption: '400 10px/14px IBM Plex Mono' },
+  { token: '--kobos-type-label-xs', caption: '600 10px/14px Inter' },
+  { token: '--kobos-type-annotation', caption: '400 9px/12px Inter' }
+];
+
+const spacingTokens = [
+  { token: '--kobos-space-1', value: '4px', usage: 'icon gap, compact badge padding, tight table cells' },
+  { token: '--kobos-space-2', value: '8px', usage: 'small gaps, compact controls, badge horizontal padding' },
+  { token: '--kobos-space-3', value: '12px', usage: 'form field gaps, compact card spacing' },
+  { token: '--kobos-space-4', value: '16px', usage: 'default component padding, card inner padding, form sections' },
+  { token: '--kobos-space-5', value: '20px', usage: 'medium layout spacing' },
+  { token: '--kobos-space-6', value: '24px', usage: 'section spacing, dashboard card gaps' },
+  { token: '--kobos-space-8', value: '32px', usage: 'large section spacing' },
+  { token: '--kobos-space-10', value: '40px', usage: 'page-level spacing' },
+  { token: '--kobos-space-12', value: '48px', usage: 'major page sections and layout separation' }
 ];
 
 const navItems = [
@@ -74,7 +93,7 @@ const navItems = [
   { key: 'business-colors', label: 'Business Colors' },
   { key: 'typography', label: 'Typography' },
   { key: 'radius-elevation', label: 'Radius & Elevation' },
-  { key: 'spacing', label: 'Spacing (coming soon)' }
+  { key: 'spacing', label: 'Spacing' }
 ];
 
 function showToast(message) {
@@ -85,6 +104,20 @@ function showToast(message) {
   setTimeout(() => {
     toast.classList.remove('show');
   }, 1800);
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copied ' + text);
+  }).catch(() => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    showToast('Copied ' + text);
+  });
 }
 
 function createColorCard(token) {
@@ -99,17 +132,7 @@ function createColorCard(token) {
     </div>
   `;
   card.addEventListener('click', () => {
-    navigator.clipboard.writeText(token).then(() => {
-      showToast('Copied ' + token);
-    }).catch(() => {
-      const textArea = document.createElement('textarea');
-      textArea.value = token;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      showToast('Copied ' + token);
-    });
+    copyToClipboard(token);
   });
   return card;
 }
@@ -187,8 +210,17 @@ function renderTypography(container) {
     row.className = 'typography-row';
     const specimen = document.createElement('div');
     specimen.className = 'specimen';
-    specimen.textContent = 'Kitchen Outfitters — 1 000 orders';
+    if (token === '--kobos-type-numeric-accounting') {
+      specimen.textContent = 'Kitchen Outfitters — 1 000 orders ($2,481.50)';
+    } else {
+      specimen.textContent = 'Kitchen Outfitters — 1 000 orders';
+    }
     specimen.style.font = `var(${token})`;
+    if (token === '--kobos-type-display-page-title') {
+      specimen.style.letterSpacing = '-0.02em';
+    } else if (token === '--kobos-type-table-header') {
+      specimen.style.letterSpacing = '0.04em';
+    }
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.innerHTML = `${token}<br>${caption}`;
@@ -200,31 +232,136 @@ function renderTypography(container) {
 
 function renderRadiusElevation(container) {
   container.innerHTML = '<h1>Radius & Elevation</h1>';
-  const note = document.createElement('p');
-  note.style.color = 'var(--kobos-text-muted)';
-  note.style.font = 'var(--kobos-type-caption)';
-  note.textContent = 'Note: Radius tokens are not yet exposed in the design tokens.';
-  container.appendChild(note);
-  const elevations = [
-    '--kobos-elevation-card',
-    '--kobos-elevation-dropdown',
-    '--kobos-elevation-modal',
-    '--kobos-elevation-sticky-header'
+
+  // RADIUS section
+  const radiusH2 = document.createElement('h2');
+  radiusH2.textContent = 'Radius';
+  container.appendChild(radiusH2);
+
+  const radiusData = [
+    { doc: 'radius/small-control', css: '--kobos-radius-small-control', value: '6px', usage: 'inputs, buttons, selects, filters' },
+    { doc: 'radius/card', css: '--kobos-radius-card', value: '12px', usage: 'dashboard cards, order cards, table containers' },
+    { doc: 'radius/modal', css: '--kobos-radius-modal', value: '16px', usage: 'modals, dialogs, large panels' },
+    { doc: 'radius/pill', css: '--kobos-radius-pill', value: '999px', usage: 'badges, status pills, tags, chips' }
   ];
-  const grid = document.createElement('div');
-  grid.className = 'elevation-grid';
-  elevations.forEach(elev => {
+
+  const radiusGrid = document.createElement('div');
+  radiusGrid.className = 'radius-grid';
+
+  radiusData.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'radius-card';
+
+    const sample = document.createElement('div');
+    sample.className = 'radius-sample';
+    sample.style.borderRadius = `var(${item.css})`;
+    if (item.doc === 'radius/pill') {
+      sample.style.width = '100px';
+      sample.style.height = '28px';
+    } else {
+      sample.style.width = '60px';
+      sample.style.height = '60px';
+    }
+    card.appendChild(sample);
+
+    const info = document.createElement('div');
+    info.className = 'radius-info';
+
+    const docName = document.createElement('div');
+    docName.className = 'doc-name';
+    docName.textContent = item.doc;
+
+    const usage = document.createElement('div');
+    usage.className = 'usage';
+    usage.textContent = item.usage;
+
+    const px = document.createElement('div');
+    px.className = 'px-value';
+    px.textContent = item.value;
+
+    info.appendChild(docName);
+    info.appendChild(usage);
+    info.appendChild(px);
+    card.appendChild(info);
+
+    card.addEventListener('click', () => copyToClipboard(item.css));
+    radiusGrid.appendChild(card);
+  });
+
+  container.appendChild(radiusGrid);
+
+  // ELEVATION section
+  const elevH2 = document.createElement('h2');
+  elevH2.textContent = 'Elevation';
+  container.appendChild(elevH2);
+
+  const elevData = [
+    { doc: 'elevation/none', css: '--kobos-elevation-none', usage: 'Flat surfaces, table rows, base layout', spec: 'No shadow' },
+    { doc: 'elevation/card', css: '--kobos-elevation-card', usage: 'dashboard cards, summary panels', spec: '0/1/3/0 · 0.08' },
+    { doc: 'elevation/dropdown', css: '--kobos-elevation-dropdown', usage: 'dropdown menus, popovers', spec: '0/8/24/-4 · 0.16' },
+    { doc: 'elevation/modal', css: '--kobos-elevation-modal', usage: 'modals, dialogs, overlays', spec: '0/20/48/-12 · 0.24' },
+    { doc: 'elevation/sticky-header', css: '--kobos-elevation-sticky-header', usage: 'sticky headers, fixed top bars', spec: '0/1/0/0 · 0.10' }
+  ];
+
+  const elevGrid = document.createElement('div');
+  elevGrid.className = 'elevation-grid';
+
+  elevData.forEach(item => {
     const card = document.createElement('div');
     card.className = 'elevation-card';
-    card.style.boxShadow = `var(${elev})`;
-    card.innerHTML = `<div>${elev}</div>`;
-    grid.appendChild(card);
+    if (item.css === '--kobos-elevation-none') {
+      card.style.boxShadow = 'none';
+    } else {
+      card.style.boxShadow = `var(${item.css})`;
+    }
+
+    const content = document.createElement('div');
+    content.innerHTML = `
+      <div class="elev-doc">${item.doc}</div>
+      <div class="elev-usage">${item.usage}</div>
+      <div class="elev-spec">${item.spec}</div>
+    `;
+    card.appendChild(content);
+
+    card.addEventListener('click', () => copyToClipboard(item.css));
+    elevGrid.appendChild(card);
   });
-  container.appendChild(grid);
+
+  container.appendChild(elevGrid);
 }
 
 function renderSpacing(container) {
-  container.innerHTML = '<h1>Spacing</h1><p style="color: var(--kobos-text-muted);">Coming soon</p>';
+  container.innerHTML = '<h1>Spacing</h1>';
+  const table = document.createElement('div');
+  table.className = 'spacing-table';
+  spacingTokens.forEach(({token, value, usage}) => {
+    const row = document.createElement('div');
+    row.className = 'spacing-row';
+
+    const name = document.createElement('div');
+    name.className = 'spacing-name';
+    name.textContent = token;
+
+    const val = document.createElement('div');
+    val.className = 'spacing-value';
+    val.textContent = value;
+
+    const bar = document.createElement('div');
+    bar.className = 'spacing-bar';
+    const px = parseInt(value, 10);
+    bar.style.width = (px * 10) + 'px';
+
+    const use = document.createElement('div');
+    use.className = 'spacing-usage';
+    use.textContent = usage;
+
+    row.appendChild(name);
+    row.appendChild(val);
+    row.appendChild(bar);
+    row.appendChild(use);
+    table.appendChild(row);
+  });
+  container.appendChild(table);
 }
 
 const renderers = {
