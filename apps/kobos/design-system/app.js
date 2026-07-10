@@ -98,6 +98,7 @@ const navItems = [
   { key: 'inputs', label: 'Inputs' },
   { key: 'select', label: 'Select & Dropdown' },
   { key: 'checkbox', label: 'Checkbox, Radio & Switch' },
+  { key: 'textarea', label: 'Textarea & Notes' },
   { key: 'badges', label: 'Badges & Chips' },
   { key: 'cards', label: 'Cards' }
 ];
@@ -3165,6 +3166,546 @@ function renderCheckbox(container) {
   container.appendChild(list);
 }
 
+function renderTextarea(container) {
+  container.innerHTML = '<h1>Textarea & Notes</h1>';
+
+  // 1. Textarea variants
+  container.appendChild(createSectionHeading('Textarea variants', '.kobos-textarea'));
+
+  const variants = [
+    {
+      label: 'Internal Note',
+      value: 'Customer asked for updated lead time. Verify dimensions before production release.',
+      helper: 'Visible to staff only — not shown to customer.'
+    },
+    {
+      label: 'Customer-facing Note',
+      value: 'Lead time starts after payment confirmation. Please review all dimensions.',
+      helper: 'This note may be visible to the customer.'
+    },
+    {
+      label: 'Production Note',
+      value: 'Check grain direction before cutting. Paint SW 7005 Pure White. Hold for QC before packaging.'
+    },
+    {
+      label: 'Cost Note',
+      value: 'Cost estimated from previous similar job. Manual override based on supplier invoice.',
+      helper: 'Required for manual cost overrides.'
+    },
+    {
+      label: 'Audit Reason',
+      value: 'Unlocking cost because the customer changed the width from 24" to 25 1/2".',
+      required: true,
+      helper: 'Reason required before unlocking cost.'
+    },
+    {
+      label: 'Claim / Defect',
+      value: 'Door arrived with damaged corner on right side. Finish defect visible on front face.',
+      helper: 'Include product, quantity, and visible issue details.'
+    }
+  ];
+
+  variants.forEach(v => {
+    const field = document.createElement('div');
+    field.className = 'kobos-textarea-field';
+
+    const labelRow = document.createElement('div');
+    labelRow.className = 'field-label';
+    labelRow.textContent = v.label;
+    if (v.required) {
+      const req = document.createElement('span');
+      req.className = 'required';
+      req.textContent = ' * Required';
+      labelRow.appendChild(req);
+    }
+    field.appendChild(labelRow);
+
+    const ta = document.createElement('textarea');
+    ta.className = 'kobos-textarea';
+    ta.value = v.value;
+    ta.rows = 3;
+    field.appendChild(ta);
+
+    if (v.helper) {
+      const meta = document.createElement('div');
+      meta.className = 'meta-row';
+      const helper = document.createElement('div');
+      helper.className = 'helper';
+      helper.textContent = v.helper;
+      meta.appendChild(helper);
+      field.appendChild(meta);
+    }
+
+    container.appendChild(field);
+  });
+
+  // 2. Textarea states
+  container.appendChild(createSectionHeading('Textarea states', '.kobos-textarea'));
+
+  const statesGrid = document.createElement('div');
+  statesGrid.style.display = 'grid';
+  statesGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  statesGrid.style.gap = '16px';
+
+  const states = [
+    { label: 'Empty', placeholder: 'Add an internal note…' },
+    { label: 'Filled', value: 'Customer asked for updated lead time. Verify dimensions before production release.', counter: '142 / 1000' },
+    { label: 'Focus', value: 'Focus state example text here.', extraClass: 'is-focus', caption: '2px info/default focus ring' },
+    { label: 'Disabled', placeholder: 'Instructions locked…', extraClass: 'is-disabled' },
+    { label: 'ReadOnly', value: 'Historical audit entry — read-only', extraClass: 'is-readonly', caption: 'Historical audit entry — read-only' },
+    { label: 'Warning', value: 'This is a long note that is approaching the character limit for this field.', extraClass: 'is-warning', counter: '920 / 1000', counterClass: 'is-warning' },
+    { label: 'Error', value: 'Reason for cancellation', extraClass: 'is-error', required: true, helper: 'Reason required before canceling order.', helperClass: 'is-error' },
+    { label: 'Autosaved', value: 'Note content here.', status: 'Autosaved · 12 seconds ago' },
+    { label: 'Unsaved', value: 'Unsaved note content.', status: 'Unsaved changes · not saved' }
+  ];
+
+  states.forEach(s => {
+    const tile = document.createElement('div');
+    const field = document.createElement('div');
+    field.className = 'kobos-textarea-field';
+
+    const label = document.createElement('div');
+    label.className = 'field-label';
+    label.textContent = s.label;
+    if (s.required) {
+      const req = document.createElement('span');
+      req.className = 'required';
+      req.textContent = ' * Required';
+      label.appendChild(req);
+    }
+    field.appendChild(label);
+
+    const ta = document.createElement('textarea');
+    ta.className = `kobos-textarea ${s.extraClass || ''}`.trim();
+    if (s.value) ta.value = s.value;
+    if (s.placeholder) ta.placeholder = s.placeholder;
+    ta.rows = 2;
+    field.appendChild(ta);
+
+    const meta = document.createElement('div');
+    meta.className = 'meta-row';
+
+    if (s.helper) {
+      const h = document.createElement('div');
+      h.className = `helper ${s.helperClass || ''}`;
+      h.textContent = s.helper;
+      meta.appendChild(h);
+    }
+    if (s.counter) {
+      const c = document.createElement('div');
+      c.className = `kobos-char-counter ${s.counterClass || ''}`;
+      c.textContent = s.counter;
+      meta.appendChild(c);
+    }
+    if (s.status) {
+      const st = document.createElement('div');
+      st.className = 'kobos-autosave-status';
+      st.textContent = s.status;
+      meta.appendChild(st);
+    }
+    if (s.caption) {
+      const cap = document.createElement('div');
+      cap.style.font = 'var(--kobos-type-caption)';
+      cap.style.color = 'var(--kobos-text-muted)';
+      cap.textContent = s.caption;
+      meta.appendChild(cap);
+    }
+
+    field.appendChild(meta);
+    tile.appendChild(field);
+    statesGrid.appendChild(tile);
+  });
+
+  container.appendChild(statesGrid);
+
+  // 3. Character counter states
+  container.appendChild(createSectionHeading('Character counter states', '.kobos-char-counter'));
+
+  // Live interactive textarea
+  const liveField = document.createElement('div');
+  liveField.className = 'kobos-textarea-field';
+
+  const liveLabel = document.createElement('div');
+  liveLabel.className = 'field-label';
+  liveLabel.textContent = 'Try it — Internal Note';
+  liveField.appendChild(liveLabel);
+
+  const liveTa = document.createElement('textarea');
+  liveTa.className = 'kobos-textarea';
+  liveTa.placeholder = 'Type here to test the counter...';
+  liveTa.rows = 3;
+  liveField.appendChild(liveTa);
+
+  const liveMeta = document.createElement('div');
+  liveMeta.className = 'meta-row';
+  const liveCounter = document.createElement('div');
+  liveCounter.className = 'kobos-char-counter';
+  liveCounter.textContent = '0 / 1000';
+  liveMeta.appendChild(liveCounter);
+  liveField.appendChild(liveMeta);
+
+  container.appendChild(liveField);
+
+  liveTa.addEventListener('input', () => {
+    const len = liveTa.value.length;
+    liveCounter.textContent = `${len} / 1000`;
+    liveCounter.className = 'kobos-char-counter';
+    liveTa.classList.remove('is-error');
+    if (len > 1000) {
+      liveCounter.classList.add('is-danger');
+      liveTa.classList.add('is-error');
+    } else if (len >= 900) {
+      liveCounter.classList.add('is-warning');
+    }
+  });
+
+  // Static counter demos
+  const counterDemos = document.createElement('div');
+  counterDemos.style.display = 'flex';
+  counterDemos.style.gap = '24px';
+  counterDemos.style.marginTop = '16px';
+
+  const counters = [
+    { text: '142 / 1000', cls: '' },
+    { text: '920 / 1000', cls: 'is-warning' },
+    { text: '1034 / 1000', cls: 'is-danger' }
+  ];
+
+  counters.forEach(c => {
+    const d = document.createElement('div');
+    d.className = `kobos-char-counter ${c.cls}`;
+    d.textContent = c.text;
+    counterDemos.appendChild(d);
+  });
+
+  container.appendChild(counterDemos);
+
+  const note = document.createElement('div');
+  note.style.font = 'var(--kobos-type-caption)';
+  note.style.color = 'var(--kobos-text-muted)';
+  note.style.marginTop = '8px';
+  note.textContent = 'text/muted → warning/default → danger/default based on usage';
+  container.appendChild(note);
+
+  // 4. Autosave status
+  container.appendChild(createSectionHeading('Autosave status', '.kobos-autosave-status'));
+
+  const autosaveDemos = [
+    'Saving…',
+    'Autosaved',
+    'Saved 12 seconds ago',
+    'Unsaved changes — not saved yet',
+    'Save failed — please retry'
+  ];
+
+  autosaveDemos.forEach((text, i) => {
+    const st = document.createElement('div');
+    st.className = 'kobos-autosave-status';
+    if (i === 4) st.classList.add('is-danger');
+    st.textContent = text;
+    container.appendChild(st);
+  });
+
+  // 5. Required for action
+  container.appendChild(createSectionHeading('Required for action', '.kobos-textarea-field'));
+
+  const requiredActions = [
+    { title: 'Unlock Cost', label: 'Audit Reason', placeholder: 'Enter reason for unlocking cost…', helper: 'Required — must explain why cost is being unlocked.' },
+    { title: 'Cancel Order', label: 'Cancellation Reason', placeholder: 'Enter cancellation reason…', helper: 'Required before order can be canceled.' },
+    { title: 'Request Review', label: 'Review Note', placeholder: 'Describe what needs review…', helper: 'Required — explain scope of review needed.' },
+    { title: 'Claim / Defect', label: 'Defect Description', placeholder: 'Describe the issue clearly…', helper: 'Required — include product, quantity, and visible defect details.' }
+  ];
+
+  requiredActions.forEach(act => {
+    const card = document.createElement('div');
+    card.className = 'kobos-card';
+    card.style.maxWidth = '400px';
+    card.style.marginBottom = '16px';
+
+    const titleEl = document.createElement('div');
+    titleEl.style.font = 'var(--kobos-type-body-small-semibold)';
+    titleEl.style.marginBottom = '8px';
+    titleEl.textContent = act.title;
+    card.appendChild(titleEl);
+
+    const field = document.createElement('div');
+    field.className = 'kobos-textarea-field';
+
+    const label = document.createElement('div');
+    label.className = 'field-label';
+    label.textContent = act.label;
+    const req = document.createElement('span');
+    req.className = 'required';
+    req.textContent = ' * Required';
+    label.appendChild(req);
+    field.appendChild(label);
+
+    const ta = document.createElement('textarea');
+    ta.className = 'kobos-textarea';
+    ta.placeholder = act.placeholder;
+    ta.rows = 2;
+    field.appendChild(ta);
+
+    const meta = document.createElement('div');
+    meta.className = 'meta-row';
+    const helper = document.createElement('div');
+    helper.className = 'helper is-error';
+    helper.textContent = act.helper;
+    meta.appendChild(helper);
+    field.appendChild(meta);
+
+    card.appendChild(field);
+    container.appendChild(card);
+  });
+
+  // 6. Read-only note display
+  container.appendChild(createSectionHeading('Read-only note display', '.kobos-note-readonly'));
+
+  const notes = [
+    { author: 'Sarah K.', date: 'Jun 30, 2026 · 2:14 PM', tag: 'Audit Reason', body: 'Unlocking cost because the customer changed the width from 24" to 25 1/2".' },
+    { author: 'James R. (Dealer)', date: 'Jun 28, 2026 · 10:42 AM', tag: 'Customer-facing Note', body: 'Lead time starts after payment confirmation. Please review all cabinet dimensions before final approval.' },
+    { author: 'System', date: 'Jun 27, 2026 · 8:00 AM', tag: 'System Note', body: 'Order #1042 was automatically created from Quote #QT-0048 by conversion workflow.' }
+  ];
+
+  notes.forEach(n => {
+    const noteEl = document.createElement('div');
+    noteEl.className = 'kobos-note-readonly';
+
+    const header = document.createElement('div');
+    header.className = 'note-header';
+    header.style.display = 'flex';
+    header.style.justifyContent = 'space-between';
+    header.style.alignItems = 'center';
+
+    const leftInfo = document.createElement('span');
+    leftInfo.textContent = `${n.author} · ${n.date}`;
+    header.appendChild(leftInfo);
+
+    const tagSpan = document.createElement('span');
+    tagSpan.className = 'kobos-badge kobos-badge--neutral';
+    tagSpan.textContent = n.tag;
+    header.appendChild(tagSpan);
+
+    noteEl.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'note-body';
+    body.textContent = n.body;
+    noteEl.appendChild(body);
+
+    container.appendChild(noteEl);
+  });
+
+  // 7. Order Review Notes
+  container.appendChild(createSectionHeading('Order Review Notes', '.kobos-card'));
+
+  const denseCard = document.createElement('div');
+  denseCard.className = 'kobos-card';
+
+  const denseTitle = document.createElement('div');
+  denseTitle.className = 'kobos-card__title';
+  denseTitle.textContent = 'Order Review Notes';
+  denseCard.appendChild(denseTitle);
+
+  const denseSub = document.createElement('div');
+  denseSub.className = 'kobos-card__subtitle';
+  denseSub.textContent = 'Order #1042 · Anderson Cabinets · Jun 30, 2026';
+  denseCard.appendChild(denseSub);
+
+  const divider = document.createElement('div');
+  divider.className = 'kobos-card__divider';
+  denseCard.appendChild(divider);
+
+  // row1
+  const row1 = document.createElement('div');
+  row1.style.display = 'grid';
+  row1.style.gridTemplateColumns = '1fr 1fr';
+  row1.style.gap = '16px';
+
+  // Internal Note
+  const intField = document.createElement('div');
+  intField.className = 'kobos-textarea-field';
+  const intLabel = document.createElement('div');
+  intLabel.className = 'field-label';
+  intLabel.textContent = 'Internal Note';
+  intField.appendChild(intLabel);
+  const intTa = document.createElement('textarea');
+  intTa.className = 'kobos-textarea';
+  intTa.value = 'Customer asked for updated lead time. Verify dimensions before production release.';
+  intTa.rows = 2;
+  intField.appendChild(intTa);
+  const intMeta = document.createElement('div');
+  intMeta.className = 'meta-row';
+  const intStatus = document.createElement('div');
+  intStatus.className = 'kobos-autosave-status';
+  intStatus.textContent = 'Autosaved · 12s ago';
+  intMeta.appendChild(intStatus);
+  const intCount = document.createElement('div');
+  intCount.className = 'kobos-char-counter';
+  intCount.textContent = '142 / 1000';
+  intMeta.appendChild(intCount);
+  intField.appendChild(intMeta);
+  row1.appendChild(intField);
+
+  // Production Note
+  const prodField = document.createElement('div');
+  prodField.className = 'kobos-textarea-field';
+  const prodLabel = document.createElement('div');
+  prodLabel.className = 'field-label';
+  prodLabel.textContent = 'Production Note';
+  prodField.appendChild(prodLabel);
+  const prodTa = document.createElement('textarea');
+  prodTa.className = 'kobos-textarea';
+  prodTa.value = 'Check grain direction before cutting. Paint SW 7005 Pure White. Hold for QC before packaging.';
+  prodTa.rows = 2;
+  prodField.appendChild(prodTa);
+  const prodMeta = document.createElement('div');
+  prodMeta.className = 'meta-row';
+  const prodHelp = document.createElement('div');
+  prodHelp.className = 'helper';
+  prodHelp.textContent = 'Visible to production staff on shop floor.';
+  prodMeta.appendChild(prodHelp);
+  prodField.appendChild(prodMeta);
+  row1.appendChild(prodField);
+
+  denseCard.appendChild(row1);
+
+  // row2
+  const row2 = document.createElement('div');
+  row2.style.display = 'grid';
+  row2.style.gridTemplateColumns = '1fr 1fr';
+  row2.style.gap = '16px';
+  row2.style.marginTop = '16px';
+
+  // Cost Note
+  const costField = document.createElement('div');
+  costField.className = 'kobos-textarea-field';
+  const costLabel = document.createElement('div');
+  costLabel.className = 'field-label';
+  costLabel.textContent = 'Cost Note';
+  costField.appendChild(costLabel);
+  const costTa = document.createElement('textarea');
+  costTa.className = 'kobos-textarea';
+  costTa.value = 'Cost estimated from previous similar job. Manual override based on supplier invoice.';
+  costTa.rows = 2;
+  costField.appendChild(costTa);
+  const costMeta = document.createElement('div');
+  costMeta.className = 'meta-row';
+  const costHelp = document.createElement('div');
+  costHelp.className = 'helper';
+  costHelp.textContent = 'Required for manual cost overrides.';
+  costMeta.appendChild(costHelp);
+  costField.appendChild(costMeta);
+  row2.appendChild(costField);
+
+  // Customer-facing Note
+  const custField = document.createElement('div');
+  custField.className = 'kobos-textarea-field';
+  const custLabel = document.createElement('div');
+  custLabel.className = 'field-label';
+  custLabel.textContent = 'Customer-facing Note';
+  custField.appendChild(custLabel);
+  const custTa = document.createElement('textarea');
+  custTa.className = 'kobos-textarea';
+  custTa.value = 'Lead time starts after payment confirmation. Please review all dimensions.';
+  custTa.rows = 2;
+  custField.appendChild(custTa);
+  const custMeta = document.createElement('div');
+  custMeta.className = 'meta-row';
+  const custHelp = document.createElement('div');
+  custHelp.className = 'helper';
+  custHelp.textContent = 'This note may be visible to the customer.';
+  custMeta.appendChild(custHelp);
+  custField.appendChild(custMeta);
+  row2.appendChild(custField);
+
+  denseCard.appendChild(row2);
+
+  // row3 full-width
+  const row3 = document.createElement('div');
+  row3.style.marginTop = '16px';
+
+  const auditField = document.createElement('div');
+  auditField.className = 'kobos-textarea-field';
+  const auditLabel = document.createElement('div');
+  auditLabel.className = 'field-label';
+  auditLabel.textContent = 'Audit Reason';
+  const auditReq = document.createElement('span');
+  auditReq.className = 'required';
+  auditReq.textContent = ' * Required';
+  auditLabel.appendChild(auditReq);
+  auditField.appendChild(auditLabel);
+
+  const auditTa = document.createElement('textarea');
+  auditTa.className = 'kobos-textarea';
+  auditTa.placeholder = 'Enter reason for this action…';
+  auditTa.rows = 2;
+  auditField.appendChild(auditTa);
+
+  const auditMeta = document.createElement('div');
+  auditMeta.className = 'meta-row';
+  const auditHelp = document.createElement('div');
+  auditHelp.className = 'helper is-error';
+  auditHelp.textContent = 'Required before requesting cost review.';
+  auditMeta.appendChild(auditHelp);
+  auditField.appendChild(auditMeta);
+
+  row3.appendChild(auditField);
+  denseCard.appendChild(row3);
+
+  // footer buttons
+  const actions = document.createElement('div');
+  actions.className = 'kobos-card__actions';
+  actions.style.marginTop = '16px';
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'kobos-btn kobos-btn--primary';
+  saveBtn.textContent = 'Save Notes';
+  actions.appendChild(saveBtn);
+
+  const reviewBtn = document.createElement('button');
+  reviewBtn.className = 'kobos-btn kobos-btn--secondary';
+  reviewBtn.textContent = 'Request Review';
+  actions.appendChild(reviewBtn);
+
+  const unlockBtn = document.createElement('button');
+  unlockBtn.className = 'kobos-btn kobos-btn--secondary';
+  unlockBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;vertical-align:middle;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Unlock Cost`;
+  actions.appendChild(unlockBtn);
+
+  denseCard.appendChild(actions);
+  container.appendChild(denseCard);
+
+  // 8. Accessibility & usage rules
+  container.appendChild(createSectionHeading('Accessibility & usage rules', '.kobos-textarea'));
+
+  const list = document.createElement('ul');
+  list.style.marginLeft = '20px';
+  list.style.paddingLeft = '0';
+  list.style.lineHeight = '1.7';
+
+  const rules = [
+    'Textareas must always have visible labels — placeholder text is not a label.',
+    'Required-for-action notes must clearly communicate WHY the note is required.',
+    'Error/warning states must include helper message text, not only a colored border.',
+    'Character counters: neutral below 90% · warning/default above 90% · danger/default when exceeded.',
+    'Read-only notes must remain selectable and copyable — never use surface/disabled for read-only.',
+    'Disabled ≠ Read-only. Disabled is not interactive; read-only is readable and copyable.',
+    'Autosave status uses caption typography — informative but not dominant in the interface.',
+    'Customer-facing note must be clearly labeled so staff know when content reaches the customer.',
+    'Audit reason fields must always be required — mark visibly with \'* Required\' indicator.',
+    'Long text must maintain 20px line-height (body-regular) for comfortable operational readability.'
+  ];
+
+  rules.forEach(rule => {
+    const li = document.createElement('li');
+    li.textContent = rule;
+    list.appendChild(li);
+  });
+
+  container.appendChild(list);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -3175,6 +3716,7 @@ const renderers = {
   'inputs': renderInputs,
   'select': renderSelect,
   'checkbox': renderCheckbox,
+  'textarea': renderTextarea,
   'badges': renderBadges,
   'cards': renderCards
 };

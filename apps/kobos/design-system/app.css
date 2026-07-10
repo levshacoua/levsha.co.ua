@@ -1399,3 +1399,130 @@ h2 {
 .kobos-field-option__help.is-warning {
   color: var(--kobos-warning-default);
 }
+
+.kobos-textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: var(--kobos-space-3);
+  border: 1px solid var(--kobos-border-default);
+  border-radius: var(--kobos-radius-small-control);
+  background-color: var(--kobos-surface-default);
+  color: var(--kobos-text-primary);
+  font: var(--kobos-type-body-regular);
+  line-height: 20px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.kobos-textarea:focus {
+  outline: none;
+}
+
+.kobos-textarea.is-focus {
+  border-color: var(--kobos-info-default);
+  box-shadow: 0 0 0 2px var(--kobos-info-default);
+}
+
+.kobos-textarea.is-disabled {
+  background-color: var(--kobos-surface-disabled);
+  color: var(--kobos-text-disabled);
+  cursor: not-allowed;
+}
+
+.kobos-textarea.is-readonly {
+  background-color: var(--kobos-bg-subtle);
+  color: var(--kobos-text-primary);
+  cursor: text;
+}
+
+.kobos-textarea.is-warning {
+  border-color: var(--kobos-warning-default);
+}
+
+.kobos-textarea.is-error {
+  border-color: var(--kobos-danger-default);
+}
+
+.kobos-textarea-field {
+  margin-bottom: 16px;
+}
+
+.kobos-textarea-field .field-label {
+  font: var(--kobos-type-label-small);
+  color: var(--kobos-text-primary);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kobos-textarea-field .field-label .required {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-textarea-field .meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+}
+
+.kobos-textarea-field .helper {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+}
+
+.kobos-textarea-field .helper.is-error {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-textarea-field .helper.is-warning {
+  color: var(--kobos-warning-default);
+}
+
+.kobos-char-counter {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  text-align: right;
+}
+
+.kobos-char-counter.is-warning {
+  color: var(--kobos-warning-default);
+}
+
+.kobos-char-counter.is-danger {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-autosave-status {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+}
+
+.kobos-autosave-status.is-danger {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-note-readonly {
+  padding: var(--kobos-space-3);
+  background-color: var(--kobos-bg-subtle);
+  border-radius: var(--kobos-radius-small-control);
+  margin-bottom: 12px;
+}
+
+.kobos-note-readonly .note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  margin-bottom: 4px;
+}
+
+.kobos-note-readonly .note-body {
+  font: var(--kobos-type-body-regular);
+  color: var(--kobos-text-primary);
+  white-space: pre-wrap;
+}
