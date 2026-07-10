@@ -96,6 +96,7 @@ const navItems = [
   { key: 'spacing', label: 'Spacing' },
   { key: 'buttons', label: 'Buttons' },
   { key: 'inputs', label: 'Inputs' },
+  { key: 'select', label: 'Select & Dropdown' },
   { key: 'badges', label: 'Badges & Chips' },
   { key: 'cards', label: 'Cards' }
 ];
@@ -156,6 +157,8 @@ const warningIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" heigh
 const errorIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 15 6-6"/></svg>`;
 
 const searchIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
+
+const chevronDownSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -1234,6 +1237,295 @@ function createSectionHeading(title, copyText) {
   return h2;
 }
 
+function renderSelect(container) {
+  container.innerHTML = '<h1>Select & Dropdown</h1>';
+
+  // 1. Select states
+  container.appendChild(createSectionHeading('Select states', '.kobos-select'));
+
+  const statesGrid = document.createElement('div');
+  statesGrid.className = 'input-grid';
+
+  function createSelectDemo(caption, value, extraClasses = '', showMenu = false, menuOptions = null, isPlaceholder = false) {
+    const tile = document.createElement('div');
+    tile.className = 'input-tile';
+
+    const select = document.createElement('div');
+    select.className = `kobos-select ${extraClasses}`.trim();
+
+    const valueEl = document.createElement('span');
+    valueEl.className = 'kobos-select__value';
+    if (isPlaceholder) {
+      valueEl.textContent = value;
+      valueEl.style.color = 'var(--kobos-text-muted)';
+    } else {
+      valueEl.textContent = value;
+    }
+    select.appendChild(valueEl);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'kobos-select__chevron';
+    chevron.innerHTML = chevronDownSVG;
+    select.appendChild(chevron);
+
+    tile.appendChild(select);
+
+    if (showMenu && menuOptions) {
+      const menu = document.createElement('div');
+      menu.className = 'kobos-menu';
+      menuOptions.forEach(opt => {
+        const option = document.createElement('div');
+        let optClass = 'kobos-option';
+        if (opt.selected) optClass += ' is-selected';
+        if (opt.disabled) optClass += ' is-disabled';
+        if (opt.warning) optClass += ' is-warning';
+        option.className = optClass;
+
+        if (opt.selected) {
+          const check = document.createElement('span');
+          check.innerHTML = validIconSVG;
+          check.style.color = 'var(--kobos-info-default)';
+          check.style.flexShrink = '0';
+          check.style.width = '16px';
+          check.style.height = '16px';
+          option.appendChild(check);
+        }
+
+        const col = document.createElement('div');
+        const labelEl = document.createElement('div');
+        labelEl.className = 'kobos-option__label';
+        labelEl.textContent = opt.label;
+        col.appendChild(labelEl);
+
+        const capEl = document.createElement('div');
+        capEl.className = 'kobos-option__caption';
+        capEl.textContent = opt.caption;
+        col.appendChild(capEl);
+
+        option.appendChild(col);
+        menu.appendChild(option);
+      });
+      tile.appendChild(menu);
+    }
+
+    const lbl = document.createElement('div');
+    lbl.className = 'input-label';
+    lbl.textContent = caption;
+    tile.appendChild(lbl);
+
+    return tile;
+  }
+
+  // Closed
+  statesGrid.appendChild(createSelectDemo('Closed', 'Select material…', '', false, null, true));
+
+  // Filled
+  statesGrid.appendChild(createSelectDemo('Filled', 'Maple paint grade'));
+
+  // Open
+  const openOptions = [
+    { label: 'Poplar', caption: '$2.20/ft²' },
+    { label: 'Knotty pine', caption: '$1.95/ft²' },
+    { label: 'Maple paint grade', caption: '$2.50/ft²', selected: true },
+    { label: 'Cherry', caption: '$4.45/ft²' },
+    { label: 'Black Walnut', caption: '$10.65/ft²' }
+  ];
+  statesGrid.appendChild(createSelectDemo('Open', 'Maple paint grade', 'is-open', true, openOptions));
+
+  // Hover
+  statesGrid.appendChild(createSelectDemo('Hover', 'Maple paint grade', 'is-hover'));
+
+  // Disabled
+  statesGrid.appendChild(createSelectDemo('Disabled', 'Maple paint grade', 'is-disabled'));
+
+  // Error
+  const errorTile = createSelectDemo('Error', 'Maple paint grade', 'is-error');
+  const errorHelper = document.createElement('div');
+  errorHelper.className = 'kobos-input-helper is-error';
+  errorHelper.textContent = 'Material is required';
+  errorTile.appendChild(errorHelper);
+  statesGrid.appendChild(errorTile);
+
+  // Warning
+  const warnTile = createSelectDemo('Warning', 'Maple paint grade', 'is-warning');
+  const warnHelper = document.createElement('div');
+  warnHelper.className = 'kobos-input-helper is-warning';
+  warnHelper.textContent = 'Price updated — verify';
+  warnTile.appendChild(warnHelper);
+  statesGrid.appendChild(warnTile);
+
+  container.appendChild(statesGrid);
+
+  // 2. Option states
+  container.appendChild(createSectionHeading('Option states', '.kobos-option'));
+
+  const optionMenu = document.createElement('div');
+  optionMenu.className = 'kobos-menu';
+
+  const optionDemos = [
+    { label: 'Red Oak', caption: '$3.50/ft²' },
+    { label: 'Maple paint grade', caption: '$2.50/ft²', hover: true },
+    { label: 'Maple paint grade', caption: '$2.50/ft²', selected: true },
+    { label: 'Hickory', caption: 'price pending', disabled: true },
+    { label: 'Zebrawood', caption: '$22.25/ft² — rarewood', warning: true }
+  ];
+
+  optionDemos.forEach(item => {
+    const opt = document.createElement('div');
+    let cls = 'kobos-option';
+    if (item.hover) cls += ' is-hover';
+    if (item.selected) cls += ' is-selected';
+    if (item.disabled) cls += ' is-disabled';
+    if (item.warning) cls += ' is-warning';
+    opt.className = cls;
+
+    if (item.selected) {
+      const check = document.createElement('span');
+      check.innerHTML = validIconSVG;
+      check.style.color = 'var(--kobos-info-default)';
+      check.style.flexShrink = '0';
+      check.style.width = '16px';
+      check.style.height = '16px';
+      opt.appendChild(check);
+    }
+
+    const col = document.createElement('div');
+    const labelEl = document.createElement('div');
+    labelEl.className = 'kobos-option__label';
+    labelEl.textContent = item.label;
+    col.appendChild(labelEl);
+
+    const capEl = document.createElement('div');
+    capEl.className = 'kobos-option__caption';
+    capEl.textContent = item.caption;
+    col.appendChild(capEl);
+
+    opt.appendChild(col);
+    optionMenu.appendChild(opt);
+  });
+
+  container.appendChild(optionMenu);
+
+  // 3. Working dropdown demo
+  container.appendChild(createSectionHeading('Working dropdown demo', '.kobos-select'));
+
+  const interactiveTile = document.createElement('div');
+  interactiveTile.className = 'input-tile';
+
+  const selectWrapper = document.createElement('div');
+  selectWrapper.className = 'kobos-select';
+
+  const valueSpan = document.createElement('span');
+  valueSpan.className = 'kobos-select__value';
+  valueSpan.textContent = 'New';
+  selectWrapper.appendChild(valueSpan);
+
+  const chev = document.createElement('span');
+  chev.className = 'kobos-select__chevron';
+  chev.innerHTML = chevronDownSVG;
+  selectWrapper.appendChild(chev);
+
+  interactiveTile.appendChild(selectWrapper);
+
+  const interactiveMenu = document.createElement('div');
+  interactiveMenu.className = 'kobos-menu';
+  interactiveMenu.style.display = 'none';
+
+  const statusOptions = ['New', 'Paid', 'In Production', 'QC', 'Ready to Ship', 'Completed'];
+  statusOptions.forEach(status => {
+    const opt = document.createElement('div');
+    opt.className = 'kobos-option';
+    const lbl = document.createElement('div');
+    lbl.className = 'kobos-option__label';
+    lbl.textContent = status;
+    opt.appendChild(lbl);
+
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      valueSpan.textContent = status;
+      interactiveMenu.style.display = 'none';
+      selectWrapper.classList.remove('is-open');
+      showToast('Selected: ' + status);
+    });
+
+    interactiveMenu.appendChild(opt);
+  });
+
+  interactiveTile.appendChild(interactiveMenu);
+
+  selectWrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = interactiveMenu.style.display === 'block';
+    if (isOpen) {
+      interactiveMenu.style.display = 'none';
+      selectWrapper.classList.remove('is-open');
+    } else {
+      interactiveMenu.style.display = 'block';
+      selectWrapper.classList.add('is-open');
+    }
+  });
+
+  // Click outside handler
+  const outsideClickHandler = (e) => {
+    if (!interactiveTile.contains(e.target)) {
+      interactiveMenu.style.display = 'none';
+      selectWrapper.classList.remove('is-open');
+    }
+  };
+  document.addEventListener('click', outsideClickHandler);
+
+  const intLabel = document.createElement('div');
+  intLabel.className = 'input-label';
+  intLabel.textContent = 'Order status';
+  interactiveTile.appendChild(intLabel);
+
+  container.appendChild(interactiveTile);
+
+  // 4. Business examples
+  container.appendChild(createSectionHeading('Business examples', '.kobos-select'));
+
+  const bizRow = document.createElement('div');
+  bizRow.style.display = 'flex';
+  bizRow.style.gap = '16px';
+  bizRow.style.flexWrap = 'wrap';
+
+  const bizExamples = [
+    { label: 'Status: In Production', value: 'In Production' },
+    { label: 'Dealer: Anderson Cabinets', value: 'Anderson Cabinets' },
+    { label: 'Material: Maple paint grade', value: 'Maple paint grade' }
+  ];
+
+  bizExamples.forEach(ex => {
+    const tile = document.createElement('div');
+    tile.style.flex = '1';
+    tile.style.minWidth = '200px';
+
+    const sel = document.createElement('div');
+    sel.className = 'kobos-select';
+
+    const val = document.createElement('span');
+    val.className = 'kobos-select__value';
+    val.textContent = ex.value;
+    sel.appendChild(val);
+
+    const ch = document.createElement('span');
+    ch.className = 'kobos-select__chevron';
+    ch.innerHTML = chevronDownSVG;
+    sel.appendChild(ch);
+
+    tile.appendChild(sel);
+
+    const cap = document.createElement('div');
+    cap.className = 'input-label';
+    cap.textContent = ex.label;
+    tile.appendChild(cap);
+
+    bizRow.appendChild(tile);
+  });
+
+  container.appendChild(bizRow);
+}
+
 function renderBadges(container) {
   container.innerHTML = '<h1>Badges &amp; Chips</h1>';
 
@@ -2187,6 +2479,7 @@ const renderers = {
   'spacing': renderSpacing,
   'buttons': renderButtons,
   'inputs': renderInputs,
+  'select': renderSelect,
   'badges': renderBadges,
   'cards': renderCards
 };
