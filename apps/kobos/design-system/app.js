@@ -102,6 +102,7 @@ const navItems = [
   { key: 'datetime', label: 'Date & Time' },
   { key: 'badges', label: 'Badges & Chips' },
   { key: 'cards', label: 'Cards' },
+  { key: 'tables', label: 'Tables' },
   { key: 'alerts', label: 'Alerts' }
 ];
 
@@ -191,6 +192,12 @@ const lockSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
 const plugSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8"/><path d="M6 8h12"/></svg>`;
 
 const xIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+const chevronUpSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>`;
+
+const funnelSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>`;
+
+const moreHorizontalSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -4715,6 +4722,1059 @@ function renderAlerts(container) {
   container.appendChild(rulesList);
 }
 
+function renderTables(container) {
+  container.innerHTML = '<h1>Tables</h1>';
+
+  // Section 1: Table anatomy & component overview
+  container.appendChild(createSectionHeading('Table anatomy & component overview', '.kobos-table'));
+
+  const twoCol = document.createElement('div');
+  twoCol.style.display = 'grid';
+  twoCol.style.gridTemplateColumns = '1fr 1fr';
+  twoCol.style.gap = '32px';
+  twoCol.style.marginBottom = '24px';
+
+  const leftCol = document.createElement('div');
+  leftCol.innerHTML = `
+    <div style="font:var(--kobos-type-body-semibold);margin-bottom:8px;">Parts</div>
+    <ul style="margin:0;padding-left:20px;line-height:1.6;font:var(--kobos-type-body-small);">
+      <li><strong>Toolbar</strong> — search, filters, column menu, export</li>
+      <li><strong>Header Row</strong> — column labels, sort, filter affordances</li>
+      <li><strong>Body Rows</strong> — data rows with states</li>
+      <li><strong>Cells</strong> — typed content (id, status, currency, etc.)</li>
+      <li><strong>Row Selection</strong> — checkbox column + bulk bar</li>
+      <li><strong>Bulk Action Bar</strong> — actions on selected rows</li>
+      <li><strong>Row Actions Menu</strong> — per-row overflow menu</li>
+      <li><strong>Expandable Row</strong> — detail panel below row</li>
+      <li><strong>Pagination</strong> — page navigation + count</li>
+      <li><strong>Column Menu</strong> — show/hide columns</li>
+    </ul>
+  `;
+
+  const rightCol = document.createElement('div');
+  rightCol.innerHTML = `
+    <div style="font:var(--kobos-type-body-semibold);margin-bottom:8px;">Row states</div>
+    <ul style="margin:0;padding-left:20px;line-height:1.6;font:var(--kobos-type-body-small);">
+      <li><strong>Default</strong> — normal data row</li>
+      <li><strong>Hover</strong> — mouse over affordance</li>
+      <li><strong>Selected</strong> — active multi-select</li>
+      <li><strong>Disabled</strong> — unavailable, muted</li>
+      <li><strong>Warning</strong> — non-blocking issue</li>
+      <li><strong>Error</strong> — blocking problem</li>
+      <li><strong>Needs-Review</strong> — human attention required</li>
+      <li><strong>Locked</strong> — protected, view-only</li>
+      <li><strong>Updated</strong> — recently changed</li>
+      <li><strong>Loading</strong> — skeleton placeholders</li>
+    </ul>
+  `;
+
+  twoCol.appendChild(leftCol);
+  twoCol.appendChild(rightCol);
+  container.appendChild(twoCol);
+
+  // Section 2: Column headers
+  container.appendChild(createSectionHeading('Column headers', '.kobos-th'));
+
+  const headerDemoWrap = document.createElement('div');
+  headerDemoWrap.style.display = 'flex';
+  headerDemoWrap.style.flexWrap = 'wrap';
+  headerDemoWrap.style.gap = '12px';
+  headerDemoWrap.style.marginBottom = '24px';
+
+  const headerTypes = [
+    { label: 'Default', cls: '' },
+    { label: 'Sortable', cls: 'is-sortable' },
+    { label: 'Sorted ASC', cls: 'is-sortable is-asc' },
+    { label: 'Sorted DESC', cls: 'is-sortable is-desc' },
+    { label: 'Filterable', cls: 'is-filterable' },
+    { label: 'Filter active', cls: 'is-filterable is-filter-active' },
+    { label: 'Numeric', cls: 'is-numeric' },
+    { label: 'Checkbox', cls: 'is-checkbox' },
+    { label: 'Actions', cls: 'is-actions' }
+  ];
+
+  headerTypes.forEach(h => {
+    const card = document.createElement('div');
+    card.style.border = '1px solid var(--kobos-border-subtle)';
+    card.style.borderRadius = '6px';
+    card.style.padding = '8px';
+    card.style.minWidth = '120px';
+
+    const miniTable = document.createElement('table');
+    miniTable.className = 'kobos-table';
+    miniTable.style.width = '100%';
+    miniTable.style.fontSize = '12px';
+
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = `kobos-th ${h.cls}`.trim();
+    th.textContent = h.label;
+
+    if (h.cls.includes('sortable')) {
+      const icon = document.createElement('span');
+      icon.className = 'sort-icon';
+      icon.innerHTML = h.cls.includes('asc') ? chevronUpSVG : chevronDownSVG;
+      th.appendChild(icon);
+    }
+    if (h.cls.includes('filterable')) {
+      const icon = document.createElement('span');
+      icon.className = 'filter-icon';
+      icon.innerHTML = funnelSVG;
+      th.appendChild(icon);
+    }
+
+    tr.appendChild(th);
+    thead.appendChild(tr);
+    miniTable.appendChild(thead);
+    card.appendChild(miniTable);
+
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.style.marginTop = '4px';
+    cap.textContent = h.label;
+    card.appendChild(cap);
+
+    headerDemoWrap.appendChild(card);
+  });
+
+  container.appendChild(headerDemoWrap);
+
+  // Section 3: Table cells
+  container.appendChild(createSectionHeading('Table cells', '.kobos-td'));
+
+  const cellDemoWrap = document.createElement('div');
+  cellDemoWrap.style.display = 'flex';
+  cellDemoWrap.style.flexWrap = 'wrap';
+  cellDemoWrap.style.gap = '12px';
+  cellDemoWrap.style.marginBottom = '24px';
+
+  const cellTypes = [
+    { label: 'Text', content: 'Maple paint grade', cls: '' },
+    { label: 'ID / Technical', content: 'ORD-1042', cls: 'id' },
+    { label: 'Status badge', content: '<span class="kobos-badge kobos-badge--info">In-Production</span>', cls: '' },
+    { label: 'Numeric', content: '284', cls: 'numeric' },
+    { label: 'Currency', content: '$2,481.50', cls: 'currency' },
+    { label: 'Percentage', content: '72%', cls: 'percentage' },
+    { label: 'Date', content: 'Jul 15, 2026', cls: 'date' },
+    { label: 'User / Employee', content: '<div class="user"><div class="avatar">SK</div><span>Sarah K.</span></div>', cls: 'user' },
+    { label: 'Entity + ID', content: '<div class="entity"><div class="entity-name">Anderson Cabinets</div><div class="entity-id">DLR-014</div></div>', cls: 'entity' },
+    { label: 'Actions / overflow', content: '<button class="kobos-icon-btn" style="width:28px;height:28px;">⋯</button>', cls: 'actions' },
+    { label: 'Locked cell', content: '🔒 Approved cost', cls: 'locked' },
+    { label: 'Warning', content: 'Payment pending', cls: 'warning' },
+    { label: 'Error', content: 'Parse failed', cls: 'error' },
+    { label: 'Updated recently', content: '2 min ago', cls: 'updated' }
+  ];
+
+  cellTypes.forEach(c => {
+    const card = document.createElement('div');
+    card.style.border = '1px solid var(--kobos-border-subtle)';
+    card.style.borderRadius = '6px';
+    card.style.padding = '8px';
+    card.style.minWidth = '140px';
+
+    const miniTable = document.createElement('table');
+    miniTable.className = 'kobos-table';
+    miniTable.style.width = '100%';
+    miniTable.style.fontSize = '12px';
+
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.className = `kobos-td ${c.cls}`.trim();
+    td.innerHTML = c.content;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    miniTable.appendChild(tbody);
+    card.appendChild(miniTable);
+
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.style.marginTop = '4px';
+    cap.textContent = c.label;
+    card.appendChild(cap);
+
+    cellDemoWrap.appendChild(card);
+  });
+
+  container.appendChild(cellDemoWrap);
+
+  // Section 4: Table rows
+  container.appendChild(createSectionHeading('Table rows', '.kobos-tr'));
+
+  const rowDemoWrap = document.createElement('div');
+  rowDemoWrap.style.display = 'flex';
+  rowDemoWrap.style.flexDirection = 'column';
+  rowDemoWrap.style.gap = '12px';
+  rowDemoWrap.style.marginBottom = '24px';
+
+  const rowStates = [
+    { label: 'Default', state: '' },
+    { label: 'Hover', state: 'is-hover' },
+    { label: 'Selected (checkbox checked)', state: 'is-selected' },
+    { label: 'Disabled', state: 'is-disabled' },
+    { label: 'Warning ("payment pending")', state: 'is-warning' },
+    { label: 'Error ("parse failed")', state: 'is-error' },
+    { label: 'Needs Review', state: 'is-needs-review' },
+    { label: 'Locked ("approved cost")', state: 'is-locked' },
+    { label: 'Updated recently', state: 'is-updated' },
+    { label: 'Loading (skeleton)', state: 'is-loading' }
+  ];
+
+  rowStates.forEach(r => {
+    const card = document.createElement('div');
+    card.style.border = '1px solid var(--kobos-border-subtle)';
+    card.style.borderRadius = '6px';
+    card.style.padding = '8px';
+
+    const miniTable = document.createElement('table');
+    miniTable.className = 'kobos-table';
+    miniTable.style.width = '100%';
+    miniTable.style.fontSize = '12px';
+
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    tr.className = `kobos-tr ${r.state}`.trim();
+
+    // checkbox
+    const tdCheck = document.createElement('td');
+    tdCheck.className = 'kobos-td is-checkbox';
+    tdCheck.style.width = '48px';
+    tdCheck.style.textAlign = 'center';
+    if (r.state === 'is-selected') {
+      const cb = document.createElement('div');
+      cb.className = 'kobos-checkbox is-checked';
+      cb.innerHTML = `<span style="width:13px;height:13px;color:var(--kobos-text-inverse);">${checkboxCheckSVG}</span>`;
+      tdCheck.appendChild(cb);
+    } else if (r.state !== 'is-disabled') {
+      const cb = document.createElement('div');
+      cb.className = 'kobos-checkbox';
+      tdCheck.appendChild(cb);
+    }
+    tr.appendChild(tdCheck);
+
+    // order
+    const tdOrder = document.createElement('td');
+    tdOrder.className = 'kobos-td entity';
+    tdOrder.innerHTML = r.state === 'is-loading' 
+      ? '<div class="kobos-skeleton" style="width:80px;"></div>' 
+      : '<div class="entity-name">ORD-1042</div><div class="entity-id">Anderson Cabinets</div>';
+    tr.appendChild(tdOrder);
+
+    // status
+    const tdStatus = document.createElement('td');
+    tdStatus.className = 'kobos-td';
+    tdStatus.innerHTML = r.state === 'is-loading' 
+      ? '<div class="kobos-skeleton" style="width:70px;"></div>' 
+      : '<span class="kobos-badge kobos-badge--info">In-Production</span>';
+    tr.appendChild(tdStatus);
+
+    // material
+    const tdMat = document.createElement('td');
+    tdMat.className = 'kobos-td';
+    tdMat.textContent = r.state === 'is-loading' ? '' : 'Maple paint grade';
+    if (r.state === 'is-loading') tdMat.innerHTML = '<div class="kobos-skeleton" style="width:90px;"></div>';
+    tr.appendChild(tdMat);
+
+    // cost
+    const tdCost = document.createElement('td');
+    tdCost.className = 'kobos-td currency';
+    tdCost.textContent = r.state === 'is-loading' ? '' : '$2,481.50';
+    if (r.state === 'is-loading') tdCost.innerHTML = '<div class="kobos-skeleton" style="width:60px;"></div>';
+    tr.appendChild(tdCost);
+
+    tbody.appendChild(tr);
+    miniTable.appendChild(tbody);
+    card.appendChild(miniTable);
+
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.style.marginTop = '4px';
+    cap.textContent = r.label;
+    card.appendChild(cap);
+
+    rowDemoWrap.appendChild(card);
+  });
+
+  container.appendChild(rowDemoWrap);
+
+  // Section 5: Toolbar & bulk action bar
+  container.appendChild(createSectionHeading('Toolbar & bulk action bar', '.kobos-table-toolbar'));
+
+  // Default toolbar
+  const toolbarDefault = document.createElement('div');
+  toolbarDefault.className = 'kobos-table-toolbar';
+  toolbarDefault.innerHTML = `
+    <div class="toolbar-left">
+      <div class="kobos-input" style="width:220px;">
+        <span class="kobos-input__icon">${searchIconSVG}</span>
+        <input placeholder="Search orders..." value="">
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Columns</button>
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Export</button>
+    </div>
+  `;
+  container.appendChild(toolbarDefault);
+  const capT1 = document.createElement('div');
+  capT1.className = 'button-caption';
+  capT1.textContent = 'Toolbar Default';
+  container.appendChild(capT1);
+
+  // Search active
+  const toolbarSearch = document.createElement('div');
+  toolbarSearch.className = 'kobos-table-toolbar';
+  toolbarSearch.innerHTML = `
+    <div class="toolbar-left">
+      <div class="kobos-input is-focus" style="width:220px;">
+        <span class="kobos-input__icon">${searchIconSVG}</span>
+        <input placeholder="Search orders..." value="ORD-104">
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Columns</button>
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Export</button>
+    </div>
+  `;
+  container.appendChild(toolbarSearch);
+  const capT2 = document.createElement('div');
+  capT2.className = 'button-caption';
+  capT2.textContent = 'Toolbar Search-active';
+  container.appendChild(capT2);
+
+  // Filter applied
+  const toolbarFilter = document.createElement('div');
+  toolbarFilter.className = 'kobos-table-toolbar';
+  toolbarFilter.innerHTML = `
+    <div class="toolbar-left">
+      <div class="kobos-input" style="width:220px;">
+        <span class="kobos-input__icon">${searchIconSVG}</span>
+        <input placeholder="Search orders..." value="">
+      </div>
+      <span class="kobos-chip is-active">Status: In-Production</span>
+      <span class="kobos-chip">Dealer: Anderson</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Columns</button>
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Export</button>
+    </div>
+  `;
+  container.appendChild(toolbarFilter);
+  const capT3 = document.createElement('div');
+  capT3.className = 'button-caption';
+  capT3.textContent = 'Toolbar Filter-applied';
+  container.appendChild(capT3);
+
+  // Bulk bars
+  const bulk1 = document.createElement('div');
+  bulk1.className = 'kobos-bulk-bar';
+  bulk1.innerHTML = `
+    <span class="bulk-count">1 selected</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Export</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Lock</button>
+    <button class="kobos-btn kobos-btn--destructive kobos-btn--sm">Delete</button>
+  `;
+  container.appendChild(bulk1);
+  const capB1 = document.createElement('div');
+  capB1.className = 'button-caption';
+  capB1.textContent = 'Bulk actions — 1 row selected';
+  container.appendChild(capB1);
+
+  const bulk12 = document.createElement('div');
+  bulk12.className = 'kobos-bulk-bar';
+  bulk12.innerHTML = `
+    <span class="bulk-count">12 selected</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Export</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Lock</button>
+    <button class="kobos-btn kobos-btn--destructive kobos-btn--sm">Delete</button>
+  `;
+  container.appendChild(bulk12);
+  const capB2 = document.createElement('div');
+  capB2.className = 'button-caption';
+  capB2.textContent = 'Bulk actions — 12 rows selected';
+  container.appendChild(capB2);
+
+  const bulkLoading = document.createElement('div');
+  bulkLoading.className = 'kobos-bulk-bar';
+  bulkLoading.innerHTML = `
+    <span class="bulk-count">12 selected</span>
+    <span style="color:var(--kobos-text-muted);">Processing…</span>
+    <div class="kobos-skeleton" style="width:60px;height:20px;"></div>
+  `;
+  container.appendChild(bulkLoading);
+  const capB3 = document.createElement('div');
+  capB3.className = 'button-caption';
+  capB3.textContent = 'Bulk actions — Loading';
+  container.appendChild(capB3);
+
+  // Section 6: Row actions & expandable rows
+  container.appendChild(createSectionHeading('Row actions & expandable rows', '.kobos-row-actions'));
+
+  // Row actions default
+  const raWrap = document.createElement('div');
+  raWrap.style.marginBottom = '16px';
+  const raMenu = document.createElement('div');
+  raMenu.className = 'kobos-menu';
+  raMenu.style.position = 'relative';
+  raMenu.style.display = 'block';
+  raMenu.style.width = '160px';
+  raMenu.innerHTML = `
+    <div class="kobos-option"><div class="kobos-option__label">View order</div></div>
+    <div class="kobos-option"><div class="kobos-option__label">Edit</div></div>
+    <div class="kobos-option"><div class="kobos-option__label">Lock cost</div></div>
+    <div class="kobos-option"><div class="kobos-option__label">Request review</div></div>
+  `;
+  raWrap.appendChild(raMenu);
+  container.appendChild(raWrap);
+  const capRA1 = document.createElement('div');
+  capRA1.className = 'button-caption';
+  capRA1.textContent = 'Row actions default menu';
+  container.appendChild(capRA1);
+
+  // Role-limited
+  const raLimitedWrap = document.createElement('div');
+  raLimitedWrap.style.marginBottom = '16px';
+  const raLimited = document.createElement('div');
+  raLimited.className = 'kobos-menu';
+  raLimited.style.position = 'relative';
+  raLimited.style.display = 'block';
+  raLimited.style.width = '160px';
+  raLimited.innerHTML = `
+    <div class="kobos-option"><div class="kobos-option__label">View order</div></div>
+    <div class="kobos-option"><div class="kobos-option__label">Request review</div></div>
+    <div style="padding:4px 12px;font:var(--kobos-type-caption);color:var(--kobos-text-muted);">Role-limited</div>
+  `;
+  raLimitedWrap.appendChild(raLimited);
+  container.appendChild(raLimitedWrap);
+  const capRA2 = document.createElement('div');
+  capRA2.className = 'button-caption';
+  capRA2.textContent = 'Role-limited menu';
+  container.appendChild(capRA2);
+
+  // Expanded rows
+  container.appendChild(createSectionHeading('Expanded row states', '.kobos-expanded-row'));
+
+  const expSummary = document.createElement('div');
+  expSummary.className = 'kobos-expanded-row';
+  expSummary.innerHTML = `
+    <div class="expanded-summary">
+      <div class="detail-row"><span class="detail-label">Line items</span><span class="detail-value">12</span></div>
+      <div class="detail-row"><span class="detail-label">Total cost</span><span class="detail-value mono">$2,481.50</span></div>
+      <div class="detail-row"><span class="detail-label">Audit</span><span class="detail-value mono">QT-0048 → ORD-1042</span></div>
+    </div>
+  `;
+  container.appendChild(expSummary);
+  const capE1 = document.createElement('div');
+  capE1.className = 'button-caption';
+  capE1.textContent = 'Expanded — Summary';
+  container.appendChild(capE1);
+
+  const expLoading = document.createElement('div');
+  expLoading.className = 'kobos-expanded-row';
+  expLoading.innerHTML = `
+    <div class="expanded-loading">
+      <div class="kobos-skeleton" style="width:120px;"></div>
+      <div class="kobos-skeleton" style="width:180px;"></div>
+      <div class="kobos-skeleton" style="width:90px;"></div>
+    </div>
+  `;
+  container.appendChild(expLoading);
+  const capE2 = document.createElement('div');
+  capE2.className = 'button-caption';
+  capE2.textContent = 'Expanded — Loading';
+  container.appendChild(capE2);
+
+  const expError = document.createElement('div');
+  expError.className = 'kobos-expanded-row';
+  expError.innerHTML = `
+    <div class="expanded-error">Failed to load details — retry</div>
+  `;
+  container.appendChild(expError);
+  const capE3 = document.createElement('div');
+  capE3.className = 'button-caption';
+  capE3.textContent = 'Expanded — Error';
+  container.appendChild(capE3);
+
+  // Section 7: Pagination & column visibility
+  container.appendChild(createSectionHeading('Pagination & column visibility', '.kobos-table-pagination'));
+
+  // Default pagination
+  const pagDefault = document.createElement('div');
+  pagDefault.className = 'kobos-table-pagination';
+  pagDefault.innerHTML = `
+    <span class="page-info">Showing 1–25 of 284</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">‹</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">1</button>
+    <button class="kobos-btn kobos-btn--primary kobos-btn--sm">2</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">3</button>
+    <span style="color:var(--kobos-text-muted);">…</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">12</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">›</button>
+  `;
+  container.appendChild(pagDefault);
+  const capP1 = document.createElement('div');
+  capP1.className = 'button-caption';
+  capP1.textContent = 'Pagination Default';
+  container.appendChild(capP1);
+
+  // Compact
+  const pagCompact = document.createElement('div');
+  pagCompact.className = 'kobos-table-pagination';
+  pagCompact.innerHTML = `
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">‹</button>
+    <span style="font:var(--kobos-type-body-small);">Page 3 of 12</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">›</button>
+  `;
+  container.appendChild(pagCompact);
+  const capP2 = document.createElement('div');
+  capP2.className = 'button-caption';
+  capP2.textContent = 'Pagination Compact';
+  container.appendChild(capP2);
+
+  // Large count
+  const pagLarge = document.createElement('div');
+  pagLarge.className = 'kobos-table-pagination';
+  pagLarge.innerHTML = `
+    <span class="page-info">Showing 1–50 of 1,284</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">‹</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">1</button>
+    <button class="kobos-btn kobos-btn--primary kobos-btn--sm">2</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">3</button>
+    <span style="color:var(--kobos-text-muted);">…</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">26</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">›</button>
+  `;
+  container.appendChild(pagLarge);
+  const capP3 = document.createElement('div');
+  capP3.className = 'button-caption';
+  capP3.textContent = 'Pagination Large-count';
+  container.appendChild(capP3);
+
+  // Column menu
+  container.appendChild(createSectionHeading('Column menu', '.kobos-column-menu'));
+
+  const colMenuAll = document.createElement('div');
+  colMenuAll.className = 'kobos-menu';
+  colMenuAll.style.position = 'relative';
+  colMenuAll.style.display = 'block';
+  colMenuAll.style.width = '220px';
+  colMenuAll.style.marginBottom = '8px';
+  colMenuAll.innerHTML = `
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Order</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Status</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Material</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Cost</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Margin</div></div>
+  `;
+  container.appendChild(colMenuAll);
+  const capCM1 = document.createElement('div');
+  capCM1.className = 'button-caption';
+  capCM1.textContent = 'Column menu — All visible';
+  container.appendChild(capCM1);
+
+  const colMenuSome = document.createElement('div');
+  colMenuSome.className = 'kobos-menu';
+  colMenuSome.style.position = 'relative';
+  colMenuSome.style.display = 'block';
+  colMenuSome.style.width = '220px';
+  colMenuSome.innerHTML = `
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Order</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Status</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox" style="margin-right:8px;"></div><div class="kobos-option__label">Material</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox is-checked" style="margin-right:8px;"></div><div class="kobos-option__label">Cost</div></div>
+    <div class="kobos-option"><div class="kobos-checkbox" style="margin-right:8px;"></div><div class="kobos-option__label">Margin</div></div>
+  `;
+  container.appendChild(colMenuSome);
+  const capCM2 = document.createElement('div');
+  capCM2.className = 'button-caption';
+  capCM2.textContent = 'Column menu — Some hidden';
+  container.appendChild(capCM2);
+
+  // Section 8: Assembled table (interactive)
+  container.appendChild(createSectionHeading('Assembled table', '.kobos-table'));
+
+  const noteAssembled = document.createElement('div');
+  noteAssembled.style.font = 'var(--kobos-type-caption)';
+  noteAssembled.style.color = 'var(--kobos-text-muted)';
+  noteAssembled.style.marginBottom = '8px';
+  noteAssembled.textContent = 'Full table with toolbar · sorted headers · mixed row states · pagination';
+  container.appendChild(noteAssembled);
+
+  // Toolbar for assembled table
+  const assembledToolbar = document.createElement('div');
+  assembledToolbar.className = 'kobos-table-toolbar';
+  assembledToolbar.innerHTML = `
+    <div class="toolbar-left">
+      <div class="kobos-input" style="width:240px;" id="table-search">
+        <span class="kobos-input__icon">${searchIconSVG}</span>
+        <input placeholder="Search orders..." id="search-input">
+      </div>
+      <span class="kobos-chip">Status: In-Production</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm" id="columns-btn">Columns</button>
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm" id="export-btn">Export</button>
+    </div>
+  `;
+  container.appendChild(assembledToolbar);
+
+  // The table
+  const assembledTable = document.createElement('table');
+  assembledTable.className = 'kobos-table';
+
+  const assembledThead = document.createElement('thead');
+  const headerTr = document.createElement('tr');
+
+  const headers = [
+    { key: 'check', label: '', cls: 'is-checkbox' },
+    { key: 'order', label: 'Order', cls: 'is-sortable' },
+    { key: 'status', label: 'Status', cls: '' },
+    { key: 'material', label: 'Material', cls: '' },
+    { key: 'cost', label: 'Cost', cls: 'is-sortable is-numeric' },
+    { key: 'margin', label: 'Margin', cls: 'is-sortable is-numeric' },
+    { key: 'due', label: 'Due date', cls: 'is-sortable' },
+    { key: 'updated', label: 'Updated by', cls: '' },
+    { key: 'actions', label: '', cls: 'is-actions' }
+  ];
+
+  headers.forEach(h => {
+    const th = document.createElement('th');
+    th.className = `kobos-th ${h.cls}`.trim();
+    th.dataset.key = h.key;
+    th.innerHTML = h.label;
+    if (h.cls.includes('sortable')) {
+      const icon = document.createElement('span');
+      icon.className = 'sort-icon';
+      icon.innerHTML = chevronDownSVG;
+      th.appendChild(icon);
+    }
+    headerTr.appendChild(th);
+  });
+  assembledThead.appendChild(headerTr);
+  assembledTable.appendChild(assembledThead);
+
+  const assembledTbody = document.createElement('tbody');
+  assembledTable.appendChild(assembledTbody);
+
+  container.appendChild(assembledTable);
+
+  // Bulk bar (hidden initially)
+  const bulkBar = document.createElement('div');
+  bulkBar.className = 'kobos-bulk-bar';
+  bulkBar.style.display = 'none';
+  bulkBar.innerHTML = `
+    <span class="bulk-count" id="bulk-count">0 selected</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm" id="bulk-export">Export</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm" id="bulk-lock">Lock</button>
+    <button class="kobos-btn kobos-btn--destructive kobos-btn--sm" id="bulk-delete">Delete</button>
+  `;
+  container.appendChild(bulkBar);
+
+  // Pagination
+  const assembledPag = document.createElement('div');
+  assembledPag.className = 'kobos-table-pagination';
+  assembledPag.innerHTML = `
+    <span class="page-info">Showing 1–8 of 284</span>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">‹</button>
+    <button class="kobos-btn kobos-btn--primary kobos-btn--sm">1</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">2</button>
+    <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">›</button>
+  `;
+  container.appendChild(assembledPag);
+
+  // Sample data
+  let tableData = [
+    { id: 'ORD-1042', dealer: 'Anderson Cabinets', status: 'In-Production', material: 'Maple paint grade', cost: 2481.50, margin: 38, due: 'Jul 28, 2026', updated: 'Sarah K.', state: '' },
+    { id: 'ORD-1043', dealer: 'Summit Design', status: 'Needs-Review', material: 'Cherry', cost: 3100.00, margin: 25, due: 'Jul 15, 2026', updated: 'James R.', state: 'needs-review' },
+    { id: 'ORD-1041', dealer: 'Kitchen Outfitters', status: 'Paid', material: 'Poplar', cost: 1850.00, margin: 42, due: 'Jul 10, 2026', updated: 'Sarah K.', state: 'warning' },
+    { id: 'ORD-1044', dealer: 'Anderson Cabinets', status: 'In-Production', material: 'Maple paint grade', cost: 1240.00, margin: 31, due: 'Jul 30, 2026', updated: 'Mike T.', state: '' },
+    { id: 'ORD-1045', dealer: 'Summit Design', status: 'Failed', material: 'Walnut', cost: 920.00, margin: 18, due: 'Jul 12, 2026', updated: 'James R.', state: 'error' },
+    { id: 'ORD-1046', dealer: 'Kitchen Outfitters', status: 'In-Production', material: 'Oak', cost: 2750.00, margin: 35, due: 'Aug 02, 2026', updated: 'Sarah K.', state: 'updated' },
+    { id: 'ORD-1047', dealer: 'Anderson Cabinets', status: 'Locked', material: 'Maple paint grade', cost: 4200.00, margin: 29, due: 'Jul 25, 2026', updated: 'Admin', state: 'locked' },
+    { id: 'ORD-1048', dealer: 'Summit Design', status: 'In-Production', material: 'Cherry', cost: 1680.00, margin: 40, due: 'Jul 29, 2026', updated: 'Mike T.', state: '' }
+  ];
+
+  let selectedIds = new Set();
+  let currentSort = { key: null, dir: 'asc' };
+  let expandedRows = new Set();
+
+  function renderAssembledRows() {
+    assembledTbody.innerHTML = '';
+
+    let dataToRender = [...tableData];
+
+    // Apply simple sort if active
+    if (currentSort.key) {
+      dataToRender.sort((a, b) => {
+        let valA = a[currentSort.key];
+        let valB = b[currentSort.key];
+        if (currentSort.key === 'cost' || currentSort.key === 'margin') {
+          valA = parseFloat(valA);
+          valB = parseFloat(valB);
+        }
+        if (valA < valB) return currentSort.dir === 'asc' ? -1 : 1;
+        if (valA > valB) return currentSort.dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    dataToRender.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.className = `kobos-tr ${row.state === 'warning' ? 'is-warning' : row.state === 'error' ? 'is-error' : row.state === 'needs-review' ? 'is-needs-review' : row.state === 'locked' ? 'is-locked' : row.state === 'updated' ? 'is-updated' : ''}`.trim();
+      if (selectedIds.has(row.id)) tr.classList.add('is-selected');
+      if (row.state === 'locked' || row.state === 'error') tr.classList.add('is-disabled');
+
+      // checkbox
+      const tdCheck = document.createElement('td');
+      tdCheck.className = 'kobos-td is-checkbox';
+      tdCheck.style.width = '48px';
+      tdCheck.style.textAlign = 'center';
+      if (row.state !== 'locked' && row.state !== 'error') {
+        const cb = document.createElement('div');
+        cb.className = `kobos-checkbox ${selectedIds.has(row.id) ? 'is-checked' : ''}`;
+        if (selectedIds.has(row.id)) {
+          cb.innerHTML = `<span style="width:13px;height:13px;color:var(--kobos-text-inverse);">${checkboxCheckSVG}</span>`;
+        }
+        cb.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (selectedIds.has(row.id)) {
+            selectedIds.delete(row.id);
+          } else {
+            selectedIds.add(row.id);
+          }
+          updateSelection();
+          renderAssembledRows();
+        });
+        tdCheck.appendChild(cb);
+      }
+      tr.appendChild(tdCheck);
+
+      // order (entity)
+      const tdOrder = document.createElement('td');
+      tdOrder.className = 'kobos-td entity';
+      tdOrder.innerHTML = `
+        <div class="entity-name">${row.id}</div>
+        <div class="entity-id">${row.dealer}</div>
+      `;
+      // expand toggle on order cell
+      tdOrder.style.cursor = 'pointer';
+      tdOrder.addEventListener('click', () => {
+        if (row.state === 'locked' || row.state === 'error') return;
+        if (expandedRows.has(row.id)) {
+          expandedRows.delete(row.id);
+        } else {
+          expandedRows.add(row.id);
+        }
+        renderAssembledRows();
+      });
+      tr.appendChild(tdOrder);
+
+      // status
+      const tdStatus = document.createElement('td');
+      tdStatus.className = 'kobos-td';
+      let badgeClass = 'info';
+      if (row.status === 'Needs-Review') badgeClass = 'warning';
+      if (row.status === 'Failed') badgeClass = 'error';
+      if (row.status === 'Locked') badgeClass = 'brand';
+      tdStatus.innerHTML = `<span class="kobos-badge kobos-badge--${badgeClass}">${row.status}</span>`;
+      tr.appendChild(tdStatus);
+
+      // material
+      const tdMat = document.createElement('td');
+      tdMat.className = 'kobos-td';
+      tdMat.textContent = row.material;
+      tr.appendChild(tdMat);
+
+      // cost
+      const tdCost = document.createElement('td');
+      tdCost.className = 'kobos-td currency';
+      if (row.state === 'locked') {
+        tdCost.innerHTML = `🔒 <span style="color:var(--kobos-text-muted);">${row.cost.toLocaleString('en-US', {style:'currency', currency:'USD'})}</span>`;
+      } else {
+        tdCost.textContent = row.cost.toLocaleString('en-US', {style:'currency', currency:'USD'});
+      }
+      tr.appendChild(tdCost);
+
+      // margin
+      const tdMargin = document.createElement('td');
+      tdMargin.className = 'kobos-td percentage';
+      tdMargin.textContent = `${row.margin}%`;
+      tr.appendChild(tdMargin);
+
+      // due
+      const tdDue = document.createElement('td');
+      tdDue.className = 'kobos-td date';
+      tdDue.textContent = row.due;
+      tr.appendChild(tdDue);
+
+      // updated
+      const tdUpdated = document.createElement('td');
+      tdUpdated.className = 'kobos-td user';
+      tdUpdated.innerHTML = `<div class="avatar">${row.updated.split(' ').map(w => w[0]).join('')}</div><span>${row.updated}</span>`;
+      tr.appendChild(tdUpdated);
+
+      // actions
+      const tdActions = document.createElement('td');
+      tdActions.className = 'kobos-td actions';
+      const moreBtn = document.createElement('button');
+      moreBtn.className = 'kobos-icon-btn';
+      moreBtn.style.width = '28px';
+      moreBtn.style.height = '28px';
+      moreBtn.innerHTML = moreHorizontalSVG;
+      moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showRowActionsMenu(moreBtn, row);
+      });
+      tdActions.appendChild(moreBtn);
+      tr.appendChild(tdActions);
+
+      // click row for selection (except actions)
+      tr.addEventListener('click', (e) => {
+        if (e.target.closest('.kobos-td.actions') || row.state === 'locked' || row.state === 'error') return;
+        if (selectedIds.has(row.id)) {
+          selectedIds.delete(row.id);
+        } else {
+          selectedIds.add(row.id);
+        }
+        updateSelection();
+        renderAssembledRows();
+      });
+
+      assembledTbody.appendChild(tr);
+
+      // expanded row if open
+      if (expandedRows.has(row.id)) {
+        const expTr = document.createElement('tr');
+        expTr.className = 'kobos-expanded-row';
+        const expTd = document.createElement('td');
+        expTd.colSpan = 9;
+        expTd.innerHTML = `
+          <div class="detail-row"><span class="detail-label">Line items</span><span class="detail-value">12</span></div>
+          <div class="detail-row"><span class="detail-label">Cost breakdown</span><span class="detail-value mono">Material $1,820 · Labor $480 · Freight $181.50</span></div>
+          <div class="detail-row"><span class="detail-label">Audit log</span><span class="detail-value mono">Jun 30 14:22 — Sarah K. (updated lead time)</span></div>
+        `;
+        expTr.appendChild(expTd);
+        assembledTbody.appendChild(expTr);
+      }
+    });
+  }
+
+  function updateSelection() {
+    const countEl = bulkBar.querySelector('#bulk-count');
+    if (selectedIds.size > 0) {
+      bulkBar.style.display = 'flex';
+      countEl.textContent = `${selectedIds.size} selected`;
+    } else {
+      bulkBar.style.display = 'none';
+    }
+  }
+
+  function showRowActionsMenu(anchor, row) {
+    // remove any existing
+    document.querySelectorAll('.kobos-row-actions').forEach(el => el.remove());
+
+    const menu = document.createElement('div');
+    menu.className = 'kobos-menu kobos-row-actions';
+    menu.style.position = 'absolute';
+    menu.style.zIndex = '200';
+
+    const rect = anchor.getBoundingClientRect();
+    menu.style.top = `${rect.bottom + window.scrollY + 4}px`;
+    menu.style.left = `${rect.left + window.scrollX - 120}px`;
+
+    const options = row.state === 'locked' 
+      ? ['View order', 'Request review'] 
+      : ['View order', 'Edit', 'Lock cost', 'Request review'];
+
+    options.forEach(opt => {
+      const div = document.createElement('div');
+      div.className = 'kobos-option';
+      div.innerHTML = `<div class="kobos-option__label">${opt}</div>`;
+      div.addEventListener('click', () => {
+        menu.remove();
+        showToast(`${opt} — ${row.id}`);
+      });
+      menu.appendChild(div);
+    });
+
+    document.body.appendChild(menu);
+
+    const closeHandler = (e) => {
+      if (!menu.contains(e.target)) {
+        menu.remove();
+        document.removeEventListener('click', closeHandler);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', closeHandler), 0);
+  }
+
+  // Header sorting
+  headerTr.querySelectorAll('.kobos-th.is-sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      if (currentSort.key === key) {
+        currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.key = key;
+        currentSort.dir = 'asc';
+      }
+      // update visual
+      headerTr.querySelectorAll('.kobos-th').forEach(h => h.classList.remove('is-asc', 'is-desc'));
+      th.classList.add(currentSort.dir === 'asc' ? 'is-asc' : 'is-desc');
+      renderAssembledRows();
+    });
+  });
+
+  // Header checkbox (select all)
+  const headerCheckTh = headerTr.querySelector('.kobos-th.is-checkbox');
+  if (headerCheckTh) {
+    const headerCb = document.createElement('div');
+    headerCb.className = 'kobos-checkbox';
+    headerCheckTh.appendChild(headerCb);
+
+    headerCb.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const allSelectable = tableData.filter(r => r.state !== 'locked' && r.state !== 'error');
+      if (selectedIds.size === allSelectable.length) {
+        selectedIds.clear();
+      } else {
+        allSelectable.forEach(r => selectedIds.add(r.id));
+      }
+      updateSelection();
+      renderAssembledRows();
+    });
+  }
+
+  // Bulk actions
+  bulkBar.querySelector('#bulk-export').addEventListener('click', () => {
+    showToast(`Exported ${selectedIds.size} rows`);
+    selectedIds.clear();
+    updateSelection();
+    renderAssembledRows();
+  });
+  bulkBar.querySelector('#bulk-lock').addEventListener('click', () => {
+    showToast(`Locked ${selectedIds.size} rows`);
+    selectedIds.clear();
+    updateSelection();
+    renderAssembledRows();
+  });
+  bulkBar.querySelector('#bulk-delete').addEventListener('click', () => {
+    showToast(`Deleted ${selectedIds.size} rows`);
+    selectedIds.clear();
+    updateSelection();
+    renderAssembledRows();
+  });
+
+  // Search (simple filter demo)
+  const searchInput = assembledToolbar.querySelector('#search-input');
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase();
+    // For demo we just re-render with filter note; full filter would rebuild data
+    if (q) {
+      showToast('Search applied (demo)');
+    }
+    renderAssembledRows();
+  });
+
+  // Columns button (demo menu)
+  assembledToolbar.querySelector('#columns-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const menu = document.createElement('div');
+    menu.className = 'kobos-menu kobos-column-menu';
+    menu.style.position = 'absolute';
+    menu.style.zIndex = '200';
+    const rect = e.currentTarget.getBoundingClientRect();
+    menu.style.top = `${rect.bottom + window.scrollY + 4}px`;
+    menu.style.left = `${rect.left + window.scrollX}px`;
+
+    const cols = ['Order', 'Status', 'Material', 'Cost', 'Margin', 'Due date', 'Updated by'];
+    cols.forEach(col => {
+      const opt = document.createElement('div');
+      opt.className = 'kobos-option';
+      const cb = document.createElement('div');
+      cb.className = 'kobos-checkbox is-checked';
+      cb.style.marginRight = '8px';
+      opt.appendChild(cb);
+      const lbl = document.createElement('div');
+      lbl.className = 'kobos-option__label';
+      lbl.textContent = col;
+      opt.appendChild(lbl);
+      menu.appendChild(opt);
+    });
+    document.body.appendChild(menu);
+
+    const close = (ev) => {
+      if (!menu.contains(ev.target)) {
+        menu.remove();
+        document.removeEventListener('click', close);
+      }
+    };
+    setTimeout(() => document.addEventListener('click', close), 0);
+  });
+
+  // Export button
+  assembledToolbar.querySelector('#export-btn').addEventListener('click', () => {
+    showToast('Exported table (demo)');
+  });
+
+  // Initial render
+  renderAssembledRows();
+
+  // Loading table
+  container.appendChild(createSectionHeading('Table — Loading', '.kobos-table'));
+
+  const loadingTable = document.createElement('table');
+  loadingTable.className = 'kobos-table';
+  const loadingThead = assembledThead.cloneNode(true);
+  loadingTable.appendChild(loadingThead);
+  const loadingTbody = document.createElement('tbody');
+
+  for (let i = 0; i < 4; i++) {
+    const tr = document.createElement('tr');
+    tr.className = 'kobos-tr is-loading';
+    for (let j = 0; j < 9; j++) {
+      const td = document.createElement('td');
+      td.className = 'kobos-td';
+      td.innerHTML = '<div class="kobos-skeleton" style="width:70%;height:14px;"></div>';
+      tr.appendChild(td);
+    }
+    loadingTbody.appendChild(tr);
+  }
+  loadingTable.appendChild(loadingTbody);
+  container.appendChild(loadingTable);
+
+  // Section 9: States reference
+  container.appendChild(createSectionHeading('States reference', '.kobos-table'));
+
+  const rulesList = document.createElement('ul');
+  rulesList.style.marginLeft = '20px';
+  rulesList.style.paddingLeft = '0';
+  rulesList.style.lineHeight = '1.7';
+  rulesList.style.font = 'var(--kobos-type-body-small)';
+
+  const rules = [
+    'Table headers must be associated with cells in implementation.',
+    'Sort state must be communicated via text, not icon alone.',
+    'Row selection must be keyboard accessible.',
+    'Status must not rely on color alone — include text labels.',
+    'Locked/disabled rows must show text or icon indicator.',
+    'Pagination controls must have accessible labels in implementation.',
+    'Comfortable density: customer/dealer-facing pages.',
+    'Compact density: admin data tables (default for KOBOS admin).',
+    'Dense density: production queues, audit logs.',
+    'Do not reduce line height below 1.4 for dense tables.'
+  ];
+
+  rules.forEach(rule => {
+    const li = document.createElement('li');
+    li.textContent = rule;
+    rulesList.appendChild(li);
+  });
+
+  container.appendChild(rulesList);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -4729,6 +5789,7 @@ const renderers = {
   'datetime': renderDateTime,
   'badges': renderBadges,
   'cards': renderCards,
+  'tables': renderTables,
   'alerts': renderAlerts
 };
 
