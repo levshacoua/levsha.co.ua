@@ -51,6 +51,39 @@
     </div>
 
     <div id="canvas"></div>
+    <button id="add-global-btn" class="floating-add-btn">+ Add</button>
+    <div id="add-modal" class="modal">
+      <div class="modal-content">
+        <h2>Add Node / Intent</h2>
+        <form id="intent-form">
+          <div class="form-group">
+            <label for="intent-title">Title <span style="color: var(--atlas-error)">*</span></label>
+            <input type="text" id="intent-title" required placeholder="Feature or node title">
+          </div>
+          <div class="form-group">
+            <label for="intent-group">Group</label>
+            <select id="intent-group">
+              <option value="erp">erp</option>
+              <option value="api">api</option>
+              <option value="mcp">mcp</option>
+              <option value="web">web</option>
+              <option value="entity">entity</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="intent-note">Note (optional)</label>
+            <textarea id="intent-note" placeholder="Additional details..."></textarea>
+          </div>
+          <div id="intent-relates" class="relates-line"></div>
+          <div class="form-actions">
+            <button type="button" id="intent-cancel">Cancel</button>
+            <button type="button" id="intent-copy">Copy</button>
+            <button type="submit">Send to Lefty's Brain</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="toast"></div>
   </div>
 
   <script src="atlas.js"></script>

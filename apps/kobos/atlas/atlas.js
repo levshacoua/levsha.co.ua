@@ -1,3 +1,6 @@
+const BOT_USERNAME = 'leftys_brain_bot';
+let currentParent = null;
+
 async function deriveKey(password, salt) {
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -164,6 +167,19 @@ function renderGraph(graph) {
       </div>
     `;
 
+    const header = nodeEl.querySelector('.node-header');
+    if (header) {
+      const addUnder = document.createElement('span');
+      addUnder.className = 'add-under-btn';
+      addUnder.textContent = '+';
+      addUnder.setAttribute('aria-label', 'Add under this node');
+      addUnder.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showAddForm(node);
+      });
+      header.appendChild(addUnder);
+    }
+
     nodeEl.addEventListener("click", () => {
       const existing = nodeEl.querySelector(".expanded-content");
       if (existing) {
@@ -264,8 +280,122 @@ function renderGraph(graph) {
   updateTransform();
 }
 
+function showAddForm(parentNode = null) {
+  const modal = document.getElementById('add-modal');
+  const titleInput = document.getElementById('intent-title');
+  const groupSelect = document.getElementById('intent-group');
+  const noteInput = document.getElementById('intent-note');
+  const relatesEl = document.getElementById('intent-relates');
+  if (!modal || !titleInput || !groupSelect) return;
+
+  currentParent = parentNode;
+
+  titleInput.value = '';
+  groupSelect.value = parentNode ? parentNode.group : 'web';
+  if (noteInput) noteInput.value = '';
+
+  if (relatesEl) {
+    if (parentNode) {
+      relatesEl.innerHTML = `relates to: <strong>${parentNode.label}</strong>`;
+      relatesEl.style.display = 'block';
+    } else {
+      relatesEl.style.display = 'none';
+      relatesEl.innerHTML = '';
+    }
+  }
+
+  modal.style.display = 'flex';
+  titleInput.focus();
+}
+
+function buildIntent() {
+  const titleInput = document.getElementById('intent-title');
+  const groupSelect = document.getElementById('intent-group');
+  const noteInput = document.getElementById('intent-note');
+  if (!titleInput || !groupSelect) return null;
+
+  const title = titleInput.value.trim();
+  if (!title) return null;
+
+  const group = groupSelect.value;
+  const note = noteInput ? noteInput.value.trim() : '';
+
+  let intent = `#TASK KOBOS Atlas add-node "${title}" group=${group}`;
+  if (currentParent && currentParent.id) {
+    intent += ` under=${currentParent.id}`;
+  }
+  if (note) {
+    intent += ` — ${note}`;
+  }
+  return intent;
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 1800);
+}
+
+function copyToClipboard(text) {
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copied');
+  }).catch(() => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    showToast('Copied');
+  });
+}
+
 // Wire up password gate
 document.getElementById("unlock-btn").addEventListener("click", unlock);
 document.getElementById("password-input").addEventListener("keypress", e => {
   if (e.key === "Enter") unlock();
 });
+
+// Add intent UI
+const addGlobalBtn = document.getElementById('add-global-btn');
+if (addGlobalBtn) {
+  addGlobalBtn.addEventListener('click', () => showAddForm(null));
+}
+
+const modalEl = document.getElementById('add-modal');
+const intentForm = document.getElementById('intent-form');
+const cancelBtn = document.getElementById('intent-cancel');
+const copyBtn = document.getElementById('intent-copy');
+
+if (cancelBtn && modalEl) {
+  cancelBtn.addEventListener('click', () => {
+    modalEl.style.display = 'none';
+  });
+}
+
+if (copyBtn) {
+  copyBtn.addEventListener('click', () => {
+    const intentText = buildIntent();
+    if (intentText) {
+      copyToClipboard(intentText);
+    }
+  });
+}
+
+if (intentForm && modalEl) {
+  intentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const intentText = buildIntent();
+    if (intentText) {
+      const encoded = encodeURIComponent(intentText);
+      window.open(`https://t.me/${BOT_USERNAME}?text=${encoded}`, '_blank');
+      showToast("Sent to Lefty's Brain");
+      modalEl.style.display = 'none';
+    }
+  });
+}
