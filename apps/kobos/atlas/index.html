@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain Atlas — LevSha</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <link rel="stylesheet" href="atlas.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Roboto:wght@300&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>Brain Atlas</h1>
+      <p>LevSha.co.ua — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+      <button id="unlock-btn">Unlock</button>
+      <div id="error-msg">Incorrect password</div>
+    </div>
+  </div>
+
+  <div id="app">
+    <header>
+      <h1>Brain Atlas — <span id="project-name"></span></h1>
+      <div id="generated"></div>
+    </header>
+
+    <div class="toolbar">
+      <div class="legend" id="legend">
+        <div class="legend-group">
+          <strong>Groups</strong>
+          <div>ERP — Enterprise Resource Planning</div>
+          <div>API — Services &amp; Integration</div>
+          <div>MCP — Message Coordination</div>
+          <div>Web — Frontend &amp; Admin</div>
+          <div>Entity — Core Data Models</div>
+        </div>
+        <div class="legend-group">
+          <strong>Status</strong>
+          <div><span class="status-chip built">built</span> Fully implemented</div>
+          <div><span class="status-chip partial">partial</span> In progress</div>
+          <div><span class="status-chip planned">planned</span> Future work</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="zoom-in" title="Zoom in">+</button>
+        <button id="zoom-out" title="Zoom out">−</button>
+        <button id="reset-view">Reset View</button>
+      </div>
+    </div>
+
+    <div id="canvas"></div>
+  </div>
+
+  <script src="atlas.js"></script>
+</body>
+</html>

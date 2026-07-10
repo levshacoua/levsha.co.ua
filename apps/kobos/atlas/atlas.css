@@ -1,0 +1,262 @@
+:root {
+  --atlas-bg: #0d0d0d;
+  --atlas-fg: #ffffff;
+  --atlas-accent: #00aced;
+  --atlas-line: rgba(0, 172, 237, 0.15);
+  --atlas-muted: #555555;
+  --atlas-partial: #b86a00;
+  --atlas-planned: #666666;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--atlas-bg);
+  color: var(--atlas-fg);
+  font-family: 'Inter', 'Roboto', -apple-system, "SF Pro Display", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 0 0 4px 0;
+}
+
+header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--atlas-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#generated {
+  font-size: 0.85rem;
+  color: var(--atlas-muted);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 20px;
+  gap: 20px;
+}
+
+.legend {
+  display: flex;
+  gap: 32px;
+  font-size: 0.8rem;
+}
+
+.legend-group {
+  line-height: 1.3;
+}
+
+.legend-group strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 400;
+  color: var(--atlas-accent);
+}
+
+.controls {
+  display: flex;
+  gap: 6px;
+}
+
+.controls button {
+  background: #1a1a1a;
+  color: var(--atlas-fg);
+  border: 1px solid var(--atlas-line);
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 300;
+}
+
+.controls button:hover {
+  border-color: var(--atlas-accent);
+}
+
+#canvas {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  overflow: hidden;
+  border: 1px solid var(--atlas-line);
+  background-image: 
+    linear-gradient(rgba(0, 172, 237, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 172, 237, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(0, 172, 237, 0.03) 20px, transparent 20px);
+  background-size: 20px 20px, 20px 20px, 100px 100px;
+}
+
+#password-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--atlas-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.gate-content {
+  background: #1a1a1a;
+  padding: 40px 48px;
+  border: 1px solid var(--atlas-line);
+  text-align: center;
+  max-width: 320px;
+}
+
+.gate-content h1 {
+  margin-bottom: 8px;
+}
+
+.gate-content p {
+  margin-bottom: 20px;
+  color: var(--atlas-muted);
+}
+
+#password-input {
+  width: 100%;
+  padding: 10px;
+  background: #111;
+  border: 1px solid var(--atlas-line);
+  color: var(--atlas-fg);
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+#unlock-btn {
+  background: var(--atlas-accent);
+  color: var(--atlas-bg);
+  border: none;
+  padding: 10px 24px;
+  font-family: inherit;
+  font-weight: 400;
+  cursor: pointer;
+  width: 100%;
+}
+
+#error-msg {
+  margin-top: 12px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  display: none;
+}
+
+#app {
+  display: none;
+}
+
+.node {
+  background: #1a1a1a;
+  border-radius: 3px;
+  padding: 8px 10px;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--atlas-line);
+  transition: border-color 0.1s ease;
+}
+
+.node.built {
+  border-color: var(--atlas-accent);
+}
+
+.node.partial {
+  border-color: var(--atlas-partial);
+  border-style: dashed;
+}
+
+.node.planned {
+  border-color: var(--atlas-planned);
+  border-style: dashed;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.node-label {
+  flex: 1;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-chip {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.status-chip.built {
+  background: var(--atlas-accent);
+  color: var(--atlas-bg);
+}
+
+.status-chip.partial {
+  background: var(--atlas-partial);
+  color: #fff;
+}
+
+.status-chip.planned {
+  background: var(--atlas-planned);
+  color: var(--atlas-fg);
+}
+
+.task-badge {
+  background: var(--atlas-muted);
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  min-width: 14px;
+  text-align: center;
+}
+
+.expanded-content {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--atlas-line);
+  font-size: 11px;
+}
+
+.capabilities {
+  margin: 4px 0 6px;
+  padding-left: 14px;
+  list-style: disc;
+}
+
+.capabilities li {
+  margin-bottom: 1px;
+}
+
+.tasks {
+  font-size: 10px;
+  color: var(--atlas-muted);
+  display: flex;
+  gap: 10px;
+}
