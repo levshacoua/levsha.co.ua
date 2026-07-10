@@ -1526,3 +1526,214 @@ h2 {
   color: var(--kobos-text-primary);
   white-space: pre-wrap;
 }
+
+/* Date & Time */
+.kobos-datepicker,
+.kobos-timepicker,
+.kobos-leadtime-select {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background-color: var(--kobos-surface-default);
+  border: 1px solid var(--kobos-border-default);
+  border-radius: var(--kobos-radius-small-control);
+  padding: 0 var(--kobos-space-3);
+  gap: var(--kobos-space-2);
+  font: var(--kobos-type-body-regular);
+  color: var(--kobos-text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.kobos-datepicker:hover,
+.kobos-timepicker:hover,
+.kobos-leadtime-select:hover {
+  border-color: var(--kobos-border-strong);
+}
+
+.kobos-datepicker.is-open,
+.kobos-timepicker.is-open,
+.kobos-leadtime-select.is-open {
+  border-color: var(--kobos-info-default);
+  box-shadow: 0 0 0 1px var(--kobos-info-default);
+}
+
+.kobos-datepicker.is-disabled,
+.kobos-timepicker.is-disabled,
+.kobos-leadtime-select.is-disabled {
+  background-color: var(--kobos-surface-disabled);
+  color: var(--kobos-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.kobos-datepicker.is-error,
+.kobos-timepicker.is-error,
+.kobos-leadtime-select.is-error {
+  border-color: var(--kobos-danger-default);
+}
+
+.kobos-datepicker.is-warning,
+.kobos-timepicker.is-warning,
+.kobos-leadtime-select.is-warning {
+  border-color: var(--kobos-warning-default);
+}
+
+.kobos-datepicker .kobos-input__icon,
+.kobos-timepicker .kobos-input__icon,
+.kobos-leadtime-select .kobos-input__icon {
+  color: var(--kobos-text-muted);
+  flex-shrink: 0;
+}
+
+.kobos-calendar-popover {
+  background-color: var(--kobos-surface-default);
+  border: 1px solid var(--kobos-border-subtle);
+  border-radius: var(--kobos-radius-card);
+  box-shadow: var(--kobos-elevation-dropdown);
+  padding: var(--kobos-space-3);
+  width: 300px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+.kobos-calendar-popover .cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--kobos-space-2);
+}
+
+.kobos-calendar-popover .cal-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--kobos-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kobos-calendar-popover .cal-header .month-year {
+  font: var(--kobos-type-body-small-semibold);
+  color: var(--kobos-text-primary);
+}
+
+.kobos-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 36px);
+  gap: 4px;
+}
+
+.kobos-cal-weekday {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  text-align: center;
+}
+
+.kobos-cal-cell {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font: var(--kobos-type-body-small);
+  color: var(--kobos-text-primary);
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.kobos-cal-cell.is-today {
+  border: 1px solid var(--kobos-info-default);
+}
+
+.kobos-cal-cell.is-selected {
+  background-color: var(--kobos-brand-default);
+  color: var(--kobos-text-inverse);
+}
+
+.kobos-cal-cell.is-range-start,
+.kobos-cal-cell.is-range-end {
+  background-color: var(--kobos-brand-default);
+  color: var(--kobos-text-inverse);
+}
+
+.kobos-cal-cell.is-range-middle {
+  background-color: var(--kobos-info-subtle);
+  color: var(--kobos-text-primary);
+  border-radius: 0;
+}
+
+.kobos-cal-cell.is-disabled {
+  color: var(--kobos-text-disabled);
+  background-color: var(--kobos-surface-disabled);
+  cursor: not-allowed;
+}
+
+.kobos-cal-cell.is-holiday {
+  color: var(--kobos-text-disabled);
+  background-color: var(--kobos-surface-disabled);
+}
+
+.kobos-cal-cell.is-past-warning {
+  color: var(--kobos-warning-default);
+}
+
+.kobos-cal-cell.is-manual-review {
+  background-color: var(--kobos-warning-subtle);
+  color: var(--kobos-text-primary);
+}
+
+.kobos-cal-cell.is-loading {
+  opacity: 0.5;
+}
+
+.kobos-cal-cell.is-has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background-color: var(--kobos-info-default);
+  border-radius: 50%;
+}
+
+.kobos-time-menu {
+  width: 160px;
+  background-color: var(--kobos-surface-default);
+  border: 1px solid var(--kobos-border-subtle);
+  border-radius: var(--kobos-radius-small-control);
+  box-shadow: var(--kobos-elevation-dropdown);
+  padding: var(--kobos-space-1) 0;
+  margin-top: 4px;
+}
+
+.kobos-time-option {
+  display: flex;
+  align-items: center;
+  gap: var(--kobos-space-2);
+  padding: var(--kobos-space-2) var(--kobos-space-3);
+  cursor: pointer;
+  font: var(--kobos-type-body-small);
+}
+
+.kobos-time-option:hover {
+  background-color: var(--kobos-surface-hover);
+}
+
+.kobos-time-option.is-selected {
+  background-color: var(--kobos-surface-selected);
+}
+
+.kobos-time-option.is-selected::after {
+  content: '✓';
+  margin-left: auto;
+  color: var(--kobos-info-default);
+  font-size: 12px;
+}

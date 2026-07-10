@@ -99,6 +99,7 @@ const navItems = [
   { key: 'select', label: 'Select & Dropdown' },
   { key: 'checkbox', label: 'Checkbox, Radio & Switch' },
   { key: 'textarea', label: 'Textarea & Notes' },
+  { key: 'datetime', label: 'Date & Time' },
   { key: 'badges', label: 'Badges & Chips' },
   { key: 'cards', label: 'Cards' }
 ];
@@ -163,6 +164,14 @@ const searchIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height
 const chevronDownSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
 
 const checkboxCheckSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>`;
+
+const calendarIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+
+const clockIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+
+const chevronLeftSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>`;
+
+const chevronRightSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -3706,6 +3715,691 @@ function renderTextarea(container) {
   container.appendChild(list);
 }
 
+function renderDateTime(container) {
+  container.innerHTML = '<h1>Date & Time</h1>';
+
+  // Helper to create datepicker trigger
+  function createDatepickerTrigger(value = '', placeholder = 'Select date…', extraClasses = '') {
+    const trigger = document.createElement('div');
+    trigger.className = `kobos-datepicker ${extraClasses}`.trim();
+    const icon = document.createElement('span');
+    icon.className = 'kobos-input__icon';
+    icon.innerHTML = calendarIconSVG;
+    trigger.appendChild(icon);
+    const val = document.createElement('span');
+    val.className = 'kobos-select__value';
+    if (value) {
+      val.textContent = value;
+    } else {
+      val.textContent = placeholder;
+      val.style.color = 'var(--kobos-text-muted)';
+    }
+    trigger.appendChild(val);
+    const chev = document.createElement('span');
+    chev.className = 'kobos-select__chevron';
+    chev.innerHTML = chevronDownSVG;
+    trigger.appendChild(chev);
+    return trigger;
+  }
+
+  function createTimepickerTrigger(value = '', placeholder = 'Select time…', extraClasses = '') {
+    const trigger = document.createElement('div');
+    trigger.className = `kobos-timepicker ${extraClasses}`.trim();
+    const icon = document.createElement('span');
+    icon.className = 'kobos-input__icon';
+    icon.innerHTML = clockIconSVG;
+    trigger.appendChild(icon);
+    const val = document.createElement('span');
+    val.className = 'kobos-select__value';
+    if (value) {
+      val.textContent = value;
+    } else {
+      val.textContent = placeholder;
+      val.style.color = 'var(--kobos-text-muted)';
+    }
+    trigger.appendChild(val);
+    const chev = document.createElement('span');
+    chev.className = 'kobos-select__chevron';
+    chev.innerHTML = chevronDownSVG;
+    trigger.appendChild(chev);
+    return trigger;
+  }
+
+  function createLeadtimeSelect(value = '', extraClasses = '') {
+    const trigger = document.createElement('div');
+    trigger.className = `kobos-leadtime-select ${extraClasses}`.trim();
+    const val = document.createElement('span');
+    val.className = 'kobos-select__value';
+    val.textContent = value || 'Standard';
+    trigger.appendChild(val);
+    const chev = document.createElement('span');
+    chev.className = 'kobos-select__chevron';
+    chev.innerHTML = chevronDownSVG;
+    trigger.appendChild(chev);
+    return trigger;
+  }
+
+  function buildJulyCalendarGrid(mode = 'single', selectedDay = 15, rangeStart = 1, rangeEnd = 15) {
+    const grid = document.createElement('div');
+    grid.className = 'kobos-cal-grid';
+    const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    weekdays.forEach(d => {
+      const wd = document.createElement('div');
+      wd.className = 'kobos-cal-weekday';
+      wd.textContent = d;
+      grid.appendChild(wd);
+    });
+    const firstDay = new Date(2026, 6, 1).getDay();
+    for (let i = 0; i < firstDay; i++) {
+      grid.appendChild(document.createElement('div'));
+    }
+    for (let d = 1; d <= 31; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'kobos-cal-cell';
+      cell.textContent = d;
+      cell.dataset.day = d;
+      const dow = new Date(2026, 6, d).getDay();
+      const isWeekend = dow === 0 || dow === 6;
+      const isHoliday = d === 4;
+      const isToday = d === 16;
+      let isSel = false;
+      let isRS = false;
+      let isRE = false;
+      let isRM = false;
+      if (mode === 'single') {
+        isSel = d === selectedDay;
+      } else if (mode === 'range') {
+        isRS = d === rangeStart;
+        isRE = d === rangeEnd;
+        isRM = d > rangeStart && d < rangeEnd;
+      }
+      const isManRev = d === 22 || d === 23;
+      const isEvent = d === 18;
+      if (isToday) cell.classList.add('is-today');
+      if (isSel) cell.classList.add('is-selected');
+      if (isRS) cell.classList.add('is-range-start');
+      if (isRE) cell.classList.add('is-range-end');
+      if (isRM) cell.classList.add('is-range-middle');
+      if (isWeekend || isHoliday) {
+        cell.classList.add('is-disabled');
+        if (isHoliday) {
+          cell.classList.add('is-holiday');
+          cell.title = 'Holiday';
+        }
+      }
+      if (isManRev) cell.classList.add('is-manual-review');
+      if (isEvent) cell.classList.add('is-has-event');
+      grid.appendChild(cell);
+    }
+    return grid;
+  }
+
+  // Section 1: Date picker + open calendar
+  container.appendChild(createSectionHeading('Date picker + open calendar', '.kobos-datepicker'));
+
+  const sec1 = document.createElement('div');
+  sec1.style.display = 'grid';
+  sec1.style.gridTemplateColumns = '1fr 1fr 1fr';
+  sec1.style.gap = '24px';
+
+  // (a) Quote expiration date - INTERACTIVE
+  const colA = document.createElement('div');
+  const lblA = document.createElement('div');
+  lblA.className = 'field-label';
+  lblA.textContent = 'Quote expiration date';
+  colA.appendChild(lblA);
+
+  const triggerA = createDatepickerTrigger('Jul 15, 2026');
+  const wrapperA = document.createElement('div');
+  wrapperA.style.position = 'relative';
+  wrapperA.appendChild(triggerA);
+
+  const popoverA = document.createElement('div');
+  popoverA.className = 'kobos-calendar-popover';
+  popoverA.style.position = 'absolute';
+  popoverA.style.top = '100%';
+  popoverA.style.left = '0';
+  popoverA.style.zIndex = '100';
+  popoverA.style.display = 'none';
+
+  const headerA = document.createElement('div');
+  headerA.className = 'cal-header';
+  const prevA = document.createElement('button');
+  prevA.innerHTML = chevronLeftSVG;
+  const monthA = document.createElement('div');
+  monthA.className = 'month-year';
+  monthA.textContent = 'July 2026';
+  const nextA = document.createElement('button');
+  nextA.innerHTML = chevronRightSVG;
+  headerA.appendChild(prevA);
+  headerA.appendChild(monthA);
+  headerA.appendChild(nextA);
+  popoverA.appendChild(headerA);
+
+  const gridA = buildJulyCalendarGrid('single', 15);
+  popoverA.appendChild(gridA);
+  wrapperA.appendChild(popoverA);
+  colA.appendChild(wrapperA);
+
+  const capA = document.createElement('div');
+  capA.className = 'input-label';
+  capA.textContent = 'Single date selected · Jul 15';
+  colA.appendChild(capA);
+
+  // Interactive wiring
+  triggerA.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = popoverA.style.display === 'block';
+    if (isOpen) {
+      popoverA.style.display = 'none';
+      triggerA.classList.remove('is-open');
+    } else {
+      popoverA.style.display = 'block';
+      triggerA.classList.add('is-open');
+    }
+  });
+
+  gridA.querySelectorAll('.kobos-cal-cell').forEach(cell => {
+    const day = parseInt(cell.dataset.day, 10);
+    const disabled = cell.classList.contains('is-disabled');
+    if (!disabled) {
+      cell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const valSpan = triggerA.querySelector('.kobos-select__value');
+        valSpan.textContent = `Jul ${day}, 2026`;
+        valSpan.style.color = '';
+        gridA.querySelectorAll('.kobos-cal-cell').forEach(c => c.classList.remove('is-selected'));
+        cell.classList.add('is-selected');
+        popoverA.style.display = 'none';
+        triggerA.classList.remove('is-open');
+        showToast(`Date selected: Jul ${day}, 2026`);
+      });
+    }
+  });
+
+  // Click outside for this picker
+  document.addEventListener('click', (e) => {
+    if (!wrapperA.contains(e.target)) {
+      popoverA.style.display = 'none';
+      triggerA.classList.remove('is-open');
+    }
+  });
+
+  // (b) Report date range - static open range
+  const colB = document.createElement('div');
+  const lblB1 = document.createElement('div');
+  lblB1.className = 'field-label';
+  lblB1.textContent = 'Report date range';
+  colB.appendChild(lblB1);
+
+  const rangeWrap = document.createElement('div');
+  rangeWrap.style.display = 'flex';
+  rangeWrap.style.alignItems = 'center';
+  rangeWrap.style.gap = '8px';
+
+  const trigB1 = createDatepickerTrigger('Jul 1, 2026');
+  const arrow = document.createElement('span');
+  arrow.textContent = '→';
+  arrow.style.color = 'var(--kobos-text-muted)';
+  const trigB2 = createDatepickerTrigger('Jul 15, 2026');
+  rangeWrap.appendChild(trigB1);
+  rangeWrap.appendChild(arrow);
+  rangeWrap.appendChild(trigB2);
+  colB.appendChild(rangeWrap);
+
+  const popRange = document.createElement('div');
+  popRange.className = 'kobos-calendar-popover';
+  popRange.style.marginTop = '4px';
+
+  const hRange = document.createElement('div');
+  hRange.className = 'cal-header';
+  const pR = document.createElement('button');
+  pR.innerHTML = chevronLeftSVG;
+  const mR = document.createElement('div');
+  mR.className = 'month-year';
+  mR.textContent = 'July 2026';
+  const nR = document.createElement('button');
+  nR.innerHTML = chevronRightSVG;
+  hRange.appendChild(pR);
+  hRange.appendChild(mR);
+  hRange.appendChild(nR);
+  popRange.appendChild(hRange);
+
+  const gRange = buildJulyCalendarGrid('range', null, 1, 15);
+  popRange.appendChild(gRange);
+  colB.appendChild(popRange);
+
+  const capB = document.createElement('div');
+  capB.className = 'input-label';
+  capB.textContent = 'Date range Jul 1–15 · range highlight';
+  colB.appendChild(capB);
+
+  // (c) Trigger states
+  const colC = document.createElement('div');
+  const lblC = document.createElement('div');
+  lblC.className = 'field-label';
+  lblC.textContent = 'Trigger states';
+  colC.appendChild(lblC);
+
+  const emptyTrig = createDatepickerTrigger('', 'Select date…');
+  colC.appendChild(emptyTrig);
+
+  const filledTrig = createDatepickerTrigger('Jul 15, 2026');
+  colC.appendChild(filledTrig);
+
+  const warnTrig = createDatepickerTrigger('Jul 15, 2026', '', 'is-warning');
+  colC.appendChild(warnTrig);
+
+  const errTrig = createDatepickerTrigger('Jul 15, 2026', '', 'is-error');
+  colC.appendChild(errTrig);
+  const errHelp = document.createElement('div');
+  errHelp.className = 'kobos-input-helper is-error';
+  errHelp.textContent = 'End date cannot be before start date.';
+  colC.appendChild(errHelp);
+
+  const disTrig = createDatepickerTrigger('Jul 15, 2026', '', 'is-disabled');
+  colC.appendChild(disTrig);
+
+  sec1.appendChild(colA);
+  sec1.appendChild(colB);
+  sec1.appendChild(colC);
+  container.appendChild(sec1);
+
+  // Section 2: Calendar cell states
+  container.appendChild(createSectionHeading('Calendar cell states', '.kobos-cal-cell'));
+
+  const note2 = document.createElement('div');
+  note2.className = 'input-label';
+  note2.textContent = 'All 12 states · 36×36 · brand/default selected, info/subtle range, warning/subtle manual review';
+  container.appendChild(note2);
+
+  const statesRow = document.createElement('div');
+  statesRow.style.display = 'flex';
+  statesRow.style.gap = '12px';
+  statesRow.style.flexWrap = 'wrap';
+  statesRow.style.marginBottom = '16px';
+
+  const cellStates = [
+    { label: 'Default', cls: '', day: '15' },
+    { label: 'Today', cls: 'is-today', day: '16' },
+    { label: 'Selected', cls: 'is-selected', day: '15' },
+    { label: 'Range-start', cls: 'is-range-start', day: '1' },
+    { label: 'Range-middle', cls: 'is-range-middle', day: '5' },
+    { label: 'Range-end', cls: 'is-range-end', day: '15' },
+    { label: 'Disabled weekend', cls: 'is-disabled', day: '5' },
+    { label: 'Disabled holiday', cls: 'is-disabled is-holiday', day: '4' },
+    { label: 'Past warning', cls: 'is-past-warning', day: '10' },
+    { label: 'Manual review', cls: 'is-manual-review', day: '22' },
+    { label: 'Loading', cls: 'is-loading', day: '15' },
+    { label: 'Has event', cls: 'is-has-event', day: '18' }
+  ];
+
+  cellStates.forEach(st => {
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.flexDirection = 'column';
+    wrap.style.alignItems = 'center';
+    const cell = document.createElement('div');
+    cell.className = `kobos-cal-cell ${st.cls}`.trim();
+    cell.textContent = st.day;
+    wrap.appendChild(cell);
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.textContent = st.label;
+    wrap.appendChild(cap);
+    statesRow.appendChild(wrap);
+  });
+
+  container.appendChild(statesRow);
+
+  // Section 3: Time picker
+  container.appendChild(createSectionHeading('Time picker', '.kobos-timepicker'));
+
+  const timeNote = document.createElement('div');
+  timeNote.className = 'input-label';
+  timeNote.textContent = '12-hour AM/PM format · dropdown list · 30-min intervals · US operations';
+  container.appendChild(timeNote);
+
+  // Interactive open time picker
+  const timeWrap = document.createElement('div');
+  timeWrap.style.position = 'relative';
+  timeWrap.style.marginBottom = '8px';
+
+  const timeTrig = createTimepickerTrigger('9:00 AM');
+  timeWrap.appendChild(timeTrig);
+
+  const timeMenu = document.createElement('div');
+  timeMenu.className = 'kobos-time-menu';
+  timeMenu.style.position = 'absolute';
+  timeMenu.style.top = '100%';
+  timeMenu.style.left = '0';
+  timeMenu.style.zIndex = '100';
+  timeMenu.style.display = 'block'; // open for demo
+
+  const times = [];
+  for (let h = 8; h <= 18; h++) {
+    for (let m = 0; m < 60; m += 30) {
+      if (h === 18 && m > 0) break;
+      const hour = h > 12 ? h - 12 : h;
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const minStr = m === 0 ? '00' : '30';
+      times.push(`${hour}:${minStr} ${ampm}`);
+    }
+  }
+
+  times.forEach((t, idx) => {
+    const opt = document.createElement('div');
+    opt.className = 'kobos-time-option';
+    if (t === '9:00 AM') opt.classList.add('is-selected');
+    opt.textContent = t;
+    opt.addEventListener('click', () => {
+      const v = timeTrig.querySelector('.kobos-select__value');
+      v.textContent = t;
+      timeMenu.style.display = 'none';
+      timeTrig.classList.remove('is-open');
+      showToast('Time selected: ' + t);
+    });
+    timeMenu.appendChild(opt);
+  });
+
+  timeWrap.appendChild(timeMenu);
+  container.appendChild(timeWrap);
+
+  timeTrig.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = timeMenu.style.display === 'block';
+    timeMenu.style.display = open ? 'none' : 'block';
+    timeTrig.classList.toggle('is-open', !open);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!timeWrap.contains(e.target)) {
+      timeMenu.style.display = 'none';
+      timeTrig.classList.remove('is-open');
+    }
+  });
+
+  // Standalone time states
+  const timeStates = document.createElement('div');
+  timeStates.style.display = 'flex';
+  timeStates.style.flexDirection = 'column';
+  timeStates.style.gap = '8px';
+
+  const tFilled = createTimepickerTrigger('9:00 AM');
+  timeStates.appendChild(tFilled);
+
+  const tEmpty = createTimepickerTrigger('', 'Select a time…');
+  timeStates.appendChild(tEmpty);
+  const tEmptyHelp = document.createElement('div');
+  tEmptyHelp.className = 'kobos-input-helper';
+  tEmptyHelp.textContent = 'Select a time.';
+  timeStates.appendChild(tEmptyHelp);
+
+  const tErr = createTimepickerTrigger('9:00 AM', '', 'is-error');
+  timeStates.appendChild(tErr);
+  const tErrHelp = document.createElement('div');
+  tErrHelp.className = 'kobos-input-helper is-error';
+  tErrHelp.textContent = 'Invalid time — use 8:00 AM format';
+  timeStates.appendChild(tErrHelp);
+
+  const tDis = createTimepickerTrigger('9:00 AM', '', 'is-disabled');
+  timeStates.appendChild(tDis);
+
+  container.appendChild(timeStates);
+
+  // Section 4: Business-day due date picker
+  container.appendChild(createSectionHeading('Business-day due date picker', '.kobos-datepicker'));
+
+  const bizNote = document.createElement('div');
+  bizNote.className = 'input-label';
+  bizNote.textContent = 'business days only · weekends/holidays disabled · US format';
+  container.appendChild(bizNote);
+
+  const bizGrid = document.createElement('div');
+  bizGrid.style.display = 'grid';
+  bizGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(220px, 1fr))';
+  bizGrid.style.gap = '16px';
+
+  const bizFields = [
+    { label: 'Production due date', value: 'Jul 28, 2026', helper: '15 business days from payment confirmation.' },
+    { label: 'Past date', value: 'Jul 10, 2026', cls: 'is-warning', helper: 'Selected date is in the past.' },
+    { label: 'Weekend unavailable', value: 'Jul 19, 2026', cls: 'is-error', helper: 'Weekends are not production days.' },
+    { label: 'Manual review required', value: 'Jul 22, 2026', cls: 'is-warning', helper: 'Requested date requires manual review.' },
+    { label: 'Loading availability', value: 'Jul 30, 2026', cls: 'is-disabled', helper: 'Checking production availability…' },
+    { label: 'Quote expiration', value: 'Jul 15, 2026' }
+  ];
+
+  bizFields.forEach(f => {
+    const tile = document.createElement('div');
+    const fl = document.createElement('div');
+    fl.className = 'field-label';
+    fl.textContent = f.label;
+    tile.appendChild(fl);
+
+    const trig = createDatepickerTrigger(f.value, '', f.cls || '');
+    tile.appendChild(trig);
+
+    if (f.helper) {
+      const h = document.createElement('div');
+      h.className = 'kobos-input-helper' + (f.cls && f.cls.includes('error') ? ' is-error' : f.cls && f.cls.includes('warning') ? ' is-warning' : '');
+      h.textContent = f.helper;
+      tile.appendChild(h);
+    }
+    bizGrid.appendChild(tile);
+  });
+
+  container.appendChild(bizGrid);
+
+  // Section 5: Production lead time selector
+  container.appendChild(createSectionHeading('Production lead time selector', '.kobos-leadtime-select'));
+
+  const leadNote = document.createElement('div');
+  leadNote.className = 'input-label';
+  leadNote.textContent = 'controlled option list · surcharge preview · warning for manual review';
+  container.appendChild(leadNote);
+
+  // Open leadtime
+  const leadWrap = document.createElement('div');
+  leadWrap.style.position = 'relative';
+  leadWrap.style.marginBottom = '8px';
+
+  const leadTrig = createLeadtimeSelect('Standard');
+  leadWrap.appendChild(leadTrig);
+
+  const leadMenu = document.createElement('div');
+  leadMenu.className = 'kobos-menu';
+  leadMenu.style.position = 'absolute';
+  leadMenu.style.top = '100%';
+  leadMenu.style.left = '0';
+  leadMenu.style.zIndex = '100';
+  leadMenu.style.display = 'block';
+  leadMenu.style.width = '260px';
+
+  const leadOptions = [
+    { label: 'Standard', caption: 'No surcharge' },
+    { label: 'Rush (10 business days)', caption: '+ $200' },
+    { label: 'Expedited (5 business days)', caption: '+ $450' },
+    { label: 'Manual review', caption: 'admin required', warning: true }
+  ];
+
+  leadOptions.forEach(opt => {
+    const o = document.createElement('div');
+    o.className = 'kobos-option' + (opt.warning ? ' is-warning' : '');
+    const col = document.createElement('div');
+    const l = document.createElement('div');
+    l.className = 'kobos-option__label';
+    l.textContent = opt.label;
+    col.appendChild(l);
+    const c = document.createElement('div');
+    c.className = 'kobos-option__caption';
+    c.textContent = opt.caption;
+    col.appendChild(c);
+    o.appendChild(col);
+    leadMenu.appendChild(o);
+  });
+
+  leadWrap.appendChild(leadMenu);
+  container.appendChild(leadWrap);
+
+  // Standalone
+  const leadStd = createLeadtimeSelect('Standard');
+  container.appendChild(leadStd);
+  const leadStdHelp = document.createElement('div');
+  leadStdHelp.className = 'kobos-input-helper';
+  leadStdHelp.textContent = 'No surcharge.';
+  container.appendChild(leadStdHelp);
+
+  const leadMan = createLeadtimeSelect('Manual review', 'is-warning');
+  container.appendChild(leadMan);
+  const leadManHelp = document.createElement('div');
+  leadManHelp.className = 'kobos-input-helper is-warning';
+  leadManHelp.textContent = 'Outside automatic rules — admin required.';
+  container.appendChild(leadManHelp);
+
+  // Section 6: Production Scheduling
+  container.appendChild(createSectionHeading('Production Scheduling', '.kobos-card'));
+
+  const schedCard = document.createElement('div');
+  schedCard.className = 'kobos-card';
+
+  const schedTitle = document.createElement('div');
+  schedTitle.className = 'kobos-card__title';
+  schedTitle.textContent = 'Production Scheduling';
+  schedCard.appendChild(schedTitle);
+
+  const schedSub = document.createElement('div');
+  schedSub.className = 'kobos-card__subtitle';
+  schedSub.textContent = 'Order #1042 · Anderson Cabinets · Jul 2026';
+  schedCard.appendChild(schedSub);
+
+  const schedDiv = document.createElement('div');
+  schedDiv.className = 'kobos-card__divider';
+  schedCard.appendChild(schedDiv);
+
+  // row1
+  const row1 = document.createElement('div');
+  row1.style.display = 'grid';
+  row1.style.gridTemplateColumns = 'repeat(auto-fill, minmax(160px, 1fr))';
+  row1.style.gap = '12px';
+  row1.style.marginBottom = '12px';
+
+  const row1Fields = [
+    { label: 'Payment confirmed', value: 'Jul 6, 2026' },
+    { label: 'Production due date', value: 'Jul 28, 2026', helper: '15 business days' },
+    { label: 'QC target', value: 'Jul 30, 2026' },
+    { label: 'Production lead time', value: 'Rush (10 business days)', isLead: true, helper: '+ $200 surcharge.' },
+    { label: 'Shipping target date', value: 'Aug 3, 2026' }
+  ];
+
+  row1Fields.forEach(f => {
+    const fld = document.createElement('div');
+    const fl = document.createElement('div');
+    fl.className = 'field-label';
+    fl.textContent = f.label;
+    fld.appendChild(fl);
+    let trig;
+    if (f.isLead) {
+      trig = createLeadtimeSelect(f.value);
+    } else {
+      trig = createDatepickerTrigger(f.value);
+    }
+    fld.appendChild(trig);
+    if (f.helper) {
+      const h = document.createElement('div');
+      h.className = 'kobos-input-helper';
+      h.textContent = f.helper;
+      fld.appendChild(h);
+    }
+    row1.appendChild(fld);
+  });
+
+  schedCard.appendChild(row1);
+
+  // row2
+  const row2 = document.createElement('div');
+  row2.style.display = 'grid';
+  row2.style.gridTemplateColumns = 'repeat(auto-fill, minmax(160px, 1fr))';
+  row2.style.gap = '12px';
+
+  const row2Fields = [
+    { label: 'Task start time', value: '9:00 AM', isTime: true },
+    { label: 'Report range start', value: 'Jul 1, 2026' },
+    { label: 'Report range end', value: 'Jul 15, 2026' },
+    { label: 'Warning date', value: 'Jul 10, 2026', cls: 'is-warning', helper: 'Selected date is in the past.' }
+  ];
+
+  row2Fields.forEach(f => {
+    const fld = document.createElement('div');
+    const fl = document.createElement('div');
+    fl.className = 'field-label';
+    fl.textContent = f.label;
+    fld.appendChild(fl);
+    let trig;
+    if (f.isTime) {
+      trig = createTimepickerTrigger(f.value);
+    } else {
+      trig = createDatepickerTrigger(f.value, '', f.cls || '');
+    }
+    fld.appendChild(trig);
+    if (f.helper) {
+      const h = document.createElement('div');
+      h.className = 'kobos-input-helper is-warning';
+      h.textContent = f.helper;
+      fld.appendChild(h);
+    }
+    row2.appendChild(fld);
+  });
+
+  schedCard.appendChild(row2);
+
+  // footer buttons
+  const schedActions = document.createElement('div');
+  schedActions.className = 'kobos-card__actions';
+  schedActions.style.marginTop = '16px';
+
+  const saveS = document.createElement('button');
+  saveS.className = 'kobos-btn kobos-btn--primary';
+  saveS.textContent = 'Save Schedule';
+  schedActions.appendChild(saveS);
+
+  const recalc = document.createElement('button');
+  recalc.className = 'kobos-btn kobos-btn--secondary';
+  recalc.textContent = 'Recalculate Due Dates';
+  schedActions.appendChild(recalc);
+
+  schedCard.appendChild(schedActions);
+  container.appendChild(schedCard);
+
+  // Section 7: Accessibility & usage rules
+  container.appendChild(createSectionHeading('Accessibility & usage rules', '.kobos-field-option'));
+
+  const rulesList = document.createElement('ul');
+  rulesList.style.marginLeft = '20px';
+  rulesList.style.paddingLeft = '0';
+  rulesList.style.lineHeight = '1.7';
+
+  const rules = [
+    'Date picker trigger must have visible focus state — uses info/default 2px ring (same as Input).',
+    'Selected date must use brand/default fill + text/inverse — never rely on color alone; always show the date value in the trigger.',
+    'Disabled weekends and holidays must be clearly unavailable — surface/disabled fill + text/disabled text.',
+    'Invalid date range must include error message text, not only a red border — \'End date cannot be before start date.\'',
+    'Manual review dates (Jul 22-23 in example) use warning/subtle bg — must include helper text explanation.',
+    'Business-day picker must show helper text explaining the rule: \'15 business days from payment confirmation.\'',
+    'Time picker uses 12-hour AM/PM format for US operations — 24h format may be added later per locale.',
+    'Production lead time options with surcharges must display the surcharge cost in the option metadata.',
+    'Loading availability states must communicate what is being checked — \'Checking production availability...\'',
+    'Calendar days must be keyboard navigable in implementation — Tab to trigger, arrow keys inside calendar.'
+  ];
+
+  rules.forEach(r => {
+    const li = document.createElement('li');
+    li.textContent = r;
+    rulesList.appendChild(li);
+  });
+
+  container.appendChild(rulesList);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -3717,6 +4411,7 @@ const renderers = {
   'select': renderSelect,
   'checkbox': renderCheckbox,
   'textarea': renderTextarea,
+  'datetime': renderDateTime,
   'badges': renderBadges,
   'cards': renderCards
 };
