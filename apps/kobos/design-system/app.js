@@ -101,7 +101,8 @@ const navItems = [
   { key: 'textarea', label: 'Textarea & Notes' },
   { key: 'datetime', label: 'Date & Time' },
   { key: 'badges', label: 'Badges & Chips' },
-  { key: 'cards', label: 'Cards' }
+  { key: 'cards', label: 'Cards' },
+  { key: 'alerts', label: 'Alerts' }
 ];
 
 function getColorDocName(token) {
@@ -172,6 +173,24 @@ const clockIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height=
 const chevronLeftSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>`;
 
 const chevronRightSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+
+const infoIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
+
+const checkCircleSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`;
+
+const triangleAlertSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
+
+const circleXSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 15 6-6"/></svg>`;
+
+const octagonAlertSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`;
+
+const eyeSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+
+const lockSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+
+const plugSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8"/><path d="M6 8h12"/></svg>`;
+
+const xIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -4400,6 +4419,302 @@ function renderDateTime(container) {
   container.appendChild(rulesList);
 }
 
+function renderAlerts(container) {
+  container.innerHTML = '<h1>Alerts</h1>';
+
+  function createAlert(variant, title, message, options = {}) {
+    const { dismissible = false, withAction = false, withActions = false, expanded = false, actionLabel = '', action2Label = '', details = [] } = options;
+
+    const alert = document.createElement('div');
+    alert.className = `kobos-alert is-${variant}`;
+    if (dismissible) alert.classList.add('is-dismissible');
+    if (withAction) alert.classList.add('is-with-action');
+    if (withActions) alert.classList.add('is-with-actions');
+    if (expanded) alert.classList.add('is-expanded');
+
+    const icon = document.createElement('span');
+    icon.className = 'alert-icon';
+    let iconSVG = '';
+    switch (variant) {
+      case 'info': iconSVG = infoIconSVG; break;
+      case 'success': iconSVG = checkCircleSVG; break;
+      case 'warning': iconSVG = triangleAlertSVG; break;
+      case 'error': iconSVG = circleXSVG; break;
+      case 'critical': iconSVG = octagonAlertSVG; break;
+      case 'manual-review': iconSVG = eyeSVG; break;
+      case 'permission-denied': iconSVG = lockSVG; break;
+      case 'integration-warning': iconSVG = plugSVG; break;
+    }
+    icon.innerHTML = iconSVG;
+    alert.appendChild(icon);
+
+    const content = document.createElement('div');
+    content.className = 'alert-content';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'alert-title';
+    titleEl.textContent = title;
+    content.appendChild(titleEl);
+
+    const msgEl = document.createElement('div');
+    msgEl.className = 'alert-message';
+    msgEl.textContent = message;
+    content.appendChild(msgEl);
+
+    if (expanded && details.length > 0) {
+      const detailsDiv = document.createElement('div');
+      detailsDiv.className = 'alert-details';
+      details.forEach(d => {
+        const row = document.createElement('div');
+        row.className = 'alert-detail-row';
+        const label = document.createElement('span');
+        label.className = 'alert-detail-label';
+        label.textContent = d.label + ': ';
+        const value = document.createElement('span');
+        value.className = 'alert-detail-value';
+        value.textContent = d.value;
+        row.appendChild(label);
+        row.appendChild(value);
+        detailsDiv.appendChild(row);
+      });
+      content.appendChild(detailsDiv);
+    }
+
+    alert.appendChild(content);
+
+    const trailing = document.createElement('div');
+    trailing.className = 'alert-trailing';
+
+    if (dismissible && variant !== 'critical') {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'kobos-alert__close';
+      closeBtn.innerHTML = xIconSVG;
+      closeBtn.setAttribute('aria-label', 'Dismiss alert');
+      closeBtn.addEventListener('click', () => {
+        alert.remove();
+        showToast('Alert dismissed');
+      });
+      trailing.appendChild(closeBtn);
+    }
+
+    if (withAction) {
+      const btn = document.createElement('button');
+      btn.className = 'kobos-btn kobos-btn--primary kobos-btn--sm';
+      btn.textContent = actionLabel || 'Action';
+      btn.addEventListener('click', () => {
+        showToast('Opening: ' + (actionLabel || 'Action'));
+      });
+      trailing.appendChild(btn);
+    }
+
+    if (withActions) {
+      const btn1 = document.createElement('button');
+      btn1.className = 'kobos-btn kobos-btn--primary kobos-btn--sm';
+      btn1.textContent = actionLabel || 'Review Blockers';
+      btn1.addEventListener('click', () => {
+        showToast('Opening: ' + (actionLabel || 'Review Blockers'));
+      });
+      const btn2 = document.createElement('button');
+      btn2.className = 'kobos-btn kobos-btn--tertiary kobos-btn--sm';
+      btn2.textContent = action2Label || 'View Order';
+      btn2.addEventListener('click', () => {
+        showToast('Opening: ' + (action2Label || 'View Order'));
+      });
+      trailing.appendChild(btn1);
+      trailing.appendChild(btn2);
+    }
+
+    if (trailing.children.length > 0) {
+      alert.appendChild(trailing);
+    }
+
+    return alert;
+  }
+
+  // Section 1: Alert variants
+  container.appendChild(createSectionHeading('Alert variants', '.kobos-alert'));
+
+  const note1 = document.createElement('div');
+  note1.className = 'page-subtitle';
+  note1.textContent = '8 variants · inline · *-subtle backgrounds';
+  container.appendChild(note1);
+
+  const variantsContainer = document.createElement('div');
+  variantsContainer.style.display = 'flex';
+  variantsContainer.style.flexDirection = 'column';
+  variantsContainer.style.gap = '12px';
+
+  const variantDemos = [
+    { variant: 'info', title: 'Information', message: 'This quote will remain editable until it is converted to an order.' },
+    { variant: 'success', title: 'Saved successfully', message: 'Your changes were saved and the order record was updated.' },
+    { variant: 'warning', title: 'Review recommended', message: 'This order has incomplete cost coverage. Margin may be partial.' },
+    { variant: 'error', title: 'Could not save changes', message: 'Fix the highlighted fields and try again.' },
+    { variant: 'critical', title: 'Cannot release to production', message: 'This order cannot be released to production until payment is confirmed and all reviews are complete.' },
+    { variant: 'manual-review', title: 'Manual review required', message: 'This item has a rule conflict and must be reviewed before production.' },
+    { variant: 'permission-denied', title: 'Permission required', message: 'Only Admin users can unlock cost values.' },
+    { variant: 'integration-warning', title: 'Integration warning', message: 'This attachment was imported but some fields could not be parsed automatically.' }
+  ];
+
+  variantDemos.forEach(d => {
+    const wrapper = document.createElement('div');
+    const alertEl = createAlert(d.variant, d.title, d.message);
+    wrapper.appendChild(alertEl);
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.textContent = `${d.variant === 'info' ? 'Info' : d.variant === 'success' ? 'Success' : d.variant === 'warning' ? 'Warning' : d.variant === 'error' ? 'Error' : d.variant === 'critical' ? 'Critical' : d.variant === 'manual-review' ? 'Manual-Review' : d.variant === 'permission-denied' ? 'Permission-Denied' : 'Integration-Warning'} ("${d.title}" / "${d.message}")`;
+    wrapper.appendChild(cap);
+    variantsContainer.appendChild(wrapper);
+  });
+
+  container.appendChild(variantsContainer);
+
+  // Section 2: Alert layouts
+  container.appendChild(createSectionHeading('Alert layouts', '.kobos-alert'));
+
+  // Dismissible
+  const disWrapper = document.createElement('div');
+  const disAlert = createAlert('info', 'Information', 'This quote will remain editable until it is converted to an order.', { dismissible: true });
+  disWrapper.appendChild(disAlert);
+  const disCap = document.createElement('div');
+  disCap.className = 'button-caption';
+  disCap.textContent = 'Dismissible · close icon';
+  disWrapper.appendChild(disCap);
+  container.appendChild(disWrapper);
+
+  // With-Action
+  const actWrapper = document.createElement('div');
+  const actAlert = createAlert('warning', 'Review recommended', 'Cost coverage is below target (72%). Margin is partial.', { withAction: true, actionLabel: 'Review Costs' });
+  actWrapper.appendChild(actAlert);
+  const actCap = document.createElement('div');
+  actCap.className = 'button-caption';
+  actCap.textContent = 'With-Action · primary button';
+  actWrapper.appendChild(actCap);
+  container.appendChild(actWrapper);
+
+  // With-Actions
+  const actsWrapper = document.createElement('div');
+  const actsAlert = createAlert('critical', 'Cannot release to production', 'Missing payment confirmation and required reviews.', { withActions: true, actionLabel: 'Review Blockers', action2Label: 'View Order' });
+  actsWrapper.appendChild(actsAlert);
+  const actsCap = document.createElement('div');
+  actsCap.className = 'button-caption';
+  actsCap.textContent = 'With-Actions · primary + tertiary';
+  actsWrapper.appendChild(actsCap);
+  container.appendChild(actsWrapper);
+
+  // Expanded
+  const expWrapper = document.createElement('div');
+  const expAlert = createAlert('integration-warning', 'Integration warning', 'Trello attachment could not be fully parsed.', {
+    expanded: true,
+    details: [
+      { label: 'Source', value: 'Trello · card RO-1042' },
+      { label: 'Fields', value: 'material.cost_per_sqft' },
+      { label: 'Order', value: 'Missing value' },
+      { label: 'Imported', value: 'Jun 30, 2026 · 2:14 PM' }
+    ]
+  });
+  expWrapper.appendChild(expAlert);
+  const expCap = document.createElement('div');
+  expCap.className = 'button-caption';
+  expCap.textContent = 'Expanded · detail rows visible';
+  expWrapper.appendChild(expCap);
+  container.appendChild(expWrapper);
+
+  // Section 3: Business examples
+  container.appendChild(createSectionHeading('Business examples — KOBOS workflows', '.kobos-alert'));
+
+  const bizGrid = document.createElement('div');
+  bizGrid.style.display = 'grid';
+  bizGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
+  bizGrid.style.gap = '16px';
+
+  const bizAlerts = [
+    { variant: 'warning', title: 'Review recommended', message: 'Cost coverage is below target (72%). Margin is partial.', withAction: true, actionLabel: 'Review Costs' },
+    { variant: 'critical', title: 'Cannot release to production', message: 'Missing payment confirmation and required reviews.', withActions: true, actionLabel: 'Review Blockers', action2Label: 'View Order' },
+    { variant: 'integration-warning', title: 'Integration warning', message: 'Detail invoice could not be fully parsed.', withAction: true, actionLabel: 'Review Costs' },
+    { variant: 'manual-review', title: 'Manual review required', message: 'Rush lead time is outside automatic rules.', withAction: true, actionLabel: 'Request Review' },
+    { variant: 'permission-denied', title: 'Permission required', message: 'Only Admin users can unlock cost values.', withActions: true, actionLabel: 'Request Access', action2Label: 'Cancel' },
+    { variant: 'success', title: 'Saved successfully', message: 'Your changes were saved and the order record was updated.' },
+    { variant: 'info', title: 'Information', message: 'This quote will remain editable until it is converted to an order.' },
+    { variant: 'error', title: 'Could not save changes', message: 'Fix the highlighted fields and try again.' }
+  ];
+
+  bizAlerts.forEach(b => {
+    const w = document.createElement('div');
+    const a = createAlert(b.variant, b.title, b.message, {
+      withAction: b.withAction,
+      withActions: b.withActions,
+      actionLabel: b.actionLabel,
+      action2Label: b.action2Label
+    });
+    w.appendChild(a);
+    bizGrid.appendChild(w);
+  });
+
+  container.appendChild(bizGrid);
+
+  // Section 4: Order Review Alerts
+  container.appendChild(createSectionHeading('Order Review Alerts', '.kobos-card'));
+
+  const reviewCard = document.createElement('div');
+  reviewCard.className = 'kobos-card';
+
+  const rTitle = document.createElement('div');
+  rTitle.className = 'kobos-card__title';
+  rTitle.textContent = 'Order Review Alerts';
+  reviewCard.appendChild(rTitle);
+
+  const rSub = document.createElement('div');
+  rSub.className = 'kobos-card__subtitle';
+  rSub.textContent = 'Order #1042 · Anderson Cabinets · Multiple concurrent alert states';
+  reviewCard.appendChild(rSub);
+
+  const stack = document.createElement('div');
+  stack.style.display = 'flex';
+  stack.style.flexDirection = 'column';
+  stack.style.gap = 'var(--kobos-space-3)';
+
+  const stackAlerts = [
+    createAlert('critical', 'Cannot release to production', 'Missing payment confirmation and required reviews.', { withActions: true, actionLabel: 'Review Blockers', action2Label: 'View Order' }),
+    createAlert('warning', 'Review recommended', 'Cost coverage is below target (72%). Margin is partial.', { withAction: true, actionLabel: 'Review Costs' }),
+    createAlert('manual-review', 'Manual review required', 'Rush lead time is outside automatic rules.', { withAction: true, actionLabel: 'Request Review' }),
+    createAlert('integration-warning', 'Integration warning', 'Detail invoice could not be fully parsed.', { withAction: true, actionLabel: 'Review Costs' }),
+    createAlert('success', 'Saved successfully', 'Your changes were saved and the order record was updated.')
+  ];
+
+  stackAlerts.forEach(a => stack.appendChild(a));
+  reviewCard.appendChild(stack);
+  container.appendChild(reviewCard);
+
+  // Section 5: Accessibility & usage rules
+  container.appendChild(createSectionHeading('Accessibility & usage rules', '.kobos-alert'));
+
+  const rulesList = document.createElement('ul');
+  rulesList.style.marginLeft = '20px';
+  rulesList.style.paddingLeft = '0';
+  rulesList.style.lineHeight = '1.7';
+
+  const rules = [
+    'Alerts must communicate severity through icon + title + message — never color alone.',
+    'Critical blocking errors must be persistent — do not allow dismissal while the underlying issue remains.',
+    'Warning treatment (not danger) should be used for manual review, duplicate detection, and soft conflicts.',
+    'Permission denied alerts must explain the limitation — not just show an icon or say \'access denied\'.',
+    'External integration alerts must name the source in text (Trello, Stripe, Gmail) — never icon only.',
+    'Dismissible alerts must have an accessible close label in implementation — not just a visual ✕ icon.',
+    'Error alerts must explain how to recover where possible — \'try again\', \'contact admin\', etc.',
+    'Manual review alerts must specify what requires review — not just say \'needs attention\'.',
+    'Expanded details should use technical references in mono-value typography for IDs and timestamps.',
+    'In dense views, limit simultaneous critical/error alerts — group related alerts when possible.'
+  ];
+
+  rules.forEach(rule => {
+    const li = document.createElement('li');
+    li.textContent = rule;
+    rulesList.appendChild(li);
+  });
+
+  container.appendChild(rulesList);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -4413,7 +4728,8 @@ const renderers = {
   'textarea': renderTextarea,
   'datetime': renderDateTime,
   'badges': renderBadges,
-  'cards': renderCards
+  'cards': renderCards,
+  'alerts': renderAlerts
 };
 
 function updateActiveNav(pageKey) {

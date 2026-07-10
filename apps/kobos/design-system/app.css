@@ -1737,3 +1737,149 @@ h2 {
   color: var(--kobos-info-default);
   font-size: 12px;
 }
+
+.kobos-alert {
+  display: flex;
+  flex-direction: row;
+  gap: var(--kobos-space-3);
+  padding: var(--kobos-space-3) var(--kobos-space-4);
+  border-radius: var(--kobos-radius-card);
+  border: 1px solid;
+  background-color: var(--kobos-surface-default);
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.kobos-alert .alert-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kobos-alert .alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.kobos-alert .alert-title {
+  font: var(--kobos-type-body-medium);
+  color: var(--kobos-text-primary);
+  margin-bottom: 2px;
+}
+
+.kobos-alert .alert-message {
+  font: var(--kobos-type-body-small);
+  color: var(--kobos-text-secondary);
+}
+
+.kobos-alert .alert-details {
+  margin-top: var(--kobos-space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kobos-alert .alert-detail-row {
+  font: var(--kobos-type-caption);
+  display: flex;
+  gap: 4px;
+}
+
+.kobos-alert .alert-detail-label {
+  color: var(--kobos-text-muted);
+}
+
+.kobos-alert .alert-detail-value {
+  font: var(--kobos-type-mono-value);
+  color: var(--kobos-text-primary);
+}
+
+.kobos-alert .alert-trailing {
+  display: flex;
+  gap: var(--kobos-space-2);
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.kobos-alert__close {
+  background: none;
+  border: none;
+  color: var(--kobos-text-muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kobos-alert__close:hover {
+  color: var(--kobos-text-primary);
+}
+
+.kobos-alert.is-info {
+  background-color: var(--kobos-info-subtle);
+  border-color: var(--kobos-info-default);
+}
+
+.kobos-alert.is-info .alert-icon {
+  color: var(--kobos-info-default);
+}
+
+.kobos-alert.is-success {
+  background-color: var(--kobos-success-subtle);
+  border-color: var(--kobos-success-default);
+}
+
+.kobos-alert.is-success .alert-icon {
+  color: var(--kobos-success-default);
+}
+
+.kobos-alert.is-warning,
+.kobos-alert.is-manual-review,
+.kobos-alert.is-integration-warning {
+  background-color: var(--kobos-warning-subtle);
+  border-color: var(--kobos-warning-default);
+}
+
+.kobos-alert.is-warning .alert-icon,
+.kobos-alert.is-manual-review .alert-icon,
+.kobos-alert.is-integration-warning .alert-icon {
+  color: var(--kobos-warning-default);
+}
+
+.kobos-alert.is-error {
+  background-color: var(--kobos-danger-subtle);
+  border-color: var(--kobos-danger-default);
+}
+
+.kobos-alert.is-error .alert-icon {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-alert.is-critical {
+  background-color: var(--kobos-danger-subtle);
+  border-color: var(--kobos-danger-default);
+  border-width: 2px;
+}
+
+.kobos-alert.is-critical .alert-icon {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-alert.is-permission-denied {
+  background-color: var(--kobos-neutral-subtle);
+  border-color: var(--kobos-neutral-default);
+}
+
+.kobos-alert.is-permission-denied .alert-icon {
+  color: var(--kobos-neutral-default);
+}
+
+.kobos-alert.is-permission-denied .alert-title,
+.kobos-alert.is-permission-denied .alert-message {
+  color: var(--kobos-text-secondary);
+}
