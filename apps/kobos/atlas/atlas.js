@@ -169,6 +169,7 @@ function renderGraph(graph) {
       if (existing) {
         existing.remove();
         nodeEl.classList.remove("expanded");
+        nodeEl.style.zIndex = "";
         expandedNodes.delete(node.id);
       } else {
         const exp = document.createElement("div");
@@ -186,6 +187,7 @@ function renderGraph(graph) {
         exp.innerHTML = html;
         nodeEl.appendChild(exp);
         nodeEl.classList.add("expanded");
+        nodeEl.style.zIndex = "20";
         expandedNodes.add(node.id);
       }
     });
