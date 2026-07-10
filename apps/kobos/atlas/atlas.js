@@ -1,5 +1,3 @@
-const SAMPLE_PASSWORD = "levsha-demo";
-
 async function deriveKey(password, salt) {
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -31,7 +29,7 @@ async function unlock() {
   errorEl.style.display = "none";
 
   try {
-    const response = await fetch("graph.enc.json");
+    const response = await fetch("graph.enc.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Failed to load encrypted graph");
     const enc = await response.json();
 
@@ -39,26 +37,15 @@ async function unlock() {
     const iv = Uint8Array.from(atob(enc.iv), c => c.charCodeAt(0));
     const ciphertext = Uint8Array.from(atob(enc.ciphertext), c => c.charCodeAt(0));
 
-    let graph = null;
-
-    try {
-      const key = await deriveKey(password, salt);
-      const decrypted = await crypto.subtle.decrypt(
-        { name: "AES-GCM", iv: iv },
-        key,
-        ciphertext
-      );
-      const jsonStr = new TextDecoder().decode(decrypted);
-      graph = JSON.parse(jsonStr);
-    } catch (decryptErr) {
-      if (password === SAMPLE_PASSWORD) {
-        // Fallback for sample password until encrypt.py is executed with the real password
-        const graphRes = await fetch("graph.json");
-        graph = await graphRes.json();
-      } else {
-        throw decryptErr;
-      }
-    }
+    // Encrypted data is the only source of truth — no plaintext fallback.
+    const key = await deriveKey(password, salt);
+    const decrypted = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: iv },
+      key,
+      ciphertext
+    );
+    const jsonStr = new TextDecoder().decode(decrypted);
+    const graph = JSON.parse(jsonStr);
 
     if (graph) {
       document.getElementById("password-gate").style.display = "none";
