@@ -96,7 +96,8 @@ const navItems = [
   { key: 'spacing', label: 'Spacing' },
   { key: 'buttons', label: 'Buttons' },
   { key: 'inputs', label: 'Inputs' },
-  { key: 'badges', label: 'Badges & Chips' }
+  { key: 'badges', label: 'Badges & Chips' },
+  { key: 'cards', label: 'Cards' }
 ];
 
 function getColorDocName(token) {
@@ -1586,6 +1587,598 @@ function renderBadges(container) {
   container.appendChild(bizContainer);
 }
 
+function renderCards(container) {
+  container.innerHTML = '<h1>Cards</h1>';
+
+  // 1. Card anatomy
+  container.appendChild(createSectionHeading('Card anatomy', '.kobos-card'));
+  const anatomy = document.createElement('div');
+  anatomy.style.font = 'var(--kobos-type-caption)';
+  anatomy.style.color = 'var(--kobos-text-muted)';
+  anatomy.style.marginBottom = '24px';
+  anatomy.innerHTML = `
+    <ol style="margin-left: 20px; padding-left: 0; line-height: 1.7;">
+      <li>Leading icon/avatar (optional)</li>
+      <li>Status badge</li>
+      <li>Title</li>
+      <li>Subtitle/entity ID</li>
+      <li>Metadata rows (2–4)</li>
+      <li>Divider</li>
+      <li>Action row</li>
+      <li>KPI value+trend (KPI only)</li>
+      <li>Warning/error message</li>
+      <li>Locked/read-only indicator</li>
+    </ol>
+  `;
+  container.appendChild(anatomy);
+
+  // 2. Basic Card
+  container.appendChild(createSectionHeading('Basic Card', '.kobos-card'));
+
+  // Default
+  const basicDefault = document.createElement('div');
+  basicDefault.className = 'kobos-card';
+  basicDefault.style.maxWidth = '320px';
+  basicDefault.style.marginBottom = '16px';
+  basicDefault.innerHTML = `
+    <div class="kobos-card__title">Order Summary</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Orders</span><span class="kobos-card__meta-value">284</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Revenue</span><span class="kobos-card__meta-value">$48,210</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Pending</span><span class="kobos-card__meta-value">9</span></div>
+    </div>
+  `;
+  container.appendChild(basicDefault);
+
+  // Hover
+  const basicHover = basicDefault.cloneNode(true);
+  basicHover.classList.add('is-hover');
+  container.appendChild(basicHover);
+
+  // Selected
+  const basicSelected = basicDefault.cloneNode(true);
+  basicSelected.classList.add('is-selected');
+  container.appendChild(basicSelected);
+
+  // Disabled (short)
+  const basicDisabled = document.createElement('div');
+  basicDisabled.className = 'kobos-card is-disabled';
+  basicDisabled.style.maxWidth = '320px';
+  basicDisabled.style.marginBottom = '16px';
+  basicDisabled.innerHTML = `
+    <div class="kobos-card__title">Order Summary</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Orders</span><span class="kobos-card__meta-value">284</span></div>
+    </div>
+  `;
+  container.appendChild(basicDisabled);
+
+  // Loading
+  const basicLoading = document.createElement('div');
+  basicLoading.className = 'kobos-card';
+  basicLoading.style.maxWidth = '320px';
+  basicLoading.style.marginBottom = '16px';
+  const sk1 = document.createElement('div');
+  sk1.className = 'kobos-skeleton';
+  sk1.style.width = '60%';
+  const sk2 = document.createElement('div');
+  sk2.className = 'kobos-skeleton';
+  sk2.style.width = '90%';
+  const sk3 = document.createElement('div');
+  sk3.className = 'kobos-skeleton';
+  sk3.style.width = '75%';
+  basicLoading.appendChild(sk1);
+  basicLoading.appendChild(sk2);
+  basicLoading.appendChild(sk3);
+  container.appendChild(basicLoading);
+
+  // 3. KPI Card
+  container.appendChild(createSectionHeading('KPI Card', '.kobos-card'));
+
+  // Default KPI
+  const kpiDefault = document.createElement('div');
+  kpiDefault.className = 'kobos-card';
+  kpiDefault.style.maxWidth = '280px';
+  kpiDefault.style.marginBottom = '16px';
+  kpiDefault.innerHTML = `
+    <div style="font: var(--kobos-type-caption); color: var(--kobos-text-muted); margin-bottom: 4px;">ORDERS THIS MONTH</div>
+    <div class="kobos-card__kpi-value">284</div>
+    <div class="kobos-card__kpi-trend">+12 this week</div>
+  `;
+  container.appendChild(kpiDefault);
+
+  // Loading KPI
+  const kpiLoading = document.createElement('div');
+  kpiLoading.className = 'kobos-card';
+  kpiLoading.style.maxWidth = '280px';
+  kpiLoading.style.marginBottom = '16px';
+  const ksk1 = document.createElement('div');
+  ksk1.className = 'kobos-skeleton';
+  ksk1.style.width = '70%';
+  const ksk2 = document.createElement('div');
+  ksk2.className = 'kobos-skeleton';
+  ksk2.style.width = '40%';
+  kpiLoading.appendChild(ksk1);
+  kpiLoading.appendChild(ksk2);
+  container.appendChild(kpiLoading);
+
+  // Warning KPI
+  const kpiWarning = document.createElement('div');
+  kpiWarning.className = 'kobos-card is-warning';
+  kpiWarning.style.maxWidth = '280px';
+  kpiWarning.style.marginBottom = '16px';
+  kpiWarning.innerHTML = `
+    <div style="font: var(--kobos-type-caption); color: var(--kobos-text-muted); margin-bottom: 4px;">COST COVERAGE</div>
+    <div class="kobos-card__kpi-value">42%</div>
+    <div class="kobos-card__message is-warning">Below 60% — review required</div>
+  `;
+  container.appendChild(kpiWarning);
+
+  // Error KPI
+  const kpiError = document.createElement('div');
+  kpiError.className = 'kobos-card is-error';
+  kpiError.style.maxWidth = '280px';
+  kpiError.style.marginBottom = '16px';
+  kpiError.innerHTML = `
+    <div style="font: var(--kobos-type-caption); color: var(--kobos-text-muted); margin-bottom: 4px;">PAYMENT VERIFICATION</div>
+    <div class="kobos-card__kpi-value">—</div>
+    <div class="kobos-card__message is-error">Stripe verification failed</div>
+  `;
+  container.appendChild(kpiError);
+
+  // 4. Entity Cards
+  container.appendChild(createSectionHeading('Entity Cards', '.kobos-card'));
+
+  const entityGrid = document.createElement('div');
+  entityGrid.style.display = 'grid';
+  entityGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  entityGrid.style.gap = '16px';
+  entityGrid.style.marginBottom = '24px';
+
+  // Order Default
+  const orderDefault = document.createElement('div');
+  orderDefault.className = 'kobos-card';
+  orderDefault.innerHTML = `
+    <span class="kobos-badge kobos-badge--info">In-Production</span>
+    <div class="kobos-card__title">Order #1042</div>
+    <div class="kobos-card__subtitle">Anderson Cabinets</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$2,481.50</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Due</span><span class="kobos-card__meta-value">Jul 18</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Items</span><span class="kobos-card__meta-value">12</span></div>
+    </div>
+    <div class="kobos-card__divider"></div>
+    <div class="kobos-card__actions">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">View Order</button>
+      <button class="kobos-btn kobos-btn--success kobos-btn--sm">Mark Paid</button>
+    </div>
+  `;
+  entityGrid.appendChild(orderDefault);
+
+  // Order Warning
+  const orderWarning = document.createElement('div');
+  orderWarning.className = 'kobos-card is-warning';
+  orderWarning.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">Order #1043</div>
+    <div class="kobos-card__subtitle">Summit Design Group</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$3,100.00</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">Cost data incomplete</div>
+  `;
+  entityGrid.appendChild(orderWarning);
+
+  // Order Overdue
+  const orderOverdue = document.createElement('div');
+  orderOverdue.className = 'kobos-card is-overdue';
+  orderOverdue.innerHTML = `
+    <span class="kobos-badge kobos-badge--error">Overdue</span>
+    <div class="kobos-card__title">Order #1041</div>
+    <div class="kobos-card__subtitle">Kitchen Outfitters</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$1,850.00</span></div>
+    </div>
+    <div class="kobos-card__message is-error">5 days past due</div>
+  `;
+  entityGrid.appendChild(orderOverdue);
+
+  // Order Locked
+  const orderLocked = document.createElement('div');
+  orderLocked.className = 'kobos-card is-locked';
+  orderLocked.innerHTML = `
+    <span class="kobos-badge kobos-badge--brand">Locked</span>
+    <div class="kobos-card__title">Order #1040</div>
+    <div class="kobos-card__subtitle">Anderson Cabinets</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$4,200.00</span></div>
+    </div>
+    <div class="kobos-card__message">Protected. View only.</div>
+  `;
+  entityGrid.appendChild(orderLocked);
+
+  // Quote Default
+  const quoteDefault = document.createElement('div');
+  quoteDefault.className = 'kobos-card';
+  quoteDefault.innerHTML = `
+    <span class="kobos-badge kobos-badge--neutral">Draft</span>
+    <div class="kobos-card__title">Quote QT-0048</div>
+    <div class="kobos-card__subtitle">Summit Design Group</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$3,100.00</span></div>
+    </div>
+    <div class="kobos-card__divider"></div>
+    <div class="kobos-card__actions">
+      <button class="kobos-btn kobos-btn--success kobos-btn--sm">Convert to Order</button>
+      <button class="kobos-btn kobos-btn--tertiary kobos-btn--sm">Edit</button>
+    </div>
+  `;
+  entityGrid.appendChild(quoteDefault);
+
+  // Quote Needs-Review
+  const quoteReview = document.createElement('div');
+  quoteReview.className = 'kobos-card is-needs-review';
+  quoteReview.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">Quote QT-0051</div>
+    <div class="kobos-card__subtitle">Summit Design Group</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$2,750.00</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">Cost data incomplete</div>
+  `;
+  entityGrid.appendChild(quoteReview);
+
+  // Customer Selected
+  const customerSelected = document.createElement('div');
+  customerSelected.className = 'kobos-card is-selected';
+  customerSelected.innerHTML = `
+    <div class="kobos-card__title">Anderson Cabinets</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Orders</span><span class="kobos-card__meta-value">34</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Since</span><span class="kobos-card__meta-value">2019</span></div>
+    </div>
+  `;
+  entityGrid.appendChild(customerSelected);
+
+  // Employee Active
+  const employeeActive = document.createElement('div');
+  employeeActive.className = 'kobos-card';
+  employeeActive.innerHTML = `
+    <span class="kobos-badge kobos-badge--success">Active</span>
+    <div class="kobos-card__title">Sarah K.</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Role</span><span class="kobos-card__meta-value">Production</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Tasks today</span><span class="kobos-card__meta-value">3</span></div>
+    </div>
+  `;
+  entityGrid.appendChild(employeeActive);
+
+  container.appendChild(entityGrid);
+
+  // 5. Task Card
+  container.appendChild(createSectionHeading('Task Card', '.kobos-card'));
+
+  const taskGrid = document.createElement('div');
+  taskGrid.style.display = 'grid';
+  taskGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
+  taskGrid.style.gap = '16px';
+  taskGrid.style.marginBottom = '24px';
+
+  // Task Default
+  const taskDefault = document.createElement('div');
+  taskDefault.className = 'kobos-card';
+  taskDefault.innerHTML = `
+    <span class="kobos-badge kobos-badge--neutral">Todo</span>
+    <div class="kobos-card__title">CNC — Cut doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Order</span><span class="kobos-card__meta-value">#1042</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Due</span><span class="kobos-card__meta-value">Jul 12</span></div>
+    </div>
+  `;
+  taskGrid.appendChild(taskDefault);
+
+  // Task Active
+  const taskActive = document.createElement('div');
+  taskActive.className = 'kobos-card is-selected';
+  taskActive.innerHTML = `
+    <span class="kobos-badge kobos-badge--info">In-Progress</span>
+    <div class="kobos-card__title">CNC — Cut doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Order</span><span class="kobos-card__meta-value">#1042</span></div>
+    </div>
+  `;
+  taskGrid.appendChild(taskActive);
+
+  // Task Overdue
+  const taskOverdue = document.createElement('div');
+  taskOverdue.className = 'kobos-card is-overdue';
+  taskOverdue.innerHTML = `
+    <span class="kobos-badge kobos-badge--error">Overdue</span>
+    <div class="kobos-card__title">CNC — Cut doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Order</span><span class="kobos-card__meta-value">#1041</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Due</span><span class="kobos-card__meta-value">Jul 5 — 4 days late</span></div>
+    </div>
+  `;
+  taskGrid.appendChild(taskOverdue);
+
+  // Task Needs-Review
+  const taskReview = document.createElement('div');
+  taskReview.className = 'kobos-card is-needs-review';
+  taskReview.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">CNC — Cut doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Order</span><span class="kobos-card__meta-value">#1043</span></div>
+    </div>
+  `;
+  taskGrid.appendChild(taskReview);
+
+  // Task Locked
+  const taskLocked = document.createElement('div');
+  taskLocked.className = 'kobos-card is-locked';
+  taskLocked.innerHTML = `
+    <span class="kobos-badge kobos-badge--brand">Locked</span>
+    <div class="kobos-card__title">CNC — Cut doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Order</span><span class="kobos-card__meta-value">#1040</span></div>
+    </div>
+  `;
+  taskGrid.appendChild(taskLocked);
+
+  container.appendChild(taskGrid);
+
+  // 6. Document Card
+  container.appendChild(createSectionHeading('Document Card', '.kobos-card'));
+
+  const docGrid = document.createElement('div');
+  docGrid.style.display = 'grid';
+  docGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  docGrid.style.gap = '16px';
+  docGrid.style.marginBottom = '24px';
+
+  // Parsed
+  const docParsed = document.createElement('div');
+  docParsed.className = 'kobos-card';
+  docParsed.innerHTML = `
+    <span class="kobos-badge kobos-badge--info">Parsed</span>
+    <div class="kobos-card__title">INV-2026-0042.pdf</div>
+    <div class="kobos-card__subtitle">invoices@kitchenoutfittersll.com</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Vendor</span><span class="kobos-card__meta-value">Hardwood Supply Co</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$1,284.00</span></div>
+    </div>
+    <div class="kobos-card__divider"></div>
+    <div class="kobos-card__actions">
+      <button class="kobos-btn kobos-btn--secondary kobos-btn--sm">Review</button>
+    </div>
+  `;
+  docGrid.appendChild(docParsed);
+
+  // Processing
+  const docProcessing = document.createElement('div');
+  docProcessing.className = 'kobos-card';
+  docProcessing.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Pending</span>
+    <div class="kobos-card__title">INV-2026-0043.pdf</div>
+    <div class="kobos-card__subtitle">Parsing…</div>
+    <div class="kobos-skeleton" style="width: 80%;"></div>
+  `;
+  docGrid.appendChild(docProcessing);
+
+  // Needs-Review
+  const docNeedsReview = document.createElement('div');
+  docNeedsReview.className = 'kobos-card is-needs-review';
+  docNeedsReview.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">INV-2026-0044.pdf</div>
+    <div class="kobos-card__subtitle">invoices@kitchenoutfittersll.com</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Vendor</span><span class="kobos-card__meta-value">Hardwood Supply Co</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">3 line items unmatched</div>
+  `;
+  docGrid.appendChild(docNeedsReview);
+
+  // Parse Failed
+  const docFailed = document.createElement('div');
+  docFailed.className = 'kobos-card is-error';
+  docFailed.innerHTML = `
+    <span class="kobos-badge kobos-badge--error">Failed</span>
+    <div class="kobos-card__title">INV-2026-0045.pdf</div>
+    <div class="kobos-card__subtitle">invoices@kitchenoutfittersll.com</div>
+    <div class="kobos-card__message is-error">Unreadable PDF — manual entry</div>
+  `;
+  docGrid.appendChild(docFailed);
+
+  // Duplicate
+  const docDuplicate = document.createElement('div');
+  docDuplicate.className = 'kobos-card is-warning';
+  docDuplicate.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Duplicate</span>
+    <div class="kobos-card__title">INV-2026-0046.pdf</div>
+    <div class="kobos-card__subtitle">invoices@kitchenoutfittersll.com</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Total</span><span class="kobos-card__meta-value mono">$1,284.00</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">Matches INV-2026-0038</div>
+  `;
+  docGrid.appendChild(docDuplicate);
+
+  container.appendChild(docGrid);
+
+  // 7. Cost Margin Card
+  container.appendChild(createSectionHeading('Cost Margin Card', '.kobos-card'));
+
+  const costGrid = document.createElement('div');
+  costGrid.style.display = 'grid';
+  costGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  costGrid.style.gap = '16px';
+  costGrid.style.marginBottom = '24px';
+
+  // Default
+  const costDefault = document.createElement('div');
+  costDefault.className = 'kobos-card';
+  costDefault.innerHTML = `
+    <span class="kobos-badge kobos-badge--success">Actual</span>
+    <div class="kobos-card__title">Cost Profile — MDF Doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Coverage</span><span class="kobos-card__meta-value">92%</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Margin</span><span class="kobos-card__meta-value mono">38%</span></div>
+    </div>
+  `;
+  costGrid.appendChild(costDefault);
+
+  // Warning
+  const costWarning = document.createElement('div');
+  costWarning.className = 'kobos-card is-warning';
+  costWarning.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">Cost Profile — MDF Doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Coverage</span><span class="kobos-card__meta-value">42%</span></div>
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Margin</span><span class="kobos-card__meta-value mono">—</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">Incomplete — 3 items estimated</div>
+  `;
+  costGrid.appendChild(costWarning);
+
+  // Locked
+  const costLocked = document.createElement('div');
+  costLocked.className = 'kobos-card is-locked';
+  costLocked.innerHTML = `
+    <span class="kobos-badge kobos-badge--brand">Locked</span>
+    <div class="kobos-card__title">Cost Profile — MDF Doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Coverage</span><span class="kobos-card__meta-value">92%</span></div>
+    </div>
+    <div class="kobos-card__message">Approved by owner Jul 9</div>
+  `;
+  costGrid.appendChild(costLocked);
+
+  // Error
+  const costError = document.createElement('div');
+  costError.className = 'kobos-card is-error';
+  costError.innerHTML = `
+    <div class="kobos-card__title">Cost Profile — MDF Doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Coverage</span><span class="kobos-card__meta-value">—</span></div>
+    </div>
+    <div class="kobos-card__message is-error">Calculation failed — missing wage rates</div>
+  `;
+  costGrid.appendChild(costError);
+
+  // Needs-Review
+  const costNeeds = document.createElement('div');
+  costNeeds.className = 'kobos-card is-needs-review';
+  costNeeds.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Manual-Override</span>
+    <div class="kobos-card__title">Cost Profile — MDF Doors</div>
+    <div class="kobos-card__meta">
+      <div class="kobos-card__meta-row"><span class="kobos-card__meta-label">Coverage</span><span class="kobos-card__meta-value">65%</span></div>
+    </div>
+    <div class="kobos-card__message is-warning">Override pending approval</div>
+  `;
+  costGrid.appendChild(costNeeds);
+
+  container.appendChild(costGrid);
+
+  // 8. Alert Card
+  container.appendChild(createSectionHeading('Alert Card', '.kobos-card'));
+
+  const alertGrid = document.createElement('div');
+  alertGrid.style.display = 'grid';
+  alertGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(340px, 1fr))';
+  alertGrid.style.gap = '16px';
+  alertGrid.style.marginBottom = '24px';
+
+  // Default Alert
+  const alertDefault = document.createElement('div');
+  alertDefault.className = 'kobos-card';
+  alertDefault.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Needs-Review</span>
+    <div class="kobos-card__title">Manual review required</div>
+    <div style="font: var(--kobos-type-body-small); margin: 8px 0;">Quote QT-0048 has unmatched cost lines.</div>
+    <div class="kobos-card__actions">
+      <button class="kobos-btn kobos-btn--primary kobos-btn--sm">Review now</button>
+    </div>
+  `;
+  alertGrid.appendChild(alertDefault);
+
+  // Warning Alert
+  const alertWarning = document.createElement('div');
+  alertWarning.className = 'kobos-card is-warning';
+  alertWarning.innerHTML = `
+    <span class="kobos-badge kobos-badge--warning">Warning</span>
+    <div class="kobos-card__title">Cost coverage below 60%</div>
+    <div style="font: var(--kobos-type-body-small); margin: 8px 0;">Review cost data before proceeding.</div>
+  `;
+  alertGrid.appendChild(alertWarning);
+
+  // Error Alert
+  const alertError = document.createElement('div');
+  alertError.className = 'kobos-card is-error';
+  alertError.innerHTML = `
+    <span class="kobos-badge kobos-badge--error">Error</span>
+    <div class="kobos-card__title">Payment failed — Stripe declined</div>
+    <div style="font: var(--kobos-type-body-small); margin: 8px 0;">Card ending in 4242 was declined.</div>
+    <div class="kobos-card__actions">
+      <button class="kobos-btn kobos-btn--destructive kobos-btn--sm">Retry</button>
+    </div>
+  `;
+  alertGrid.appendChild(alertError);
+
+  // Overdue Alert
+  const alertOverdue = document.createElement('div');
+  alertOverdue.className = 'kobos-card is-overdue';
+  alertOverdue.innerHTML = `
+    <span class="kobos-badge kobos-badge--error">Overdue</span>
+    <div class="kobos-card__title">Review due 2 days ago</div>
+    <div style="font: var(--kobos-type-body-small); margin: 8px 0;">Quote QT-0048 requires immediate attention.</div>
+  `;
+  alertGrid.appendChild(alertOverdue);
+
+  container.appendChild(alertGrid);
+
+  // 9. States reference
+  container.appendChild(createSectionHeading('States reference', '.kobos-card'));
+
+  const statesRef = document.createElement('div');
+  statesRef.style.display = 'grid';
+  statesRef.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
+  statesRef.style.gap = '12px';
+
+  const stateItems = [
+    { state: '', label: 'Default', caption: 'Normal display. No issue.' },
+    { state: 'is-hover', label: 'Hover', caption: 'Clickable affordance.' },
+    { state: 'is-selected', label: 'Selected', caption: 'Active selection in list.' },
+    { state: 'is-selected', label: 'Active', caption: 'Currently running or open.' },
+    { state: 'is-disabled', label: 'Disabled', caption: 'Unavailable. Muted text.' },
+    { state: '', label: 'Loading', caption: 'Content loading. Use skeleton.' },
+    { state: 'is-warning', label: 'Warning', caption: 'Non-blocking issue. Review needed.' },
+    { state: 'is-error', label: 'Error', caption: 'Blocking failure. Action required.' },
+    { state: 'is-needs-review', label: 'Needs Review', caption: 'Human review required.' },
+    { state: 'is-overdue', label: 'Overdue', caption: 'Time-sensitive. Past due.' },
+    { state: 'is-locked', label: 'Locked', caption: 'Protected. View only.' },
+    { state: '', label: 'Read-only', caption: 'View only. Not editable.' }
+  ];
+
+  stateItems.forEach(item => {
+    const mini = document.createElement('div');
+    mini.className = `kobos-card ${item.state}`.trim();
+    mini.style.padding = '10px';
+    mini.style.fontSize = '12px';
+    mini.innerHTML = `
+      <div class="kobos-card__title" style="font-size: 13px; margin-bottom: 2px;">${item.label}</div>
+      <div style="font: var(--kobos-type-caption); color: var(--kobos-text-muted);">${item.caption}</div>
+    `;
+    statesRef.appendChild(mini);
+  });
+
+  container.appendChild(statesRef);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -1594,7 +2187,8 @@ const renderers = {
   'spacing': renderSpacing,
   'buttons': renderButtons,
   'inputs': renderInputs,
-  'badges': renderBadges
+  'badges': renderBadges,
+  'cards': renderCards
 };
 
 function updateActiveNav(pageKey) {
