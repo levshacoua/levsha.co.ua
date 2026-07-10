@@ -1204,3 +1204,198 @@ h2 {
 .kobos-option.is-warning .kobos-option__caption {
   color: var(--kobos-warning-default);
 }
+
+.checkbox-states,
+.radio-states,
+.switch-states {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.state-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 70px;
+}
+
+.indeterminate-bar {
+  width: 9px;
+  height: 2px;
+  background-color: var(--kobos-text-inverse);
+  border-radius: 1px;
+}
+
+.kobos-checkbox {
+  width: 18px;
+  height: 18px;
+  background-color: var(--kobos-surface-default);
+  border: 1px solid var(--kobos-border-default);
+  border-radius: var(--kobos-radius-small-control);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.kobos-checkbox.is-checked {
+  background-color: var(--kobos-brand-default);
+  border-color: var(--kobos-brand-default);
+}
+
+.kobos-checkbox.is-checked span {
+  width: 13px;
+  height: 13px;
+  color: var(--kobos-text-inverse);
+}
+
+.kobos-checkbox.is-indeterminate {
+  background-color: var(--kobos-brand-default);
+  border-color: var(--kobos-brand-default);
+}
+
+.kobos-checkbox.is-disabled {
+  background-color: var(--kobos-surface-disabled);
+  border-color: var(--kobos-border-subtle);
+  cursor: not-allowed;
+}
+
+.kobos-checkbox.is-disabled.is-checked span {
+  color: var(--kobos-text-disabled);
+}
+
+.kobos-checkbox.is-error {
+  border-color: var(--kobos-danger-default);
+}
+
+.kobos-checkbox.is-focus {
+  box-shadow: 0 0 0 2px var(--kobos-info-default);
+}
+
+.kobos-radio {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--kobos-border-default);
+  border-radius: 999px;
+  background-color: var(--kobos-surface-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.kobos-radio.is-selected {
+  border-color: var(--kobos-brand-default);
+}
+
+.kobos-radio.is-selected .radio-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--kobos-brand-default);
+  border-radius: 999px;
+}
+
+.kobos-radio.is-disabled {
+  background-color: var(--kobos-surface-disabled);
+  border-color: var(--kobos-border-subtle);
+  cursor: not-allowed;
+}
+
+.kobos-radio.is-disabled.is-selected .radio-dot {
+  background-color: var(--kobos-text-disabled);
+}
+
+.kobos-radio.is-error {
+  border-color: var(--kobos-danger-default);
+}
+
+.kobos-radio.is-focus {
+  box-shadow: 0 0 0 2px var(--kobos-info-default);
+}
+
+.kobos-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background-color: var(--kobos-neutral-subtle);
+  position: relative;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.kobos-switch .switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--kobos-surface-default);
+  border-radius: 999px;
+  box-shadow: var(--kobos-elevation-card);
+  transition: transform 0.15s;
+}
+
+.kobos-switch.is-on {
+  background-color: var(--kobos-brand-default);
+}
+
+.kobos-switch.is-on .switch-thumb {
+  transform: translateX(20px);
+}
+
+.kobos-switch.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kobos-switch.is-loading .switch-thumb {
+  transform: translateX(10px);
+  opacity: 0.5;
+}
+
+.kobos-switch.is-denied {
+  background-color: var(--kobos-danger-default);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.kobos-field-option {
+  display: flex;
+  flex-direction: row;
+  gap: var(--kobos-space-3);
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.option-label {
+  font: var(--kobos-type-body-medium);
+  color: var(--kobos-text-primary);
+}
+
+.option-desc {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+}
+
+.kobos-field-option__help {
+  font: var(--kobos-type-caption);
+  color: var(--kobos-text-muted);
+  margin-top: 4px;
+}
+
+.kobos-field-option__help.is-error {
+  color: var(--kobos-danger-default);
+}
+
+.kobos-field-option__help.is-warning {
+  color: var(--kobos-warning-default);
+}

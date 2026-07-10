@@ -97,6 +97,7 @@ const navItems = [
   { key: 'buttons', label: 'Buttons' },
   { key: 'inputs', label: 'Inputs' },
   { key: 'select', label: 'Select & Dropdown' },
+  { key: 'checkbox', label: 'Checkbox, Radio & Switch' },
   { key: 'badges', label: 'Badges & Chips' },
   { key: 'cards', label: 'Cards' }
 ];
@@ -159,6 +160,8 @@ const errorIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height=
 const searchIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
 
 const chevronDownSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
+
+const checkboxCheckSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>`;
 
 function createCopyButton(cssVar) {
   const btn = document.createElement('button');
@@ -2471,6 +2474,697 @@ function renderCards(container) {
   container.appendChild(statesRef);
 }
 
+function renderCheckbox(container) {
+  container.innerHTML = '<h1>Checkbox, Radio & Switch</h1>';
+
+  function createCheckbox(checked = false, disabled = false, error = false, indeterminate = false) {
+    const el = document.createElement('div');
+    el.className = 'kobos-checkbox';
+    if (checked) el.classList.add('is-checked');
+    if (disabled) el.classList.add('is-disabled');
+    if (error) el.classList.add('is-error');
+    if (indeterminate) el.classList.add('is-indeterminate');
+    updateCheckboxVisual(el, checked, indeterminate, disabled);
+    if (!disabled) {
+      el.addEventListener('click', () => {
+        if (el.classList.contains('is-disabled')) return;
+        const isNowChecked = !el.classList.contains('is-checked');
+        el.classList.toggle('is-checked');
+        if (el.classList.contains('is-indeterminate')) {
+          el.classList.remove('is-indeterminate');
+        }
+        updateCheckboxVisual(el, isNowChecked, false, false);
+      });
+    }
+    return el;
+  }
+
+  function updateCheckboxVisual(el, checked, indeterminate, disabled) {
+    el.innerHTML = '';
+    if (indeterminate) {
+      const bar = document.createElement('div');
+      bar.className = 'indeterminate-bar';
+      el.appendChild(bar);
+    } else if (checked) {
+      const check = document.createElement('span');
+      check.innerHTML = checkboxCheckSVG;
+      check.style.width = '13px';
+      check.style.height = '13px';
+      check.style.color = disabled ? 'var(--kobos-text-disabled)' : 'var(--kobos-text-inverse)';
+      el.appendChild(check);
+    }
+  }
+
+  function createRadio(selected = false, disabled = false, error = false) {
+    const el = document.createElement('div');
+    el.className = 'kobos-radio';
+    if (selected) el.classList.add('is-selected');
+    if (disabled) el.classList.add('is-disabled');
+    if (error) el.classList.add('is-error');
+    updateRadioVisual(el, selected, disabled);
+    return el;
+  }
+
+  function updateRadioVisual(el, selected, disabled) {
+    el.innerHTML = '';
+    if (selected) {
+      const dot = document.createElement('div');
+      dot.className = 'radio-dot';
+      dot.style.width = '8px';
+      dot.style.height = '8px';
+      dot.style.backgroundColor = disabled ? 'var(--kobos-text-disabled)' : 'var(--kobos-brand-default)';
+      dot.style.borderRadius = '999px';
+      el.appendChild(dot);
+    }
+  }
+
+  function createSwitch(isOn = false, disabled = false, loading = false, denied = false) {
+    const el = document.createElement('div');
+    el.className = 'kobos-switch';
+    if (isOn) el.classList.add('is-on');
+    if (disabled) el.classList.add('is-disabled');
+    if (loading) el.classList.add('is-loading');
+    if (denied) el.classList.add('is-denied');
+    const thumb = document.createElement('div');
+    thumb.className = 'switch-thumb';
+    el.appendChild(thumb);
+    if (!disabled && !denied && !loading) {
+      el.addEventListener('click', () => {
+        const nowOn = !el.classList.contains('is-on');
+        el.classList.toggle('is-on');
+      });
+    }
+    return el;
+  }
+
+  // 1. Checkbox states
+  container.appendChild(createSectionHeading('Checkbox states', '.kobos-checkbox'));
+  const cbStatesContainer = document.createElement('div');
+  cbStatesContainer.className = 'checkbox-states';
+  const cbStateDemos = [
+    { caption: 'Unchecked', checked: false, disabled: false, error: false, focus: false, indeterminate: false },
+    { caption: 'Checked', checked: true, disabled: false, error: false, focus: false, indeterminate: false },
+    { caption: 'Indeterminate', checked: false, disabled: false, error: false, focus: false, indeterminate: true },
+    { caption: 'Disabled unchecked', checked: false, disabled: true, error: false, focus: false, indeterminate: false },
+    { caption: 'Disabled checked', checked: true, disabled: true, error: false, focus: false, indeterminate: false },
+    { caption: 'Error', checked: false, disabled: false, error: true, focus: false, indeterminate: false },
+    { caption: 'Focus', checked: false, disabled: false, error: false, focus: true, indeterminate: false }
+  ];
+  cbStateDemos.forEach(demo => {
+    const stateDiv = document.createElement('div');
+    stateDiv.className = 'state-demo';
+    const cb = document.createElement('div');
+    cb.className = 'kobos-checkbox';
+    if (demo.checked) cb.classList.add('is-checked');
+    if (demo.disabled) cb.classList.add('is-disabled');
+    if (demo.error) cb.classList.add('is-error');
+    if (demo.focus) cb.classList.add('is-focus');
+    if (demo.indeterminate) cb.classList.add('is-indeterminate');
+    if (demo.checked || demo.indeterminate) {
+      if (demo.indeterminate) {
+        const bar = document.createElement('div');
+        bar.className = 'indeterminate-bar';
+        cb.appendChild(bar);
+      } else {
+        const check = document.createElement('span');
+        check.innerHTML = checkboxCheckSVG;
+        check.style.width = '13px';
+        check.style.height = '13px';
+        check.style.color = demo.disabled ? 'var(--kobos-text-disabled)' : 'var(--kobos-text-inverse)';
+        cb.appendChild(check);
+      }
+    }
+    stateDiv.appendChild(cb);
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.textContent = demo.caption;
+    stateDiv.appendChild(cap);
+    cbStatesContainer.appendChild(stateDiv);
+  });
+  container.appendChild(cbStatesContainer);
+
+  // 2. Checkbox examples
+  container.appendChild(createSectionHeading('Checkbox examples', '.kobos-checkbox'));
+  const cbExamples = [
+    { label: 'Hinge boring', desc: 'Drill 35mm hinge cups for this door', checked: true },
+    { label: 'Rush order', desc: 'Expedite production schedule if available', warningHelp: 'Rush may not be available for all finish types.' },
+    { label: 'Residential delivery', desc: 'Freight carrier with liftgate service' },
+    { label: 'Lift-gate required', desc: 'Adds handling at delivery', checked: true },
+    { label: 'Needs review', desc: 'Flag this order for manual admin review' },
+    { label: 'Share via customer-facing PDF', desc: 'Include prices in the shared quote', checked: true },
+    { label: 'Terms confirmation', desc: 'Customer accepted the quoted terms', help: 'Confirmation required before order can be submitted.' }
+  ];
+  cbExamples.forEach(ex => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const control = createCheckbox(ex.checked || false, false, false, false);
+    row.appendChild(control);
+    const textCol = document.createElement('div');
+    const label = document.createElement('div');
+    label.className = 'option-label';
+    label.textContent = ex.label;
+    textCol.appendChild(label);
+    const desc = document.createElement('div');
+    desc.className = 'option-desc';
+    desc.textContent = ex.desc;
+    textCol.appendChild(desc);
+    if (ex.warningHelp) {
+      const help = document.createElement('div');
+      help.className = 'kobos-field-option__help is-warning';
+      help.textContent = ex.warningHelp;
+      textCol.appendChild(help);
+    }
+    if (ex.help) {
+      const help = document.createElement('div');
+      help.className = 'kobos-field-option__help';
+      help.textContent = ex.help;
+      textCol.appendChild(help);
+    }
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // 3. Radio states
+  container.appendChild(createSectionHeading('Radio states', '.kobos-radio'));
+  const radioStatesContainer = document.createElement('div');
+  radioStatesContainer.className = 'radio-states';
+  const radioStateDemos = [
+    { caption: 'Unselected', selected: false, disabled: false, error: false, focus: false },
+    { caption: 'Selected', selected: true, disabled: false, error: false, focus: false },
+    { caption: 'Disabled', selected: false, disabled: true, error: false, focus: false },
+    { caption: 'Error', selected: false, disabled: false, error: true, focus: false },
+    { caption: 'Focus', selected: false, disabled: false, error: false, focus: true }
+  ];
+  radioStateDemos.forEach(demo => {
+    const stateDiv = document.createElement('div');
+    stateDiv.className = 'state-demo';
+    const radio = document.createElement('div');
+    radio.className = 'kobos-radio';
+    if (demo.selected) radio.classList.add('is-selected');
+    if (demo.disabled) radio.classList.add('is-disabled');
+    if (demo.error) radio.classList.add('is-error');
+    if (demo.focus) radio.classList.add('is-focus');
+    if (demo.selected) {
+      const dot = document.createElement('div');
+      dot.className = 'radio-dot';
+      dot.style.width = '8px';
+      dot.style.height = '8px';
+      dot.style.backgroundColor = demo.disabled ? 'var(--kobos-text-disabled)' : 'var(--kobos-brand-default)';
+      dot.style.borderRadius = '999px';
+      radio.appendChild(dot);
+    }
+    stateDiv.appendChild(radio);
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.textContent = demo.caption;
+    stateDiv.appendChild(cap);
+    radioStatesContainer.appendChild(stateDiv);
+  });
+  container.appendChild(radioStatesContainer);
+
+  // 4. Radio group examples
+  container.appendChild(createSectionHeading('Radio group examples', '.kobos-radio'));
+
+  // Hinge boring
+  const group1Label = document.createElement('div');
+  group1Label.style.font = 'var(--kobos-type-body-semibold)';
+  group1Label.style.marginTop = '16px';
+  group1Label.textContent = 'Hinge boring';
+  container.appendChild(group1Label);
+  const hingeOptions = [
+    { text: 'No boring', selected: false },
+    { text: 'Hinge boring only', selected: true },
+    { text: 'Hinge boring + hinges', selected: false }
+  ];
+  const hingeRadios = [];
+  hingeOptions.forEach(opt => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const radio = createRadio(opt.selected);
+    hingeRadios.push(radio);
+    radio.addEventListener('click', () => {
+      hingeRadios.forEach(r => {
+        r.classList.remove('is-selected');
+        updateRadioVisual(r, false, r.classList.contains('is-disabled'));
+      });
+      radio.classList.add('is-selected');
+      updateRadioVisual(radio, true, false);
+    });
+    row.appendChild(radio);
+    const textCol = document.createElement('div');
+    const lbl = document.createElement('div');
+    lbl.className = 'option-label';
+    lbl.textContent = opt.text;
+    textCol.appendChild(lbl);
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // Delivery type
+  const group2Label = document.createElement('div');
+  group2Label.style.font = 'var(--kobos-type-body-semibold)';
+  group2Label.style.marginTop = '16px';
+  group2Label.textContent = 'Delivery type';
+  container.appendChild(group2Label);
+  const deliveryOptions = [
+    { text: 'Standard shipping', selected: false },
+    { text: 'Freight shipping', selected: true },
+    { text: 'Customer pickup', selected: false }
+  ];
+  const deliveryRadios = [];
+  deliveryOptions.forEach(opt => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const radio = createRadio(opt.selected);
+    deliveryRadios.push(radio);
+    radio.addEventListener('click', () => {
+      deliveryRadios.forEach(r => {
+        r.classList.remove('is-selected');
+        updateRadioVisual(r, false, r.classList.contains('is-disabled'));
+      });
+      radio.classList.add('is-selected');
+      updateRadioVisual(radio, true, false);
+    });
+    row.appendChild(radio);
+    const textCol = document.createElement('div');
+    const lbl = document.createElement('div');
+    lbl.className = 'option-label';
+    lbl.textContent = opt.text;
+    textCol.appendChild(lbl);
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // Cost source
+  const group3Label = document.createElement('div');
+  group3Label.style.font = 'var(--kobos-type-body-semibold)';
+  group3Label.style.marginTop = '16px';
+  group3Label.textContent = 'Cost source';
+  container.appendChild(group3Label);
+  const costSourceOptions = [
+    { text: 'Unknown', selected: false },
+    { text: 'Estimated Engine', selected: false },
+    { text: 'Manual Capture', selected: true },
+    { text: 'Manual Override', selected: false },
+    { text: 'Vendor Invoice', selected: false },
+    { text: 'Production Actual', selected: false, disabled: true }
+  ];
+  const costSourceRadios = [];
+  costSourceOptions.forEach(opt => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const radio = createRadio(opt.selected, opt.disabled || false);
+    costSourceRadios.push(radio);
+    if (!opt.disabled) {
+      radio.addEventListener('click', () => {
+        costSourceRadios.forEach(r => {
+          if (!r.classList.contains('is-disabled')) {
+            r.classList.remove('is-selected');
+            updateRadioVisual(r, false, false);
+          }
+        });
+        radio.classList.add('is-selected');
+        updateRadioVisual(radio, true, false);
+      });
+    }
+    row.appendChild(radio);
+    const textCol = document.createElement('div');
+    const lbl = document.createElement('div');
+    lbl.className = 'option-label';
+    lbl.textContent = opt.text;
+    textCol.appendChild(lbl);
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // Quote visibility
+  const group4Label = document.createElement('div');
+  group4Label.style.font = 'var(--kobos-type-body-semibold)';
+  group4Label.style.marginTop = '16px';
+  group4Label.textContent = 'Quote visibility';
+  container.appendChild(group4Label);
+  const quoteOptions = [
+    { text: 'Internal only', selected: false },
+    { text: 'Customer-facing', selected: true },
+    { text: 'Dealer-facing', selected: false }
+  ];
+  const quoteRadios = [];
+  quoteOptions.forEach(opt => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const radio = createRadio(opt.selected);
+    quoteRadios.push(radio);
+    radio.addEventListener('click', () => {
+      quoteRadios.forEach(r => {
+        r.classList.remove('is-selected');
+        updateRadioVisual(r, false, r.classList.contains('is-disabled'));
+      });
+      radio.classList.add('is-selected');
+      updateRadioVisual(radio, true, false);
+    });
+    row.appendChild(radio);
+    const textCol = document.createElement('div');
+    const lbl = document.createElement('div');
+    lbl.className = 'option-label';
+    lbl.textContent = opt.text;
+    textCol.appendChild(lbl);
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // 5. Switch states
+  container.appendChild(createSectionHeading('Switch states', '.kobos-switch'));
+  const switchStatesContainer = document.createElement('div');
+  switchStatesContainer.className = 'switch-states';
+  const switchStateDemos = [
+    { caption: 'Off', on: false, disabled: false, loading: false, denied: false },
+    { caption: 'On', on: true, disabled: false, loading: false, denied: false },
+    { caption: 'Disabled off', on: false, disabled: true, loading: false, denied: false },
+    { caption: 'Disabled on', on: true, disabled: true, loading: false, denied: false },
+    { caption: 'Loading', on: false, disabled: false, loading: true, denied: false },
+    { caption: 'Permission denied', on: false, disabled: false, loading: false, denied: true }
+  ];
+  switchStateDemos.forEach(demo => {
+    const stateDiv = document.createElement('div');
+    stateDiv.className = 'state-demo';
+    const sw = createSwitch(demo.on, demo.disabled, demo.loading, demo.denied);
+    stateDiv.appendChild(sw);
+    const cap = document.createElement('div');
+    cap.className = 'button-caption';
+    cap.textContent = demo.caption;
+    stateDiv.appendChild(cap);
+    switchStatesContainer.appendChild(stateDiv);
+  });
+  container.appendChild(switchStatesContainer);
+
+  // 6. Switch examples
+  container.appendChild(createSectionHeading('Switch examples', '.kobos-switch'));
+  const switchExamples = [
+    { label: 'Cost locked', desc: '', on: true, help: 'Cost is locked by admin — contact admin to unlock.' },
+    { label: 'Cost locked', desc: '', on: true, denied: true, help: 'Admin permission required.', helpError: true },
+    { label: 'Dealer approved', desc: '', on: true },
+    { label: 'Employee active', desc: '', on: true, help: 'Changes must be made in the HR system.' },
+    { label: 'Auto-apply rule enabled', desc: '', on: true },
+    { label: 'Saving…', desc: '', on: false, loading: true, help: 'Saving…' },
+    { label: 'Customer-facing PDF allowed', desc: '', on: false }
+  ];
+  switchExamples.forEach(ex => {
+    const row = document.createElement('div');
+    row.className = 'kobos-field-option';
+    const sw = createSwitch(ex.on, ex.disabled || false, ex.loading || false, ex.denied || false);
+    row.appendChild(sw);
+    if (ex.label === 'Cost locked' && !ex.denied && !ex.loading) {
+      sw.addEventListener('click', () => {
+        const isOn = sw.classList.contains('is-on');
+        showToast('Cost locked: ' + (isOn ? 'On' : 'Off'));
+      });
+    }
+    if (ex.label === 'Customer-facing PDF allowed') {
+      sw.addEventListener('click', () => {
+        const isOn = sw.classList.contains('is-on');
+        showToast('Customer-facing PDF allowed: ' + (isOn ? 'On' : 'Off'));
+      });
+    }
+    const textCol = document.createElement('div');
+    const label = document.createElement('div');
+    label.className = 'option-label';
+    label.textContent = ex.label;
+    textCol.appendChild(label);
+    if (ex.desc) {
+      const desc = document.createElement('div');
+      desc.className = 'option-desc';
+      desc.textContent = ex.desc;
+      textCol.appendChild(desc);
+    }
+    if (ex.help) {
+      const help = document.createElement('div');
+      help.className = 'kobos-field-option__help' + (ex.helpError ? ' is-error' : '');
+      help.textContent = ex.help;
+      textCol.appendChild(help);
+    }
+    row.appendChild(textCol);
+    container.appendChild(row);
+  });
+
+  // 7. Order Options & Rules
+  container.appendChild(createSectionHeading('Order Options & Rules', '.kobos-card'));
+  const card = document.createElement('div');
+  card.className = 'kobos-card';
+  const title = document.createElement('div');
+  title.className = 'kobos-card__title';
+  title.textContent = 'Order Options & Rules';
+  card.appendChild(title);
+  const sub = document.createElement('div');
+  sub.className = 'kobos-card__subtitle';
+  sub.textContent = 'Order #1042 · Anderson Cabinets · Production, freight, cost, and portal options';
+  card.appendChild(sub);
+
+  // PRODUCTION OPTIONS
+  const prodHeader = document.createElement('div');
+  prodHeader.style.font = 'var(--kobos-type-table-header)';
+  prodHeader.style.textTransform = 'uppercase';
+  prodHeader.style.marginTop = '16px';
+  prodHeader.textContent = 'PRODUCTION OPTIONS';
+  card.appendChild(prodHeader);
+  const prodDivider = document.createElement('div');
+  prodDivider.style.height = '1px';
+  prodDivider.style.backgroundColor = 'var(--kobos-border-subtle)';
+  prodDivider.style.margin = '8px 0';
+  card.appendChild(prodDivider);
+
+  const hingeRow = document.createElement('div');
+  hingeRow.className = 'kobos-field-option';
+  const hingeCb = createCheckbox(true);
+  hingeRow.appendChild(hingeCb);
+  const hingeText = document.createElement('div');
+  const hingeLabel = document.createElement('div');
+  hingeLabel.className = 'option-label';
+  hingeLabel.textContent = 'Hinge boring';
+  hingeText.appendChild(hingeLabel);
+  hingeRow.appendChild(hingeText);
+  card.appendChild(hingeRow);
+
+  const rushRow = document.createElement('div');
+  rushRow.className = 'kobos-field-option';
+  const rushCb = createCheckbox(false);
+  rushRow.appendChild(rushCb);
+  const rushText = document.createElement('div');
+  const rushLabel = document.createElement('div');
+  rushLabel.className = 'option-label';
+  rushLabel.textContent = 'Rush order';
+  rushText.appendChild(rushLabel);
+  const rushDesc = document.createElement('div');
+  rushDesc.className = 'option-desc';
+  rushDesc.textContent = 'Expedite production schedule if available';
+  rushText.appendChild(rushDesc);
+  const rushHelp = document.createElement('div');
+  rushHelp.className = 'kobos-field-option__help is-warning';
+  rushHelp.textContent = 'Rush not available for painted finish.';
+  rushText.appendChild(rushHelp);
+  rushRow.appendChild(rushText);
+  card.appendChild(rushRow);
+
+  const reviewRow = document.createElement('div');
+  reviewRow.className = 'kobos-field-option';
+  const reviewCb = createCheckbox(true);
+  reviewRow.appendChild(reviewCb);
+  const reviewText = document.createElement('div');
+  const reviewLabel = document.createElement('div');
+  reviewLabel.className = 'option-label';
+  reviewLabel.textContent = 'Needs review';
+  reviewText.appendChild(reviewLabel);
+  reviewRow.appendChild(reviewText);
+  card.appendChild(reviewRow);
+
+  // FREIGHT OPTIONS
+  const freightHeader = document.createElement('div');
+  freightHeader.style.font = 'var(--kobos-type-table-header)';
+  freightHeader.style.textTransform = 'uppercase';
+  freightHeader.style.marginTop = '16px';
+  freightHeader.textContent = 'FREIGHT OPTIONS';
+  card.appendChild(freightHeader);
+  const freightDivider = document.createElement('div');
+  freightDivider.style.height = '1px';
+  freightDivider.style.backgroundColor = 'var(--kobos-border-subtle)';
+  freightDivider.style.margin = '8px 0';
+  card.appendChild(freightDivider);
+
+  const resRow = document.createElement('div');
+  resRow.className = 'kobos-field-option';
+  const resCb = createCheckbox(false);
+  resRow.appendChild(resCb);
+  const resText = document.createElement('div');
+  const resLabel = document.createElement('div');
+  resLabel.className = 'option-label';
+  resLabel.textContent = 'Residential delivery';
+  resText.appendChild(resLabel);
+  resRow.appendChild(resText);
+  card.appendChild(resRow);
+
+  const liftRow = document.createElement('div');
+  liftRow.className = 'kobos-field-option';
+  const liftCb = createCheckbox(false);
+  liftRow.appendChild(liftCb);
+  const liftText = document.createElement('div');
+  const liftLabel = document.createElement('div');
+  liftLabel.className = 'option-label';
+  liftLabel.textContent = 'Lift-gate required';
+  liftText.appendChild(liftLabel);
+  liftRow.appendChild(liftText);
+  card.appendChild(liftRow);
+
+  // COST CONTROLS
+  const costHeader = document.createElement('div');
+  costHeader.style.font = 'var(--kobos-type-table-header)';
+  costHeader.style.textTransform = 'uppercase';
+  costHeader.style.marginTop = '16px';
+  costHeader.textContent = 'COST CONTROLS';
+  card.appendChild(costHeader);
+  const costDivider = document.createElement('div');
+  costDivider.style.height = '1px';
+  costDivider.style.backgroundColor = 'var(--kobos-border-subtle)';
+  costDivider.style.margin = '8px 0';
+  card.appendChild(costDivider);
+
+  const costLockedRow = document.createElement('div');
+  costLockedRow.className = 'kobos-field-option';
+  const costSw = createSwitch(true);
+  costLockedRow.appendChild(costSw);
+  const costText = document.createElement('div');
+  const costLabel = document.createElement('div');
+  costLabel.className = 'option-label';
+  costLabel.textContent = 'Cost locked';
+  costText.appendChild(costLabel);
+  const costHelp = document.createElement('div');
+  costHelp.className = 'kobos-field-option__help';
+  costHelp.textContent = 'Cost is locked.';
+  costText.appendChild(costHelp);
+  costLockedRow.appendChild(costText);
+  card.appendChild(costLockedRow);
+  costSw.addEventListener('click', () => {
+    const isOn = costSw.classList.contains('is-on');
+    showToast('Cost locked: ' + (isOn ? 'On' : 'Off'));
+  });
+
+  const autoRow = document.createElement('div');
+  autoRow.className = 'kobos-field-option';
+  const autoSw = createSwitch(true);
+  autoRow.appendChild(autoSw);
+  const autoText = document.createElement('div');
+  const autoLabel = document.createElement('div');
+  autoLabel.className = 'option-label';
+  autoLabel.textContent = 'Auto-apply rule';
+  autoText.appendChild(autoLabel);
+  autoRow.appendChild(autoText);
+  card.appendChild(autoRow);
+
+  // PORTAL CONTROLS
+  const portalHeader = document.createElement('div');
+  portalHeader.style.font = 'var(--kobos-type-table-header)';
+  portalHeader.style.textTransform = 'uppercase';
+  portalHeader.style.marginTop = '16px';
+  portalHeader.textContent = 'PORTAL CONTROLS';
+  card.appendChild(portalHeader);
+  const portalDivider = document.createElement('div');
+  portalDivider.style.height = '1px';
+  portalDivider.style.backgroundColor = 'var(--kobos-border-subtle)';
+  portalDivider.style.margin = '8px 0';
+  card.appendChild(portalDivider);
+
+  const pdfRow = document.createElement('div');
+  pdfRow.className = 'kobos-field-option';
+  const pdfSw = createSwitch(true);
+  pdfRow.appendChild(pdfSw);
+  const pdfText = document.createElement('div');
+  const pdfLabel = document.createElement('div');
+  pdfLabel.className = 'option-label';
+  pdfLabel.textContent = 'Customer-facing PDF allowed';
+  pdfText.appendChild(pdfLabel);
+  pdfRow.appendChild(pdfText);
+  card.appendChild(pdfRow);
+  pdfSw.addEventListener('click', () => {
+    const isOn = pdfSw.classList.contains('is-on');
+    showToast('Customer-facing PDF allowed: ' + (isOn ? 'On' : 'Off'));
+  });
+
+  const dealerRow = document.createElement('div');
+  dealerRow.className = 'kobos-field-option';
+  const dealerSw = createSwitch(false);
+  dealerRow.appendChild(dealerSw);
+  const dealerText = document.createElement('div');
+  const dealerLabel = document.createElement('div');
+  dealerLabel.className = 'option-label';
+  dealerLabel.textContent = 'Dealer approved';
+  dealerText.appendChild(dealerLabel);
+  dealerRow.appendChild(dealerText);
+  card.appendChild(dealerRow);
+
+  // EMPLOYEE CONTROLS
+  const empHeader = document.createElement('div');
+  empHeader.style.font = 'var(--kobos-type-table-header)';
+  empHeader.style.textTransform = 'uppercase';
+  empHeader.style.marginTop = '16px';
+  empHeader.textContent = 'EMPLOYEE CONTROLS';
+  card.appendChild(empHeader);
+  const empDivider = document.createElement('div');
+  empDivider.style.height = '1px';
+  empDivider.style.backgroundColor = 'var(--kobos-border-subtle)';
+  empDivider.style.margin = '8px 0';
+  card.appendChild(empDivider);
+
+  const empRow = document.createElement('div');
+  empRow.className = 'kobos-field-option';
+  const empSw = createSwitch(true);
+  empRow.appendChild(empSw);
+  const empText = document.createElement('div');
+  const empLabel = document.createElement('div');
+  empLabel.className = 'option-label';
+  empLabel.textContent = 'Employee active';
+  empText.appendChild(empLabel);
+  empRow.appendChild(empText);
+  card.appendChild(empRow);
+
+  // Footer
+  const actions = document.createElement('div');
+  actions.className = 'kobos-card__actions';
+  actions.style.marginTop = '16px';
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'kobos-btn kobos-btn--primary';
+  saveBtn.textContent = 'Save Options';
+  actions.appendChild(saveBtn);
+  const reviewBtn = document.createElement('button');
+  reviewBtn.className = 'kobos-btn kobos-btn--secondary';
+  reviewBtn.textContent = 'Request Review';
+  actions.appendChild(reviewBtn);
+  card.appendChild(actions);
+  container.appendChild(card);
+
+  // 8. Accessibility & usage rules
+  container.appendChild(createSectionHeading('Accessibility & usage rules', '.kobos-field-option'));
+  const list = document.createElement('ul');
+  list.style.marginLeft = '20px';
+  list.style.paddingLeft = '0';
+  list.style.lineHeight = '1.7';
+  const rules = [
+    'Checkbox: use for multiple selections or single boolean — never when only one option is allowed (use Radio instead).',
+    'Radio: use when one option must be selected from a small visible set — use Select for many options.',
+    'Switch: use for persistent on/off settings — do not use for destructive actions requiring confirmation.',
+    'Focus state uses info/default 2px ring on all three controls — always visible for keyboard navigation.',
+    'Error states must include helper message text — never rely on color alone (red border is not enough).',
+    'Disabled and permission denied must be visually distinct — permission denied should explain why access is limited.',
+    'Switch state must be communicated by label text, not color alone — \'Cost locked\' is on/off, not just green/gray.',
+    'Radio groups must have a visible group label — users must understand what the options belong to.',
+    'Loading switch changes must show visual indicator and prevent repeated toggles during async operations.',
+    'Touch targets should remain comfortable for shop-floor devices — minimum 44×44px recommended.'
+  ];
+  rules.forEach(rule => {
+    const li = document.createElement('li');
+    li.textContent = rule;
+    list.appendChild(li);
+  });
+  container.appendChild(list);
+}
+
 const renderers = {
   'color-system': renderColorSystem,
   'business-colors': renderBusinessColors,
@@ -2480,6 +3174,7 @@ const renderers = {
   'buttons': renderButtons,
   'inputs': renderInputs,
   'select': renderSelect,
+  'checkbox': renderCheckbox,
   'badges': renderBadges,
   'cards': renderCards
 };
