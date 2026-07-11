@@ -84,14 +84,20 @@ function renderGraph(graph) {
   viewport.appendChild(svg);
   canvas.appendChild(viewport);
 
-  // Group nodes by lane
+  // Group nodes by lane; nodes without a group fall back to their layer
+  // (team/projects layers) so no node is ever silently dropped.
   const groups = {};
   graph.nodes.forEach(node => {
-    if (!groups[node.group]) groups[node.group] = [];
-    groups[node.group].push(node);
+    const key = node.group || node.layer || "other";
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(node);
   });
 
-  const groupOrder = ["erp", "api", "mcp", "web", "entity"];
+  const knownOrder = ["erp", "api", "mcp", "web", "entity", "team", "project", "projects"];
+  const groupOrder = [
+    ...knownOrder.filter(g => groups[g]),
+    ...Object.keys(groups).filter(g => !knownOrder.includes(g)).sort(),
+  ];
   const laneWidth = 290;
   const nodeWidth = 250;
   const nodeHeight = 84;
