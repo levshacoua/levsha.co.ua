@@ -165,11 +165,15 @@ function renderGraph(graph) {
     nodeEl.style.top = pos.y + "px";
     nodeEl.style.width = nodeWidth + "px";
 
+    // Team/project nodes may lack tasks/status — never let one node kill the render.
+    const tasks = node.tasks || { open: 0, review: 0, next: 0 };
+    const status = node.status || node.kind || "planned";
+    nodeEl.className = `node status-${status}`;
     nodeEl.innerHTML = `
       <div class="node-header">
-        <span class="node-label">${node.label}</span>
-        <span class="status-chip ${node.status}">${node.status}</span>
-        <span class="task-badge">${node.tasks.open + node.tasks.review + node.tasks.next}</span>
+        <span class="node-label">${node.label || node.id}</span>
+        <span class="status-chip ${status}">${status}</span>
+        <span class="task-badge">${(tasks.open || 0) + (tasks.review || 0) + (tasks.next || 0)}</span>
       </div>
     `;
 
@@ -197,14 +201,15 @@ function renderGraph(graph) {
         const exp = document.createElement("div");
         exp.className = "expanded-content";
         let html = '<ul class="capabilities">';
-        node.capabilities.forEach(cap => {
+        (node.capabilities || []).forEach(cap => {
           html += `<li>${cap}</li>`;
         });
         html += "</ul>";
+        const t = node.tasks || {};
         html += `<div class="tasks">
-          <div>Open: ${node.tasks.open}</div>
-          <div>Review: ${node.tasks.review}</div>
-          <div>Next: ${node.tasks.next}</div>
+          <div>Open: ${t.open || 0}</div>
+          <div>Review: ${t.review || 0}</div>
+          <div>Next: ${t.next || 0}</div>
         </div>`;
         exp.innerHTML = html;
         nodeEl.appendChild(exp);
