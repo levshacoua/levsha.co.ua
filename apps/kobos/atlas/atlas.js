@@ -92,9 +92,9 @@ function renderGraph(graph) {
   });
 
   const groupOrder = ["erp", "api", "mcp", "web", "entity"];
-  const laneWidth = 240;
-  const nodeWidth = 210;
-  const nodeHeight = 70;
+  const laneWidth = 290;
+  const nodeWidth = 250;
+  const nodeHeight = 84;
   const verticalGap = 15;
   const startX = 30;
   const startY = 30;
