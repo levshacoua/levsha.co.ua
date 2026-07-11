@@ -125,13 +125,15 @@ function renderGraph(graph) {
   svg.setAttribute("width", svgWidth);
   svg.setAttribute("height", svgHeight);
 
-  // Draw edges (under nodes)
+  // Draw edges (under nodes); keep endpoints updatable for the post-render reflow.
   graph.edges.forEach(edge => {
     const fromPos = positions[edge.from];
     const toPos = positions[edge.to];
     if (!fromPos || !toPos) return;
 
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.dataset.from = edge.from;
+    line.dataset.to = edge.to;
     line.setAttribute("x1", fromPos.x + nodeWidth / 2);
     line.setAttribute("y1", fromPos.y + nodeHeight / 2);
     line.setAttribute("x2", toPos.x + nodeWidth / 2);
@@ -169,12 +171,22 @@ function renderGraph(graph) {
     const tasks = node.tasks || { open: 0, review: 0, next: 0 };
     const status = node.status || node.kind || "planned";
     nodeEl.className = `node status-${status}`;
+    let metaLine = "";
+    if (node.model) {
+      metaLine = `<div class="node-meta">⚙ ${node.model}${node.assignment ? ` (${node.assignment})` : ""}</div>`;
+    } else if (node.accepted !== undefined) {
+      const parts = [`✅ ${node.accepted} accepted`];
+      if (node.head) parts.push(node.head);
+      if (node.last_accept) parts.push(node.last_accept);
+      metaLine = `<div class="node-meta">${parts.join(" · ")}</div>`;
+    }
     nodeEl.innerHTML = `
       <div class="node-header">
         <span class="node-label">${node.label || node.id}</span>
         <span class="status-chip ${status}">${status}</span>
         <span class="task-badge">${(tasks.open || 0) + (tasks.review || 0) + (tasks.next || 0)}</span>
       </div>
+      ${metaLine}
     `;
 
     const header = nodeEl.querySelector('.node-header');
@@ -220,7 +232,32 @@ function renderGraph(graph) {
     });
 
     nodeEl.addEventListener("mousedown", e => e.stopPropagation());
+    nodeEl.dataset.id = node.id;
     viewport.appendChild(nodeEl);
+  });
+
+  // Reflow: cards have variable heights (meta lines, two-line labels) — re-stack each
+  // lane by measured height so cards never overlap, then re-anchor edge endpoints.
+  let reflowMaxY = 0;
+  groupOrder.forEach(group => {
+    if (!groups[group]) return;
+    let y = startY;
+    groups[group].forEach(node => {
+      const el = viewport.querySelector(`.node[data-id="${CSS.escape(node.id)}"]`);
+      if (!el) return;
+      el.style.top = y + "px";
+      positions[node.id] = { x: positions[node.id].x, y: y, h: el.offsetHeight };
+      y += el.offsetHeight + verticalGap;
+    });
+    reflowMaxY = Math.max(reflowMaxY, y);
+  });
+  svg.setAttribute("height", reflowMaxY + 50);
+  svg.querySelectorAll("line[data-from]").forEach(line => {
+    const f = positions[line.dataset.from];
+    const t = positions[line.dataset.to];
+    if (!f || !t) return;
+    line.setAttribute("y1", f.y + (f.h || nodeHeight) / 2);
+    line.setAttribute("y2", t.y + (t.h || nodeHeight) / 2);
   });
 
   // Pan / zoom state
