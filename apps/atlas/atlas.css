@@ -1,0 +1,414 @@
+:root {
+  --atlas-bg: #0d0d0d;
+  --atlas-fg: #ffffff;
+  --atlas-accent: #00aced;
+  --atlas-line: rgba(0, 172, 237, 0.15);
+  --atlas-muted: #555555;
+  --atlas-partial: #b86a00;
+  --atlas-planned: #666666;
+  --atlas-surface: #1a1a1a;
+  --atlas-input-bg: #111;
+  --atlas-error: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--atlas-bg);
+  color: var(--atlas-fg);
+  font-family: 'Inter', 'Roboto', -apple-system, "SF Pro Display", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 0 0 4px 0;
+}
+
+header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--atlas-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#generated {
+  font-size: 0.85rem;
+  color: var(--atlas-muted);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 20px;
+  gap: 20px;
+}
+
+.legend {
+  display: flex;
+  gap: 32px;
+  font-size: 0.8rem;
+}
+
+.legend-group {
+  line-height: 1.3;
+}
+
+.legend-group strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 400;
+  color: var(--atlas-accent);
+}
+
+.controls {
+  display: flex;
+  gap: 6px;
+}
+
+.controls button {
+  background: #1a1a1a;
+  color: var(--atlas-fg);
+  border: 1px solid var(--atlas-line);
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 300;
+}
+
+.controls button:hover {
+  border-color: var(--atlas-accent);
+}
+
+#canvas {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  overflow: hidden;
+  border: 1px solid var(--atlas-line);
+  background-image: 
+    linear-gradient(rgba(0, 172, 237, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 172, 237, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(0, 172, 237, 0.03) 20px, transparent 20px);
+  background-size: 20px 20px, 20px 20px, 100px 100px;
+}
+
+#password-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--atlas-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.gate-content {
+  background: #1a1a1a;
+  padding: 40px 48px;
+  border: 1px solid var(--atlas-line);
+  text-align: center;
+  max-width: 320px;
+}
+
+.gate-content h1 {
+  margin-bottom: 8px;
+}
+
+.gate-content p {
+  margin-bottom: 20px;
+  color: var(--atlas-muted);
+}
+
+#password-input {
+  width: 100%;
+  padding: 10px;
+  background: #111;
+  border: 1px solid var(--atlas-line);
+  color: var(--atlas-fg);
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+#unlock-btn {
+  background: var(--atlas-accent);
+  color: var(--atlas-bg);
+  border: none;
+  padding: 10px 24px;
+  font-family: inherit;
+  font-weight: 400;
+  cursor: pointer;
+  width: 100%;
+}
+
+#error-msg {
+  margin-top: 12px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  display: none;
+}
+
+#app {
+  display: none;
+}
+
+.node {
+  background: #1a1a1a;
+  border-radius: 3px;
+  padding: 8px 10px;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--atlas-line);
+  transition: border-color 0.1s ease;
+}
+
+.node.built {
+  border-color: var(--atlas-accent);
+}
+
+.node.partial {
+  border-color: var(--atlas-partial);
+  border-style: dashed;
+}
+
+.node.planned {
+  border-color: var(--atlas-planned);
+  border-style: dashed;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.node-label {
+  flex: 1;
+  font-weight: 400;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.status-chip {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.status-chip.built {
+  background: var(--atlas-accent);
+  color: var(--atlas-bg);
+}
+
+.status-chip.partial {
+  background: var(--atlas-partial);
+  color: #fff;
+}
+
+.status-chip.planned {
+  background: var(--atlas-planned);
+  color: var(--atlas-fg);
+}
+
+.task-badge {
+  background: var(--atlas-muted);
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  min-width: 14px;
+  text-align: center;
+}
+
+.expanded-content {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--atlas-line);
+  font-size: 11px;
+}
+
+.capabilities {
+  margin: 4px 0 6px;
+  padding-left: 14px;
+  list-style: disc;
+}
+
+.capabilities li {
+  margin-bottom: 1px;
+}
+
+.tasks {
+  font-size: 10px;
+  color: var(--atlas-muted);
+  display: flex;
+  gap: 10px;
+}
+
+.floating-add-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--atlas-surface);
+  color: var(--atlas-fg);
+  border: 1px solid var(--atlas-line);
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 300;
+  z-index: 50;
+  border-radius: 3px;
+}
+
+.floating-add-btn:hover {
+  border-color: var(--atlas-accent);
+}
+
+.add-under-btn {
+  color: var(--atlas-accent);
+  font-size: 11px;
+  margin-left: 4px;
+  padding: 0 2px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal-content {
+  background: var(--atlas-surface);
+  border: 1px solid var(--atlas-line);
+  padding: 20px 24px;
+  width: 340px;
+  max-width: 90vw;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  color: var(--atlas-muted);
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--atlas-input-bg);
+  border: 1px solid var(--atlas-line);
+  color: var(--atlas-fg);
+  font-family: inherit;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.relates-line {
+  font-size: 12px;
+  color: var(--atlas-muted);
+  padding: 4px 0;
+  border-top: 1px solid var(--atlas-line);
+  border-bottom: 1px solid var(--atlas-line);
+  margin: 8px 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--atlas-surface);
+  border: 1px solid var(--atlas-line);
+  color: var(--atlas-fg);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.form-actions button[type="submit"] {
+  background: var(--atlas-accent);
+  color: var(--atlas-bg);
+  border: none;
+}
+
+.form-actions button:hover {
+  border-color: var(--atlas-accent);
+}
+
+#toast {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--atlas-surface);
+  color: var(--atlas-fg);
+  padding: 6px 14px;
+  border: 1px solid var(--atlas-line);
+  border-radius: 3px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 300;
+  white-space: nowrap;
+}
+
+#toast.show {
+  opacity: 1;
+}
