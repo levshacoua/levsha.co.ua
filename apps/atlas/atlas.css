@@ -412,3 +412,13 @@ header {
 #toast.show {
   opacity: 1;
 }
+
+.node-meta {
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--atlas-accent, #4db8ff);
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
