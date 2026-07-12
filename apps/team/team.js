@@ -212,6 +212,26 @@ function fmtTok(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e
 function renderSummary(stats) {
   const el = document.getElementById("summary");
   if (!el) return;
+  // peer-review trigger button (LB-100)
+  let btn = document.getElementById("peer-review-btn");
+  if (!btn) {
+    btn = document.createElement("button");
+    btn.id = "peer-review-btn";
+    btn.className = "peer-btn";
+    btn.textContent = "🔍 Запустити peer-оцінку";
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "⏳ рейтери оцінюють (1-3 хв)…";
+      try {
+        const res = await apiPost("/team/api/peer-review", {});
+        btn.textContent = res.ok ? `✅ ${res.summary || "готово"} — онови Аналітику` : `❌ ${res.reason || "відхилено"}`;
+      } catch (e) {
+        btn.textContent = "⚠️ API недоступний";
+      }
+      setTimeout(() => { btn.disabled = false; btn.textContent = "🔍 Запустити peer-оцінку"; }, 8000);
+    });
+    el.parentNode.insertBefore(btn, el.nextSibling);
+  }
   const models = stats.models || {};
   let tokens = 0, seconds = 0;
   Object.values(models).forEach(m => {
