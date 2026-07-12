@@ -19,6 +19,13 @@
     .hint { text-align: center; color: var(--atlas-muted); font-size: 12px; padding: 8px 20px 24px; }
     .copied { color: var(--atlas-accent); font-size: 12px; margin-left: 8px; opacity: 0; transition: opacity .2s; }
     .copied.show { opacity: 1; }
+    .save-status { font-size: 12px; margin-top: 8px; min-height: 15px; }
+    .save-status.ok { color: #4caf50; }
+    .save-status.err { color: var(--atlas-error, #ff6b6b); }
+    .save-status.warn { color: #e0a030; }
+    .confirm-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
+    .confirm-row .warn { font-size: 12px; color: #e0a030; flex: 1; }
+    .confirm-row button { padding: 5px 12px; background: #e0a030; color: #0d0d0d; border: none; cursor: pointer; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -38,8 +45,7 @@
       <div id="generated"></div>
     </header>
     <div class="team-list" id="team-list"></div>
-    <p class="hint">Кнопка копіює команду для бота — встав її в Telegram «Lefty's Brain», і зміна застосується
-      (стратегічні ролі попросять підтвердження). Atlas — карта; керування — тут.</p>
+    <p class="hint">Вибір у списку зберігається автоматично — побачиш «✅ застосовано». Стратегічні ролі попросять підтвердження. Якщо API недоступний, команда копіюється в буфер для бота. Atlas — карта; керування — тут.</p>
   </div>
 
   <script src="team.js"></script>
