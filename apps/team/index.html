@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — Lefty's Brain</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <link rel="stylesheet" href="../atlas/atlas.css">
+  <style>
+    .team-list { max-width: 760px; margin: 0 auto; padding: 20px; display: grid; gap: 12px; }
+    .role-card { background: var(--atlas-surface); border: 1px solid var(--atlas-line); border-radius: 3px; padding: 14px 16px; }
+    .role-card h3 { margin: 0 0 4px 0; font-weight: 400; font-size: 1.05rem; }
+    .role-model { font-size: 12px; color: var(--atlas-accent); margin-bottom: 10px; }
+    .role-actions { display: flex; gap: 8px; align-items: center; }
+    .role-actions select { flex: 1; padding: 6px 8px; background: var(--atlas-input-bg); color: var(--atlas-fg); border: 1px solid var(--atlas-line); font-family: inherit; font-size: 13px; }
+    .role-actions button { padding: 6px 14px; background: var(--atlas-accent); color: var(--atlas-bg); border: none; cursor: pointer; font-family: inherit; font-size: 13px; }
+    .role-actions button.unset { background: var(--atlas-surface); color: var(--atlas-fg); border: 1px solid var(--atlas-line); }
+    .hint { text-align: center; color: var(--atlas-muted); font-size: 12px; padding: 8px 20px 24px; }
+    .copied { color: var(--atlas-accent); font-size: 12px; margin-left: 8px; opacity: 0; transition: opacity .2s; }
+    .copied.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>Team</h1>
+      <p>LevSha.co.ua — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+      <button id="unlock-btn">Unlock</button>
+      <div id="error-msg">Incorrect password</div>
+    </div>
+  </div>
+
+  <div id="app">
+    <header>
+      <h1>Lefty's Brain — Team</h1>
+      <div id="generated"></div>
+    </header>
+    <div class="team-list" id="team-list"></div>
+    <p class="hint">Кнопка копіює команду для бота — встав її в Telegram «Lefty's Brain», і зміна застосується
+      (стратегічні ролі попросять підтвердження). Atlas — карта; керування — тут.</p>
+  </div>
+
+  <script src="team.js"></script>
+</body>
+</html>
