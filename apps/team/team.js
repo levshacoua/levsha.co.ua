@@ -76,6 +76,8 @@ async function unlock() {
     document.getElementById("app").style.display = "block";
     try {
       const stats = await fetchStats();
+      window.teamStats = stats;
+      renderSummary(stats);
       renderTeam(rosterFromStats(stats));
       document.getElementById("generated").textContent = "🟢 live";
     } catch (e) {
@@ -128,6 +130,7 @@ function renderTeam(roster) {
       <h3>${role.label || role.key}</h3>
       <div class="role-model">⚙ зараз: <span class="current">${role.model || "—"}</span><span class="assign">${role.assignment ? ` (${role.assignment})` : ""}</span></div>
       <details class="duties"><summary>Обов'язки (${(role.capabilities || []).length})</summary><ul>${duties}</ul></details>
+      <details class="analytics"><summary>Аналітика</summary><div class="charts"></div></details>
       <div class="role-actions">
         <select aria-label="model for ${role.key}">${options}</select>
         <button type="button" data-act="unset" class="unset" title="Повернути автоматичний вибір">unset</button>
@@ -182,6 +185,14 @@ function renderTeam(roster) {
       }
     });
 
+    const analytics = card.querySelector(".analytics");
+    analytics.addEventListener("toggle", () => {
+      if (analytics.open && !analytics.dataset.done) {
+        analytics.dataset.done = "1";
+        renderRoleCharts(analytics.querySelector(".charts"), role);
+      }
+    });
+
     list.appendChild(card);
   });
 
@@ -190,3 +201,89 @@ function renderTeam(roster) {
 
 document.getElementById("unlock-btn").addEventListener("click", unlock);
 document.getElementById("password-input").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+
+
+// ---- Dashboards (LB-099 page half) ----
+function fmtTok(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(1)+"K" : String(n); }
+
+function renderSummary(stats) {
+  const el = document.getElementById("summary");
+  if (!el) return;
+  const models = stats.models || {};
+  let tokens = 0, seconds = 0;
+  Object.values(models).forEach(m => {
+    const u = m.usage_30d || {};
+    tokens += (u.tokens_in || 0) + (u.tokens_out || 0);
+    seconds += u.seconds || 0;
+  });
+  const spend = stats.spend_estimate_usd || {};
+  const spendTxt = typeof spend === "object" ? `$${(spend.total ?? 0).toFixed(2)}` : `$${(+spend).toFixed(2)}`;
+  const provs = Object.entries(stats.providers || {}).map(([name, p]) => {
+    const lim = p && (p.limits || p.limit || p.usage) ? JSON.stringify(p.limits || p.limit || p.usage).slice(0, 40) : "н/д";
+    return `${name}: ${p && p.available === false ? "⛔" : "🟢"} ${lim}`;
+  }).join("<br>");
+  el.innerHTML = `
+    <div class="stat">Токени 30д<br><b>${fmtTok(tokens)}</b></div>
+    <div class="stat">Машинний час 30д<br><b>${(seconds/3600).toFixed(1)} год</b></div>
+    <div class="stat">Витрати (оцінка)<br><b>${spendTxt}</b></div>
+    <div class="stat">Ліміти провайдерів<br>${provs || "н/д"}</div>`;
+}
+
+const PIE_COLORS = ["#00aced", "#4caf50", "#e0a030", "#ff6b6b", "#9c6ade", "#607d8b", "#c0ca33"];
+
+function pie(container, caption, labels, data) {
+  const box = document.createElement("div");
+  box.className = "chart-box";
+  const canvas = document.createElement("canvas");
+  box.appendChild(canvas);
+  const cap = document.createElement("div");
+  cap.className = "cap";
+  cap.textContent = caption;
+  box.appendChild(cap);
+  container.appendChild(box);
+  new Chart(canvas, {
+    type: "doughnut",
+    data: { labels, datasets: [{ data, backgroundColor: PIE_COLORS, borderWidth: 0 }] },
+    options: { plugins: { legend: { position: "bottom", labels: { color: "#ccc", font: { size: 10 } } } } },
+  });
+}
+
+function renderRoleCharts(container, role) {
+  const stats = window.teamStats || {};
+  const models = stats.models || {};
+  const my = role.model && models[role.model] ? (models[role.model].usage_30d || {}) : {};
+
+  // 1) time share: this role's model vs the rest of the team
+  const totalSec = Object.values(models).reduce((s, m) => s + ((m.usage_30d || {}).seconds || 0), 0);
+  const mySec = my.seconds || 0;
+  if (totalSec > 0) {
+    pie(container, `Час: ${role.model || "—"} vs команда (30д)`,
+        [role.model || "—", "решта команди"], [Math.round(mySec), Math.round(totalSec - mySec)]);
+  }
+
+  // 2) reliability: ok vs failures of the effective model
+  const runs = my.runs || 0, fails = my.failures || 0;
+  if (runs > 0) {
+    pie(container, `Надійність ${role.model} (${runs} ранів)`,
+        ["успішні", "збої"], [runs - fails, fails]);
+  }
+
+  // 3) peer scores (avg per rater) when present
+  const scores = role.peer_scores || (stats.roles && stats.roles[role.key] && stats.roles[role.key].peer_scores) || [];
+  if (scores.length) {
+    const byRater = {};
+    scores.forEach(s => { (byRater[s.rater] ||= []).push(s.score); });
+    const labels = Object.keys(byRater);
+    const data = labels.map(r => byRater[r].reduce((a, b) => a + b, 0) / byRater[r].length);
+    pie(container, "Оцінки старших моделей (сер.)", labels, data);
+  } else {
+    const note = document.createElement("div");
+    note.className = "cap";
+    note.textContent = "Peer-оцінок ще немає — з'являться після першого запуску оцінювання (LB-100).";
+    container.appendChild(note);
+  }
+
+  if (!container.children.length) {
+    container.innerHTML = '<div class="cap">Немає даних за 30 днів для цієї моделі.</div>';
+  }
+}
