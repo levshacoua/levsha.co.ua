@@ -1,7 +1,8 @@
-// Team management page — decrypts the global atlas graph (same password), derives the
-// Team API token from the SAME password, and AUTOSAVES role→model changes through
-// https://brain.levsha.co.ua/team/api with live feedback (LB-098). Clipboard command
-// remains the fallback when the API is unreachable.
+// Team management page — password unlocks the atlas graph (auth check + offline fallback),
+// then the page renders the LIVE roster from the Team API (/team/api/stats) so what you see
+// is what the brain actually uses right now. Saves are real (autosave) with server-confirmed
+// feedback; the encrypted graph is only the offline fallback. NOTE: requests intentionally
+// send no Content-Type header — keeps them CORS-simple (the API parses the JSON body anyway).
 const API_BASE = "https://brain.levsha.co.ua";
 let apiToken = null;
 
@@ -27,6 +28,35 @@ async function deriveApiToken(password) {
   return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+async function fetchStats() {
+  const r = await fetch(API_BASE + "/team/api/stats", { headers: { "X-Team-Token": apiToken } });
+  if (!r.ok) throw new Error("stats " + r.status);
+  const d = await r.json();
+  if (!d.ok) throw new Error(d.reason || "stats failed");
+  return d;
+}
+
+function rosterFromStats(stats) {
+  const roles = Object.entries(stats.roles || {}).map(([key, r]) => ({
+    key, label: r.label || key, model: r.model, assignment: r.assignment,
+    capabilities: r.capabilities || [],
+  }));
+  const models = Object.keys(stats.models || {}).length
+    ? Object.keys(stats.models)
+    : [...new Set(roles.map(r => r.model).filter(Boolean))];
+  return { roles, models: models.sort(), live: true };
+}
+
+function rosterFromGraph(graph) {
+  const roles = graph.nodes.filter(n => n.kind === "role").map(n => ({
+    key: (n.id || "").replace(/^role:/, ""), label: n.label, model: n.model,
+    assignment: n.assignment, capabilities: n.capabilities || [],
+  }));
+  const models = graph.nodes.filter(n => n.kind === "model")
+    .map(n => (n.id || "").replace(/^model:/, "")).filter(Boolean).sort();
+  return { roles, models, live: false, generated: graph.generated };
+}
+
 async function unlock() {
   const password = document.getElementById("password-input").value.trim();
   if (!password) return;
@@ -44,7 +74,15 @@ async function unlock() {
     apiToken = await deriveApiToken(password);
     document.getElementById("password-gate").style.display = "none";
     document.getElementById("app").style.display = "block";
-    renderTeam(graph);
+    try {
+      const stats = await fetchStats();
+      renderTeam(rosterFromStats(stats));
+      document.getElementById("generated").textContent = "🟢 live";
+    } catch (e) {
+      renderTeam(rosterFromGraph(graph));
+      document.getElementById("generated").textContent =
+        `⚠ офлайн-знімок ${graph.generated || ""} (API недоступний)`;
+    }
   } catch (e) {
     errorEl.style.display = "block";
   }
@@ -53,7 +91,7 @@ async function unlock() {
 async function apiPost(path, body) {
   const r = await fetch(API_BASE + path, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-Team-Token": apiToken },
+    headers: { "X-Team-Token": apiToken },
     body: JSON.stringify(body),
   });
   return r.json();
@@ -64,26 +102,34 @@ function setStatusLine(el, text, cls) {
   el.className = "save-status " + (cls || "");
 }
 
-function renderTeam(graph) {
-  document.getElementById("generated").textContent = `Generated: ${graph.generated || ""}`;
-  const roles = graph.nodes.filter(n => n.kind === "role");
-  const models = graph.nodes.filter(n => n.kind === "model")
-    .map(n => (n.id || "").replace(/^model:/, "")).filter(Boolean).sort();
+async function refreshCardTruth(card, roleKey) {
+  try {
+    const stats = await fetchStats();
+    const r = (stats.roles || {})[roleKey];
+    if (r) {
+      card.querySelector(".current").textContent = r.model || "—";
+      card.querySelector(".assign").textContent = r.assignment ? ` (${r.assignment})` : "";
+    }
+  } catch (e) { /* keep optimistic value */ }
+}
+
+function renderTeam(roster) {
   const list = document.getElementById("team-list");
   list.innerHTML = "";
 
-  roles.sort((a, b) => (a.label || "").localeCompare(b.label || "")).forEach(role => {
-    const roleKey = (role.id || "").replace(/^role:/, "");
+  roster.roles.sort((a, b) => (a.label || "").localeCompare(b.label || "")).forEach(role => {
     const card = document.createElement("div");
     card.className = "role-card";
-    const options = models
+    const options = roster.models
       .map(m => `<option value="${m}" ${m === role.model ? "selected" : ""}>${m}</option>`).join("");
+    const duties = (role.capabilities || []).map(c => `<li>${c}</li>`).join("");
 
     card.innerHTML = `
-      <h3>${role.label || roleKey}</h3>
-      <div class="role-model">⚙ зараз: <span class="current">${role.model || "—"}</span>${role.assignment ? ` (${role.assignment})` : ""}</div>
+      <h3>${role.label || role.key}</h3>
+      <div class="role-model">⚙ зараз: <span class="current">${role.model || "—"}</span><span class="assign">${role.assignment ? ` (${role.assignment})` : ""}</span></div>
+      <details class="duties"><summary>Обов'язки (${(role.capabilities || []).length})</summary><ul>${duties}</ul></details>
       <div class="role-actions">
-        <select aria-label="model for ${roleKey}">${options}</select>
+        <select aria-label="model for ${role.key}">${options}</select>
         <button type="button" data-act="unset" class="unset" title="Повернути автоматичний вибір">unset</button>
       </div>
       <div class="save-status"></div>
@@ -96,16 +142,15 @@ function renderTeam(graph) {
     const select = card.querySelector("select");
     const status = card.querySelector(".save-status");
     const confirmRow = card.querySelector(".confirm-row");
-    const currentEl = card.querySelector(".current");
 
     async function save(model, confirmed) {
       setStatusLine(status, "⏳ зберігаю…", "");
       confirmRow.style.display = "none";
       try {
-        const res = await apiPost("/team/api/set", { role: roleKey, model, ...(confirmed ? { confirm: true } : {}) });
+        const res = await apiPost("/team/api/set", { role: role.key, model, ...(confirmed ? { confirm: true } : {}) });
         if (res.ok) {
-          currentEl.textContent = res.model;
           setStatusLine(status, `✅ застосовано: ${res.role} → ${res.model} (${res.assignment || "pinned"})`, "ok");
+          refreshCardTruth(card, role.key);
         } else if (res.needs_confirm) {
           card.querySelector(".warn").textContent = `⚠️ ${res.reason}`;
           confirmRow.style.display = "flex";
@@ -115,7 +160,7 @@ function renderTeam(graph) {
         }
       } catch (e) {
         setStatusLine(status, "⚠️ API недоступний — команда скопійована в буфер, встав боту", "warn");
-        navigator.clipboard.writeText(`/team set ${roleKey} ${model}`).catch(() => {});
+        navigator.clipboard.writeText(`/team set ${role.key} ${model}`).catch(() => {});
       }
     }
 
@@ -124,23 +169,23 @@ function renderTeam(graph) {
     card.querySelector('[data-act="unset"]').addEventListener("click", async () => {
       setStatusLine(status, "⏳ зберігаю…", "");
       try {
-        const res = await apiPost("/team/api/unset", { role: roleKey });
+        const res = await apiPost("/team/api/unset", { role: role.key });
         if (res.ok) {
-          currentEl.textContent = res.model || "auto";
-          setStatusLine(status, `✅ ${roleKey}: пін знято (авто-вибір)`, "ok");
+          setStatusLine(status, `✅ ${role.key}: пін знято (авто-вибір)`, "ok");
+          refreshCardTruth(card, role.key);
         } else {
           setStatusLine(status, `❌ ${res.reason || "відхилено"}`, "err");
         }
       } catch (e) {
         setStatusLine(status, "⚠️ API недоступний — команда в буфері", "warn");
-        navigator.clipboard.writeText(`/team unset ${roleKey}`).catch(() => {});
+        navigator.clipboard.writeText(`/team unset ${role.key}`).catch(() => {});
       }
     });
 
     list.appendChild(card);
   });
 
-  if (!roles.length) list.innerHTML = '<p class="hint">У графі немає ролей — онови глобальний Atlas.</p>';
+  if (!roster.roles.length) list.innerHTML = '<p class="hint">Ролі не знайдено.</p>';
 }
 
 document.getElementById("unlock-btn").addEventListener("click", unlock);
