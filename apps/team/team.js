@@ -5,6 +5,8 @@
 // send no Content-Type header — keeps them CORS-simple (the API parses the JSON body anyway).
 const API_BASE = "https://brain.levsha.co.ua";
 let apiToken = null;
+let expandedRoleKey = null;
+let lastRoleStatus = null;
 
 async function pbkdf2Bits(password, saltBytes, bits) {
   const enc = new TextEncoder();
@@ -39,7 +41,9 @@ async function fetchStats() {
 function rosterFromStats(stats) {
   const roles = Object.entries(stats.roles || {}).map(([key, r]) => ({
     key, label: r.label || key, model: r.model, assignment: r.assignment,
-    capabilities: r.capabilities || [],
+    model_variant: r.model_variant, effort: r.effort,
+    contour: r.contour || r.group || roleManifestContour(stats.workflow, key),
+    capabilities: r.capabilities || [], peer_scores: r.peer_scores || [],
   }));
   const models = Object.keys(stats.models || {}).length
     ? Object.keys(stats.models)
@@ -50,7 +54,8 @@ function rosterFromStats(stats) {
 function rosterFromGraph(graph) {
   const roles = graph.nodes.filter(n => n.kind === "role").map(n => ({
     key: (n.id || "").replace(/^role:/, ""), label: n.label, model: n.model,
-    assignment: n.assignment, capabilities: n.capabilities || [],
+    assignment: n.assignment, model_variant: n.model_variant, effort: n.effort,
+    contour: n.contour || n.group, capabilities: n.capabilities || [],
   }));
   const models = graph.nodes.filter(n => n.kind === "model")
     .map(n => (n.id || "").replace(/^model:/, "")).filter(Boolean).sort();
@@ -110,6 +115,8 @@ function setStatusLine(el, text, cls) {
 async function refreshCardTruth(card, roleKey) {
   try {
     const stats = await fetchStats();
+    window.teamStats = stats;
+    renderPipeline(stats);
     const r = (stats.roles || {})[roleKey];
     if (r) {
       card.querySelector(".current").textContent = r.model || "—";
@@ -118,36 +125,116 @@ async function refreshCardTruth(card, roleKey) {
   } catch (e) { /* keep optimistic value */ }
 }
 
+async function refreshTeamTruth(roleKey) {
+  const stats = await fetchStats();
+  window.teamStats = stats;
+  renderSummary(stats);
+  renderPipeline(stats);
+  renderTeam(rosterFromStats(stats));
+  return (stats.roles || {})[roleKey];
+}
+
+function roleModelParts(role) {
+  const parts = [role && role.model ? role.model : "auto"];
+  if (role && role.model_variant) parts.push(role.model_variant);
+  if (role && role.effort) parts.push(role.effort);
+  return parts;
+}
+
+function roleModelText(role) {
+  return roleModelParts(role).join(" · ");
+}
+
+function roleModelChip(role) {
+  const pinned = role && role.assignment;
+  return `<span class="model-chip${pinned ? " pinned" : ""}">${roleModelText(role)}${pinned ? " <span class=\"pin\">pinned</span>" : ""}</span>`;
+}
+
+const ROLE_GROUPS = [
+  { key: "main", title: "Основний конвеєр", roles: ["ceo", "architect", "developer", "frontend", "local_worker", "reviewer"] },
+  { key: "planning", title: "Планування", roles: ["planner", "project_manager", "product_manager"] },
+  { key: "support", title: "Підтримка", roles: ["knowledge", "logger", "secretary", "security"] },
+  { key: "schedule", title: "Розклад", roles: ["nightly", "researcher"] },
+];
+
+const ROLE_GROUP_BY_KEY = ROLE_GROUPS.reduce((acc, group) => {
+  group.roles.forEach(role => { acc[role] = group.key; });
+  return acc;
+}, {});
+
+function roleGroupKey(role) {
+  return (role.contour && ROLE_GROUPS.some(g => g.key === role.contour) && role.contour)
+    || ROLE_GROUP_BY_KEY[role.key]
+    || "support";
+}
+
 function renderTeam(roster) {
   const list = document.getElementById("team-list");
   list.innerHTML = "";
 
-  roster.roles.sort((a, b) => (a.label || "").localeCompare(b.label || "")).forEach(role => {
+  const rolesByGroup = ROLE_GROUPS.map(group => ({ ...group, items: [] }));
+  const groupIndex = Object.fromEntries(rolesByGroup.map((group, index) => [group.key, index]));
+  roster.roles.forEach(role => {
+    rolesByGroup[groupIndex[roleGroupKey(role)] || 0].items.push(role);
+  });
+
+  rolesByGroup.forEach(group => {
+    group.items.sort((a, b) => {
+      const ai = group.roles.indexOf(a.key);
+      const bi = group.roles.indexOf(b.key);
+      if (ai !== -1 || bi !== -1) return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+      return (a.label || "").localeCompare(b.label || "");
+    });
+  });
+
+  rolesByGroup.filter(group => group.items.length).forEach(group => {
+    const header = document.createElement("h2");
+    header.className = "role-section";
+    header.innerHTML = `<span>${group.title}</span><em>${group.items.length}</em>`;
+    list.appendChild(header);
+
+    group.items.forEach(role => {
     const card = document.createElement("div");
     card.className = "role-card";
+    card.dataset.role = role.key;
     const options = roster.models
       .map(m => `<option value="${m}" ${m === role.model ? "selected" : ""}>${m}</option>`).join("");
     const duties = (role.capabilities || []).map(c => `<li>${c}</li>`).join("");
+    const isOpen = expandedRoleKey === role.key;
 
     card.innerHTML = `
-      <h3>${role.label || role.key}</h3>
-      <div class="role-model">⚙ зараз: <span class="current">${role.model || "—"}</span><span class="assign">${role.assignment ? ` (${role.assignment})` : ""}</span></div>
-      <details class="duties"><summary>Обов'язки (${(role.capabilities || []).length})</summary><ul>${duties}</ul></details>
-      <details class="analytics"><summary>Аналітика</summary><div class="charts"></div></details>
-      <div class="role-actions">
-        <select aria-label="model for ${role.key}">${options}</select>
-        <button type="button" data-act="unset" class="unset" title="Повернути автоматичний вибір">unset</button>
-      </div>
-      <div class="save-status"></div>
-      <div class="confirm-row" style="display:none">
-        <span class="warn"></span>
-        <button type="button" data-act="confirm">Все одно застосувати</button>
+      <button type="button" class="role-row" aria-expanded="${isOpen ? "true" : "false"}">
+        <span class="role-title">${role.label || role.key}</span>
+        ${roleModelChip(role)}
+      </button>
+      <div class="role-body" ${isOpen ? "" : "hidden"}>
+        <div class="role-model">⚙ зараз: <span class="current">${role.model || "—"}</span><span class="assign">${role.assignment ? ` (${role.assignment})` : ""}</span></div>
+        <details class="duties"><summary>Обов'язки (${(role.capabilities || []).length})</summary><ul>${duties}</ul></details>
+        <details class="analytics"><summary>Аналітика</summary><div class="charts"></div></details>
+        <div class="role-actions">
+          <select aria-label="model for ${role.key}">${options}</select>
+          <button type="button" data-act="unset" class="unset" title="Повернути автоматичний вибір">unset</button>
+        </div>
+        <div class="save-status"></div>
+        <div class="confirm-row" style="display:none">
+          <span class="warn"></span>
+          <button type="button" data-act="confirm">Все одно застосувати</button>
+        </div>
       </div>
     `;
 
+    const row = card.querySelector(".role-row");
     const select = card.querySelector("select");
     const status = card.querySelector(".save-status");
     const confirmRow = card.querySelector(".confirm-row");
+    if (lastRoleStatus && lastRoleStatus.role === role.key) {
+      setStatusLine(status, lastRoleStatus.text, lastRoleStatus.cls);
+    }
+
+    row.addEventListener("click", () => {
+      expandedRoleKey = expandedRoleKey === role.key ? null : role.key;
+      renderTeam(roster);
+    });
 
     async function save(model, confirmed) {
       setStatusLine(status, "⏳ зберігаю…", "");
@@ -155,8 +242,13 @@ function renderTeam(roster) {
       try {
         const res = await apiPost("/team/api/set", { role: role.key, model, ...(confirmed ? { confirm: true } : {}) });
         if (res.ok) {
-          setStatusLine(status, `✅ застосовано: ${res.role} → ${res.model} (${res.assignment || "pinned"})`, "ok");
-          refreshCardTruth(card, role.key);
+          lastRoleStatus = { role: role.key, text: `✅ застосовано: ${res.role} → ${res.model} (${res.assignment || "pinned"})`, cls: "ok" };
+          setStatusLine(status, lastRoleStatus.text, lastRoleStatus.cls);
+          try {
+            await refreshTeamTruth(role.key);
+          } catch (e) {
+            refreshCardTruth(card, role.key);
+          }
         } else if (res.needs_confirm) {
           card.querySelector(".warn").textContent = `⚠️ ${res.reason}`;
           confirmRow.style.display = "flex";
@@ -177,8 +269,13 @@ function renderTeam(roster) {
       try {
         const res = await apiPost("/team/api/unset", { role: role.key });
         if (res.ok) {
-          setStatusLine(status, `✅ ${role.key}: пін знято (авто-вибір)`, "ok");
-          refreshCardTruth(card, role.key);
+          lastRoleStatus = { role: role.key, text: `✅ ${role.key}: пін знято (авто-вибір)`, cls: "ok" };
+          setStatusLine(status, lastRoleStatus.text, lastRoleStatus.cls);
+          try {
+            await refreshTeamTruth(role.key);
+          } catch (e) {
+            refreshCardTruth(card, role.key);
+          }
         } else {
           setStatusLine(status, `❌ ${res.reason || "відхилено"}`, "err");
         }
@@ -197,6 +294,7 @@ function renderTeam(roster) {
     });
 
     list.appendChild(card);
+  });
   });
 
   if (!roster.roles.length) list.innerHTML = '<p class="hint">Ролі не знайдено.</p>';
@@ -313,41 +411,121 @@ function renderRoleCharts(container, role) {
 
 
 // ---- Живий опис взаємодії команди (модель підставляється з поточних призначень) ----
+function esc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[ch]));
+}
+
+function asArray(v) {
+  if (!v) return [];
+  return Array.isArray(v) ? v : Object.values(v);
+}
+
+function workflowSection(workflow, names) {
+  for (const name of names) {
+    if (workflow && workflow[name]) return workflow[name];
+  }
+  return null;
+}
+
+function roleManifestContour(workflow, roleKey) {
+  if (!workflow) return "";
+  const groups = workflow.role_groups || workflow.groups || workflow.contours || workflow.role_contours;
+  if (!groups) return "";
+  for (const [groupKey, value] of Object.entries(groups)) {
+    const roles = Array.isArray(value) ? value : (value.roles || value.items || value.role_keys || []);
+    if (roles.includes(roleKey)) return value.key || value.contour || groupKey;
+  }
+  const roleMeta = workflow.roles && workflow.roles[roleKey];
+  return roleMeta && (roleMeta.contour || roleMeta.group || "");
+}
+
+function workflowSteps(workflow) {
+  const section = workflowSection(workflow, ["main", "primary", "pipeline", "workflow"]);
+  return asArray(
+    workflow.steps || workflow.pipeline_steps || workflow.interaction_steps
+    || (section && (section.steps || section.items))
+  );
+}
+
+function workflowFlow(workflow) {
+  const section = workflowSection(workflow, ["main", "primary", "pipeline", "workflow"]);
+  return asArray(
+    workflow.flow || workflow.chips || workflow.pipeline_flow
+    || (section && (section.flow || section.chips || section.items))
+  );
+}
+
+function planningFlow(workflow) {
+  const planning = workflowSection(workflow, ["planning_flow", "planning", "planning_contour", "plan"]);
+  const manifestFlow = asArray(
+    Array.isArray(planning) ? planning : (planning && (planning.flow || planning.chips || planning.items || planning.steps))
+  );
+  if (manifestFlow.length) return manifestFlow;
+  return [
+    { label: "Workflow manifest ще не доступний у відповіді API." },
+  ];
+}
+
+function chipRoleKeys(item) {
+  if (!item || typeof item === "string") return [];
+  const raw = item.roles || item.role_keys || item.keys || item.role || item.key;
+  return Array.isArray(raw) ? raw : (raw ? [raw] : []);
+}
+
+function chipLabel(item) {
+  if (typeof item === "string") return item;
+  return item.label || item.name || item.title || chipRoleKeys(item).join(" / ") || "step";
+}
+
+function renderChip(item, roles) {
+  const keys = typeof item === "string" && roles[item] ? [item] : chipRoleKeys(item);
+  const label = typeof item === "string" && roles[item] ? (roles[item].label || item) : chipLabel(item);
+  const modelText = keys.length
+    ? keys.map(key => roleModelText(roles[key] || { model: "auto" })).join(" / ")
+    : (item && typeof item === "object" && (item.model || item.model_variant || item.effort)
+      ? roleModelText(item)
+      : "");
+  return `<span class="chip">${esc(label)}${modelText ? `<em>${esc(modelText)}</em>` : ""}</span>`;
+}
+
+function renderFlowRow(title, items, roles) {
+  if (!items.length) return "";
+  return `<div class="flow-row"><strong>${esc(title)}</strong>${items.map(item => renderChip(item, roles)).join('<span class="arr">→</span>')}</div>`;
+}
+
+function renderWorkflowStep(step, roles) {
+  if (typeof step === "string") return `<li>${esc(step)}</li>`;
+  const title = step.title || step.label || step.name;
+  const text = step.text || step.description || step.summary || "";
+  const keys = chipRoleKeys(step);
+  const roleBits = keys.map(key => `<span class="m">${esc(roleModelText(roles[key] || { model: "auto" }))}</span>`).join(" / ");
+  return `<li>${title ? `<b>${esc(title)}</b>${text ? " — " : ""}` : ""}${esc(text)}${roleBits ? ` ${roleBits}` : ""}</li>`;
+}
+
 function renderPipeline(stats) {
   const el = document.getElementById("pipeline-steps");
   if (!el) return;
   const R = stats.roles || {};
-  const m = key => `<span class="m">${(R[key] && R[key].model) || "auto"}</span>`;
-
-  // Arrow flow diagram (chips), models live-substituted.
+  const workflow = stats.workflow;
   const flow = document.getElementById("pipeline-flow");
-  if (flow) {
-    const chip = (name, key) => `<span class="chip">${name}${key ? `<em>${(R[key] && R[key].model) || "auto"}</em>` : ""}</span>`;
-    flow.innerHTML = [
-      chip("Owner"),
-      chip("CEO / Architect", "ceo"),
-      chip("Developer", "developer") + chip("Frontend", "frontend") + chip("Local", "local_worker"),
-      `<span class="chip gate">Гейти</span>`,
-      chip("CEO review", "ceo") + `<span class="chip veto">Owner вето</span>`,
-      chip("Secretary", "knowledge"),
-    ].join('<span class="arr">→</span>')
-    + `<div class="loops">↻ Nightly ${(R.nightly||{}).model||"auto"} · щоП'ятниці Researcher ${(R.researcher||{}).model||"auto"} · план: Planner/PM/Product ${(R.planner||{}).model||"auto"}</div>`;
+
+  if (!workflow) {
+    if (flow) flow.innerHTML = "";
+    el.innerHTML = '<li class="hint">Workflow manifest ще не доступний у відповіді API. Онови backend або відкрий live API; сторінка не впала.</li>';
+    return;
   }
-  el.innerHTML = `
-    <li><b>Owner</b> ставить задачу або дає «го» (Telegram / сторінки).</li>
-    <li><b>CEO</b> [${m("ceo")}] приймає рішення що і коли робити; <b>Architect</b> [${m("architect")}]
-        пише контракт задачі → лінт → CEO-review.</li>
-    <li>Виконавець за типом задачі: <b>Developer (Backend)</b> [${m("developer")}] — код у гілці;
-        <b>Frontend</b> [${m("frontend")}] — сторінки/дизайн-система;
-        <b>Local Worker</b> [${m("local_worker")}] — приватні/дешеві локальні задачі.</li>
-    <li>Автоматичні <b>гейти</b> (тести, скани) — без людей; червоне → задача не їде далі.</li>
-    <li><b>CEO</b> [${m("ceo")}] робить post-run review дифа → accept/reject;
-        <b>Owner</b> отримує сповіщення і має право вето кнопкою.</li>
-    <li>Після accept: <b>Logger/Knowledge Curator</b> [${m("knowledge")}] пише журнал і стан проєкту;
-        Atlas оновлюється.</li>
-    <li>Вночі <b>Nightly Maintenance</b> [${m("nightly")}] — індексація, прибирання, дайджест;
-        щоп'ятниці <b>Researcher</b> [${m("researcher")}] — ринок моделей + ефективність команди.</li>
-    <li>Планувальний контур: <b>Planner</b> [${m("planner")}] / <b>Project Manager</b> [${m("project_manager")}]
-        / <b>Product Manager</b> [${m("product_manager")}] — декомпозиція беклогу в чергу задач
-        (pipeline pre-drafting).</li>`;
+
+  const steps = workflowSteps(workflow);
+  if (flow) {
+    const rows = [
+      renderFlowRow("Основний конвеєр", workflowFlow(workflow), R),
+      renderFlowRow("Планування", planningFlow(workflow), R),
+    ].filter(Boolean);
+    flow.innerHTML = rows.join("");
+  }
+  el.innerHTML = steps.length
+    ? steps.map(step => renderWorkflowStep(step, R)).join("")
+    : '<li class="hint">Workflow manifest отримано, але кроки не описані.</li>';
 }

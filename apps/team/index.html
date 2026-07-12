@@ -10,6 +10,14 @@
   <style>
     .team-list { max-width: 760px; margin: 0 auto; padding: 20px; display: grid; gap: 12px; }
     .role-card { background: var(--atlas-surface); border: 1px solid var(--atlas-line); border-radius: 3px; padding: 14px 16px; }
+    .role-section { margin: 10px 0 0; padding: 0 2px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 13px; font-weight: 400; color: var(--atlas-fg); }
+    .role-section em { font-style: normal; color: var(--atlas-muted); font-size: 11px; }
+    .role-row { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0; border: 0; background: transparent; color: var(--atlas-fg); cursor: pointer; font: inherit; text-align: left; }
+    .role-row[aria-expanded="true"] { margin-bottom: 10px; }
+    .role-title { min-width: 0; font-size: 1.02rem; }
+    .model-chip { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; max-width: 100%; border: 1px solid var(--atlas-line); border-radius: 3px; padding: 4px 8px; color: var(--atlas-accent); font-size: 11px; line-height: 1.25; overflow-wrap: anywhere; }
+    .model-chip .pin { color: #e0a030; }
+    .role-body { padding-top: 2px; }
     .role-card h3 { margin: 0 0 4px 0; font-weight: 400; font-size: 1.05rem; }
     .role-model { font-size: 12px; color: var(--atlas-accent); margin-bottom: 10px; }
     .role-actions { display: flex; gap: 8px; align-items: center; }
@@ -30,7 +38,9 @@
     .pipeline summary { cursor: pointer; color: var(--atlas-fg); padding: 6px 0; }
     .pipeline ol { line-height: 1.7; }
     .pipeline .m { color: var(--atlas-accent); font-weight: 400; }
-    #pipeline-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 0 4px; }
+    #pipeline-flow { display: grid; gap: 8px; padding: 10px 0 4px; }
+    #pipeline-flow .flow-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    #pipeline-flow .flow-row strong { width: 100%; color: var(--atlas-fg); font-weight: 400; font-size: 12px; }
     #pipeline-flow .chip { background: var(--atlas-surface); border: 1px solid var(--atlas-line); border-radius: 3px; padding: 5px 10px; font-size: 12px; color: var(--atlas-fg); }
     #pipeline-flow .chip em { display: block; font-style: normal; color: var(--atlas-accent); font-size: 10px; }
     #pipeline-flow .chip.gate { border-color: #4caf50; }
@@ -54,6 +64,16 @@
     #summary { max-width: 760px; margin: 0 auto; padding: 0 20px 8px; display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; }
     #summary .stat { background: var(--atlas-surface); border: 1px solid var(--atlas-line); padding: 10px 14px; border-radius: 3px; }
     #summary .stat b { color: var(--atlas-accent); font-weight: 400; }
+    @media (max-width: 560px) {
+      .team-list { padding: 14px; }
+      .role-card { padding: 12px; }
+      .role-row { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .model-chip { width: fit-content; }
+      .role-actions { flex-direction: column; align-items: stretch; }
+      .role-actions select, .role-actions button { width: 100%; }
+      .confirm-row { align-items: stretch; flex-direction: column; }
+      #pipeline-flow .arr { display: none; }
+    }
   </style>
 </head>
 <body>
