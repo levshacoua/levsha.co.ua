@@ -86,8 +86,17 @@ function renderGraph(graph) {
 
   // Group nodes by lane; nodes without a group fall back to their layer
   // (team/projects layers) so no node is ever silently dropped.
+  // Owner 2026-07-12: a role is the wrapper, its model lives INSIDE the role card —
+  // assigned model nodes are redundant on the map; only unassigned (idle) models stay visible.
+  const assignedModels = new Set(
+    graph.nodes.filter(n => n.kind === "role" && n.model).map(n => "model:" + n.model)
+  );
+  const visibleNodes = graph.nodes.filter(
+    n => !(n.kind === "model" && assignedModels.has(n.id))
+  );
+
   const groups = {};
-  graph.nodes.forEach(node => {
+  visibleNodes.forEach(node => {
     const key = node.group || node.layer || "other";
     if (!groups[key]) groups[key] = [];
     groups[key].push(node);
@@ -156,7 +165,7 @@ function renderGraph(graph) {
   // Create node elements
   const expandedNodes = new Set();
 
-  graph.nodes.forEach(node => {
+  visibleNodes.forEach(node => {
     const pos = positions[node.id];
     if (!pos) return;
 

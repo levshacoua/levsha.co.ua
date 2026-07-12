@@ -82,7 +82,9 @@ async function unlock() {
       renderTeam(rosterFromStats(stats));
       document.getElementById("generated").textContent = "🟢 live";
     } catch (e) {
-      renderTeam(rosterFromGraph(graph));
+      const roster = rosterFromGraph(graph);
+      renderPipeline({ roles: Object.fromEntries(roster.roles.map(r => [r.key, r])) });
+      renderTeam(roster);
       document.getElementById("generated").textContent =
         `⚠ офлайн-знімок ${graph.generated || ""} (API недоступний)`;
     }
@@ -296,6 +298,21 @@ function renderPipeline(stats) {
   if (!el) return;
   const R = stats.roles || {};
   const m = key => `<span class="m">${(R[key] && R[key].model) || "auto"}</span>`;
+
+  // Arrow flow diagram (chips), models live-substituted.
+  const flow = document.getElementById("pipeline-flow");
+  if (flow) {
+    const chip = (name, key) => `<span class="chip">${name}${key ? `<em>${(R[key] && R[key].model) || "auto"}</em>` : ""}</span>`;
+    flow.innerHTML = [
+      chip("Owner"),
+      chip("CEO / Architect", "ceo"),
+      chip("Developer", "developer") + chip("Frontend", "frontend") + chip("Local", "local_worker"),
+      `<span class="chip gate">Гейти</span>`,
+      chip("CEO review", "ceo") + `<span class="chip veto">Owner вето</span>`,
+      chip("Secretary", "knowledge"),
+    ].join('<span class="arr">→</span>')
+    + `<div class="loops">↻ Nightly ${(R.nightly||{}).model||"auto"} · щоП'ятниці Researcher ${(R.researcher||{}).model||"auto"} · план: Planner/PM/Product ${(R.planner||{}).model||"auto"}</div>`;
+  }
   el.innerHTML = `
     <li><b>Owner</b> ставить задачу або дає «го» (Telegram / сторінки).</li>
     <li><b>CEO</b> [${m("ceo")}] приймає рішення що і коли робити; <b>Architect</b> [${m("architect")}]

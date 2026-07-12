@@ -30,6 +30,13 @@
     .pipeline summary { cursor: pointer; color: var(--atlas-fg); padding: 6px 0; }
     .pipeline ol { line-height: 1.7; }
     .pipeline .m { color: var(--atlas-accent); font-weight: 400; }
+    #pipeline-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 0 4px; }
+    #pipeline-flow .chip { background: var(--atlas-surface); border: 1px solid var(--atlas-line); border-radius: 3px; padding: 5px 10px; font-size: 12px; color: var(--atlas-fg); }
+    #pipeline-flow .chip em { display: block; font-style: normal; color: var(--atlas-accent); font-size: 10px; }
+    #pipeline-flow .chip.gate { border-color: #4caf50; }
+    #pipeline-flow .chip.veto { border-color: #e0a030; }
+    #pipeline-flow .arr { color: var(--atlas-muted); }
+    #pipeline-flow .loops { width: 100%; font-size: 11px; color: var(--atlas-muted); padding-top: 6px; }
     .site-nav { display: flex; gap: 8px; }
     .site-nav a { color: var(--atlas-fg); text-decoration: none; font-size: 12px; padding: 4px 12px; border: 1px solid var(--atlas-line); border-radius: 3px; }
     .site-nav a:hover { border-color: var(--atlas-accent); color: var(--atlas-accent); }
@@ -65,12 +72,12 @@
       <div id="generated"></div>
     </header>
     <div id="summary"></div>
-    <details id="pipeline" class="pipeline"><summary>Як команда взаємодіє (живий опис)</summary><ol id="pipeline-steps"></ol></details>
+    <details id="pipeline" class="pipeline" open><summary>Як команда взаємодіє (живий опис)</summary><div id="pipeline-flow"></div><ol id="pipeline-steps"></ol></details>
     <div class="team-list" id="team-list"></div>
     <p class="hint">Вибір у списку зберігається автоматично — побачиш «✅ застосовано». Стратегічні ролі попросять підтвердження. Якщо API недоступний, команда копіюється в буфер для бота. Atlas — карта; керування — тут.</p>
   </div>
 
   <script src="chart.umd.min.js"></script>
-  <script src="team.js"></script>
+  <script src="team.js?v=3"></script>
 </body>
 </html>
