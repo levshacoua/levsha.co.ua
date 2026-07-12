@@ -26,6 +26,13 @@
     .confirm-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
     .confirm-row .warn { font-size: 12px; color: #e0a030; flex: 1; }
     .confirm-row button { padding: 5px 12px; background: #e0a030; color: #0d0d0d; border: none; cursor: pointer; font-size: 12px; }
+    .pipeline { max-width: 760px; margin: 0 auto 8px; padding: 0 20px; font-size: 13px; color: var(--atlas-muted); }
+    .pipeline summary { cursor: pointer; color: var(--atlas-fg); padding: 6px 0; }
+    .pipeline ol { line-height: 1.7; }
+    .pipeline .m { color: var(--atlas-accent); font-weight: 400; }
+    .site-nav { display: flex; gap: 8px; }
+    .site-nav a { color: var(--atlas-fg); text-decoration: none; font-size: 12px; padding: 4px 12px; border: 1px solid var(--atlas-line); border-radius: 3px; }
+    .site-nav a:hover { border-color: var(--atlas-accent); color: var(--atlas-accent); }
     .duties { margin: 0 0 10px; font-size: 12px; color: var(--atlas-muted); }
     .duties summary { cursor: pointer; color: var(--atlas-fg); }
     .duties ul { margin: 6px 0 0; padding-left: 18px; }
@@ -54,9 +61,11 @@
   <div id="app">
     <header>
       <h1>Lefty's Brain — Team</h1>
+      <nav class="site-nav"><a href="/apps/atlas/">Atlas</a><a href="/apps/atlas/kobos/">KOBOS</a><a href="/apps/team/">Team</a></nav>
       <div id="generated"></div>
     </header>
     <div id="summary"></div>
+    <details id="pipeline" class="pipeline"><summary>Як команда взаємодіє (живий опис)</summary><ol id="pipeline-steps"></ol></details>
     <div class="team-list" id="team-list"></div>
     <p class="hint">Вибір у списку зберігається автоматично — побачиш «✅ застосовано». Стратегічні ролі попросять підтвердження. Якщо API недоступний, команда копіюється в буфер для бота. Atlas — карта; керування — тут.</p>
   </div>

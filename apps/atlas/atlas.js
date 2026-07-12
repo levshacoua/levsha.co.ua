@@ -93,7 +93,7 @@ function renderGraph(graph) {
     groups[key].push(node);
   });
 
-  const knownOrder = ["erp", "api", "mcp", "web", "entity", "team", "project", "projects"];
+  const knownOrder = ["team", "project", "projects", "erp", "api", "mcp", "web", "entity"];
   const groupOrder = [
     ...knownOrder.filter(g => groups[g]),
     ...Object.keys(groups).filter(g => !knownOrder.includes(g)).sort(),

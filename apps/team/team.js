@@ -78,6 +78,7 @@ async function unlock() {
       const stats = await fetchStats();
       window.teamStats = stats;
       renderSummary(stats);
+      renderPipeline(stats);
       renderTeam(rosterFromStats(stats));
       document.getElementById("generated").textContent = "🟢 live";
     } catch (e) {
@@ -286,4 +287,30 @@ function renderRoleCharts(container, role) {
   if (!container.children.length) {
     container.innerHTML = '<div class="cap">Немає даних за 30 днів для цієї моделі.</div>';
   }
+}
+
+
+// ---- Живий опис взаємодії команди (модель підставляється з поточних призначень) ----
+function renderPipeline(stats) {
+  const el = document.getElementById("pipeline-steps");
+  if (!el) return;
+  const R = stats.roles || {};
+  const m = key => `<span class="m">${(R[key] && R[key].model) || "auto"}</span>`;
+  el.innerHTML = `
+    <li><b>Owner</b> ставить задачу або дає «го» (Telegram / сторінки).</li>
+    <li><b>CEO</b> [${m("ceo")}] приймає рішення що і коли робити; <b>Architect</b> [${m("architect")}]
+        пише контракт задачі → лінт → CEO-review.</li>
+    <li>Виконавець за типом задачі: <b>Developer (Backend)</b> [${m("developer")}] — код у гілці;
+        <b>Frontend</b> [${m("frontend")}] — сторінки/дизайн-система;
+        <b>Local Worker</b> [${m("local_worker")}] — приватні/дешеві локальні задачі.</li>
+    <li>Автоматичні <b>гейти</b> (тести, скани) — без людей; червоне → задача не їде далі.</li>
+    <li><b>CEO</b> [${m("ceo")}] робить post-run review дифа → accept/reject;
+        <b>Owner</b> отримує сповіщення і має право вето кнопкою.</li>
+    <li>Після accept: <b>Logger/Knowledge Curator</b> [${m("knowledge")}] пише журнал і стан проєкту;
+        Atlas оновлюється.</li>
+    <li>Вночі <b>Nightly Maintenance</b> [${m("nightly")}] — індексація, прибирання, дайджест;
+        щоп'ятниці <b>Researcher</b> [${m("researcher")}] — ринок моделей + ефективність команди.</li>
+    <li>Планувальний контур: <b>Planner</b> [${m("planner")}] / <b>Project Manager</b> [${m("project_manager")}]
+        / <b>Product Manager</b> [${m("product_manager")}] — декомпозиція беклогу в чергу задач
+        (pipeline pre-drafting).</li>`;
 }

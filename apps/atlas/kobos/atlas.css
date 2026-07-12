@@ -422,3 +422,7 @@ header {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.site-nav { display: flex; gap: 8px; }
+.site-nav a { color: var(--atlas-fg); text-decoration: none; font-size: 12px; padding: 4px 12px; border: 1px solid var(--atlas-line); border-radius: 3px; }
+.site-nav a:hover { border-color: var(--atlas-accent); color: var(--atlas-accent); }
