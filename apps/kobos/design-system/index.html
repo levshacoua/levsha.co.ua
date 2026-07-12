@@ -3,58 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOBOS Design System</title>
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta name="referrer" content="no-referrer">
-  <title>KOBOS Design System</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Krona+One:wght@400&display=swap">
-  <link rel="stylesheet" href="./tokens.css">
-  <link rel="stylesheet" href="app.css">
+  <style>
+    body { margin:0; background:#0d0d0d; color:#fff; font-family:-apple-system,Inter,sans-serif; }
+    #password-gate { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+    .gate-content { background:#1a1a1a; padding:40px 48px; border:1px solid rgba(0,172,237,.15); text-align:center; max-width:320px; }
+    .gate-content input { width:100%; padding:10px; background:#111; border:1px solid rgba(0,172,237,.15); color:#fff; font:inherit; margin-bottom:12px; box-sizing:border-box; }
+    .gate-content button { background:#00aced; color:#0d0d0d; border:none; padding:10px 24px; width:100%; cursor:pointer; font:inherit; }
+    #error-msg { margin-top:12px; color:#ff6b6b; font-size:.85rem; display:none; }
+  </style>
 </head>
 <body>
-  <div class="layout">
-    <main class="main" id="main-content"></main>
-    <aside class="sidebar" id="sidebar">
-      <details open>
-        <summary>Foundations</summary>
-        <nav>
-          <a href="#/color-system" data-page="color-system">Color System</a>
-          <a href="#/business-colors" data-page="business-colors">Business Colors</a>
-          <a href="#/typography" data-page="typography">Typography</a>
-          <a href="#/radius-elevation" data-page="radius-elevation">Radius &amp; Elevation</a>
-          <a href="#/spacing" data-page="spacing">Spacing</a>
-        </nav>
-      </details>
-      <details open>
-        <summary>Core Components</summary>
-        <nav>
-          <a href="#/buttons" data-page="buttons">Buttons</a>
-          <a href="#/inputs" data-page="inputs">Inputs</a>
-          <a href="#/select" data-page="select">Select &amp; Dropdown</a>
-          <a href="#/checkbox" data-page="checkbox">Checkbox, Radio &amp; Switch</a>
-          <a href="#/textarea" data-page="textarea">Textarea &amp; Notes</a>
-          <a href="#/datetime" data-page="datetime">Date &amp; Time</a>
-        </nav>
-      </details>
-      <details open>
-        <summary>Data Display</summary>
-        <nav>
-          <a href="#/badges" data-page="badges">Badges &amp; Chips</a>
-          <a href="#/cards" data-page="cards">Cards</a>
-          <a href="#/tables" data-page="tables">Tables</a>
-        </nav>
-      </details>
-      <details open>
-        <summary>Feedback &amp; Status</summary>
-        <nav>
-          <a href="#/alerts" data-page="alerts">Alerts</a>
-        </nav>
-      </details>
-    </aside>
-    <div class="mobile-nav" id="mobile-nav">
-      <select id="nav-select" aria-label="Navigate to section"></select>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>KOBOS Design System</h1>
+      <p>LevSha.co.ua — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+      <button id="unlock-btn">Unlock</button>
+      <div id="error-msg">Incorrect password</div>
     </div>
   </div>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
+<script>
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const km = await crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" }, km,
+    { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+}
+async function unlock() {
+  const password = document.getElementById("password-input").value.trim();
+  if (!password) return;
+  const err = document.getElementById("error-msg");
+  err.style.display = "none";
+  try {
+    const enc = await (await fetch("content.enc.json", { cache: "no-store" })).json();
+    const b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const key = await deriveKey(password, b(enc.salt));
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b(enc.iv) }, key, b(enc.ciphertext));
+    const bundle = JSON.parse(new TextDecoder().decode(plain));
+    document.open();
+    document.write(bundle.html);
+    document.close();
+    // styles + scripts are inlined inside bundle.html already
+  } catch (e) {
+    err.style.display = "block";
+  }
+}
+document.getElementById("unlock-btn").addEventListener("click", unlock);
+document.getElementById("password-input").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+</script>
 </body>
 </html>

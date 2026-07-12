@@ -1,4 +1,2 @@
 User-agent: *
 Disallow: /apps/
-
-Sitemap: https://levsha.co.ua/sitemap.xml
