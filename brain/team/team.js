@@ -78,6 +78,7 @@ async function unlock() {
     const graph = parsed.graph || parsed;
     apiToken = await deriveApiToken(password);
     document.getElementById("password-gate").style.display = "none";
+    try{sessionStorage.setItem("lb_gate_pw",document.getElementById("password-input").value.trim());}catch(e){}
     document.getElementById("app").style.display = "block";
     try {
       const stats = await fetchStats();
@@ -529,3 +530,6 @@ function renderPipeline(stats) {
     ? steps.map(step => renderWorkflowStep(step, R)).join("")
     : '<li class="hint">Workflow manifest отримано, але кроки не описані.</li>';
 }
+
+/* LB single-session gate: auto-unlock from sessionStorage (enter password once per session) */
+(function(){var p=null;try{p=sessionStorage.getItem("lb_gate_pw");}catch(e){}if(p){var el=document.getElementById("password-input");if(el){el.value=p;unlock();}}})();

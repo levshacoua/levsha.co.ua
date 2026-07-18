@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lefty's Brain — Console</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0d0d0d; --surface:#1a1a1a; --line:rgba(0,172,237,.15); --accent:#00aced; --fg:#f2f2f2; --muted:#8a8a8a; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--fg); font-family:Inter,-apple-system,sans-serif; font-weight:300; }
+    a { color:inherit; text-decoration:none; }
+
+    #password-gate { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+    .gate-content { background:var(--surface); padding:40px 48px; border:1px solid var(--line); text-align:center; max-width:320px; }
+    .gate-content h1 { font-weight:300; font-size:1.3rem; margin:0 0 6px; }
+    .gate-content p { color:var(--muted); font-size:.85rem; margin:0 0 20px; }
+    .gate-content input { width:100%; padding:10px; background:#111; border:1px solid var(--line); color:var(--fg); font:inherit; margin-bottom:12px; }
+    .gate-content button { background:var(--accent); color:var(--bg); border:none; padding:10px 24px; width:100%; cursor:pointer; font:inherit; }
+    #error-msg { margin-top:12px; color:#ff6b6b; font-size:.85rem; display:none; }
+
+    #hub { display:none; max-width:860px; margin:0 auto; padding:56px 24px 64px; }
+    .hub-head { margin-bottom:8px; }
+    .hub-head h1 { font-weight:300; font-size:1.5rem; letter-spacing:.02em; margin:0; }
+    .hub-head h1 b { color:var(--accent); font-weight:600; }
+    .hub-head p { color:var(--muted); font-size:.9rem; margin:6px 0 0; }
+    .lock { float:right; font-size:.75rem; color:var(--muted); background:none; border:1px solid var(--line); padding:5px 12px; cursor:pointer; font:inherit; }
+    .group-label { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em; margin:34px 0 12px; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+    .card { display:block; background:var(--surface); border:1px solid var(--line); padding:18px 20px; transition:border-color .15s, transform .15s; }
+    .card:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .card .name { font-size:1.02rem; font-weight:400; }
+    .card .desc { color:var(--muted); font-size:.82rem; margin-top:6px; line-height:1.5; }
+    .card.soon { opacity:.5; cursor:default; }
+    .card.soon:hover { border-color:var(--line); transform:none; }
+    .foot { color:var(--muted); font-size:.72rem; margin-top:40px; border-top:1px solid var(--line); padding-top:16px; }
+  </style>
+</head>
+<body>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>Lefty's Brain</h1>
+      <p>LevSha.co.ua — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off" autofocus>
+      <button id="unlock-btn">Unlock</button>
+      <div id="error-msg">Incorrect password</div>
+    </div>
+  </div>
+
+  <main id="hub">
+    <div class="hub-head">
+      <button class="lock" id="lock-btn" title="Lock this session">Lock</button>
+      <h1>Lefty's <b>Brain</b> — Console</h1>
+      <p>Private multi-project AI-team surfaces. One password, remembered for this browser session.</p>
+    </div>
+
+    <div class="group-label">Brain</div>
+    <div class="cards">
+      <a class="card" href="/brain/team/">
+        <div class="name">Team</div>
+        <div class="desc">Live role → model panel. Owner edits assignments; autosaves to the runtime.</div>
+      </a>
+      <a class="card" href="/brain/atlas/">
+        <div class="name">Global Atlas</div>
+        <div class="desc">Architecture graph across all projects — auto-generated monitor.</div>
+      </a>
+    </div>
+
+    <div class="group-label">KOBOS</div>
+    <div class="cards">
+      <a class="card" href="/brain/kobos/atlas/">
+        <div class="name">KOBOS · Atlas</div>
+        <div class="desc">Code-structure graph for the KOBOS repo (ERP + web platform).</div>
+      </a>
+      <a class="card" href="/brain/kobos/design-system/">
+        <div class="name">KOBOS · Design System</div>
+        <div class="desc">Component showcase (Figma-synced). Presentation layer, synthetic data.</div>
+      </a>
+    </div>
+
+    <div class="group-label">Next</div>
+    <div class="cards">
+      <div class="card soon">
+        <div class="name">New project</div>
+        <div class="desc">Future project surfaces land here at <code>/brain/&lt;project&gt;/</code>.</div>
+      </div>
+    </div>
+
+    <div class="foot">Private &amp; noindex. The live KOBOS product lives at its own domain, behind its own auth.</div>
+  </main>
+
+<script>
+const LB_GATE_KEY = "lb_gate_pw";
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const km = await crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" }, km,
+    { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+}
+function reveal() {
+  document.getElementById("password-gate").style.display = "none";
+  document.getElementById("hub").style.display = "block";
+}
+async function validate(password) {
+  // Auth probe: decrypt the global atlas payload with the entered password.
+  const enc = await (await fetch("atlas/graph.enc.json", { cache: "no-store" })).json();
+  const b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const key = await deriveKey(password, b(enc.salt));
+  await crypto.subtle.decrypt({ name: "AES-GCM", iv: b(enc.iv) }, key, b(enc.ciphertext));
+  return true; // throws on wrong password
+}
+async function unlock() {
+  const password = document.getElementById("password-input").value.trim();
+  if (!password) return;
+  const err = document.getElementById("error-msg");
+  err.style.display = "none";
+  try {
+    await validate(password);
+    try { sessionStorage.setItem(LB_GATE_KEY, password); } catch (e) {}
+    reveal();
+  } catch (e) {
+    err.style.display = "block";
+  }
+}
+document.getElementById("unlock-btn").addEventListener("click", unlock);
+document.getElementById("password-input").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+document.getElementById("lock-btn").addEventListener("click", () => {
+  try { sessionStorage.removeItem(LB_GATE_KEY); } catch (e) {}
+  location.reload();
+});
+/* single-session: auto-unlock if already validated this session */
+(function(){
+  let p = null; try { p = sessionStorage.getItem(LB_GATE_KEY); } catch (e) {}
+  if (p) { document.getElementById("password-input").value = p; unlock(); }
+})();
+</script>
+</body>
+</html>

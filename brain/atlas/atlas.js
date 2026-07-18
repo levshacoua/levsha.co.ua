@@ -52,6 +52,7 @@ async function unlock() {
 
     if (graph) {
       document.getElementById("password-gate").style.display = "none";
+    try{sessionStorage.setItem("lb_gate_pw",document.getElementById("password-input").value.trim());}catch(e){}
       document.getElementById("app").style.display = "block";
       renderGraph(graph);
     }
@@ -456,3 +457,6 @@ if (intentForm && modalEl) {
     }
   });
 }
+
+/* LB single-session gate: auto-unlock from sessionStorage (enter password once per session) */
+(function(){var p=null;try{p=sessionStorage.getItem("lb_gate_pw");}catch(e){}if(p){var el=document.getElementById("password-input");if(el){el.value=p;unlock();}}})();

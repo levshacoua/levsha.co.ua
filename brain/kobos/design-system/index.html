@@ -43,6 +43,7 @@ async function unlock() {
     const key = await deriveKey(password, b(enc.salt));
     const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b(enc.iv) }, key, b(enc.ciphertext));
     const bundle = JSON.parse(new TextDecoder().decode(plain));
+    try{sessionStorage.setItem("lb_gate_pw",document.getElementById("password-input").value.trim());}catch(e){}
     document.open();
     document.write(bundle.html);
     document.close();
@@ -53,6 +54,9 @@ async function unlock() {
 }
 document.getElementById("unlock-btn").addEventListener("click", unlock);
 document.getElementById("password-input").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+/* LB single-session gate: auto-unlock from sessionStorage (enter password once per session) */
+(function(){var p=null;try{p=sessionStorage.getItem("lb_gate_pw");}catch(e){}if(p){var el=document.getElementById("password-input");if(el){el.value=p;unlock();}}})();
+
 </script>
 </body>
 </html>
