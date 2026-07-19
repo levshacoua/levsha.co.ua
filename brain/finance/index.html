@@ -54,6 +54,18 @@
         <h2>Add transaction</h2>
         <span>Executed trade or deposit</span>
       </div>
+      <div class="autopay-control" id="autopay-control" data-save-status="">
+        <label class="autopay-toggle">
+          <input type="checkbox" id="autopay-active" name="weekly_autopay_active">
+          <span>Щотижнева автооплата на Robinhood</span>
+        </label>
+        <label class="autopay-amount">
+          <span>USD</span>
+          <input type="number" id="autopay-amount" name="weekly_contribution_usd" min="0" step="0.01" inputmode="decimal">
+        </label>
+        <p>дзеркалить реальне автосписання Robinhood — не керує ним</p>
+        <span class="autopay-save-state" id="autopay-state" role="status"></span>
+      </div>
       <form class="transaction-form" id="transaction-form" novalidate>
         <label class="transaction-field">
           <span>Action</span>

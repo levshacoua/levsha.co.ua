@@ -2,8 +2,10 @@ const HELP_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
 const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
 const JOURNAL_ENDPOINT = "https://brain.levsha.co.ua/finance/journal";
+const SETTINGS_ENDPOINT = "https://brain.levsha.co.ua/finance/settings";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
 const JOURNAL_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
+const SETTINGS_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const TOOLTIP_EDGE_GAP = 8;
 const JOURNAL_ACTION_OPTIONS = ["buy", "sell", "deposit", "dividend"];
 const THESIS_STATUS_OPTIONS = [
@@ -17,6 +19,8 @@ const THESIS_STATUS_OPTIONS = [
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
 let gatePassword = "";
 let tooltipId = 0;
+let currentSnapshot = null;
+let autopayState = { weekly_autopay_active: true, weekly_contribution_usd: 50 };
 
 const SUMMARY_HELP = {
   "Equity Value": "Сумарна вартість портфеля акцій",
@@ -83,7 +87,10 @@ async function unlock() {
 }
 
 function render(snapshot) {
+  currentSnapshot = snapshot;
+  autopayState = autopayValuesFromSnapshot(snapshot);
   decorateHelpLabels();
+  setupAutopayControl(snapshot);
   setupTransactionForm();
   renderMeta(snapshot);
   renderMetrics(snapshot);
@@ -115,7 +122,7 @@ function renderMetrics(snapshot) {
     { label: "Equity Invested", value: money(portfolio.equity_invested_net) },
     { label: "Crypto Invested", value: money(crypto.invested_net) },
     { label: "Кеш на рахунку", value: cashAvailable },
-    { label: "Щотижневий внесок", value: money(portfolio.weekly_contribution) },
+    { label: "Щотижневий внесок", value: money(weeklyContributionMetricValue(snapshot)) },
     {
       label: "Доступно цього циклу",
       value: cashAvailable,
@@ -136,6 +143,11 @@ function renderMetrics(snapshot) {
     }
     return item;
   }));
+}
+
+function weeklyContributionMetricValue(snapshot) {
+  const state = snapshot === currentSnapshot ? autopayState : autopayValuesFromSnapshot(snapshot);
+  return state.weekly_autopay_active ? state.weekly_contribution_usd : 0;
 }
 
 function renderEquities(rows) {
@@ -340,6 +352,121 @@ function setThesisControlsDisabled(form, saveButton, disabled) {
 function setThesisState(card, state, status, message) {
   card.dataset.saveStatus = status;
   state.textContent = message;
+}
+
+function setupAutopayControl(snapshot) {
+  const control = document.getElementById("autopay-control");
+  const activeInput = document.getElementById("autopay-active");
+  const amountInput = document.getElementById("autopay-amount");
+  if (!control || !activeInput || !amountInput) return;
+
+  applyAutopayValues(autopayValuesFromSnapshot(snapshot));
+  if (control.dataset.ready === "true") return;
+  control.dataset.ready = "true";
+
+  activeInput.addEventListener("change", () => persistAutopaySettings());
+  amountInput.addEventListener("blur", () => persistAutopaySettings());
+  amountInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      amountInput.blur();
+    }
+  });
+}
+
+function autopayValuesFromSnapshot(snapshot) {
+  return {
+    weekly_autopay_active: snapshot.weekly_autopay_active ?? true,
+    weekly_contribution_usd: Number(
+      snapshot.weekly_contribution_usd ?? snapshot.equity_portfolio?.weekly_contribution ?? 50
+    ),
+  };
+}
+
+function autopayValuesFromControls() {
+  return {
+    weekly_autopay_active: document.getElementById("autopay-active").checked,
+    weekly_contribution_usd: numberOrZero(document.getElementById("autopay-amount").value),
+  };
+}
+
+function autopayPayload(values) {
+  return {
+    weekly_autopay_active: Boolean(values.weekly_autopay_active),
+    weekly_contribution_usd: Number(values.weekly_contribution_usd),
+  };
+}
+
+function applyAutopayValues(values) {
+  autopayState = autopayPayload(values);
+  const activeInput = document.getElementById("autopay-active");
+  const amountInput = document.getElementById("autopay-amount");
+  if (activeInput) activeInput.checked = autopayState.weekly_autopay_active;
+  if (amountInput) amountInput.value = formatAmountInput(autopayState.weekly_contribution_usd);
+}
+
+async function persistAutopaySettings() {
+  const control = document.getElementById("autopay-control");
+  const state = document.getElementById("autopay-state");
+  if (!gatePassword) {
+    setAutopayState(control, state, "error", "Unlock again before saving.");
+    applyAutopayValues(autopayState);
+    return;
+  }
+
+  const previous = { ...autopayState };
+  const draft = autopayValuesFromControls();
+  if (!Number.isFinite(draft.weekly_contribution_usd) || draft.weekly_contribution_usd < 0) {
+    setAutopayState(control, state, "error", "Amount must be non-negative.");
+    applyAutopayValues(previous);
+    return;
+  }
+
+  const payload = autopayPayload(draft);
+  if (
+    payload.weekly_autopay_active === previous.weekly_autopay_active &&
+    payload.weekly_contribution_usd === previous.weekly_contribution_usd
+  ) {
+    return;
+  }
+
+  applyAutopayValues(payload);
+  if (currentSnapshot) renderMetrics(currentSnapshot);
+  setAutopayControlsDisabled(true);
+  setAutopayState(control, state, "saving", "Saving...");
+
+  try {
+    const response = await fetch(SETTINGS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [SETTINGS_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    setAutopayState(control, state, "saved", "Saved");
+  } catch (error) {
+    applyAutopayValues(previous);
+    if (currentSnapshot) renderMetrics(currentSnapshot);
+    setAutopayState(control, state, "error", error.message || "Save failed");
+  } finally {
+    setAutopayControlsDisabled(false);
+  }
+}
+
+function setAutopayControlsDisabled(disabled) {
+  ["autopay-active", "autopay-amount"].forEach(id => {
+    const control = document.getElementById(id);
+    if (control) control.disabled = disabled;
+  });
+}
+
+function setAutopayState(control, state, status, message) {
+  if (control) control.dataset.saveStatus = status;
+  if (state) state.textContent = message;
 }
 
 function setupTransactionForm() {
@@ -684,6 +811,11 @@ function number(value, digits) {
   });
 }
 
+function formatAmountInput(value) {
+  const numberValue = Number(value || 0);
+  return Number.isInteger(numberValue) ? String(numberValue) : String(numberValue);
+}
+
 function formatDate(value) {
   return new Date(value).toLocaleString(undefined, {
     year: "numeric",
@@ -715,6 +847,9 @@ if (typeof module !== "undefined") {
   module.exports = {
     JOURNAL_ENDPOINT,
     JOURNAL_PASSWORD_HEADER,
+    SETTINGS_ENDPOINT,
+    SETTINGS_PASSWORD_HEADER,
+    autopayPayload,
     journalPayload,
     validateJournalDraft,
   };

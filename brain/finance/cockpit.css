@@ -214,6 +214,7 @@ select {
 
 .metric,
 .thesis-card,
+.autopay-control,
 .transaction-form {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -480,9 +481,71 @@ tr:last-child td {
 .thesis-field input:focus,
 .thesis-field select:focus,
 .transaction-field input:focus,
-.transaction-field select:focus {
+.transaction-field select:focus,
+.autopay-amount input:focus {
   border-color: var(--line-strong);
   outline: 0;
+}
+
+.autopay-control {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(120px, 180px) auto;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.autopay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  font-size: .9rem;
+}
+
+.autopay-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.autopay-amount {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.autopay-amount span {
+  color: var(--muted);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.autopay-amount input {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  color-scheme: dark;
+  padding: 7px 8px;
+}
+
+.autopay-control p {
+  grid-column: 1 / 3;
+  margin: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.autopay-save-state {
+  justify-self: end;
+  color: var(--muted);
+  font-size: .78rem;
 }
 
 .transaction-form {
@@ -574,6 +637,10 @@ tr:last-child td {
   border-color: var(--line-strong);
 }
 
+.autopay-control[data-save-status="saving"] {
+  border-color: var(--line-strong);
+}
+
 .thesis-card[data-save-status="saved"] .thesis-save-state {
   color: var(--good);
 }
@@ -582,11 +649,19 @@ tr:last-child td {
   color: var(--good);
 }
 
+.autopay-control[data-save-status="saved"] .autopay-save-state {
+  color: var(--good);
+}
+
 .thesis-card[data-save-status="error"] .thesis-save-state {
   color: var(--bad);
 }
 
 .transaction-form[data-save-status="error"] .transaction-save-state {
+  color: var(--bad);
+}
+
+.autopay-control[data-save-status="error"] .autopay-save-state {
   color: var(--bad);
 }
 
@@ -602,6 +677,9 @@ tr:last-child td {
   .topbar { align-items: stretch; flex-direction: column; gap: 14px; }
   .lock { width: 100%; }
   .section-head { align-items: start; flex-direction: column; gap: 4px; }
+  .autopay-control { grid-template-columns: 1fr; }
+  .autopay-control p { grid-column: auto; }
+  .autopay-save-state { justify-self: start; }
   .transaction-form { grid-template-columns: 1fr; }
   .thesis-edit { grid-template-columns: 1fr; }
 }
