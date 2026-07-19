@@ -4,10 +4,12 @@ const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
 const JOURNAL_ENDPOINT = "https://brain.levsha.co.ua/finance/journal";
 const SETTINGS_ENDPOINT = "https://brain.levsha.co.ua/finance/settings";
 const WATCHLIST_ENDPOINT = "https://brain.levsha.co.ua/finance/watchlist";
+const DISCOVERY_ENDPOINT = "https://brain.levsha.co.ua/finance/discover";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
 const JOURNAL_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const SETTINGS_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const WATCHLIST_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
+const DISCOVERY_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const TOOLTIP_EDGE_GAP = 8;
 const JOURNAL_ACTION_OPTIONS = ["buy", "sell", "deposit", "dividend"];
 const THESIS_STATUS_OPTIONS = [
@@ -122,6 +124,7 @@ function reveal() {
   showCurrentView();
   resetTransactionForm();
   setWatchlistReadOnly(false);
+  setDiscoveryReadOnly(false);
 }
 
 async function unlock() {
@@ -146,6 +149,7 @@ function render(snapshot) {
   setupAutopayControl(snapshot);
   setupTransactionForm();
   setupWatchlistForm();
+  setupDiscoveryRun();
   renderMeta(snapshot);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
@@ -154,6 +158,7 @@ function render(snapshot) {
   renderWatchlist(snapshot.watchlist || []);
   renderBottlenecks(snapshot.bottlenecks || { nodes: [], edges: [] });
   renderDependencyCandidates(snapshot);
+  renderDiscovery(snapshot.discovery || { last_run: "", trends: [], buy_recs: [] });
   renderRecommendation(snapshot.weekly_recommendation.positions);
 }
 
@@ -917,6 +922,157 @@ function watchlistSourceBadge(source) {
   return pill(normalized || "idea", "pill-signal-hold");
 }
 
+function setupDiscoveryRun() {
+  const button = document.getElementById("discovery-run");
+  if (!button || button.dataset.ready === "true") return;
+  button.dataset.ready = "true";
+  button.addEventListener("click", runDiscovery);
+  setDiscoveryReadOnly(!gatePassword);
+}
+
+async function runDiscovery() {
+  const button = document.getElementById("discovery-run");
+  const state = document.getElementById("discovery-run-state");
+  if (!button || !state) return;
+  if (!gatePassword) {
+    setDiscoveryState("error", "Розблокуй cockpit ще раз перед запуском.");
+    setDiscoveryReadOnly(true);
+    return;
+  }
+
+  button.disabled = true;
+  setDiscoveryState("saving", "Запускаю...");
+  try {
+    const response = await fetch(DISCOVERY_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [DISCOVERY_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify({}),
+    });
+    if (response.status === 202) {
+      setDiscoveryState(
+        "saved",
+        "Запущено. Ресьорч триває ~кілька хвилин — онови сторінку пізніше."
+      );
+      return;
+    }
+    if (response.status === 409) {
+      setDiscoveryState("saved", "Вже виконується.");
+      return;
+    }
+    throw new Error(await responseErrorMessage(response));
+  } catch (error) {
+    setDiscoveryState("error", error.message || "Не вдалося запустити ресьорч");
+  } finally {
+    button.disabled = !gatePassword;
+  }
+}
+
+function setDiscoveryReadOnly(readOnly) {
+  const button = document.getElementById("discovery-run");
+  if (button) button.disabled = readOnly;
+}
+
+function setDiscoveryState(status, message) {
+  const view = document.getElementById("view-bottlenecks");
+  const state = document.getElementById("discovery-run-state");
+  if (view) view.dataset.saveStatus = status;
+  if (state) state.textContent = message;
+}
+
+function renderDiscovery(discovery) {
+  renderDiscoveryLastRun(discovery.last_run);
+  renderDiscoveryTrends(discovery.trends || []);
+  renderDiscoveryBuyRecs(discovery.buy_recs || []);
+}
+
+function renderDiscoveryLastRun(lastRun) {
+  const root = document.getElementById("discovery-last-run");
+  if (!root) return;
+  root.textContent = lastRun ? `Станом на ${lastRun}` : "Ще не запускалось";
+}
+
+function renderDiscoveryTrends(trends) {
+  const root = document.getElementById("discovery-trends");
+  if (!root) return;
+  if (!trends.length) {
+    root.replaceChildren(el("p", "muted", "Поки немає кешованих трендів."));
+    return;
+  }
+  root.replaceChildren(...trends.map(trend => {
+    const item = document.createElement("article");
+    item.className = "discovery-trend";
+    item.append(
+      el("h3", "", trend.title || trend.id || "Тренд"),
+      el("p", "", trend.note || "Нотатки ще немає.")
+    );
+    return item;
+  }));
+}
+
+function renderDiscoveryBuyRecs(rows) {
+  const root = document.getElementById("discovery-buy-recs");
+  if (!root) return;
+  if (!rows.length) {
+    root.replaceChildren(el("p", "muted", "Поки немає кешованих buy-recommendations."));
+    return;
+  }
+  root.replaceChildren(...rows.map(discoveryBuyRecCard));
+}
+
+function discoveryBuyRecCard(row) {
+  const card = document.createElement("article");
+  card.className = "discovery-buy-rec";
+  if (row.held_position || row.held) card.classList.add("is-held");
+
+  const title = document.createElement("div");
+  title.className = "discovery-buy-rec-title";
+  title.append(el("strong", "", row.ticker || "Кандидат"), discoveryBuyRecMeta(row));
+
+  card.append(
+    title,
+    el("p", "", row.rationale || row.note || ""),
+    sourceLinks(row.source_urls || row.sources || [])
+  );
+  return card;
+}
+
+function discoveryBuyRecMeta(row) {
+  const meta = document.createElement("div");
+  meta.className = "bottleneck-meta";
+  const items = [];
+  if (row.trend) items.push(row.trend);
+  if (row.chokepoint || row.bottleneck) items.push(row.chokepoint || row.bottleneck);
+  const score = row.beneficiary_probability_pct ?? row.beneficiary_pct ?? row.probability_pct;
+  if (score !== undefined && score !== null && score !== "") items.push(`${score}%`);
+  if (row.held_position || row.held) items.push("у портфелі");
+  if (row.in_watchlist) items.push("у Watchlist");
+  meta.replaceChildren(...items.map(item => pill(item)));
+  return meta;
+}
+
+function sourceLinks(urls) {
+  const list = Array.isArray(urls) ? urls : [urls].filter(Boolean);
+  const root = document.createElement("div");
+  root.className = "source-links";
+  if (!list.length) {
+    root.append(el("span", "muted", "Джерела не вказані."));
+    return root;
+  }
+  root.append(el("span", "source-links-label", "Джерела:"));
+  list.forEach((url, index) => {
+    const link = document.createElement("a");
+    link.href = String(url);
+    link.textContent = `джерело ${index + 1}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    root.append(link);
+  });
+  return root;
+}
+
 function renderBottlenecks(graph) {
   const nodes = [...(graph.nodes || [])].sort(
     (left, right) => Number(right.composite_strength) - Number(left.composite_strength)
@@ -968,8 +1124,24 @@ function dependencyCandidatesFromSnapshot(snapshot) {
 function dependencyCandidateRow(candidate) {
   const item = document.createElement("article");
   item.className = "dependency-candidate";
+  if (candidate.held_position || candidate.held) item.classList.add("is-held");
   const title = candidate.ticker || candidate.name || candidate.title || "Кандидат";
   const score = candidate.score ?? candidate.beneficiary_probability_pct ?? candidate.probability_pct;
+  const state = el("span", "dependency-candidate-state", "");
+  state.setAttribute("role", "status");
+  const actions = document.createElement("div");
+  actions.className = "dependency-candidate-actions";
+  if (candidate.held_position || candidate.held) {
+    actions.append(pill("у портфелі", "pill-signal-hold"));
+  } else {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = candidate.in_watchlist ? "у Watchlist" : "додати у Watchlist";
+    button.disabled = !gatePassword || Boolean(candidate.in_watchlist);
+    button.addEventListener("click", () => submitDependencyCandidateToWatchlist(candidate, button, state));
+    actions.append(button);
+  }
+  if (candidate.linked_thesis) actions.append(pill("теза"));
   item.append(
     el("strong", "", title),
     el("p", "", candidate.note || candidate.reason || candidate.thesis || "")
@@ -977,7 +1149,48 @@ function dependencyCandidateRow(candidate) {
   if (score !== undefined && score !== null && score !== "") {
     item.append(pill(`${score}%`));
   }
+  item.append(actions, state);
   return item;
+}
+
+async function submitDependencyCandidateToWatchlist(candidate, button, state) {
+  if (!gatePassword) {
+    state.textContent = "Розблокуй cockpit ще раз перед збереженням.";
+    return;
+  }
+  const ticker = String(candidate.ticker || candidate.name || "").trim().toUpperCase();
+  if (!ticker) {
+    state.textContent = "Немає тікера для Watchlist.";
+    return;
+  }
+
+  const payload = watchlistPayload({
+    ticker,
+    source: "bottleneck-scan",
+    status: "watching",
+  });
+  button.disabled = true;
+  state.textContent = "Зберігаю...";
+  try {
+    const response = await fetch(WATCHLIST_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [WATCHLIST_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    candidate.in_watchlist = true;
+    button.textContent = "у Watchlist";
+    appendWatchlistRow(payload);
+    state.textContent = "Збережено.";
+  } catch (error) {
+    button.disabled = false;
+    state.textContent = error.message || "Не вдалося зберегти";
+  }
 }
 
 function renderBottleneckGraph(nodes, edges) {
@@ -1559,6 +1772,8 @@ if (typeof module !== "undefined") {
     SETTINGS_PASSWORD_HEADER,
     WATCHLIST_ENDPOINT,
     WATCHLIST_PASSWORD_HEADER,
+    DISCOVERY_ENDPOINT,
+    DISCOVERY_PASSWORD_HEADER,
     autopayPayload,
     journalPayload,
     validateWatchlistDraft,

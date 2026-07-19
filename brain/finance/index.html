@@ -254,10 +254,31 @@
     </div>
 
     <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
-      <div class="placeholder-view">
-        <h2>Вузькі місця</h2>
-        <p>Модуль відкриття трендів і вузьких місць — буде додано (#027). Запуск ресьорчу — вручну, кнопкою.</p>
+      <div class="section-head discovery-head">
+        <div>
+          <h2>Вузькі місця</h2>
+          <span id="discovery-last-run">Ще не запускалось</span>
+        </div>
+        <div class="discovery-actions">
+          <button type="button" id="discovery-run">Запустити ресьорч</button>
+          <span class="discovery-run-state" id="discovery-run-state" role="status"></span>
+        </div>
       </div>
+      <div class="discovery-advisory">Дорадчо — не авто-купівля; рішення й виконання — вручну</div>
+      <section class="discovery-section">
+        <div class="section-head">
+          <h2>Тренди</h2>
+          <span>Кешований результат</span>
+        </div>
+        <div class="discovery-trends" id="discovery-trends" aria-live="polite"></div>
+      </section>
+      <section class="discovery-section">
+        <div class="section-head">
+          <h2>Buy-recommendations</h2>
+          <span>Advisory only</span>
+        </div>
+        <div class="discovery-buy-recs" id="discovery-buy-recs" aria-live="polite"></div>
+      </section>
     </div>
   </main>
 
