@@ -1,6 +1,17 @@
-const LB_GATE_KEY = "lb_gate_pw";
 const HELP_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
+const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
+const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
+const THESIS_STATUS_OPTIONS = [
+  "strengthening",
+  "valid",
+  "mixed",
+  "weakening",
+  "invalidated",
+  "insufficient-evidence",
+];
+const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
+let gatePassword = "";
 
 const SUMMARY_HELP = {
   "Equity Value": "Сумарна вартість портфеля акцій",
@@ -55,7 +66,7 @@ async function unlock() {
   err.style.display = "none";
   try {
     const snapshot = await decryptSnapshot(password);
-    try { sessionStorage.setItem(LB_GATE_KEY, password); } catch (e) {}
+    gatePassword = password;
     render(snapshot);
     reveal();
   } catch (e) {
@@ -76,7 +87,7 @@ function render(snapshot) {
 function renderMeta(snapshot) {
   const portfolio = snapshot.equity_portfolio;
   document.getElementById("snapshot-meta").textContent =
-    `${formatDate(snapshot.generated_at)} · ${portfolio.market_mode} · read-only`;
+    `${formatDate(snapshot.generated_at)} · ${portfolio.market_mode} · thesis fields editable`;
 }
 
 function renderMetrics(snapshot) {
@@ -139,16 +150,185 @@ function renderTheses(rows) {
   root.replaceChildren(...rows.map(row => {
     const card = document.createElement("article");
     card.className = "thesis-card";
+    card.dataset.thesisId = row.id;
     const meta = document.createElement("div");
     meta.className = "meta";
-    meta.append(
-      pill(row.status),
-      pill(`${row.conviction}/5 ${row.conviction_trend}`),
-      pill(row.linked_tickers.join(", "))
+    renderThesisMeta(meta, row);
+    card.append(
+      el("h3", "", row.title),
+      meta,
+      thesisEditForm(row, card, meta),
+      el("div", "risk", row.key_risk)
     );
-    card.append(el("h3", "", row.title), meta, el("div", "risk", row.key_risk));
     return card;
   }));
+}
+
+function renderThesisMeta(meta, row) {
+  meta.replaceChildren(
+    pill(row.status),
+    pill(`${row.conviction}/5 ${row.conviction_trend}`),
+    pill(row.horizon),
+    pill(row.linked_tickers.join(", "))
+  );
+}
+
+function thesisEditForm(row, card, meta) {
+  const form = document.createElement("form");
+  form.className = "thesis-edit";
+  form.append(
+    thesisField("Conviction", numberSelect("conviction", row.conviction, [1, 2, 3, 4, 5])),
+    thesisField("Status", optionSelect("status", row.status, THESIS_STATUS_OPTIONS)),
+    thesisField("Trend", optionSelect("conviction_trend", row.conviction_trend, THESIS_TREND_OPTIONS)),
+    thesisField("Horizon", horizonInput(row.horizon))
+  );
+
+  const actions = document.createElement("div");
+  actions.className = "thesis-actions";
+  const save = document.createElement("button");
+  save.type = "submit";
+  save.textContent = "Save";
+  const state = el("span", "thesis-save-state", "");
+  state.setAttribute("role", "status");
+  actions.append(save, state);
+  form.append(actions);
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    saveThesisEdit(row, form, card, meta, save, state);
+  });
+
+  return form;
+}
+
+function thesisField(label, control) {
+  const wrapper = document.createElement("label");
+  wrapper.className = "thesis-field";
+  wrapper.append(el("span", "", label), control);
+  return wrapper;
+}
+
+function numberSelect(name, value, options) {
+  const select = optionSelect(name, String(value), options.map(option => String(option)));
+  select.inputMode = "numeric";
+  return select;
+}
+
+function optionSelect(name, value, options) {
+  const select = document.createElement("select");
+  select.name = name;
+  select.required = true;
+  options.forEach(optionValue => {
+    const option = document.createElement("option");
+    option.value = optionValue;
+    option.textContent = optionValue;
+    option.selected = optionValue === String(value);
+    select.append(option);
+  });
+  return select;
+}
+
+function horizonInput(value) {
+  const input = document.createElement("input");
+  input.name = "horizon";
+  input.type = "text";
+  input.maxLength = 40;
+  input.required = true;
+  input.value = value || "";
+  return input;
+}
+
+async function saveThesisEdit(row, form, card, meta, saveButton, state) {
+  if (!gatePassword) {
+    setThesisState(card, state, "error", "Unlock again before saving.");
+    return;
+  }
+
+  const previous = thesisEditableSnapshot(row);
+  const draft = thesisEditableValues(form);
+  Object.assign(row, draft);
+  renderThesisMeta(meta, row);
+  setThesisControlsDisabled(form, saveButton, true);
+  setThesisState(card, state, "saving", "Saving...");
+
+  try {
+    const response = await fetch(THESIS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [THESIS_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(thesisPayload(row.id, draft)),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    Object.assign(row, draft);
+    setThesisState(card, state, "saved", "Saved");
+  } catch (error) {
+    Object.assign(row, previous);
+    applyThesisValues(form, previous);
+    renderThesisMeta(meta, row);
+    setThesisState(card, state, "error", error.message || "Save failed");
+  } finally {
+    setThesisControlsDisabled(form, saveButton, false);
+  }
+}
+
+function thesisEditableSnapshot(row) {
+  return {
+    conviction: Number(row.conviction),
+    status: row.status,
+    conviction_trend: row.conviction_trend,
+    horizon: row.horizon || "",
+  };
+}
+
+function thesisEditableValues(form) {
+  return {
+    conviction: Number(form.elements.conviction.value),
+    status: form.elements.status.value,
+    conviction_trend: form.elements.conviction_trend.value,
+    horizon: form.elements.horizon.value.trim(),
+  };
+}
+
+function thesisPayload(thesis, values) {
+  return {
+    thesis,
+    conviction: values.conviction,
+    status: values.status,
+    conviction_trend: values.conviction_trend,
+    horizon: values.horizon,
+  };
+}
+
+function applyThesisValues(form, values) {
+  form.elements.conviction.value = String(values.conviction);
+  form.elements.status.value = values.status;
+  form.elements.conviction_trend.value = values.conviction_trend;
+  form.elements.horizon.value = values.horizon;
+}
+
+function setThesisControlsDisabled(form, saveButton, disabled) {
+  [...form.elements].forEach(control => {
+    control.disabled = disabled;
+  });
+  saveButton.disabled = disabled;
+}
+
+function setThesisState(card, state, status, message) {
+  card.dataset.saveStatus = status;
+  state.textContent = message;
+}
+
+async function responseErrorMessage(response) {
+  try {
+    const body = await response.json();
+    if (body && typeof body.detail === "string") return body.detail;
+    if (body && typeof body.message === "string") return body.message;
+  } catch (e) {}
+  return `Save failed (${response.status})`;
 }
 
 function renderRecommendation(rows) {
@@ -268,15 +448,6 @@ document.getElementById("password-input").addEventListener("keydown", event => {
   if (event.key === "Enter") unlock();
 });
 document.getElementById("lock-btn").addEventListener("click", () => {
-  try { sessionStorage.removeItem(LB_GATE_KEY); } catch (e) {}
+  gatePassword = "";
   location.reload();
 });
-
-(function autoUnlock() {
-  let password = null;
-  try { password = sessionStorage.getItem(LB_GATE_KEY); } catch (e) {}
-  if (password) {
-    document.getElementById("password-input").value = password;
-    unlock();
-  }
-})();
