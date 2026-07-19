@@ -10,6 +10,7 @@
   --good: #52d273;
   --bad: #ff6b6b;
   --warn: #ffd166;
+  --brain-sidebar-width: 232px;
 }
 
 * { box-sizing: border-box; }
@@ -18,8 +19,14 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-weight: 300;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 button,
@@ -84,9 +91,84 @@ select {
 
 #cockpit {
   display: none;
-  max-width: 1180px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0 0 0 var(--brain-sidebar-width);
   padding: 48px 24px 72px;
+}
+
+.brain-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 20;
+  width: var(--brain-sidebar-width);
+  overflow-y: auto;
+  background: rgba(17, 17, 17, .98);
+  border-right: 1px solid var(--line);
+  padding: 28px 18px;
+}
+
+.brain-hub-link {
+  display: block;
+  margin-bottom: 30px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 14px 15px;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: .02em;
+}
+
+.brain-hub-link b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.brain-nav {
+  display: grid;
+  gap: 26px;
+}
+
+.brain-nav-group {
+  display: grid;
+  gap: 8px;
+}
+
+.brain-nav-label {
+  color: var(--muted);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.brain-nav-link {
+  display: block;
+  border: 1px solid transparent;
+  padding: 9px 10px;
+  color: var(--fg);
+  font-size: .86rem;
+  line-height: 1.25;
+  transition: border-color .15s, background .15s, color .15s;
+}
+
+.brain-nav-link:hover,
+.brain-nav-link:focus-visible {
+  border-color: var(--line-strong);
+  background: rgba(0, 172, 237, .07);
+  outline: 0;
+}
+
+.brain-nav-link.is-active {
+  border-color: var(--line-strong);
+  background: rgba(0, 172, 237, .13);
+  color: var(--accent);
+  font-weight: 400;
+}
+
+#cockpit > .topbar,
+#cockpit > section {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .topbar {
@@ -516,6 +598,69 @@ tr:last-child td {
   .section-head { align-items: start; flex-direction: column; gap: 4px; }
   .transaction-form { grid-template-columns: 1fr; }
   .thesis-edit { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  #cockpit {
+    margin-left: 0;
+    padding-top: 0;
+  }
+
+  .brain-sidebar {
+    position: sticky;
+    top: 0;
+    width: calc(100vw);
+    max-width: 100%;
+    height: auto;
+    margin: 0 -24px 32px;
+    padding: 12px 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brain-hub-link {
+    display: inline-block;
+    margin: 0 12px 0 0;
+    padding: 9px 11px;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  .brain-nav {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 18px;
+    min-width: max-content;
+    vertical-align: top;
+  }
+
+  .brain-nav-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .brain-nav-label {
+    margin-right: 2px;
+  }
+
+  .brain-nav-link {
+    padding: 9px 10px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  #cockpit {
+    padding-top: 0;
+  }
+
+  .brain-sidebar {
+    margin: 0 -16px 28px;
+    padding: 10px 16px;
+  }
 }
 
 @media (min-width: 641px) and (max-width: 980px) {
