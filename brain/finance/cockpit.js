@@ -30,6 +30,39 @@ const BOTTLENECK_LIFECYCLES = [
   "resolved",
   "displaced",
 ];
+const BOTTLENECK_SCORE_LABELS = {
+  criticality: "критичність",
+  supplier_concentration: "концентрація постачальників",
+  substitution_difficulty: "складність заміни",
+  capacity_lead_time: "строк нарощування потужностей",
+  demand_growth: "зростання попиту",
+  pricing_power: "цінова влада",
+};
+const BOTTLENECK_TYPE_LABELS = {
+  capacity: "потужності",
+  "capacity-constraint": "обмеження потужностей",
+  monopoly: "монополія",
+  "scarce-material": "дефіцитна сировина",
+  "long-lead-time": "довгий строк",
+  "supplier-concentration": "концентрація постачальників",
+  regulatory: "регуляторне",
+  ip: "інтелектуальна власність",
+  geographic: "географічне",
+};
+const BOTTLENECK_LIFECYCLE_LABELS = {
+  accelerating: "прискорюється",
+  entrenched: "усталене",
+  emerging: "виникає",
+  peaking: "пік",
+  weakening: "послаблюється",
+  resolved: "усунене",
+  displaced: "витіснене",
+};
+const BOTTLENECK_MONETIZATION_LABELS = {
+  clear: "ясна",
+  partial: "часткова",
+  unclear: "неясна",
+};
 let gatePassword = "";
 let tooltipId = 0;
 let currentSnapshot = null;
@@ -775,14 +808,17 @@ function renderBottleneckLegend(nodes, edges) {
   colorList.replaceChildren(...lifecycleItems.map(lifecycle => {
     const item = document.createElement("span");
     item.className = "bottleneck-legend-swatch-item";
-    item.append(el("span", `bottleneck-legend-swatch lifecycle-${cssToken(lifecycle)}`, ""), lifecycle);
+    item.append(
+      el("span", `bottleneck-legend-swatch lifecycle-${cssToken(lifecycle)}`, ""),
+      bottleneckDisplay(BOTTLENECK_LIFECYCLE_LABELS, lifecycle)
+    );
     return item;
   }));
 
   root.replaceChildren(
-    bottleneckLegendItem("size", "Node size", "bottleneck strength (composite 0-100)"),
-    bottleneckLegendItem("color", "Node colour", colorList),
-    bottleneckLegendItem("line", "Line", `dependency (depends_on)${edges.length ? "" : " - none in this snapshot"}`)
+    bottleneckLegendItem("size", "Розмір вузла", "сила вузького місця (composite 0-100)"),
+    bottleneckLegendItem("color", "Колір вузла", colorList),
+    bottleneckLegendItem("line", "Лінія", `залежність (depends_on)${edges.length ? "" : " - у цьому snapshot немає"}`)
   );
 }
 
@@ -836,11 +872,11 @@ function renderBottleneckDetail(node) {
     (left, right) => Number(right.beneficiary_probability_pct) - Number(left.beneficiary_probability_pct)
   );
   root.replaceChildren(
-    el("div", "bottleneck-kicker", `${node.lifecycle} / ${node.type}`),
+    el("div", "bottleneck-kicker", `${bottleneckDisplay(BOTTLENECK_LIFECYCLE_LABELS, node.lifecycle)} / ${bottleneckDisplay(BOTTLENECK_TYPE_LABELS, node.type)}`),
     el("h3", "", node.title),
     bottleneckMetaRow([
-      `${node.composite_strength}/100 strength`,
-      `${node.monetization} monetization`,
+      `${node.composite_strength}/100 сила`,
+      `${bottleneckDisplay(BOTTLENECK_MONETIZATION_LABELS, node.monetization)} монетизація`,
     ]),
     bottleneckScores(scores),
     bottleneckSignals(signals),
@@ -858,13 +894,13 @@ function bottleneckMetaRow(items) {
 function bottleneckScores(scores) {
   const section = document.createElement("section");
   section.className = "bottleneck-detail-section";
-  section.append(el("h4", "", "Scores"));
+  section.append(el("h4", "", "Оцінки"));
   const grid = document.createElement("div");
   grid.className = "bottleneck-score-grid";
   scores.forEach(([name, value]) => {
     const item = document.createElement("div");
     item.className = "bottleneck-score";
-    item.append(el("span", "", name.replaceAll("_", " ")), el("b", "", `${value}/5`));
+    item.append(el("span", "", bottleneckDisplay(BOTTLENECK_SCORE_LABELS, name)), el("b", "", `${value}/5`));
     grid.append(item);
   });
   section.append(grid);
@@ -874,7 +910,7 @@ function bottleneckScores(scores) {
 function bottleneckSignals(signals) {
   const section = document.createElement("section");
   section.className = "bottleneck-detail-section";
-  section.append(el("h4", "", "Disappearing signals"));
+  section.append(el("h4", "", "Сигнали зникнення"));
   const list = document.createElement("ul");
   list.replaceChildren(...signals.map(signal => {
     const item = document.createElement("li");
@@ -888,11 +924,11 @@ function bottleneckSignals(signals) {
 function bottleneckCompanies(companies) {
   const section = document.createElement("section");
   section.className = "bottleneck-detail-section";
-  section.append(el("h4", "", "Candidate companies"));
+  section.append(el("h4", "", "Компанії-кандидати"));
   const list = document.createElement("div");
   list.className = "bottleneck-companies";
   if (!companies.length) {
-    list.append(el("p", "muted", "No candidate companies yet."));
+    list.append(el("p", "muted", "Компаній-кандидатів поки немає."));
   }
   companies.forEach(company => {
     const item = document.createElement("article");
@@ -905,8 +941,8 @@ function bottleneckCompanies(companies) {
       el("p", "", company.note || "")
     );
     const flags = [];
-    if (company.held_position) flags.push("held");
-    if (company.linked_thesis) flags.push("thesis");
+    if (company.held_position) flags.push("у портфелі");
+    if (company.linked_thesis) flags.push("теза");
     if (flags.length) item.append(bottleneckMetaRow(flags));
     list.append(item);
   });
@@ -924,7 +960,7 @@ function renderBottleneckList(nodes) {
     button.classList.toggle("is-selected", node.id === bottleneckView.selectedId);
     button.append(
       el("strong", "", node.title),
-      el("span", "", `${node.composite_strength}/100 / ${node.lifecycle}`)
+      el("span", "", `${node.composite_strength}/100 / ${bottleneckDisplay(BOTTLENECK_LIFECYCLE_LABELS, node.lifecycle)}`)
     );
     button.addEventListener("click", () => selectBottleneck(node.id));
     return button;
@@ -1006,6 +1042,10 @@ function resetBottleneckGraph() {
   bottleneckView.x = 0;
   bottleneckView.y = 0;
   renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
+}
+
+function bottleneckDisplay(labels, value) {
+  return labels[value] || String(value || "").replaceAll("_", " ");
 }
 
 function svgNode(tag, attributes = {}) {

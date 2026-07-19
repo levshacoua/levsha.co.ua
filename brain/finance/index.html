@@ -36,7 +36,7 @@
           <div class="brain-nav-label">Lefty's Finance</div>
           <a class="brain-nav-link" href="#dashboard" data-view-link="dashboard">Dashboard</a>
           <a class="brain-nav-link" href="#theses" data-view-link="theses">Theses</a>
-          <a class="brain-nav-link" href="#bottlenecks" data-view-link="bottlenecks">Bottlenecks</a>
+          <a class="brain-nav-link" href="#bottlenecks" data-view-link="bottlenecks">Вузькі місця</a>
         </div>
       </nav>
     </aside>
@@ -189,25 +189,25 @@
 
     <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
       <div class="section-head">
-        <h2>Bottlenecks</h2>
-        <span>Dependency graph</span>
+        <h2>Вузькі місця</h2>
+        <span>Граф залежностей</span>
       </div>
       <div class="bottleneck-shell">
-        <section class="bottleneck-graph-panel" aria-label="Bottleneck dependency graph">
+        <section class="bottleneck-graph-panel" aria-label="Граф залежностей вузьких місць">
           <div class="bottleneck-toolbar">
-            <button type="button" id="bottleneck-zoom-out" title="Zoom out" aria-label="Zoom out">-</button>
-            <button type="button" id="bottleneck-zoom-reset" title="Reset graph view" aria-label="Reset graph view">Reset</button>
-            <button type="button" id="bottleneck-zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" id="bottleneck-zoom-out" title="Зменшити масштаб" aria-label="Зменшити масштаб">-</button>
+            <button type="button" id="bottleneck-zoom-reset" title="Скинути вигляд графа" aria-label="Скинути вигляд графа">Скинути</button>
+            <button type="button" id="bottleneck-zoom-in" title="Збільшити масштаб" aria-label="Збільшити масштаб">+</button>
           </div>
-          <svg id="bottleneck-graph" class="bottleneck-graph" role="img" aria-label="Interactive bottleneck graph"></svg>
-          <div class="bottleneck-legend" id="bottleneck-legend" aria-label="Bottleneck graph legend"></div>
+          <svg id="bottleneck-graph" class="bottleneck-graph" role="img" aria-label="Інтерактивний граф вузьких місць"></svg>
+          <div class="bottleneck-legend" id="bottleneck-legend" aria-label="Легенда графа вузьких місць"></div>
         </section>
         <aside class="bottleneck-detail" id="bottleneck-detail" aria-live="polite"></aside>
       </div>
-      <div class="bottleneck-list" id="bottleneck-list" aria-label="Bottleneck list"></div>
+      <div class="bottleneck-list" id="bottleneck-list" aria-label="Список вузьких місць"></div>
       <div class="placeholder-view" id="bottleneck-empty" hidden>
-        <h2>Bottlenecks</h2>
-        <p>No bottleneck files are present in this snapshot.</p>
+        <h2>Вузькі місця</h2>
+        <p>У цьому snapshot немає файлів вузьких місць.</p>
       </div>
     </div>
   </main>
