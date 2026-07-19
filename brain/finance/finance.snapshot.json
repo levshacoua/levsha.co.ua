@@ -942,13 +942,13 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-19T23:22:37.205557+00:00",
+  "generated_at": "2026-07-19T23:25:44.209901+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 2,
+      "conviction_trend": "down",
       "horizon": "<owner to set>",
       "id": "aapl-hardware-services-legacy",
       "key_risk": "hardware ecosystem loyalty weakens",
@@ -957,28 +957,7 @@
         "AAPL"
       ],
       "role": "core",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 2,
-      "suggested_conviction_trend": "down",
-      "suggested_evidence": [
-        "Hardware ecosystem loyalty remains exceptionally high and appears to be strengthening, with iPhone loyalty rates reported as high as 87% to 96.4% in early 2026.",
-        "Services continue to be a strong and durable growth driver, with record-breaking revenue in fiscal 2026 and gross margins significantly higher than hardware.",
-        "Regulatory pressures are forcing Apple to alter its App Store business model globally, impacting its platform economics. This includes compliance with the EU's Digital Markets Act, ongoing antitrust lawsuits in the US, and commission rate reductions in China.",
-        "Apple is in early settlement talks with the US Department of Justice regarding a 2024 antitrust lawsuit, suggesting a willingness to make concessions on its platform policies.",
-        "The long-running legal battle with Epic Games continues, with the US Supreme Court agreeing to hear Apple's appeal, indicating prolonged uncertainty for the App Store model."
-      ],
-      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
-      "suggested_sources": [
-        "https://www.macrumors.com/2026/07/17/iphone-loyalty-rate-climbs-to-87-percent/",
-        "https://www.tradingview.com/news/zacks-1234567890123-apple-rises-20-in-3-months-buy-sell-or-hold-the-stock/",
-        "https://www.macrumors.com/2026/07/17/apple-doj-settlement-talks-iphone-antitrust-case/",
-        "https://www.itp.net/business/apple-cuts-app-store-commission-in-china-after-regulatory-pressure",
-        "https://www.techerati.com/news-hub/apple-loses-challenge-against-eu-digital-markets-act-rules/",
-        "https://9to5mac.com/2026/07/17/apple-doj-settlement-talks-per-report/",
-        "https://www.scmp.com/news/world/europe/article/3274298/apple-loses-challenges-against-eu-rules-curb-big-tech",
-        "https://www.themacobserver.com/news/apple-cites-paused-securities-fraud-case-to-halt-epic-games-proceedings/"
-      ],
-      "suggested_status": "weakening",
+      "status": "weakening",
       "title": "AAPL - weak legacy hardware and services thesis"
     },
     {
@@ -1470,14 +1449,14 @@
         "current_price": "333.74",
         "delta": "16.62",
         "key_risk": "aapl-hardware-services-legacy: hardware ecosystem loyalty weakens",
-        "linked_thesis_status": "aapl-hardware-services-legacy: insufficient-evidence",
+        "linked_thesis_status": "aapl-hardware-services-legacy: weakening",
         "portfolio_rule_explanation": "deviation sell rule fired: current allocation is above target by more than the configured sell threshold. Action: SELL; amount: $50.06; shares: 0.1500.",
         "recommended_action": "SELL",
         "recommended_dollar_amount": "50.06",
         "recommended_share_quantity": "0.1500",
         "rule": "deviation_sell",
         "target_allocation": "2.00",
-        "thesis_conviction": "aapl-hardware-services-legacy: 1/5 flat",
+        "thesis_conviction": "aapl-hardware-services-legacy: 2/5 down",
         "thesis_links": [
           "aapl-hardware-services-legacy"
         ],
