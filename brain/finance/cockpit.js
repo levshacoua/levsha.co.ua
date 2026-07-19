@@ -1,4 +1,14 @@
 const LB_GATE_KEY = "lb_gate_pw";
+const HELP_ICON =
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
+
+const SUMMARY_HELP = {
+  "Equity Value": "Сумарна вартість портфеля акцій",
+  "Crypto Value": "Сумарна вартість крипто-портфеля",
+  "Кеш на рахунку": "Реальний кеш на рахунку Robinhood зараз",
+  "Щотижневий внесок": "Автоплатіж $50 щопʼятниці — додається до кешу коли надходить",
+  "Доступно цього циклу": "Скільки можна розмістити цього циклу = кеш + виручка від рекомендованих продажів",
+};
 
 async function deriveKey(password, salt) {
   const enc = new TextEncoder();
@@ -54,6 +64,7 @@ async function unlock() {
 }
 
 function render(snapshot) {
+  decorateHelpLabels();
   renderMeta(snapshot);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
@@ -71,17 +82,27 @@ function renderMeta(snapshot) {
 function renderMetrics(snapshot) {
   const portfolio = snapshot.equity_portfolio;
   const crypto = snapshot.crypto;
+  const cashAvailable = money(portfolio.cash_available);
+  const totalSellCash = money(portfolio.total_sell_cash);
   const metrics = [
-    ["Equity Value", money(portfolio.total_value)],
-    ["Crypto Value", money(crypto.total_value)],
-    ["Available Cash", money(portfolio.available_buy_cash)],
-    ["Weekly Budget", money(portfolio.weekly_budget)],
+    { label: "Equity Value", value: money(portfolio.total_value) },
+    { label: "Crypto Value", value: money(crypto.total_value) },
+    { label: "Кеш на рахунку", value: cashAvailable },
+    { label: "Щотижневий внесок", value: money(portfolio.weekly_contribution) },
+    {
+      label: "Доступно цього циклу",
+      value: money(portfolio.available_buy_cash),
+      help: `${SUMMARY_HELP["Доступно цього циклу"]} = кеш ${cashAvailable} + виручка від рекомендованих продажів ${totalSellCash}`,
+    },
   ];
   const root = document.getElementById("metrics");
-  root.replaceChildren(...metrics.map(([label, value]) => {
+  root.replaceChildren(...metrics.map(metric => {
     const item = document.createElement("div");
     item.className = "metric";
-    item.append(el("div", "label", label), el("div", "value", value));
+    item.append(
+      labelWithHelp(metric.label, metric.help || SUMMARY_HELP[metric.label]),
+      el("div", "value", metric.value)
+    );
     return item;
   }));
 }
@@ -95,10 +116,9 @@ function renderEquities(rows) {
     coloredMoney(row.unrealized_pnl),
     coloredMoney(row.realized_pnl),
     pct(row.weight_pct),
-    pct(row.target_pct),
     coloredPct(row.deviation_pct),
     pill(row.latest_signal),
-  ])));
+  ], [1, 2, 3, 4, 5, 6])));
 }
 
 function renderCrypto(rows) {
@@ -111,7 +131,7 @@ function renderCrypto(rows) {
     coloredMoney(row.pnl),
     coloredPct(row.drawdown_pct),
     pill(row.status),
-  ])));
+  ], [1, 2, 3, 4, 5])));
 }
 
 function renderTheses(rows) {
@@ -143,14 +163,14 @@ function renderRecommendation(rows) {
     number(row.recommended_share_quantity, 4),
     row.rule,
     pill(row.approval_status),
-  ])));
+  ], [1, 2, 3, 5, 6])));
 }
 
-function tr(values) {
+function tr(values, numericIndexes = []) {
   const row = document.createElement("tr");
   values.forEach((value, index) => {
     const cell = document.createElement("td");
-    if ([1, 2, 3, 4, 5, 6, 7].includes(index)) cell.className = "num";
+    if (numericIndexes.includes(index)) cell.className = "num";
     if (value instanceof Node) cell.append(value);
     else cell.textContent = value;
     row.append(cell);
@@ -163,6 +183,36 @@ function el(tag, className, text) {
   if (className) node.className = className;
   node.textContent = text;
   return node;
+}
+
+function labelWithHelp(label, tooltip) {
+  const node = el("div", "label help-label", "");
+  node.append(document.createTextNode(label), helpTip(tooltip));
+  return node;
+}
+
+function decorateHelpLabels() {
+  document.querySelectorAll("[data-help]").forEach(node => {
+    if (node.querySelector(".help-tip")) return;
+    const tooltip = node.getAttribute("data-help");
+    node.append(helpTip(tooltip));
+  });
+}
+
+function helpTip(text) {
+  const wrapper = document.createElement("span");
+  wrapper.className = "help-tip";
+  wrapper.tabIndex = 0;
+  wrapper.setAttribute("role", "img");
+  wrapper.setAttribute("aria-label", text);
+  wrapper.innerHTML = HELP_ICON;
+
+  const tooltip = document.createElement("span");
+  tooltip.className = "tooltip";
+  tooltip.setAttribute("role", "tooltip");
+  tooltip.textContent = text;
+  wrapper.append(tooltip);
+  return wrapper;
 }
 
 function pill(text) {

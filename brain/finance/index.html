@@ -6,7 +6,6 @@
   <title>Lefty's Finance — Cockpit</title>
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta name="referrer" content="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="cockpit.css">
 </head>
 <body>
@@ -40,15 +39,14 @@
         <table>
           <thead>
             <tr>
-              <th>Ticker</th>
-              <th class="num">Value</th>
-              <th class="num">Cost</th>
-              <th class="num">Unrealized</th>
-              <th class="num">Realized</th>
-              <th class="num">Weight</th>
-              <th class="num">Target</th>
-              <th class="num">Delta</th>
-              <th>Signal</th>
+              <th data-help="Біржовий тікер активу">Ticker</th>
+              <th class="num" data-help="Поточна ринкова вартість позиції (кількість × ціна)">Value</th>
+              <th class="num" data-help="Собівартість: скільки вкладено (кількість × середня ціна купівлі)">Cost</th>
+              <th class="num" data-help="Нереалізований P&amp;L — паперовий прибуток/збиток по відкритій позиції">Unrealized</th>
+              <th class="num" data-help="Реалізований P&amp;L — зафіксований прибуток/збиток від уже проданого">Realized</th>
+              <th class="num" data-help="Поточна частка цієї позиції у портфелі акцій">Weight</th>
+              <th class="num" data-help="Відхилення поточної частки від цільової (+ переважена, − недоважена)">Delta</th>
+              <th data-help="Рекомендована дія рушія: BUY / SELL / HOLD">Signal</th>
             </tr>
           </thead>
           <tbody id="equity-body"></tbody>
@@ -65,13 +63,13 @@
         <table>
           <thead>
             <tr>
-              <th>Coin</th>
-              <th class="num">Amount</th>
-              <th class="num">Cost</th>
-              <th class="num">Value</th>
-              <th class="num">PnL</th>
-              <th class="num">Drawdown</th>
-              <th>Status</th>
+              <th data-help="Символ монети">Coin</th>
+              <th class="num" data-help="Кількість монет">Amount</th>
+              <th class="num" data-help="Собівартість у USD (скільки вкладено)">Cost</th>
+              <th class="num" data-help="Поточна ринкова вартість у USD">Value</th>
+              <th class="num" data-help="Прибуток/збиток відносно вкладеного">PnL</th>
+              <th class="num" data-help="Просадка: наскільки нижче собівартості">Drawdown</th>
+              <th data-help="Твоя мітка: buy / average / forget / hold">Status</th>
             </tr>
           </thead>
           <tbody id="crypto-body"></tbody>
@@ -96,15 +94,15 @@
         <table>
           <thead>
             <tr>
-              <th>Ticker</th>
-              <th class="num">Current</th>
-              <th class="num">Target</th>
-              <th class="num">Delta</th>
-              <th>Action</th>
-              <th class="num">Dollars</th>
-              <th class="num">Shares</th>
-              <th>Rule</th>
-              <th>Approval</th>
+              <th data-help="Біржовий тікер">Ticker</th>
+              <th class="num" data-help="Поточна частка позиції у портфелі">Current</th>
+              <th class="num" data-help="Цільова частка за поточним режимом ринку">Target</th>
+              <th class="num" data-help="Відхилення поточної частки від цільової">Delta</th>
+              <th data-help="Рекомендована дія: BUY / SELL / HOLD">Action</th>
+              <th class="num" data-help="Рекомендована сума угоди в доларах">Dollars</th>
+              <th class="num" data-help="Рекомендована кількість акцій">Shares</th>
+              <th data-help="Яке правило портфеля спрацювало (людською мовою)">Rule</th>
+              <th data-help="Статус схвалення — виконання вручну в Robinhood">Approval</th>
             </tr>
           </thead>
           <tbody id="recommendation-body"></tbody>
