@@ -1,0 +1,1539 @@
+{
+  "bottlenecks": {
+    "edges": [
+      {
+        "from": "advanced-fab-capacity",
+        "to": "ai-compute-demand"
+      },
+      {
+        "from": "euv-litho",
+        "to": "advanced-fab-capacity"
+      },
+      {
+        "from": "hbm-supply",
+        "to": "ai-compute-demand"
+      },
+      {
+        "from": "hbm-supply",
+        "to": "advanced-fab-capacity"
+      },
+      {
+        "from": "power-grid-interconnection",
+        "to": "advanced-fab-capacity"
+      },
+      {
+        "from": "transformers-copper-grid",
+        "to": "power-grid-interconnection"
+      }
+    ],
+    "nodes": [
+      {
+        "candidate_companies": [
+          {
+            "beneficiary_probability_pct": 60,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u0434\u0438\u0437\u0430\u0439\u043d\u0435\u0440 \u0447\u0438\u043f\u0456\u0432, \u0437\u0430\u043b\u0435\u0436\u043d\u0438\u0439 \u0432\u0456\u0434 \u0430\u043b\u043e\u043a\u0430\u0446\u0456\u0457 TSMC; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "NVDA"
+          },
+          {
+            "beneficiary_probability_pct": 85,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u0454\u0434\u0438\u043d\u0438\u0439 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043b\u044c\u043d\u0438\u043a \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0456\u0432, \u043f\u043e\u0442\u0440\u0456\u0431\u043d\u0438\u0445 \u0444\u0430\u0431\u0440\u0438\u043a\u0430\u043c \u0434\u043b\u044f \u043d\u0430\u0440\u043e\u0449\u0443\u0432\u0430\u043d\u043d\u044f \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0435\u0439; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "ASML"
+          },
+          {
+            "beneficiary_probability_pct": 50,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u043c\u0430\u0454 \u0432\u043b\u0430\u0441\u043d\u0456 \u043f\u0435\u0440\u0435\u0434\u043e\u0432\u0456 memory-\u0444\u0430\u0431\u0440\u0438\u043a\u0438, \u0447\u0430\u0441\u0442\u043a\u043e\u0432\u0438\u0439 \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u0438\u0439 hedge; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MU"
+          }
+        ],
+        "composite_strength": 92,
+        "disappearing_signals": [
+          "\u043d\u043e\u0432\u0456 leading-edge \u0444\u0430\u0431\u0440\u0438\u043a\u0438 (Arizona, Japan, EU) \u0432\u0438\u0445\u043e\u0434\u044f\u0442\u044c \u043d\u0430 \u043c\u0430\u0441\u043e\u0432\u0435 \u0432\u0438\u0440\u043e\u0431\u043d\u0438\u0446\u0442\u0432\u043e \u0437 \u0432\u0438\u0441\u043e\u043a\u0438\u043c yield",
+          "\u0434\u0438\u0437\u0430\u0439\u043d \u0447\u0438\u043f\u0456\u0432 \u0441\u0443\u0442\u0442\u0454\u0432\u043e \u0437\u043c\u0456\u0449\u0443\u0454\u0442\u044c\u0441\u044f \u0434\u043e \u0437\u0440\u0456\u043b\u0438\u0445 nodes (chiplets/packaging \u044f\u043a \u0437\u0430\u043c\u0456\u043d\u0430)",
+          "\u0437\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0435\u043d\u043d\u044f foundry \u043f\u0430\u0434\u0430\u0454 \u043d\u0438\u0436\u0447\u0435 \u0456\u0441\u0442\u043e\u0440\u0438\u0447\u043d\u043e\u0433\u043e \u043f\u0456\u043a\u0430, \u0441\u0438\u0433\u043d\u0430\u043b\u0456\u0437\u0443\u044e\u0447\u0438 \u043d\u0430\u0434\u043b\u0438\u0448\u043a\u043e\u0432\u0435 \u0431\u0443\u0434\u0456\u0432\u043d\u0438\u0446\u0442\u0432\u043e",
+          "\u0433\u0435\u043e\u043f\u043e\u043b\u0456\u0442\u0438\u0447\u043d\u0435 de-risking \u0443\u0441\u043f\u0456\u0448\u043d\u043e \u0434\u0438\u0432\u0435\u0440\u0441\u0438\u0444\u0456\u043a\u0443\u0454 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456 \u0437\u0430 \u043c\u0435\u0436\u0456 Taiwan"
+        ],
+        "id": "advanced-fab-capacity",
+        "lifecycle": "accelerating",
+        "monetization": "clear",
+        "scores": {
+          "capacity_lead_time": 5,
+          "criticality": 5,
+          "demand_growth": 5,
+          "pricing_power": 4,
+          "substitution_difficulty": 5,
+          "supplier_concentration": 5
+        },
+        "title": "\u041f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456 leading-edge (<5nm) \u0444\u0430\u0431\u0440\u0438\u043a \u0437\u043e\u0441\u0435\u0440\u0435\u0434\u0436\u0435\u043d\u0456 \u0432 \u043a\u0456\u043b\u044c\u043a\u043e\u0445 \u0440\u0443\u043a\u0430\u0445",
+        "type": "capacity"
+      },
+      {
+        "candidate_companies": [
+          {
+            "beneficiary_probability_pct": 85,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u0434\u043e\u043c\u0456\u043d\u0430\u043d\u0442\u043d\u0438\u0439 AI accelerator + software-moat CUDA; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "NVDA"
+          },
+          {
+            "beneficiary_probability_pct": 70,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "hyperscaler capex + \u043c\u043e\u043d\u0435\u0442\u0438\u0437\u0430\u0446\u0456\u044f Copilot/Azure AI; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MSFT"
+          },
+          {
+            "beneficiary_probability_pct": 55,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u043f\u043e\u043f\u0438\u0442 \u043d\u0430 HBM/DRAM, \u0449\u043e \u0442\u044f\u0433\u043d\u0435\u0442\u044c\u0441\u044f \u0432\u0456\u0434 AI servers; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MU"
+          },
+          {
+            "beneficiary_probability_pct": 30,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "edge-AI/ADAS compute, \u0441\u0443\u043c\u0456\u0436\u043d\u0438\u0439, \u0430\u043b\u0435 \u043d\u0435 \u043e\u0441\u043d\u043e\u0432\u043d\u0438\u0439 \u0431\u0435\u043d\u0435\u0444\u0456\u0446\u0456\u0430\u0440; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MBLY"
+          }
+        ],
+        "composite_strength": 90,
+        "disappearing_signals": [
+          "\u0441\u0442\u0440\u043e\u043a\u0438 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043d\u043d\u044f GPU \u043d\u043e\u0440\u043c\u0430\u043b\u0456\u0437\u0443\u044e\u0442\u044c\u0441\u044f \u0434\u043e <3 \u043c\u0456\u0441\u044f\u0446\u0456\u0432",
+          "\u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f hyperscaler capex \u0441\u043f\u043e\u0432\u0456\u043b\u044c\u043d\u044e\u0454\u0442\u044c\u0441\u044f 2+ \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0438 \u043f\u043e\u0441\u043f\u0456\u043b\u044c",
+          "\u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044c inference \u0437\u0430 token \u043f\u0430\u0434\u0430\u0454 \u0448\u0432\u0438\u0434\u0448\u0435, \u043d\u0456\u0436 \u0437\u0440\u043e\u0441\u0442\u0430\u0454 \u043f\u043e\u043f\u0438\u0442 (\u0435\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c \u0432\u0438\u043f\u0435\u0440\u0435\u0434\u0436\u0430\u0454 \u043f\u043e\u0442\u0440\u0435\u0431\u0443)",
+          "\u043f\u0435\u0440\u0435\u043a\u043e\u043d\u043b\u0438\u0432\u0438\u0439 non-NVIDIA compute stack \u043e\u0442\u0440\u0438\u043c\u0443\u0454 \u0448\u0438\u0440\u043e\u043a\u0435 enterprise-\u0432\u043f\u0440\u043e\u0432\u0430\u0434\u0436\u0435\u043d\u043d\u044f"
+        ],
+        "id": "ai-compute-demand",
+        "lifecycle": "accelerating",
+        "monetization": "clear",
+        "scores": {
+          "capacity_lead_time": 4,
+          "criticality": 5,
+          "demand_growth": 5,
+          "pricing_power": 5,
+          "substitution_difficulty": 4,
+          "supplier_concentration": 4
+        },
+        "title": "\u041f\u043e\u043f\u0438\u0442 \u043d\u0430 AI training/inference compute \u0432\u0438\u043f\u0435\u0440\u0435\u0434\u0436\u0430\u0454 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0456 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456",
+        "type": "capacity"
+      },
+      {
+        "candidate_companies": [
+          {
+            "beneficiary_probability_pct": 95,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u0454\u0434\u0438\u043d\u0438\u0439 \u0433\u043b\u043e\u0431\u0430\u043b\u044c\u043d\u0438\u0439 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043b\u044c\u043d\u0438\u043a EUV scanners; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "ASML"
+          }
+        ],
+        "composite_strength": 91,
+        "disappearing_signals": [
+          "\u0434\u0440\u0443\u0433\u0438\u0439 \u0436\u0438\u0442\u0442\u0454\u0437\u0434\u0430\u0442\u043d\u0438\u0439 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043b\u044c\u043d\u0438\u043a EUV \u0430\u0431\u043e \u0435\u043a\u0432\u0456\u0432\u0430\u043b\u0435\u043d\u0442\u043d\u043e\u0433\u043e \u043e\u0431\u043b\u0430\u0434\u043d\u0430\u043d\u043d\u044f \u043f\u0440\u043e\u0445\u043e\u0434\u0438\u0442\u044c production qualification",
+          "\u0432\u043f\u0440\u043e\u0432\u0430\u0434\u0436\u0435\u043d\u043d\u044f high-NA EUV \u0437\u0443\u043f\u0438\u043d\u044f\u0454\u0442\u044c\u0441\u044f \u0430\u0431\u043e \u0439\u043e\u0433\u043e \u043e\u0431\u0445\u043e\u0434\u044f\u0442\u044c \u0430\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u043d\u0456 patterning-\u043f\u0456\u0434\u0445\u043e\u0434\u0438 (\u043d\u0430\u043f\u0440\u0438\u043a\u043b\u0430\u0434, directed self-assembly)",
+          "China \u0430\u0431\u043e \u0456\u043d\u0448\u0456 \u0433\u0440\u0430\u0432\u0446\u0456 \u0440\u043e\u0437\u0440\u043e\u0431\u043b\u044f\u044e\u0442\u044c domestic EUV-class \u0430\u043b\u044c\u0442\u0435\u0440\u043d\u0430\u0442\u0438\u0432\u0443 \u0432 \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0456",
+          "chip roadmaps \u0432\u0456\u0434\u0445\u043e\u0434\u044f\u0442\u044c \u0432\u0456\u0434 \u043f\u043e\u0442\u0440\u0435\u0431\u0438 \u0432 \u043f\u043e\u0434\u0430\u043b\u044c\u0448\u043e\u043c\u0443 \u0437\u043c\u0435\u043d\u0448\u0435\u043d\u043d\u0456 nodes (multi-die/chiplet substitution \u0437\u043d\u0438\u0436\u0443\u0454 EUV intensity)"
+        ],
+        "id": "euv-litho",
+        "lifecycle": "entrenched",
+        "monetization": "clear",
+        "scores": {
+          "capacity_lead_time": 4,
+          "criticality": 5,
+          "demand_growth": 4,
+          "pricing_power": 5,
+          "substitution_difficulty": 5,
+          "supplier_concentration": 5
+        },
+        "title": "EUV lithography \u044f\u043a \u043c\u043e\u043d\u043e\u043f\u043e\u043b\u044c\u043d\u0435 \u043e\u0431\u043b\u0430\u0434\u043d\u0430\u043d\u043d\u044f, \u0449\u043e \u043e\u0431\u043c\u0435\u0436\u0443\u0454 advanced-node \u0444\u0430\u0431\u0440\u0438\u043a\u0438",
+        "type": "monopoly"
+      },
+      {
+        "candidate_companies": [
+          {
+            "beneficiary_probability_pct": 65,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "HBM3E ramp, \u043a\u0432\u0430\u043b\u0456\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u0430 \u0432 major AI accelerator customers; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MU"
+          },
+          {
+            "beneficiary_probability_pct": 35,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "\u0434\u0440\u0430\u0439\u0432\u0435\u0440 \u043f\u043e\u043f\u0438\u0442\u0443 \u043d\u0430 HBM, \u0430 \u043d\u0435 supply-side choke; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "NVDA"
+          }
+        ],
+        "composite_strength": 84,
+        "disappearing_signals": [
+          "\u0432\u0438\u043d\u0438\u043a\u0430\u0454 \u043d\u0430\u0434\u043b\u0438\u0448\u043a\u043e\u0432\u0430 \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u044f HBM, \u043a\u043e\u043b\u0438 \u043d\u043e\u0432\u0456 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456 \u043d\u0430\u0440\u043e\u0449\u0443\u044e\u0442\u044c\u0441\u044f \u0448\u0432\u0438\u0434\u0448\u0435 \u0437\u0430 \u043f\u043e\u043f\u0438\u0442",
+          "4-\u0439/5-\u0439 \u043a\u0432\u0430\u043b\u0456\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u0438\u0439 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043b\u044c\u043d\u0438\u043a HBM \u0432\u0438\u0445\u043e\u0434\u0438\u0442\u044c \u043d\u0430 \u043c\u0430\u0441\u043e\u0432\u0435 \u0432\u0438\u0440\u043e\u0431\u043d\u0438\u0446\u0442\u0432\u043e, \u0440\u043e\u0437\u043c\u0438\u0432\u0430\u044e\u0447\u0438 \u043f\u043e\u0442\u043e\u0447\u043d\u0443 \u043e\u043b\u0456\u0433\u043e\u043f\u043e\u043b\u0456\u044e",
+          "accelerator architectures \u0432\u0456\u0434\u0445\u043e\u0434\u044f\u0442\u044c \u0432\u0456\u0434 HBM-heavy designs (\u043d\u0430\u043f\u0440\u0438\u043a\u043b\u0430\u0434, \u043d\u043e\u0432\u0456 memory paradigms)",
+          "qualification cycle times \u0441\u0443\u0442\u0442\u0454\u0432\u043e \u0441\u043a\u043e\u0440\u043e\u0447\u0443\u044e\u0442\u044c\u0441\u044f, \u0437\u043d\u0438\u0436\u0443\u044e\u0447\u0438 moat \u0434\u043b\u044f incumbents"
+        ],
+        "id": "hbm-supply",
+        "lifecycle": "accelerating",
+        "monetization": "clear",
+        "scores": {
+          "capacity_lead_time": 4,
+          "criticality": 4,
+          "demand_growth": 5,
+          "pricing_power": 4,
+          "substitution_difficulty": 4,
+          "supplier_concentration": 4
+        },
+        "title": "\u041a\u0432\u0430\u043b\u0456\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u0430 \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u044f HBM \u043f\u0440\u043e\u0442\u0438 \u043f\u043e\u043f\u0438\u0442\u0443 AI accelerator",
+        "type": "supplier-concentration"
+      },
+      {
+        "candidate_companies": [
+          {
+            "beneficiary_probability_pct": 40,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "hyperscaler, \u0449\u043e \u0437\u0430\u043a\u0440\u0456\u043f\u043b\u044e\u0454 \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0435\u043d\u0435\u0440\u0433\u0456\u044e \u0447\u0435\u0440\u0435\u0437 PPAs/nuclear deals, \u043d\u0435 pure play; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "MSFT"
+          },
+          {
+            "beneficiary_probability_pct": 45,
+            "held_position": true,
+            "linked_thesis": true,
+            "note": "uranium supply \u0434\u043b\u044f nuclear \u044f\u043a firm-power \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456 \u043d\u0430 \u043f\u043e\u043f\u0438\u0442 data centers; \u0443 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u0456 \u0432\u043b\u0430\u0441\u043d\u0438\u043a\u0430",
+            "ticker": "UEC"
+          }
+        ],
+        "composite_strength": 82,
+        "disappearing_signals": [
+          "\u0441\u0442\u0440\u043e\u043a\u0438 \u043e\u0447\u0456\u043a\u0443\u0432\u0430\u043d\u043d\u044f \u0432 interconnection queue \u043f\u043e\u0432\u0435\u0440\u0442\u0430\u044e\u0442\u044c\u0441\u044f \u0434\u043e \u0456\u0441\u0442\u043e\u0440\u0438\u0447\u043d\u0438\u0445 \u043d\u043e\u0440\u043c (<2 \u0440\u043e\u043a\u0456\u0432)",
+          "distributed/on-site generation (SMRs, gas turbines) \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0443\u0454\u0442\u044c\u0441\u044f \u0434\u043e\u0441\u0442\u0430\u0442\u043d\u044c\u043e \u0448\u0432\u0438\u0434\u043a\u043e, \u0449\u043e\u0431 \u043e\u0431\u0456\u0439\u0442\u0438 grid queues",
+          "data-center siting \u0437\u043c\u0456\u0449\u0443\u0454\u0442\u044c\u0441\u044f \u0432 \u0440\u0435\u0433\u0456\u043e\u043d\u0438 \u0437 \u043d\u0430\u0434\u043b\u0438\u0448\u043a\u043e\u043c \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0435\u043d\u0435\u0440\u0433\u0456\u0457 \u0448\u0432\u0438\u0434\u0448\u0435, \u043d\u0456\u0436 \u0437\u0440\u043e\u0441\u0442\u0430\u0454 \u043f\u043e\u043f\u0438\u0442",
+          "utility capex programs \u0441\u0443\u0442\u0442\u0454\u0432\u043e \u0437\u0430\u043a\u0440\u0438\u0432\u0430\u044e\u0442\u044c \u0431\u0430\u0433\u0430\u0442\u043e\u0440\u0456\u0447\u043d\u0438\u0439 backlog"
+        ],
+        "id": "power-grid-interconnection",
+        "lifecycle": "accelerating",
+        "monetization": "partial",
+        "scores": {
+          "capacity_lead_time": 5,
+          "criticality": 5,
+          "demand_growth": 5,
+          "pricing_power": 3,
+          "substitution_difficulty": 3,
+          "supplier_concentration": 2
+        },
+        "title": "\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u0456\u0441\u0442\u044c \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0435\u043d\u0435\u0440\u0433\u0456\u0457 \u0434\u043b\u044f data centers \u0456 \u0447\u0435\u0440\u0433\u0438 grid interconnection",
+        "type": "long-lead-time"
+      },
+      {
+        "candidate_companies": [],
+        "composite_strength": 76,
+        "disappearing_signals": [
+          "\u0441\u0442\u0440\u043e\u043a\u0438 \u043f\u043e\u0441\u0442\u0430\u0447\u0430\u043d\u043d\u044f transformers \u043d\u043e\u0440\u043c\u0430\u043b\u0456\u0437\u0443\u044e\u0442\u044c\u0441\u044f \u0437 2+ \u0440\u043e\u043a\u0456\u0432 \u043d\u0430\u0437\u0430\u0434 \u0434\u043e \u0456\u0441\u0442\u043e\u0440\u0438\u0447\u043d\u0438\u0445 6-12 \u043c\u0456\u0441\u044f\u0446\u0456\u0432",
+          "\u043d\u043e\u0432\u0456 domestic transformer manufacturing capacity \u043f\u043e\u0432\u043d\u0456\u0441\u0442\u044e \u0432\u0432\u043e\u0434\u044f\u0442\u044c\u0441\u044f \u0432 \u0435\u043a\u0441\u043f\u043b\u0443\u0430\u0442\u0430\u0446\u0456\u044e",
+          "\u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u0457 copper (\u043d\u043e\u0432\u0456 mines, \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0443\u0432\u0430\u043d\u043d\u044f recycling) \u0432\u0438\u043f\u0435\u0440\u0435\u0434\u0436\u0430\u0454 \u043f\u043e\u043f\u0438\u0442 grid + EV + data-center",
+          "grid-enhancing technologies (reconductoring, storage) \u0437\u043d\u0438\u0436\u0443\u044e\u0442\u044c new-copper intensity \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u0439 watt"
+        ],
+        "id": "transformers-copper-grid",
+        "lifecycle": "accelerating",
+        "monetization": "unclear",
+        "scores": {
+          "capacity_lead_time": 5,
+          "criticality": 4,
+          "demand_growth": 4,
+          "pricing_power": 3,
+          "substitution_difficulty": 3,
+          "supplier_concentration": 4
+        },
+        "title": "Grid transformers \u0456 copper \u044f\u043a \u0434\u0435\u0444\u0456\u0446\u0438\u0442\u043d\u0456 \u043c\u0430\u0442\u0435\u0440\u0456\u0430\u043b\u0438 \u0442\u0430 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456 \u0437\u0430 power buildout",
+        "type": "scarce-material"
+      }
+    ]
+  },
+  "crypto": {
+    "invested_net": "3688.443",
+    "positions": [
+      {
+        "amount": "0.1",
+        "avg_cost": "294.7",
+        "drawdown_pct": "-69.59103488",
+        "invested_usd": "29.47",
+        "last_reconciled": "2026-07-18",
+        "market_price": "89.61522021266411",
+        "pnl": "-20.508477979",
+        "pnl_pct": "-69.59",
+        "status": "average",
+        "symbol": "AAVE",
+        "theses": [],
+        "value": "8.961522021"
+      },
+      {
+        "amount": "170",
+        "avg_cost": "0.2843529412",
+        "drawdown_pct": "-70.94619119",
+        "invested_usd": "48.34",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.08261535986680928",
+        "pnl": "-34.29538882",
+        "pnl_pct": "-70.95",
+        "status": "forget",
+        "symbol": "ALGO",
+        "theses": [],
+        "value": "14.04461118"
+      },
+      {
+        "amount": "771.3524732",
+        "avg_cost": "0.505799895",
+        "drawdown_pct": "-82.58682308",
+        "invested_usd": "390.15",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.08807583059804659",
+        "pnl": "-322.21249024",
+        "pnl_pct": "-82.59",
+        "status": "forget",
+        "symbol": "ARB",
+        "theses": [],
+        "value": "67.93750976"
+      },
+      {
+        "amount": "321.100632",
+        "avg_cost": "1.028649486",
+        "drawdown_pct": "-89.55103772",
+        "invested_usd": "330.3",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.10748319681685149",
+        "pnl": "-295.78707757",
+        "pnl_pct": "-89.55",
+        "status": "forget",
+        "symbol": "ARKM",
+        "theses": [],
+        "value": "34.51292243"
+      },
+      {
+        "amount": "14.377",
+        "avg_cost": "3.945190234",
+        "drawdown_pct": "-62.0250886",
+        "invested_usd": "56.72",
+        "last_reconciled": "2026-07-18",
+        "market_price": "1.4981824962478865",
+        "pnl": "-35.18063025",
+        "pnl_pct": "-62.03",
+        "status": "forget",
+        "symbol": "ATOM",
+        "theses": [],
+        "value": "21.53936975"
+      },
+      {
+        "amount": "6",
+        "avg_cost": "5.655",
+        "drawdown_pct": "-96.75972123",
+        "invested_usd": "33.93",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.18323776444052678",
+        "pnl": "-32.830573413",
+        "pnl_pct": "-96.76",
+        "status": "forget",
+        "symbol": "BERA",
+        "theses": [],
+        "value": "1.099426587"
+      },
+      {
+        "amount": "0.00015749",
+        "avg_cost": "69337.73573",
+        "drawdown_pct": "-6.864754149",
+        "invested_usd": "10.92",
+        "last_reconciled": "2026-07-18",
+        "market_price": "64577.87063918026",
+        "pnl": "-0.74963115",
+        "pnl_pct": "-6.86",
+        "status": "buy",
+        "symbol": "BTC",
+        "theses": [],
+        "value": "10.17036885"
+      },
+      {
+        "amount": "1201",
+        "avg_cost": "0.08892589509",
+        "drawdown_pct": "-85.54224725",
+        "invested_usd": "106.8",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.01285668604278161",
+        "pnl": "-91.35912006",
+        "pnl_pct": "-85.54",
+        "status": "forget",
+        "symbol": "C98",
+        "theses": [],
+        "value": "15.44087994"
+      },
+      {
+        "amount": "20",
+        "avg_cost": "0.5",
+        "drawdown_pct": "-73.23797954",
+        "invested_usd": "10",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.13381010231811744",
+        "pnl": "-7.323797954",
+        "pnl_pct": "-73.24",
+        "status": "forget",
+        "symbol": "COW",
+        "theses": [],
+        "value": "2.676202046"
+      },
+      {
+        "amount": "5.97299",
+        "avg_cost": "5.464599807",
+        "drawdown_pct": "-93.90476686",
+        "invested_usd": "32.64",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.333080098277318",
+        "pnl": "-30.650515904",
+        "pnl_pct": "-93.90",
+        "status": "forget",
+        "symbol": "CYBER",
+        "theses": [],
+        "value": "1.989484096"
+      },
+      {
+        "amount": "43.973",
+        "avg_cost": "1.718554568",
+        "drawdown_pct": "-86.76165368",
+        "invested_usd": "75.57",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.22750820528620214",
+        "pnl": "-65.56578169",
+        "pnl_pct": "-86.76",
+        "status": "forget",
+        "symbol": "EIGEN",
+        "theses": [],
+        "value": "10.00421831"
+      },
+      {
+        "amount": "270",
+        "avg_cost": "0.6744814815",
+        "drawdown_pct": "-89.68118561",
+        "invested_usd": "182.11",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.06959849218386688",
+        "pnl": "-163.31840711",
+        "pnl_pct": "-89.68",
+        "status": "forget",
+        "symbol": "EOS",
+        "theses": [],
+        "value": "18.79159289"
+      },
+      {
+        "amount": "0.056",
+        "avg_cost": "2942.5",
+        "drawdown_pct": "-36.83824872",
+        "invested_usd": "164.78",
+        "last_reconciled": "2026-07-18",
+        "market_price": "1858.5345314818712",
+        "pnl": "-60.7020662",
+        "pnl_pct": "-36.84",
+        "status": "buy",
+        "symbol": "ETH",
+        "theses": [],
+        "value": "104.0779338"
+      },
+      {
+        "amount": "350",
+        "avg_cost": "0.4625142857",
+        "drawdown_pct": "-65.93082743",
+        "invested_usd": "161.88",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.15757479015287007",
+        "pnl": "-106.72882345",
+        "pnl_pct": "-65.93",
+        "status": "average",
+        "symbol": "FET",
+        "theses": [],
+        "value": "55.15117655"
+      },
+      {
+        "amount": "55.99",
+        "avg_cost": "4.143061261",
+        "drawdown_pct": "-81.94458911",
+        "invested_usd": "231.97",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.7480467338828615",
+        "pnl": "-190.08686337",
+        "pnl_pct": "-81.94",
+        "status": "forget",
+        "symbol": "FIL",
+        "theses": [],
+        "value": "41.88313663"
+      },
+      {
+        "amount": "353.66365",
+        "avg_cost": "0.3015859843",
+        "drawdown_pct": "-97.09817571",
+        "invested_usd": "106.66",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.008751495354323251",
+        "pnl": "-103.56491421",
+        "pnl_pct": "-97.10",
+        "status": "forget",
+        "symbol": "GLMR",
+        "theses": [],
+        "value": "3.09508579"
+      },
+      {
+        "amount": "39.16",
+        "avg_cost": "0",
+        "drawdown_pct": "0",
+        "invested_usd": "0",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.3541999368168637",
+        "pnl": "13.87046953",
+        "pnl_pct": "0.00",
+        "status": "hold",
+        "symbol": "GRASS",
+        "theses": [],
+        "value": "13.87046953"
+      },
+      {
+        "amount": "850",
+        "avg_cost": "0.1138235294",
+        "drawdown_pct": "-85.08088005",
+        "invested_usd": "96.75",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.01698146888395234",
+        "pnl": "-82.31575145",
+        "pnl_pct": "-85.08",
+        "status": "forget",
+        "symbol": "GRT",
+        "theses": [],
+        "value": "14.43424855"
+      },
+      {
+        "amount": "50",
+        "avg_cost": "0.2128",
+        "drawdown_pct": "-68.61148644",
+        "invested_usd": "10.64",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.06679475685250003",
+        "pnl": "-7.300262157",
+        "pnl_pct": "-68.61",
+        "status": "forget",
+        "symbol": "HBAR",
+        "theses": [],
+        "value": "3.339737843"
+      },
+      {
+        "amount": "1482.6655",
+        "avg_cost": "0.165964609",
+        "drawdown_pct": "-94.80224623",
+        "invested_usd": "246.07",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.00862643172730567",
+        "pnl": "-233.27988729",
+        "pnl_pct": "-94.80",
+        "status": "forget",
+        "symbol": "HFT",
+        "theses": [],
+        "value": "12.79011271"
+      },
+      {
+        "amount": "25",
+        "avg_cost": "6.9384",
+        "drawdown_pct": "-68.81505421",
+        "invested_usd": "173.46",
+        "last_reconciled": "2026-07-18",
+        "market_price": "2.1637362788380288",
+        "pnl": "-119.36659303",
+        "pnl_pct": "-68.82",
+        "status": "average",
+        "symbol": "ICP",
+        "theses": [],
+        "value": "54.09340697"
+      },
+      {
+        "amount": "20",
+        "avg_cost": "0.5",
+        "drawdown_pct": "-92.73632299",
+        "invested_usd": "10",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.03631838503009821",
+        "pnl": "-9.2736322994",
+        "pnl_pct": "-92.74",
+        "status": "forget",
+        "symbol": "IOTA",
+        "theses": [],
+        "value": "0.7263677006"
+      },
+      {
+        "amount": "10",
+        "avg_cost": "1.791",
+        "drawdown_pct": "-53.80585684",
+        "invested_usd": "17.91",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.8273371039564605",
+        "pnl": "-9.63662896",
+        "pnl_pct": "-53.81",
+        "status": "forget",
+        "symbol": "KAITO",
+        "theses": [],
+        "value": "8.27337104"
+      },
+      {
+        "amount": "100",
+        "avg_cost": "1.1195",
+        "drawdown_pct": "-68.21614789",
+        "invested_usd": "111.95",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.3558202243914988",
+        "pnl": "-76.36797756",
+        "pnl_pct": "-68.22",
+        "status": "forget",
+        "symbol": "LDO",
+        "theses": [],
+        "value": "35.58202244"
+      },
+      {
+        "amount": "45",
+        "avg_cost": "0.6753333333",
+        "drawdown_pct": "-98.41151134",
+        "invested_usd": "30.39",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.010727593445042344",
+        "pnl": "-29.907258295",
+        "pnl_pct": "-98.41",
+        "status": "forget",
+        "symbol": "MOVE",
+        "theses": [],
+        "value": "0.482741705"
+      },
+      {
+        "amount": "216.82256",
+        "avg_cost": "0.902858079",
+        "drawdown_pct": "-61.32423724",
+        "invested_usd": "195.76",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.3491872487184006",
+        "pnl": "-120.04832681",
+        "pnl_pct": "-61.32",
+        "status": "average",
+        "symbol": "ONDO",
+        "theses": [],
+        "value": "75.71167319"
+      },
+      {
+        "amount": "611.178",
+        "avg_cost": "0.6740802189",
+        "drawdown_pct": "-85.8701568",
+        "invested_usd": "411.983",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.09524647798665567",
+        "pnl": "-353.77044808",
+        "pnl_pct": "-85.87",
+        "status": "forget",
+        "symbol": "OP",
+        "theses": [],
+        "value": "58.21255192"
+      },
+      {
+        "amount": "278.46094",
+        "avg_cost": "0.4611418751",
+        "drawdown_pct": "-95.76549744",
+        "invested_usd": "128.41",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.019527064524835762",
+        "pnl": "-122.972475257",
+        "pnl_pct": "-95.77",
+        "status": "forget",
+        "symbol": "PERP",
+        "theses": [],
+        "value": "5.437524743"
+      },
+      {
+        "amount": "0.09835109",
+        "avg_cost": "191.9653356",
+        "drawdown_pct": "-60.70829137",
+        "invested_usd": "18.88",
+        "last_reconciled": "2026-07-18",
+        "market_price": "75.4264603447146",
+        "pnl": "-11.46172541",
+        "pnl_pct": "-60.71",
+        "status": "average",
+        "symbol": "SOL",
+        "theses": [],
+        "value": "7.41827459"
+      },
+      {
+        "amount": "74.917",
+        "avg_cost": "1.409960356",
+        "drawdown_pct": "-73.68440531",
+        "invested_usd": "105.63",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.3710394525761469",
+        "pnl": "-77.83283733",
+        "pnl_pct": "-73.68",
+        "status": "hold",
+        "symbol": "WLD",
+        "theses": [],
+        "value": "27.79716267"
+      },
+      {
+        "amount": "427",
+        "avg_cost": "0.3708899297",
+        "drawdown_pct": "-77.04448276",
+        "invested_usd": "158.37",
+        "last_reconciled": "2026-07-18",
+        "market_price": "0.08513970176796079",
+        "pnl": "-122.01534735",
+        "pnl_pct": "-77.04",
+        "status": "forget",
+        "symbol": "ZRX",
+        "theses": [],
+        "value": "36.35465265"
+      }
+    ],
+    "total_value": "765.8997588816"
+  },
+  "dependency_candidates": [],
+  "discovery": {
+    "buy_recs": [],
+    "candidates": [],
+    "last_run": "2026-07-19T23:18:16+00:00",
+    "trends": []
+  },
+  "equity_portfolio": {
+    "available_buy_cash": "50.04",
+    "cash_available": "50.04",
+    "conviction_budget_remaining_usd": "0",
+    "conviction_budget_usd": "0",
+    "deployable_if_sells_executed": "100.1",
+    "equity_invested_net": "1695.66",
+    "market_mode": "risk_on",
+    "positions": [
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "288.52",
+        "deviation_pct": "16.62",
+        "latest_signal": "SELL",
+        "pnl_pct": "15.67",
+        "realized_pnl": "0",
+        "target_pct": "2.00",
+        "ticker": "AAPL",
+        "trade_quantity": "0.15",
+        "trade_value": "50.06",
+        "unrealized_pnl": "45.22",
+        "value": "333.74",
+        "weight_pct": "18.62"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "115.58",
+        "deviation_pct": "-2.68",
+        "latest_signal": "HOLD",
+        "pnl_pct": "13.55",
+        "realized_pnl": "3",
+        "target_pct": "10.00",
+        "ticker": "ASML",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "15.66",
+        "value": "131.24",
+        "weight_pct": "7.32"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "31.59",
+        "deviation_pct": "-0.32",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-4.74",
+        "realized_pnl": "0",
+        "target_pct": "2.00",
+        "ticker": "CRSP",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-1.5",
+        "value": "30.09",
+        "weight_pct": "1.68"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "21.92",
+        "deviation_pct": "1.09",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-11.29",
+        "realized_pnl": "0",
+        "target_pct": "0.00",
+        "ticker": "JOBY",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-2.47",
+        "value": "19.45",
+        "weight_pct": "1.09"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "76.04",
+        "deviation_pct": "-2.56",
+        "latest_signal": "HOLD",
+        "pnl_pct": "28.30",
+        "realized_pnl": "0",
+        "target_pct": "8.00",
+        "ticker": "MBLY",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "21.52",
+        "value": "97.56",
+        "weight_pct": "5.44"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "501.86",
+        "deviation_pct": "6.85",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-11.27",
+        "realized_pnl": "0",
+        "target_pct": "18.00",
+        "ticker": "MSFT",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-56.56",
+        "value": "445.3",
+        "weight_pct": "24.85"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "158.63",
+        "deviation_pct": "-2.39",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-36.58",
+        "realized_pnl": "0",
+        "target_pct": "8.00",
+        "ticker": "MSTR",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-58.02",
+        "value": "100.61",
+        "weight_pct": "5.61"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "50.54",
+        "deviation_pct": "-3.59",
+        "latest_signal": "HOLD",
+        "pnl_pct": "127.30",
+        "realized_pnl": "94.41",
+        "target_pct": "10.00",
+        "ticker": "MU",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "64.33",
+        "value": "114.87",
+        "weight_pct": "6.41"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "259.26",
+        "deviation_pct": "-2.92",
+        "latest_signal": "HOLD",
+        "pnl_pct": "4.21",
+        "realized_pnl": "0",
+        "target_pct": "18.00",
+        "ticker": "NVDA",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "10.93",
+        "value": "270.19",
+        "weight_pct": "15.08"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "22",
+        "deviation_pct": "0.97",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-21.27",
+        "realized_pnl": "0",
+        "target_pct": "0.00",
+        "ticker": "QBTS",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-4.68",
+        "value": "17.32",
+        "weight_pct": "0.97"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "69.33",
+        "deviation_pct": "-6.22",
+        "latest_signal": "BUY",
+        "pnl_pct": "-2.38",
+        "realized_pnl": "0",
+        "target_pct": "10.00",
+        "ticker": "RKLB",
+        "trade_quantity": "0.74",
+        "trade_value": "50.04",
+        "unrealized_pnl": "-1.65",
+        "value": "67.68",
+        "weight_pct": "3.78"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "25.76",
+        "deviation_pct": "-0.59",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-1.99",
+        "realized_pnl": "0",
+        "target_pct": "2.00",
+        "ticker": "RXRX",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-0.51",
+        "value": "25.25",
+        "weight_pct": "1.41"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "31.6",
+        "deviation_pct": "0.01",
+        "latest_signal": "HOLD",
+        "pnl_pct": "14.04",
+        "realized_pnl": "0",
+        "target_pct": "2.00",
+        "ticker": "TEM",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "4.44",
+        "value": "36.04",
+        "weight_pct": "2.01"
+      },
+      {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "140.44",
+        "deviation_pct": "-4.26",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-26.76",
+        "realized_pnl": "0",
+        "target_pct": "10.00",
+        "ticker": "UEC",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-37.58",
+        "value": "102.86",
+        "weight_pct": "5.74"
+      }
+    ],
+    "recommended_sell_proceeds": "50.06",
+    "total_sell_cash": "50.06",
+    "total_value": "1792.19",
+    "weekly_contribution": "50"
+  },
+  "generated_at": "2026-07-19T23:18:46.877744+00:00",
+  "schema_version": 2,
+  "source": "leftys-finance/kb",
+  "theses": [
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "aapl-hardware-services-legacy",
+      "key_risk": "hardware ecosystem loyalty weakens",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "AAPL"
+      ],
+      "role": "core",
+      "status": "insufficient-evidence",
+      "suggested_conviction": 2,
+      "suggested_conviction_trend": "down",
+      "suggested_evidence": [
+        "Hardware ecosystem loyalty remains exceptionally high and appears to be strengthening, with iPhone loyalty rates reported as high as 87% to 96.4% in early 2026.",
+        "Services continue to be a strong and durable growth driver, with record-breaking revenue in fiscal 2026 and gross margins significantly higher than hardware.",
+        "Regulatory pressures are forcing Apple to alter its App Store business model globally, impacting its platform economics. This includes compliance with the EU's Digital Markets Act, ongoing antitrust lawsuits in the US, and commission rate reductions in China.",
+        "Apple is in early settlement talks with the US Department of Justice regarding a 2024 antitrust lawsuit, suggesting a willingness to make concessions on its platform policies.",
+        "The long-running legal battle with Epic Games continues, with the US Supreme Court agreeing to hear Apple's appeal, indicating prolonged uncertainty for the App Store model."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.macrumors.com/2026/07/17/iphone-loyalty-rate-climbs-to-87-percent/",
+        "https://www.tradingview.com/news/zacks-1234567890123-apple-rises-20-in-3-months-buy-sell-or-hold-the-stock/",
+        "https://www.macrumors.com/2026/07/17/apple-doj-settlement-talks-iphone-antitrust-case/",
+        "https://www.itp.net/business/apple-cuts-app-store-commission-in-china-after-regulatory-pressure",
+        "https://www.techerati.com/news-hub/apple-loses-challenge-against-eu-digital-markets-act-rules/",
+        "https://9to5mac.com/2026/07/17/apple-doj-settlement-talks-per-report/",
+        "https://www.scmp.com/news/world/europe/article/3274298/apple-loses-challenges-against-eu-rules-curb-big-tech",
+        "https://www.themacobserver.com/news/apple-cites-paused-securities-fraud-case-to-halt-epic-games-proceedings/"
+      ],
+      "suggested_status": "weakening",
+      "title": "AAPL - weak legacy hardware and services thesis"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "asml-euv-critical-supplier",
+      "key_risk": "credible EUV competitor qualifies at leading customers",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "ASML"
+      ],
+      "role": "growth",
+      "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "ASML maintains a 100% monopoly in the critical EUV lithography market, essential for all cutting-edge processor manufacturing.",
+        "Demand for leading-edge semiconductors is surging, driven by AI, with global semiconductor revenue forecast to grow significantly in 2026.",
+        "Major customers like Intel and TSMC are heavily investing in new capacity, with Intel beginning high-volume production using ASML's next-generation High-NA EUV tools.",
+        "ASML raised its full-year 2026 revenue guidance, citing strong demand from both logic and memory sectors, particularly for AI-related chips.",
+        "Geopolitical risks persist, with tightening Dutch and US export controls on sales and servicing in China, which has reduced ASML's sales to the region.",
+        "Potential competitors, like Canon with nanoimprint lithography, are not considered viable threats to EUV's dominance in the foreseeable future due to significant technical hurdles and a less mature ecosystem."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.eetimes.com/asml-raises-outlook-plans-more-euv-capacity/",
+        "https://quantumrun.com/business-trend/asml-statistics/",
+        "https://www.semiecosystem.com/asml-posts-results-intel-puts-high-na-euv-into-production/",
+        "https://www.marketsandmarkets.com/Market-Reports/extreme-ultraviolet-euv-lithography-market-148812492.html",
+        "https://www.marketwise.com/asml-faces-new-china-export-restrictions-will-it-threaten-growth/",
+        "https://hudsonlabs.io/asml-competitors/",
+        "https://bits-chips.nl/artikel/nanoimprint-lithography-wont-compete-with-euv-anytime-soon/",
+        "https://www.gartner.com/en/newsroom/press-releases/2026-04-08-gartner-forecasts-worldwide-semiconductor-revenue-to-exceed-1-3-trillion-in-2026"
+      ],
+      "suggested_status": "strengthening",
+      "title": "ASML - EUV lithography critical supplier"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "crsp-gene-editing-therapies",
+      "key_risk": "material safety setbacks in gene-editing programs",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "CRSP"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "suggested_conviction": 3,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "CASGEVY, the first approved CRISPR-based therapy, is seeing a significant ramp-up in commercial adoption, with revenues of $115.8 million in 2025 and a projection of nearly tripling in 2026.",
+        "Patient uptake for CASGEVY is increasing, with over 500 patients having initiated treatment by Q1 2026, a significant increase from the previous year.",
+        "CRISPR Therapeutics is expanding its pipeline beyond its initial approved therapy, with promising clinical data in cardiovascular diseases (CTX310) and autoimmune diseases (zugo-cel).",
+        "The regulatory environment is becoming more defined and potentially favorable, with the FDA issuing draft guidance for gene-editing therapies and proposing a 'plausible mechanism pathway' to potentially speed up approvals for platform technologies.",
+        "A material safety setback occurred in a competitor's (Intellia Therapeutics) CRISPR trial, with a clinical hold placed on two Phase 3 trials following a patient death due to liver toxicity.",
+        "Payer coverage for CASGEVY has improved significantly, with approximately 90% of eligible U.S. patients having reimbursed access."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.businesswire.com/news/home/20260112005316/en/CRISPR-Therapeutics-Highlights-Strategic-Priorities-and-Anticipated-2026-Milestones",
+        "https://www.packgene.com/vertex-and-crispr-project-nearly-3x-growth-for-casgevy-in-2026-as-patient-access-expands/",
+        "https://endpts.com/vertex-crispr-set-lofty-goal-for-casgevy-gene-therapy-as-patient-starts-ramp/",
+        "https://www.biospace.com/article/releases/crispr-therapeutics-provides-business-update-and-reports-first-quarter-2026-financial-results/",
+        "https://www.biopharmadive.com/news/vertex-crispr-casgevy-earnings-rebound/703621/",
+        "https://innovativegenomics.org/news/crispr-clinical-trials-2026/",
+        "https://www.marketbeat.com/stocks/NASDAQ/CRSP/price-target/",
+        "https://public.com/stocks/CRSP/analyst-ratings"
+      ],
+      "suggested_status": "strengthening",
+      "title": "CRSP - CRISPR gene-editing therapies"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "joby-evtol-urban-air-mobility",
+      "key_risk": "certification path stalls",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "JOBY"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "JOBY - eVTOL urban air mobility"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "mbly-adas-adoption",
+      "key_risk": "OEM design wins deteriorate",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "MBLY"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "MBLY - autonomous driving and ADAS adoption"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "micron-hbm",
+      "key_risk": "sustained HBM oversupply",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "MU"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "MU - HBM demand above qualified supply"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "msft-ai-cloud-copilot",
+      "key_risk": "Azure share or relevance weakens structurally",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "MSFT"
+      ],
+      "role": "core",
+      "status": "insufficient-evidence",
+      "title": "MSFT - AI, Azure scale, and Copilot monetization"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "mstr-bitcoin-treasury-proxy",
+      "key_risk": "bitcoin treasury premium collapses structurally",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "MSTR"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "MSTR - leveraged bitcoin treasury proxy"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "nvda-ai-compute",
+      "key_risk": "sustained AI accelerator oversupply",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "NVDA"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "NVDA - AI compute and accelerator demand"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "qbts-quantum-computing",
+      "key_risk": "customer adoption remains experimental",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "QBTS"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "QBTS - quantum computing"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "rklb-launch-space-infrastructure",
+      "key_risk": "persistent launch cadence misses",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "RKLB"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "RKLB - small launch cadence and space infrastructure"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "rxrx-ai-drug-discovery",
+      "key_risk": "platform fails to produce validated clinical candidates",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "RXRX"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "RXRX - AI-driven drug discovery"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "tem-health-ai-precision-medicine",
+      "key_risk": "health AI adoption stalls",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "TEM"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "TEM - health AI and precision medicine"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "<owner to set>",
+      "id": "uec-uranium-nuclear-buildout",
+      "key_risk": "sustained uranium oversupply",
+      "last_reviewed": "2026-07-19",
+      "linked_tickers": [
+        "UEC"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "UEC - uranium supply tightening into nuclear buildout"
+    }
+  ],
+  "theses_last_verify": "",
+  "watchlist": [],
+  "weekly_autopay_active": true,
+  "weekly_contribution_usd": "50",
+  "weekly_recommendation": {
+    "available_buy_cash": "50.04",
+    "cash_available": "50.04",
+    "conviction_budget_remaining_usd": "0.00",
+    "conviction_budget_usd": "0.00",
+    "deployable_if_sells_executed": "100.10",
+    "generated_on": "2026-07-19",
+    "market_mode": "risk_on",
+    "positions": [
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "288.52",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "18.62",
+        "current_price": "333.74",
+        "delta": "16.62",
+        "key_risk": "aapl-hardware-services-legacy: hardware ecosystem loyalty weakens",
+        "linked_thesis_status": "aapl-hardware-services-legacy: insufficient-evidence",
+        "portfolio_rule_explanation": "deviation sell rule fired: current allocation is above target by more than the configured sell threshold. Action: SELL; amount: $50.06; shares: 0.1500.",
+        "recommended_action": "SELL",
+        "recommended_dollar_amount": "50.06",
+        "recommended_share_quantity": "0.1500",
+        "rule": "deviation_sell",
+        "target_allocation": "2.00",
+        "thesis_conviction": "aapl-hardware-services-legacy: 1/5 flat",
+        "thesis_links": [
+          "aapl-hardware-services-legacy"
+        ],
+        "ticker": "AAPL"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "1539.04",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "7.32",
+        "current_price": "1747.58",
+        "delta": "-2.68",
+        "key_risk": "asml-euv-critical-supplier: credible EUV competitor qualifies at leading customers",
+        "linked_thesis_status": "asml-euv-critical-supplier: insufficient-evidence",
+        "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "within_band",
+        "target_allocation": "10.00",
+        "thesis_conviction": "asml-euv-critical-supplier: 1/5 flat",
+        "thesis_links": [
+          "asml-euv-critical-supplier"
+        ],
+        "ticker": "ASML"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "50.16",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "1.68",
+        "current_price": "47.78",
+        "delta": "-0.32",
+        "key_risk": "crsp-gene-editing-therapies: material safety setbacks in gene-editing programs",
+        "linked_thesis_status": "crsp-gene-editing-therapies: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "2.00",
+        "thesis_conviction": "crsp-gene-editing-therapies: 1/5 flat",
+        "thesis_links": [
+          "crsp-gene-editing-therapies"
+        ],
+        "ticker": "CRSP"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "8.15",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "1.09",
+        "current_price": "7.23",
+        "delta": "1.09",
+        "key_risk": "joby-evtol-urban-air-mobility: certification path stalls",
+        "linked_thesis_status": "joby-evtol-urban-air-mobility: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "0.00",
+        "thesis_conviction": "joby-evtol-urban-air-mobility: 1/5 flat",
+        "thesis_links": [
+          "joby-evtol-urban-air-mobility"
+        ],
+        "ticker": "JOBY"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "7.19",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "5.44",
+        "current_price": "9.22",
+        "delta": "-2.56",
+        "key_risk": "mbly-adas-adoption: OEM design wins deteriorate",
+        "linked_thesis_status": "mbly-adas-adoption: insufficient-evidence",
+        "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "within_band",
+        "target_allocation": "8.00",
+        "thesis_conviction": "mbly-adas-adoption: 1/5 flat",
+        "thesis_links": [
+          "mbly-adas-adoption"
+        ],
+        "ticker": "MBLY"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "443.84",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "24.85",
+        "current_price": "393.82",
+        "delta": "6.85",
+        "key_risk": "msft-ai-cloud-copilot: Azure share or relevance weakens structurally",
+        "linked_thesis_status": "msft-ai-cloud-copilot: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "18.00",
+        "thesis_conviction": "msft-ai-cloud-copilot: 1/5 flat",
+        "thesis_links": [
+          "msft-ai-cloud-copilot"
+        ],
+        "ticker": "MSFT"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "149.55",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "5.61",
+        "current_price": "94.85",
+        "delta": "-2.39",
+        "key_risk": "mstr-bitcoin-treasury-proxy: bitcoin treasury premium collapses structurally",
+        "linked_thesis_status": "mstr-bitcoin-treasury-proxy: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "8.00",
+        "thesis_conviction": "mstr-bitcoin-treasury-proxy: 1/5 flat",
+        "thesis_links": [
+          "mstr-bitcoin-treasury-proxy"
+        ],
+        "ticker": "MSTR"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "373.50",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "6.41",
+        "current_price": "848.95",
+        "delta": "-3.59",
+        "key_risk": "micron-hbm: sustained HBM oversupply",
+        "linked_thesis_status": "micron-hbm: insufficient-evidence",
+        "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "within_band",
+        "target_allocation": "10.00",
+        "thesis_conviction": "micron-hbm: 1/5 flat",
+        "thesis_links": [
+          "micron-hbm"
+        ],
+        "ticker": "MU"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "194.61",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "15.08",
+        "current_price": "202.81",
+        "delta": "-2.92",
+        "key_risk": "nvda-ai-compute: sustained AI accelerator oversupply",
+        "linked_thesis_status": "nvda-ai-compute: insufficient-evidence",
+        "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "within_band",
+        "target_allocation": "18.00",
+        "thesis_conviction": "nvda-ai-compute: 1/5 flat",
+        "thesis_links": [
+          "nvda-ai-compute"
+        ],
+        "ticker": "NVDA"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "21.25",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "0.97",
+        "current_price": "16.73",
+        "delta": "0.97",
+        "key_risk": "qbts-quantum-computing: customer adoption remains experimental",
+        "linked_thesis_status": "qbts-quantum-computing: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "0.00",
+        "thesis_conviction": "qbts-quantum-computing: 1/5 flat",
+        "thesis_links": [
+          "qbts-quantum-computing"
+        ],
+        "ticker": "QBTS"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "69.27",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "3.78",
+        "current_price": "67.62",
+        "delta": "-6.22",
+        "key_risk": "rklb-launch-space-infrastructure: persistent launch cadence misses",
+        "linked_thesis_status": "rklb-launch-space-infrastructure: insufficient-evidence",
+        "portfolio_rule_explanation": "deviation buy rule fired: current allocation is below target by more than the configured buy threshold. Action: BUY; amount: $50.04; shares: 0.7400.",
+        "recommended_action": "BUY",
+        "recommended_dollar_amount": "50.04",
+        "recommended_share_quantity": "0.7400",
+        "rule": "deviation_buy",
+        "target_allocation": "10.00",
+        "thesis_conviction": "rklb-launch-space-infrastructure: 1/5 flat",
+        "thesis_links": [
+          "rklb-launch-space-infrastructure"
+        ],
+        "ticker": "RKLB"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "3.01",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "1.41",
+        "current_price": "2.95",
+        "delta": "-0.59",
+        "key_risk": "rxrx-ai-drug-discovery: platform fails to produce validated clinical candidates",
+        "linked_thesis_status": "rxrx-ai-drug-discovery: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "2.00",
+        "thesis_conviction": "rxrx-ai-drug-discovery: 1/5 flat",
+        "thesis_links": [
+          "rxrx-ai-drug-discovery"
+        ],
+        "ticker": "RXRX"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "46.01",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "2.01",
+        "current_price": "52.47",
+        "delta": "0.01",
+        "key_risk": "tem-health-ai-precision-medicine: health AI adoption stalls",
+        "linked_thesis_status": "tem-health-ai-precision-medicine: insufficient-evidence",
+        "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "within_band",
+        "target_allocation": "2.00",
+        "thesis_conviction": "tem-health-ai-precision-medicine: 1/5 flat",
+        "thesis_links": [
+          "tem-health-ai-precision-medicine"
+        ],
+        "ticker": "TEM"
+      },
+      {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "12.67",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "5.74",
+        "current_price": "9.28",
+        "delta": "-4.26",
+        "key_risk": "uec-uranium-nuclear-buildout: sustained uranium oversupply",
+        "linked_thesis_status": "uec-uranium-nuclear-buildout: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "10.00",
+        "thesis_conviction": "uec-uranium-nuclear-buildout: 1/5 flat",
+        "thesis_links": [
+          "uec-uranium-nuclear-buildout"
+        ],
+        "ticker": "UEC"
+      }
+    ],
+    "recommendation_id": "weekly-2026-07-19",
+    "recommended_sell_proceeds": "50.06",
+    "total_sell_cash": "50.06",
+    "total_value": "1792.19",
+    "weekly_contribution": "50.00"
+  }
+}
