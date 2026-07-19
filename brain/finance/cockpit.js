@@ -1,11 +1,13 @@
 const HELP_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
 const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
+const THESES_VERIFY_ENDPOINT = "https://brain.levsha.co.ua/finance/theses/verify";
 const JOURNAL_ENDPOINT = "https://brain.levsha.co.ua/finance/journal";
 const SETTINGS_ENDPOINT = "https://brain.levsha.co.ua/finance/settings";
 const WATCHLIST_ENDPOINT = "https://brain.levsha.co.ua/finance/watchlist";
 const DISCOVERY_ENDPOINT = "https://brain.levsha.co.ua/finance/discover";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
+const THESES_VERIFY_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const JOURNAL_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const SETTINGS_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const WATCHLIST_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
@@ -123,6 +125,7 @@ function reveal() {
   document.getElementById("cockpit").style.display = "block";
   showCurrentView();
   resetTransactionForm();
+  setThesesVerifyReadOnly(false);
   setWatchlistReadOnly(false);
   setDiscoveryReadOnly(false);
 }
@@ -149,12 +152,13 @@ function render(snapshot) {
   setupAutopayControl(snapshot);
   setupTransactionForm();
   setupWatchlistForm();
+  setupThesesVerifyRun();
   setupDiscoveryRun();
   renderMeta(snapshot);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
   renderCrypto(snapshot.crypto.positions);
-  renderTheses(snapshot.theses);
+  renderTheses(snapshot.theses, snapshot.theses_last_verify);
   renderWatchlist(snapshot.watchlist || []);
   renderBottlenecks(snapshot.bottlenecks || { nodes: [], edges: [] });
   renderDependencyCandidates(snapshot);
@@ -239,7 +243,8 @@ function renderCrypto(rows) {
   ], [1, 2, 3, 4, 5])));
 }
 
-function renderTheses(rows) {
+function renderTheses(rows, lastVerify = "") {
+  renderThesesLastVerify(lastVerify);
   const root = document.getElementById("theses");
   root.replaceChildren(...rows.map(row => {
     const card = document.createElement("article");
@@ -248,14 +253,22 @@ function renderTheses(rows) {
     const meta = document.createElement("div");
     meta.className = "meta";
     renderThesisMeta(meta, row);
+    const form = thesisEditForm(row, card, meta);
     card.append(
       el("h3", "", row.title),
       meta,
-      thesisEditForm(row, card, meta),
+      thesisSuggestion(row, form, card),
+      form,
       el("div", "risk", row.key_risk)
     );
     return card;
   }));
+}
+
+function renderThesesLastVerify(lastVerify) {
+  const root = document.getElementById("theses-last-verify");
+  if (!root) return;
+  root.textContent = lastVerify ? `Станом на ${lastVerify}` : "Ще не перевірялось";
 }
 
 function renderThesisMeta(meta, row) {
@@ -293,6 +306,189 @@ function thesisEditForm(row, card, meta) {
   });
 
   return form;
+}
+
+function thesisSuggestion(row, form, card) {
+  if (!hasThesisSuggestion(row)) return document.createDocumentFragment();
+
+  const root = document.createElement("div");
+  root.className = "thesis-suggestion";
+  const sufficient = thesisSuggestionHasEvidence(row);
+  const reviewedAt = row.suggested_reviewed_at ? ` · ${row.suggested_reviewed_at}` : "";
+  root.append(el("div", "thesis-suggestion-kicker", `AI пропозиція${reviewedAt}`));
+  root.append(
+    thesisSuggestionCompare(
+      "Conviction",
+      `${row.conviction}/5`,
+      row.suggested_conviction,
+      sufficient,
+      value => `${value}/5`
+    ),
+    thesisSuggestionCompare("Status", row.status, row.suggested_status, sufficient),
+    thesisSuggestionCompare(
+      "Trend",
+      row.conviction_trend,
+      row.suggested_conviction_trend,
+      sufficient
+    )
+  );
+
+  const evidence = thesisSuggestionEvidence(row.suggested_evidence);
+  if (evidence.childNodes.length) root.append(evidence);
+  root.append(sourceLinks(row.suggested_sources || []));
+
+  const actions = document.createElement("div");
+  actions.className = "thesis-suggestion-actions";
+  const accept = document.createElement("button");
+  accept.type = "button";
+  accept.textContent = "прийняти";
+  accept.disabled = !canAcceptThesisSuggestion(row);
+  if (accept.disabled) accept.title = "Недостатньо доказів або неповна пропозиція";
+  const state = el("span", "thesis-suggestion-state", "");
+  state.setAttribute("role", "status");
+  accept.addEventListener("click", () => {
+    applyThesisValues(form, {
+      conviction: Number(row.suggested_conviction),
+      status: row.suggested_status,
+      conviction_trend: row.suggested_conviction_trend,
+      horizon: form.elements.horizon.value,
+    });
+    card.dataset.saveStatus = "";
+    state.textContent = "Заповнено. Перевір і натисни Save.";
+  });
+  actions.append(accept, state);
+  root.append(actions);
+  return root;
+}
+
+function hasThesisSuggestion(row) {
+  return [
+    row.suggested_conviction,
+    row.suggested_status,
+    row.suggested_conviction_trend,
+    row.suggested_evidence,
+    row.suggested_sources,
+    row.suggested_reviewed_at,
+  ].some(value => value !== undefined && value !== null && value !== "");
+}
+
+function thesisSuggestionHasEvidence(row) {
+  return row.suggested_status !== "insufficient-evidence"
+    && sourceUrlList(row.suggested_sources).length > 0;
+}
+
+function canAcceptThesisSuggestion(row) {
+  const conviction = Number(row.suggested_conviction);
+  return thesisSuggestionHasEvidence(row)
+    && Number.isInteger(conviction)
+    && conviction >= 1
+    && conviction <= 5
+    && THESIS_STATUS_OPTIONS.includes(String(row.suggested_status))
+    && THESIS_TREND_OPTIONS.includes(String(row.suggested_conviction_trend));
+}
+
+function thesisSuggestionCompare(label, currentValue, suggestedValue, sufficient, formatter = value => value) {
+  const row = document.createElement("div");
+  row.className = "thesis-suggestion-row";
+  const suggestedText = sufficient && suggestedValue !== undefined && suggestedValue !== null && suggestedValue !== ""
+    ? formatter(String(suggestedValue))
+    : "недостатньо доказів";
+  row.append(
+    el("span", "thesis-suggestion-label", label),
+    el("span", "thesis-suggestion-current", `поточне ${currentValue}`),
+    el("span", "thesis-suggestion-arrow", "→"),
+    el("span", "thesis-suggestion-proposed", `пропозиція ${suggestedText}`)
+  );
+  return row;
+}
+
+function thesisSuggestionEvidence(value) {
+  const root = document.createElement("div");
+  root.className = "thesis-suggestion-evidence";
+  const groups = suggestedEvidenceGroups(value);
+  groups.forEach(group => {
+    if (!group.items.length) return;
+    root.append(el("div", "thesis-suggestion-evidence-label", group.label));
+    const list = document.createElement("ul");
+    group.items.forEach(item => list.append(el("li", "", item)));
+    root.append(list);
+  });
+  return root;
+}
+
+function suggestedEvidenceGroups(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    const supporting = [];
+    const contradicting = [];
+    const other = [];
+    value.map(evidenceText).filter(Boolean).forEach(item => {
+      const match = item.match(/^(supporting|supports|підтримує|contradicting|contradicts|суперечить):\s*(.+)$/i);
+      if (!match) {
+        other.push(item);
+      } else if (["supporting", "supports", "підтримує"].includes(match[1].toLowerCase())) {
+        supporting.push(match[2]);
+      } else {
+        contradicting.push(match[2]);
+      }
+    });
+    return [
+      { label: "Підтримує", items: supporting },
+      { label: "Суперечить", items: contradicting },
+      { label: "Докази", items: other },
+    ];
+  }
+  if (typeof value === "object") {
+    const groups = [];
+    const supporting = value.supporting || value.supporting_evidence || value.supports || [];
+    const contradicting = value.contradicting || value.contradicting_evidence || value.contradicts || [];
+    groups.push({
+      label: "Підтримує",
+      items: arrayFrom(supporting).map(evidenceText).filter(Boolean),
+    });
+    groups.push({
+      label: "Суперечить",
+      items: arrayFrom(contradicting).map(evidenceText).filter(Boolean),
+    });
+    Object.entries(value).forEach(([key, items]) => {
+      const knownKeys = [
+        "supporting",
+        "supporting_evidence",
+        "supports",
+        "contradicting",
+        "contradicting_evidence",
+        "contradicts",
+      ];
+      if (knownKeys.includes(key)) return;
+      const textItems = arrayFrom(items).map(evidenceText).filter(Boolean);
+      if (textItems.length) groups.push({ label: key, items: textItems });
+    });
+    return groups;
+  }
+  return [{ label: "Докази", items: [String(value)] }];
+}
+
+function evidenceText(value) {
+  if (value === null || value === undefined) return "";
+  if (typeof value === "object") {
+    return String(value.text || value.claim || value.summary || value.note || "").trim();
+  }
+  return String(value).trim();
+}
+
+function arrayFrom(value) {
+  if (Array.isArray(value)) return value;
+  if (value === null || value === undefined || value === "") return [];
+  return [value];
+}
+
+function sourceUrlList(urls) {
+  return arrayFrom(urls).map(url => {
+    if (url && typeof url === "object") {
+      return String(url.url || url.href || url.source || "").trim();
+    }
+    return String(url).trim();
+  }).filter(Boolean);
 }
 
 function thesisField(label, control) {
@@ -359,6 +555,7 @@ async function saveThesisEdit(row, form, card, meta, saveButton, state) {
     }
     Object.assign(row, draft);
     setThesisState(card, state, "saved", "Saved");
+    window.setTimeout(() => window.location.reload(), 700);
   } catch (error) {
     Object.assign(row, previous);
     applyThesisValues(form, previous);
@@ -414,6 +611,66 @@ function setThesisControlsDisabled(form, saveButton, disabled) {
 function setThesisState(card, state, status, message) {
   card.dataset.saveStatus = status;
   state.textContent = message;
+}
+
+function setupThesesVerifyRun() {
+  const button = document.getElementById("theses-verify-run");
+  if (!button || button.dataset.ready === "true") return;
+  button.dataset.ready = "true";
+  button.addEventListener("click", runThesesVerify);
+  setThesesVerifyReadOnly(!gatePassword);
+}
+
+async function runThesesVerify() {
+  const button = document.getElementById("theses-verify-run");
+  const state = document.getElementById("theses-verify-state");
+  if (!button || !state) return;
+  if (!gatePassword) {
+    setThesesVerifyState("error", "Розблокуй cockpit ще раз перед запуском.");
+    setThesesVerifyReadOnly(true);
+    return;
+  }
+
+  button.disabled = true;
+  setThesesVerifyState("saving", "Запускаю...");
+  try {
+    const response = await fetch(THESES_VERIFY_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [THESES_VERIFY_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify({}),
+    });
+    if (response.status === 202) {
+      setThesesVerifyState(
+        "saved",
+        "Запущено. Перевірка тез триває ~кілька хвилин — онови сторінку пізніше."
+      );
+      return;
+    }
+    if (response.status === 409) {
+      setThesesVerifyState("saved", "Вже виконується.");
+      return;
+    }
+    throw new Error(await responseErrorMessage(response));
+  } catch (error) {
+    setThesesVerifyState("error", error.message || "Не вдалося запустити перевірку тез");
+  } finally {
+    button.disabled = !gatePassword;
+  }
+}
+
+function setThesesVerifyReadOnly(readOnly) {
+  const button = document.getElementById("theses-verify-run");
+  if (button) button.disabled = readOnly;
+}
+
+function setThesesVerifyState(status, message) {
+  const view = document.getElementById("view-theses");
+  const state = document.getElementById("theses-verify-state");
+  if (view) view.dataset.saveStatus = status;
+  if (state) state.textContent = message;
 }
 
 function setupAutopayControl(snapshot) {
@@ -1054,7 +1311,7 @@ function discoveryBuyRecMeta(row) {
 }
 
 function sourceLinks(urls) {
-  const list = Array.isArray(urls) ? urls : [urls].filter(Boolean);
+  const list = sourceUrlList(urls);
   const root = document.createElement("div");
   root.className = "source-links";
   if (!list.length) {
@@ -1768,6 +2025,8 @@ if (typeof module !== "undefined") {
   module.exports = {
     JOURNAL_ENDPOINT,
     JOURNAL_PASSWORD_HEADER,
+    THESES_VERIFY_ENDPOINT,
+    THESES_VERIFY_PASSWORD_HEADER,
     SETTINGS_ENDPOINT,
     SETTINGS_PASSWORD_HEADER,
     WATCHLIST_ENDPOINT,

@@ -182,9 +182,15 @@
     </div>
 
     <div class="cockpit-view" id="view-theses" data-view="theses" hidden>
-      <div class="section-head">
-        <h2>Theses</h2>
-        <span>Status, conviction, risk</span>
+      <div class="section-head thesis-verify-head">
+        <div>
+          <h2>Theses</h2>
+          <span id="theses-last-verify">Ще не перевірялось</span>
+        </div>
+        <div class="discovery-actions">
+          <button type="button" id="theses-verify-run">Verify all theses</button>
+          <span class="discovery-run-state" id="theses-verify-state" role="status"></span>
+        </div>
       </div>
       <div class="thesis-grid" id="theses"></div>
     </div>

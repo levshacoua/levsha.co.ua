@@ -444,6 +444,81 @@ tr:last-child td {
   margin: 12px 0;
 }
 
+.thesis-verify-head > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.thesis-suggestion {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 10px;
+}
+
+.thesis-suggestion-kicker,
+.thesis-suggestion-label,
+.thesis-suggestion-evidence-label {
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.thesis-suggestion-row {
+  display: grid;
+  grid-template-columns: minmax(78px, .7fr) minmax(0, 1fr) auto minmax(0, 1.2fr);
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: .8rem;
+}
+
+.thesis-suggestion-current,
+.thesis-suggestion-proposed {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.thesis-suggestion-proposed {
+  color: var(--warn);
+}
+
+.thesis-suggestion-evidence ul {
+  margin: 4px 0 0 18px;
+  padding: 0;
+  color: var(--fg);
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+.thesis-suggestion-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.thesis-suggestion-actions button {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--line-strong);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.thesis-suggestion-actions button:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: .72;
+}
+
+.thesis-suggestion-state {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
 .thesis-edit {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -722,6 +797,10 @@ tr:last-child td {
   border-color: var(--line-strong);
 }
 
+#view-theses[data-save-status="saving"] .thesis-grid {
+  border-color: var(--line-strong);
+}
+
 .thesis-card[data-save-status="saved"] .thesis-save-state {
   color: var(--good);
 }
@@ -742,6 +821,10 @@ tr:last-child td {
   color: var(--good);
 }
 
+#view-theses[data-save-status="saved"] .discovery-run-state {
+  color: var(--good);
+}
+
 .thesis-card[data-save-status="error"] .thesis-save-state {
   color: var(--bad);
 }
@@ -759,6 +842,10 @@ tr:last-child td {
 }
 
 #view-bottlenecks[data-save-status="error"] .discovery-run-state {
+  color: var(--bad);
+}
+
+#view-theses[data-save-status="error"] .discovery-run-state {
   color: var(--bad);
 }
 
@@ -1363,6 +1450,7 @@ tr:last-child td {
   .watchlist-form { grid-template-columns: 1fr; }
   .watchlist-title { align-items: start; flex-direction: column; }
   .thesis-edit { grid-template-columns: 1fr; }
+  .thesis-suggestion-row { grid-template-columns: 1fr; }
   .bottleneck-shell { grid-template-columns: 1fr; }
   .bottleneck-graph-panel { min-height: 360px; }
   .bottleneck-graph { height: 360px; }
