@@ -1,0 +1,261 @@
+:root {
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --surface-2: #111;
+  --line: rgba(0, 172, 237, .15);
+  --line-strong: rgba(0, 172, 237, .34);
+  --accent: #00aced;
+  --fg: #f2f2f2;
+  --muted: #8a8a8a;
+  --good: #52d273;
+  --bad: #ff6b6b;
+  --warn: #ffd166;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Inter, -apple-system, sans-serif;
+  font-weight: 300;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#password-gate {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.gate-content {
+  width: min(100%, 340px);
+  background: var(--surface);
+  padding: 40px 48px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.gate-content h1 {
+  font-weight: 300;
+  font-size: 1.3rem;
+  margin: 0 0 6px;
+}
+
+.gate-content p {
+  color: var(--muted);
+  font-size: .85rem;
+  margin: 0 0 20px;
+}
+
+.gate-content input {
+  width: 100%;
+  padding: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  margin-bottom: 12px;
+}
+
+.gate-content button {
+  width: 100%;
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+#error-msg {
+  margin-top: 12px;
+  color: var(--bad);
+  font-size: .85rem;
+  display: none;
+}
+
+#cockpit {
+  display: none;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+.topbar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.topbar h1 {
+  font-weight: 300;
+  font-size: 1.5rem;
+  letter-spacing: .02em;
+  margin: 0;
+}
+
+.topbar h1 b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.topbar p {
+  color: var(--muted);
+  font-size: .9rem;
+  margin: 6px 0 0;
+}
+
+.lock {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.metric,
+.thesis-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 16px;
+}
+
+.metric .label {
+  color: var(--muted);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.metric .value {
+  margin-top: 8px;
+  font-size: 1.28rem;
+  font-weight: 400;
+}
+
+section {
+  margin-top: 34px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.section-head span {
+  color: var(--muted);
+  font-size: .76rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 11px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  text-align: left;
+  white-space: nowrap;
+  font-size: .86rem;
+}
+
+th {
+  color: var(--muted);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 400;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+.num {
+  text-align: right;
+}
+
+.pill {
+  display: inline-block;
+  min-width: 58px;
+  border: 1px solid var(--line-strong);
+  padding: 3px 8px;
+  text-align: center;
+  color: var(--accent);
+  font-size: .76rem;
+  text-transform: uppercase;
+}
+
+.pos { color: var(--good); }
+.neg { color: var(--bad); }
+.warn { color: var(--warn); }
+
+.thesis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.thesis-card h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: .98rem;
+  line-height: 1.35;
+}
+
+.thesis-card .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.thesis-card .risk {
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .gate-content { padding: 32px 28px; }
+  #cockpit { padding: 34px 16px 56px; }
+  .topbar { align-items: stretch; flex-direction: column; gap: 14px; }
+  .lock { width: 100%; }
+  .section-head { align-items: start; flex-direction: column; gap: 4px; }
+}

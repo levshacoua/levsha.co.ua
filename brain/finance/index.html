@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lefty's Finance — Cockpit</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cockpit.css">
+</head>
+<body>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>Lefty's Finance</h1>
+      <p>Private cockpit — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off" autofocus>
+      <button id="unlock-btn" type="button">Unlock</button>
+      <div id="error-msg">Incorrect password or missing snapshot</div>
+    </div>
+  </div>
+
+  <main id="cockpit" aria-live="polite">
+    <header class="topbar">
+      <div>
+        <h1>Lefty's <b>Finance</b> — Cockpit</h1>
+        <p id="snapshot-meta"></p>
+      </div>
+      <button class="lock" id="lock-btn" type="button" title="Lock this session">Lock</button>
+    </header>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section>
+      <div class="section-head">
+        <h2>Equity Portfolio</h2>
+        <span>Allocation vs target</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th class="num">Value</th>
+              <th class="num">Cost</th>
+              <th class="num">Unrealized</th>
+              <th class="num">Realized</th>
+              <th class="num">Weight</th>
+              <th class="num">Target</th>
+              <th class="num">Delta</th>
+              <th>Signal</th>
+            </tr>
+          </thead>
+          <tbody id="equity-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Crypto</h2>
+        <span>Coinbase tracking</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Coin</th>
+              <th class="num">Amount</th>
+              <th class="num">Cost</th>
+              <th class="num">Value</th>
+              <th class="num">PnL</th>
+              <th class="num">Drawdown</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="crypto-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Theses</h2>
+        <span>Status, conviction, risk</span>
+      </div>
+      <div class="thesis-grid" id="theses"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Weekly Recommendation</h2>
+        <span>Review only</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th class="num">Current</th>
+              <th class="num">Target</th>
+              <th class="num">Delta</th>
+              <th>Action</th>
+              <th class="num">Dollars</th>
+              <th class="num">Shares</th>
+              <th>Rule</th>
+              <th>Approval</th>
+            </tr>
+          </thead>
+          <tbody id="recommendation-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="cockpit.js"></script>
+</body>
+</html>
