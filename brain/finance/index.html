@@ -36,6 +36,7 @@
           <div class="brain-nav-label">Lefty's Finance</div>
           <a class="brain-nav-link" href="#dashboard" data-view-link="dashboard">Dashboard</a>
           <a class="brain-nav-link" href="#theses" data-view-link="theses">Theses</a>
+          <a class="brain-nav-link" href="#watchlist" data-view-link="watchlist">Watchlist</a>
           <a class="brain-nav-link" href="#bottlenecks" data-view-link="bottlenecks">Вузькі місця</a>
         </div>
       </nav>
@@ -185,6 +186,40 @@
         <span>Status, conviction, risk</span>
       </div>
       <div class="thesis-grid" id="theses"></div>
+    </div>
+
+    <div class="cockpit-view" id="view-watchlist" data-view="watchlist" hidden>
+      <div class="section-head">
+        <h2>Watchlist</h2>
+        <span>Майбутні ставки</span>
+      </div>
+      <form class="watchlist-form" id="watchlist-form" novalidate>
+        <label class="watchlist-field">
+          <span>Тікер або назва</span>
+          <input name="ticker" id="watchlist-ticker" type="text" inputmode="latin" maxlength="80" autocomplete="off" required>
+        </label>
+        <label class="watchlist-field">
+          <span>Джерело</span>
+          <input name="source" type="text" maxlength="80" autocomplete="off" placeholder="idea">
+        </label>
+        <label class="watchlist-field">
+          <span>Статус</span>
+          <select name="status" required>
+            <option value="watching" selected>watching</option>
+            <option value="promoted">promoted</option>
+            <option value="dropped">dropped</option>
+          </select>
+        </label>
+        <div class="watchlist-actions">
+          <button type="submit" id="watchlist-submit">Додати</button>
+          <span class="watchlist-save-state" id="watchlist-state" role="status"></span>
+        </div>
+      </form>
+      <div class="watchlist-list" id="watchlist" aria-label="Список watchlist"></div>
+      <div class="placeholder-view" id="watchlist-empty" hidden>
+        <h2>Список порожній</h2>
+        <p>Додай тікер або назву компанії, яку хочеш моніторити як можливу майбутню ставку.</p>
+      </div>
     </div>
 
     <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>

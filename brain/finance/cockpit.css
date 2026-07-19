@@ -219,7 +219,8 @@ select {
 .metric,
 .thesis-card,
 .autopay-control,
-.transaction-form {
+.transaction-form,
+.watchlist-form {
   background: var(--surface);
   border: 1px solid var(--line);
   padding: 16px;
@@ -466,7 +467,9 @@ tr:last-child td {
 .thesis-field input,
 .thesis-field select,
 .transaction-field input,
-.transaction-field select {
+.transaction-field select,
+.watchlist-field input,
+.watchlist-field select {
   width: 100%;
   min-width: 0;
   min-height: 34px;
@@ -486,6 +489,8 @@ tr:last-child td {
 .thesis-field select:focus,
 .transaction-field input:focus,
 .transaction-field select:focus,
+.watchlist-field input:focus,
+.watchlist-field select:focus,
 .autopay-amount input:focus {
   border-color: var(--line-strong);
   outline: 0;
@@ -558,25 +563,44 @@ tr:last-child td {
   gap: 10px;
 }
 
-.transaction-field {
+.watchlist-form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(160px, 1fr) minmax(130px, .7fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.transaction-field,
+.watchlist-field {
   display: grid;
   gap: 5px;
   min-width: 0;
 }
 
-.transaction-field span {
+.transaction-field span,
+.watchlist-field span {
   color: var(--muted);
   font-size: .68rem;
   text-transform: uppercase;
   letter-spacing: .12em;
 }
 
-.transaction-field input:disabled {
+.transaction-field input:disabled,
+.watchlist-field input:disabled,
+.watchlist-field select:disabled {
   opacity: .58;
   cursor: not-allowed;
 }
 
 .transaction-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+}
+
+.watchlist-actions {
   display: flex;
   grid-column: 1 / -1;
   align-items: center;
@@ -608,12 +632,21 @@ tr:last-child td {
   cursor: pointer;
 }
 
+.watchlist-actions button {
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+}
+
 .thesis-actions button:disabled {
   cursor: wait;
   opacity: .7;
 }
 
-.transaction-actions button:disabled {
+.transaction-actions button:disabled,
+.watchlist-actions button:disabled {
   cursor: wait;
   opacity: .7;
 }
@@ -633,11 +666,23 @@ tr:last-child td {
   overflow-wrap: anywhere;
 }
 
+.watchlist-save-state {
+  min-width: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .thesis-card[data-save-status="saving"] {
   border-color: var(--line-strong);
 }
 
 .transaction-form[data-save-status="saving"] {
+  border-color: var(--line-strong);
+}
+
+.watchlist-form[data-save-status="saving"] {
   border-color: var(--line-strong);
 }
 
@@ -653,6 +698,10 @@ tr:last-child td {
   color: var(--good);
 }
 
+.watchlist-form[data-save-status="saved"] .watchlist-save-state {
+  color: var(--good);
+}
+
 .autopay-control[data-save-status="saved"] .autopay-save-state {
   color: var(--good);
 }
@@ -662,6 +711,10 @@ tr:last-child td {
 }
 
 .transaction-form[data-save-status="error"] .transaction-save-state {
+  color: var(--bad);
+}
+
+.watchlist-form[data-save-status="error"] .watchlist-save-state {
   color: var(--bad);
 }
 
@@ -1029,6 +1082,50 @@ tr:last-child td {
   margin-top: 4px;
 }
 
+.watchlist-list {
+  display: grid;
+  gap: 8px;
+}
+
+.watchlist-item {
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--surface);
+  padding: 14px;
+}
+
+.watchlist-item.is-held,
+.watchlist-item.has-thesis {
+  border-color: var(--line-strong);
+}
+
+.watchlist-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.watchlist-title strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.watchlist-flags:empty {
+  display: none;
+}
+
+.watchlist-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.45;
+}
+
 .bottleneck-list {
   display: none;
 }
@@ -1080,6 +1177,8 @@ tr:last-child td {
   .autopay-control p { grid-column: auto; }
   .autopay-save-state { justify-self: start; }
   .transaction-form { grid-template-columns: 1fr; }
+  .watchlist-form { grid-template-columns: 1fr; }
+  .watchlist-title { align-items: start; flex-direction: column; }
   .thesis-edit { grid-template-columns: 1fr; }
   .bottleneck-shell { grid-template-columns: 1fr; }
   .bottleneck-graph-panel { min-height: 360px; }

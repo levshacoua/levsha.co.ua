@@ -3,9 +3,11 @@ const HELP_ICON =
 const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
 const JOURNAL_ENDPOINT = "https://brain.levsha.co.ua/finance/journal";
 const SETTINGS_ENDPOINT = "https://brain.levsha.co.ua/finance/settings";
+const WATCHLIST_ENDPOINT = "https://brain.levsha.co.ua/finance/watchlist";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
 const JOURNAL_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const SETTINGS_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
+const WATCHLIST_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const TOOLTIP_EDGE_GAP = 8;
 const JOURNAL_ACTION_OPTIONS = ["buy", "sell", "deposit", "dividend"];
 const THESIS_STATUS_OPTIONS = [
@@ -17,7 +19,8 @@ const THESIS_STATUS_OPTIONS = [
   "insufficient-evidence",
 ];
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
-const COCKPIT_VIEWS = ["dashboard", "theses", "bottlenecks"];
+const WATCHLIST_STATUS_OPTIONS = ["watching", "promoted", "dropped"];
+const COCKPIT_VIEWS = ["dashboard", "theses", "watchlist", "bottlenecks"];
 const DEFAULT_COCKPIT_VIEW = "dashboard";
 const SVG_NS = "http://www.w3.org/2000/svg";
 const BOTTLENECK_DRAG_THRESHOLD_PX = 4;
@@ -118,6 +121,7 @@ function reveal() {
   document.getElementById("cockpit").style.display = "block";
   showCurrentView();
   resetTransactionForm();
+  setWatchlistReadOnly(false);
 }
 
 async function unlock() {
@@ -141,11 +145,13 @@ function render(snapshot) {
   decorateHelpLabels();
   setupAutopayControl(snapshot);
   setupTransactionForm();
+  setupWatchlistForm();
   renderMeta(snapshot);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
   renderCrypto(snapshot.crypto.positions);
   renderTheses(snapshot.theses);
+  renderWatchlist(snapshot.watchlist || []);
   renderBottlenecks(snapshot.bottlenecks || { nodes: [], edges: [] });
   renderRecommendation(snapshot.weekly_recommendation.positions);
 }
@@ -693,6 +699,221 @@ function setTransactionControlsDisabled(form, submitButton, disabled) {
 function setTransactionState(form, state, status, message) {
   form.dataset.saveStatus = status;
   state.textContent = message;
+}
+
+function setupWatchlistForm() {
+  const form = document.getElementById("watchlist-form");
+  if (!form || form.dataset.ready === "true") return;
+
+  form.dataset.ready = "true";
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    submitWatchlist(form);
+  });
+  resetWatchlistForm();
+  setWatchlistReadOnly(!gatePassword);
+}
+
+function resetWatchlistForm() {
+  const form = document.getElementById("watchlist-form");
+  if (!form) return;
+  form.reset();
+  form.elements.status.value = "watching";
+}
+
+async function submitWatchlist(form) {
+  const state = document.getElementById("watchlist-state");
+  const submit = document.getElementById("watchlist-submit");
+  if (!gatePassword) {
+    setWatchlistState(form, state, "error", "Розблокуй cockpit ще раз перед збереженням.");
+    setWatchlistReadOnly(true);
+    return;
+  }
+
+  const draft = watchlistValues(form);
+  const validation = validateWatchlistDraft(draft);
+  if (!validation.ok) {
+    setWatchlistState(form, state, "error", validation.error);
+    return;
+  }
+
+  const payload = watchlistPayload(draft);
+  setWatchlistControlsDisabled(form, submit, true);
+  setWatchlistState(form, state, "saving", "Зберігаю...");
+
+  try {
+    const response = await fetch(WATCHLIST_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [WATCHLIST_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    appendWatchlistRow(payload);
+    resetWatchlistForm();
+    setWatchlistState(form, state, "saved", "Збережено.");
+  } catch (error) {
+    setWatchlistState(form, state, "error", error.message || "Не вдалося зберегти");
+  } finally {
+    setWatchlistControlsDisabled(form, submit, false);
+  }
+}
+
+function watchlistValues(form) {
+  return {
+    ticker: form.elements.ticker.value,
+    source: form.elements.source.value,
+    status: form.elements.status.value,
+  };
+}
+
+function validateWatchlistDraft(values) {
+  if (!String(values.ticker || "").trim()) {
+    return { ok: false, error: "Вкажи тікер або назву." };
+  }
+  if (!WATCHLIST_STATUS_OPTIONS.includes(String(values.status || "").trim())) {
+    return { ok: false, error: "Обери коректний статус." };
+  }
+  return { ok: true, error: "" };
+}
+
+function watchlistPayload(values) {
+  return {
+    ticker: String(values.ticker || "").trim().toUpperCase(),
+    source: String(values.source || "").trim() || "idea",
+    status: String(values.status || "watching").trim(),
+  };
+}
+
+function appendWatchlistRow(payload) {
+  if (!currentSnapshot) return;
+  const rows = [...(currentSnapshot.watchlist || [])];
+  const existingIndex = rows.findIndex(row => row.ticker === payload.ticker);
+  const row = {
+    id: payload.ticker.toLowerCase().replace(/[^a-z0-9]+/g, "-") || payload.ticker,
+    ticker: payload.ticker,
+    thesis: "",
+    bottleneck: "",
+    source: payload.source,
+    status: payload.status,
+    held_position: watchlistTickerIsHeld(payload.ticker),
+    linked_thesis: watchlistTickerHasThesis(payload.ticker),
+  };
+  if (existingIndex >= 0) rows.splice(existingIndex, 1, row);
+  else rows.push(row);
+  currentSnapshot.watchlist = sortWatchlistRows(rows);
+  renderWatchlist(currentSnapshot.watchlist);
+}
+
+function watchlistTickerIsHeld(ticker) {
+  return Boolean(
+    currentSnapshot?.equity_portfolio?.positions?.some(position => position.ticker === ticker)
+  );
+}
+
+function watchlistTickerHasThesis(ticker) {
+  return Boolean(
+    currentSnapshot?.theses?.some(thesis => (thesis.linked_tickers || []).includes(ticker))
+  );
+}
+
+function sortWatchlistRows(rows) {
+  return [...rows].sort((left, right) => (
+    String(left.status || "").localeCompare(String(right.status || "")) ||
+    String(left.ticker || "").localeCompare(String(right.ticker || "")) ||
+    String(left.id || "").localeCompare(String(right.id || ""))
+  ));
+}
+
+function setWatchlistControlsDisabled(form, submitButton, disabled) {
+  [...form.elements].forEach(control => {
+    control.disabled = disabled;
+  });
+  submitButton.disabled = disabled;
+}
+
+function setWatchlistReadOnly(readOnly) {
+  const form = document.getElementById("watchlist-form");
+  const submit = document.getElementById("watchlist-submit");
+  if (!form || !submit) return;
+  setWatchlistControlsDisabled(form, submit, readOnly);
+}
+
+function setWatchlistState(form, state, status, message) {
+  form.dataset.saveStatus = status;
+  state.textContent = message;
+}
+
+function renderWatchlist(rows) {
+  const root = document.getElementById("watchlist");
+  const empty = document.getElementById("watchlist-empty");
+  if (!root || !empty) return;
+
+  const sortedRows = sortWatchlistRows(rows || []);
+  if (!sortedRows.length) {
+    root.replaceChildren();
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  root.replaceChildren(...sortedRows.map(row => {
+    const item = document.createElement("article");
+    item.className = "watchlist-item";
+    if (row.held_position) item.classList.add("is-held");
+    if (row.linked_thesis) item.classList.add("has-thesis");
+
+    const title = document.createElement("div");
+    title.className = "watchlist-title";
+    title.append(el("strong", "", row.ticker), watchlistFlags(row));
+
+    item.append(
+      title,
+      el("p", "", watchlistNote(row)),
+      watchlistMeta(row)
+    );
+    return item;
+  }));
+}
+
+function watchlistNote(row) {
+  const parts = [];
+  if (row.thesis) parts.push(`теза: ${row.thesis}`);
+  if (row.bottleneck) parts.push(`вузьке місце: ${row.bottleneck}`);
+  return parts.join(" / ") || "Моніторити як можливу майбутню ставку.";
+}
+
+function watchlistFlags(row) {
+  const flags = [];
+  if (row.held_position) flags.push("у портфелі");
+  if (row.linked_thesis) flags.push("теза");
+  const meta = document.createElement("div");
+  meta.className = "bottleneck-meta watchlist-flags";
+  meta.replaceChildren(...flags.map(flag => pill(flag)));
+  return meta;
+}
+
+function watchlistMeta(row) {
+  const meta = document.createElement("div");
+  meta.className = "bottleneck-meta";
+  meta.replaceChildren(
+    pill(row.status || "watching"),
+    watchlistSourceBadge(row.source)
+  );
+  return meta;
+}
+
+function watchlistSourceBadge(source) {
+  const normalized = String(source || "idea").trim();
+  const token = normalized.toLowerCase();
+  if (token === "bottleneck-scan" || token.includes("discovery")) {
+    return pill("рекомендовано як bottleneck", "pill-signal-review");
+  }
+  return pill(normalized || "idea", "pill-signal-hold");
 }
 
 function renderBottlenecks(graph) {
@@ -1302,8 +1523,12 @@ if (typeof module !== "undefined") {
     JOURNAL_PASSWORD_HEADER,
     SETTINGS_ENDPOINT,
     SETTINGS_PASSWORD_HEADER,
+    WATCHLIST_ENDPOINT,
+    WATCHLIST_PASSWORD_HEADER,
     autopayPayload,
     journalPayload,
+    validateWatchlistDraft,
+    watchlistPayload,
     validateJournalDraft,
   };
 }
