@@ -36,8 +36,9 @@
           <div class="brain-nav-label">Lefty's Finance</div>
           <a class="brain-nav-link" href="#dashboard" data-view-link="dashboard">Dashboard</a>
           <a class="brain-nav-link" href="#theses" data-view-link="theses">Theses</a>
-          <a class="brain-nav-link" href="#watchlist" data-view-link="watchlist">Watchlist</a>
+          <a class="brain-nav-link" href="#dependency-map" data-view-link="dependency-map">Ланцюг залежностей</a>
           <a class="brain-nav-link" href="#bottlenecks" data-view-link="bottlenecks">Вузькі місця</a>
+          <a class="brain-nav-link" href="#watchlist" data-view-link="watchlist">Watchlist</a>
         </div>
       </nav>
     </aside>
@@ -222,27 +223,40 @@
       </div>
     </div>
 
-    <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
+    <div class="cockpit-view" id="view-dependency-map" data-view="dependency-map" hidden>
       <div class="section-head">
-        <h2>Вузькі місця</h2>
-        <span>Граф залежностей</span>
+        <h2>Ланцюг залежностей</h2>
+        <span>Карта портфельних залежностей</span>
       </div>
       <div class="bottleneck-shell">
-        <section class="bottleneck-graph-panel" aria-label="Граф залежностей вузьких місць">
+        <section class="bottleneck-graph-panel" aria-label="Граф ланцюга залежностей">
           <div class="bottleneck-toolbar">
             <button type="button" id="bottleneck-zoom-out" title="Зменшити масштаб" aria-label="Зменшити масштаб">-</button>
             <button type="button" id="bottleneck-zoom-reset" title="Скинути вигляд графа" aria-label="Скинути вигляд графа">Скинути</button>
             <button type="button" id="bottleneck-zoom-in" title="Збільшити масштаб" aria-label="Збільшити масштаб">+</button>
           </div>
-          <svg id="bottleneck-graph" class="bottleneck-graph" role="img" aria-label="Інтерактивний граф вузьких місць"></svg>
-          <div class="bottleneck-legend" id="bottleneck-legend" aria-label="Легенда графа вузьких місць"></div>
+          <svg id="bottleneck-graph" class="bottleneck-graph" role="img" aria-label="Інтерактивний граф ланцюга залежностей"></svg>
+          <div class="bottleneck-legend" id="bottleneck-legend" aria-label="Легенда графа залежностей"></div>
         </section>
-        <aside class="bottleneck-detail" id="bottleneck-detail" aria-live="polite"></aside>
+        <div class="bottleneck-side-panel">
+          <aside class="bottleneck-detail" id="bottleneck-detail" aria-live="polite"></aside>
+          <section class="dependency-candidates-panel" aria-label="Не-портфельні кандидати">
+            <h3>Не-портфельні кандидати</h3>
+            <div class="dependency-candidates" id="dependency-candidates" aria-live="polite"></div>
+          </section>
+        </div>
       </div>
-      <div class="bottleneck-list" id="bottleneck-list" aria-label="Список вузьких місць"></div>
+      <div class="bottleneck-list" id="bottleneck-list" aria-label="Список залежностей"></div>
       <div class="placeholder-view" id="bottleneck-empty" hidden>
+        <h2>Ланцюг залежностей</h2>
+        <p>У цьому snapshot немає портфельних залежностей.</p>
+      </div>
+    </div>
+
+    <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
+      <div class="placeholder-view">
         <h2>Вузькі місця</h2>
-        <p>У цьому snapshot немає файлів вузьких місць.</p>
+        <p>Модуль відкриття трендів і вузьких місць — буде додано (#027). Запуск ресьорчу — вручну, кнопкою.</p>
       </div>
     </div>
   </main>

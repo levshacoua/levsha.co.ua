@@ -755,10 +755,18 @@ tr:last-child td {
 }
 
 .bottleneck-graph-panel,
-.bottleneck-detail {
+.bottleneck-detail,
+.dependency-candidates-panel {
   min-width: 0;
   border: 1px solid var(--line);
   background: var(--surface);
+}
+
+.bottleneck-side-panel {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+  align-content: start;
 }
 
 .bottleneck-graph-panel {
@@ -973,6 +981,44 @@ tr:last-child td {
 .bottleneck-detail {
   padding: 18px;
   overflow-wrap: anywhere;
+}
+
+.dependency-candidates-panel {
+  padding: 18px;
+  overflow-wrap: anywhere;
+}
+
+.dependency-candidates-panel h3 {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.dependency-candidates {
+  display: grid;
+  gap: 8px;
+}
+
+.dependency-candidate {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--surface-2);
+  padding: 11px;
+}
+
+.dependency-candidate strong {
+  font-weight: 600;
+}
+
+.dependency-candidate p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.4;
 }
 
 .bottleneck-kicker {

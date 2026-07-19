@@ -20,7 +20,7 @@ const THESIS_STATUS_OPTIONS = [
 ];
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
 const WATCHLIST_STATUS_OPTIONS = ["watching", "promoted", "dropped"];
-const COCKPIT_VIEWS = ["dashboard", "theses", "watchlist", "bottlenecks"];
+const COCKPIT_VIEWS = ["dashboard", "theses", "dependency-map", "bottlenecks", "watchlist"];
 const DEFAULT_COCKPIT_VIEW = "dashboard";
 const SVG_NS = "http://www.w3.org/2000/svg";
 const BOTTLENECK_DRAG_THRESHOLD_PX = 4;
@@ -153,6 +153,7 @@ function render(snapshot) {
   renderTheses(snapshot.theses);
   renderWatchlist(snapshot.watchlist || []);
   renderBottlenecks(snapshot.bottlenecks || { nodes: [], edges: [] });
+  renderDependencyCandidates(snapshot);
   renderRecommendation(snapshot.weekly_recommendation.positions);
 }
 
@@ -944,6 +945,39 @@ function renderBottlenecks(graph) {
   renderBottleneckDetail(nodes.find(node => node.id === bottleneckView.selectedId) || nodes[0]);
   renderBottleneckList(nodes);
   setupBottleneckControls();
+}
+
+function renderDependencyCandidates(snapshot) {
+  const root = document.getElementById("dependency-candidates");
+  if (!root) return;
+  const candidates = dependencyCandidatesFromSnapshot(snapshot);
+  if (!candidates.length) {
+    root.replaceChildren(el("p", "muted", "Поки немає не-портфельних кандидатів у snapshot."));
+    return;
+  }
+  root.replaceChildren(...candidates.map(dependencyCandidateRow));
+}
+
+function dependencyCandidatesFromSnapshot(snapshot) {
+  const directCandidates = snapshot?.dependency_candidates;
+  const discoveryCandidates = snapshot?.discovery?.candidates;
+  const candidates = Array.isArray(directCandidates) ? directCandidates : discoveryCandidates;
+  return Array.isArray(candidates) ? candidates : [];
+}
+
+function dependencyCandidateRow(candidate) {
+  const item = document.createElement("article");
+  item.className = "dependency-candidate";
+  const title = candidate.ticker || candidate.name || candidate.title || "Кандидат";
+  const score = candidate.score ?? candidate.beneficiary_probability_pct ?? candidate.probability_pct;
+  item.append(
+    el("strong", "", title),
+    el("p", "", candidate.note || candidate.reason || candidate.thesis || "")
+  );
+  if (score !== undefined && score !== null && score !== "") {
+    item.append(pill(`${score}%`));
+  }
+  return item;
 }
 
 function renderBottleneckGraph(nodes, edges) {
