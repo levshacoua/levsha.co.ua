@@ -34,7 +34,9 @@
         </div>
         <div class="brain-nav-group">
           <div class="brain-nav-label">Lefty's Finance</div>
-          <a class="brain-nav-link is-active" href="/brain/finance/" aria-current="page">Finance · Cockpit</a>
+          <a class="brain-nav-link" href="#dashboard" data-view-link="dashboard">Dashboard</a>
+          <a class="brain-nav-link" href="#theses" data-view-link="theses">Theses</a>
+          <a class="brain-nav-link" href="#bottlenecks" data-view-link="bottlenecks">Bottlenecks</a>
         </div>
       </nav>
     </aside>
@@ -47,141 +49,150 @@
       <button class="lock" id="lock-btn" type="button" title="Lock this session">Lock</button>
     </header>
 
-    <section class="metrics" id="metrics"></section>
+    <div class="cockpit-view" id="view-dashboard" data-view="dashboard">
+      <section class="metrics" id="metrics"></section>
 
-    <section class="transaction-section">
-      <div class="section-head">
-        <h2>Add transaction</h2>
-        <span>Executed trade or deposit</span>
-      </div>
-      <div class="autopay-control" id="autopay-control" data-save-status="">
-        <label class="autopay-toggle">
-          <input type="checkbox" id="autopay-active" name="weekly_autopay_active">
-          <span>Щотижнева автооплата на Robinhood</span>
-        </label>
-        <label class="autopay-amount">
-          <span>USD</span>
-          <input type="number" id="autopay-amount" name="weekly_contribution_usd" min="0" step="0.01" inputmode="decimal">
-        </label>
-        <p>дзеркалить реальне автосписання Robinhood — не керує ним</p>
-        <span class="autopay-save-state" id="autopay-state" role="status"></span>
-      </div>
-      <form class="transaction-form" id="transaction-form" novalidate>
-        <label class="transaction-field">
-          <span>Action</span>
-          <select name="action" id="transaction-action" required>
-            <option value="buy">buy</option>
-            <option value="sell">sell</option>
-            <option value="deposit">deposit</option>
-            <option value="dividend">dividend</option>
-          </select>
-        </label>
-        <label class="transaction-field">
-          <span>Date</span>
-          <input name="date" id="transaction-date" type="date" required>
-        </label>
-        <label class="transaction-field">
-          <span>Ticker</span>
-          <input name="ticker" id="transaction-ticker" type="text" inputmode="latin" maxlength="12" autocomplete="off" required>
-        </label>
-        <label class="transaction-field">
-          <span>Shares</span>
-          <input name="shares" type="number" min="0" step="any" inputmode="decimal">
-        </label>
-        <label class="transaction-field">
-          <span>Price</span>
-          <input name="price" type="number" min="0" step="any" inputmode="decimal">
-        </label>
-        <label class="transaction-field">
-          <span>Amount USD</span>
-          <input name="amount_usd" type="number" min="0" step="any" inputmode="decimal" required>
-        </label>
-        <div class="transaction-actions">
-          <button type="submit" id="transaction-submit">Post</button>
-          <span class="transaction-save-state" id="transaction-state" role="status"></span>
+      <section class="transaction-section">
+        <div class="section-head">
+          <h2>Add transaction</h2>
+          <span>Executed trade or deposit</span>
         </div>
-      </form>
-    </section>
+        <div class="autopay-control" id="autopay-control" data-save-status="">
+          <label class="autopay-toggle">
+            <input type="checkbox" id="autopay-active" name="weekly_autopay_active">
+            <span>Щотижнева автооплата на Robinhood</span>
+          </label>
+          <label class="autopay-amount">
+            <span>USD</span>
+            <input type="number" id="autopay-amount" name="weekly_contribution_usd" min="0" step="0.01" inputmode="decimal">
+          </label>
+          <p>дзеркалить реальне автосписання Robinhood — не керує ним</p>
+          <span class="autopay-save-state" id="autopay-state" role="status"></span>
+        </div>
+        <form class="transaction-form" id="transaction-form" novalidate>
+          <label class="transaction-field">
+            <span>Action</span>
+            <select name="action" id="transaction-action" required>
+              <option value="buy">buy</option>
+              <option value="sell">sell</option>
+              <option value="deposit">deposit</option>
+              <option value="dividend">dividend</option>
+            </select>
+          </label>
+          <label class="transaction-field">
+            <span>Date</span>
+            <input name="date" id="transaction-date" type="date" required>
+          </label>
+          <label class="transaction-field">
+            <span>Ticker</span>
+            <input name="ticker" id="transaction-ticker" type="text" inputmode="latin" maxlength="12" autocomplete="off" required>
+          </label>
+          <label class="transaction-field">
+            <span>Shares</span>
+            <input name="shares" type="number" min="0" step="any" inputmode="decimal">
+          </label>
+          <label class="transaction-field">
+            <span>Price</span>
+            <input name="price" type="number" min="0" step="any" inputmode="decimal">
+          </label>
+          <label class="transaction-field">
+            <span>Amount USD</span>
+            <input name="amount_usd" type="number" min="0" step="any" inputmode="decimal" required>
+          </label>
+          <div class="transaction-actions">
+            <button type="submit" id="transaction-submit">Post</button>
+            <span class="transaction-save-state" id="transaction-state" role="status"></span>
+          </div>
+        </form>
+      </section>
 
-    <section>
-      <div class="section-head">
-        <h2>Equity Portfolio</h2>
-        <span>Allocation vs target</span>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th data-help="Біржовий тікер активу">Ticker</th>
-              <th class="num" data-help="Поточна ринкова вартість позиції (кількість × ціна)">Value</th>
-              <th class="num" data-help="Собівартість: скільки вкладено (кількість × середня ціна купівлі)">Cost</th>
-              <th class="num" data-help="Нереалізований P&amp;L — паперовий прибуток/збиток по відкритій позиції">Unrealized</th>
-              <th class="num" data-help="Реалізований P&amp;L — зафіксований прибуток/збиток від уже проданого">Realized</th>
-              <th class="num" data-help="Поточна частка цієї позиції у портфелі акцій">Weight</th>
-              <th class="num" data-help="Відхилення поточної частки від цільової (+ переважена, − недоважена)">Delta</th>
-              <th data-help="Рекомендована дія рушія: BUY / SELL / HOLD">Signal</th>
-            </tr>
-          </thead>
-          <tbody id="equity-body"></tbody>
-        </table>
-      </div>
-    </section>
+      <section>
+        <div class="section-head">
+          <h2>Equity Portfolio</h2>
+          <span>Allocation vs target</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-help="Біржовий тікер активу">Ticker</th>
+                <th class="num" data-help="Поточна ринкова вартість позиції (кількість × ціна)">Value</th>
+                <th class="num" data-help="Собівартість: скільки вкладено (кількість × середня ціна купівлі)">Cost</th>
+                <th class="num" data-help="Нереалізований P&amp;L — паперовий прибуток/збиток по відкритій позиції">Unrealized</th>
+                <th class="num" data-help="Реалізований P&amp;L — зафіксований прибуток/збиток від уже проданого">Realized</th>
+                <th class="num" data-help="Поточна частка цієї позиції у портфелі акцій">Weight</th>
+                <th class="num" data-help="Відхилення поточної частки від цільової (+ переважена, − недоважена)">Delta</th>
+                <th data-help="Рекомендована дія рушія: BUY / SELL / HOLD">Signal</th>
+              </tr>
+            </thead>
+            <tbody id="equity-body"></tbody>
+          </table>
+        </div>
+      </section>
 
-    <section>
-      <div class="section-head">
-        <h2>Crypto</h2>
-        <span>Coinbase tracking</span>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th data-help="Символ монети">Coin</th>
-              <th class="num" data-help="Кількість монет">Amount</th>
-              <th class="num" data-help="Собівартість у USD (скільки вкладено)">Cost</th>
-              <th class="num" data-help="Поточна ринкова вартість у USD">Value</th>
-              <th class="num" data-help="Прибуток/збиток відносно вкладеного">PnL</th>
-              <th class="num" data-help="Просадка: наскільки нижче собівартості">Drawdown</th>
-              <th data-help="Твоя мітка: buy / average / forget / hold">Status</th>
-            </tr>
-          </thead>
-          <tbody id="crypto-body"></tbody>
-        </table>
-      </div>
-    </section>
+      <section>
+        <div class="section-head">
+          <h2>Crypto</h2>
+          <span>Coinbase tracking</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-help="Символ монети">Coin</th>
+                <th class="num" data-help="Кількість монет">Amount</th>
+                <th class="num" data-help="Собівартість у USD (скільки вкладено)">Cost</th>
+                <th class="num" data-help="Поточна ринкова вартість у USD">Value</th>
+                <th class="num" data-help="Прибуток/збиток відносно вкладеного">PnL</th>
+                <th class="num" data-help="Просадка: наскільки нижче собівартості">Drawdown</th>
+                <th data-help="Твоя мітка: buy / average / forget / hold">Status</th>
+              </tr>
+            </thead>
+            <tbody id="crypto-body"></tbody>
+          </table>
+        </div>
+      </section>
 
-    <section>
+      <section>
+        <div class="section-head">
+          <h2>Weekly Recommendation</h2>
+          <span>Review only</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-help="Біржовий тікер">Ticker</th>
+                <th class="num" data-help="Поточна частка позиції у портфелі">Current</th>
+                <th class="num" data-help="Цільова частка за поточним режимом ринку">Target</th>
+                <th class="num" data-help="Відхилення поточної частки від цільової">Delta</th>
+                <th data-help="Рекомендована дія: BUY / SELL / HOLD">Action</th>
+                <th class="num" data-help="Рекомендована сума угоди в доларах">Dollars</th>
+                <th class="num" data-help="Рекомендована кількість акцій">Shares</th>
+                <th data-help="Яке правило портфеля спрацювало (людською мовою)">Rule</th>
+                <th data-help="Статус схвалення — виконання вручну в Robinhood">Approval</th>
+              </tr>
+            </thead>
+            <tbody id="recommendation-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div class="cockpit-view" id="view-theses" data-view="theses" hidden>
       <div class="section-head">
         <h2>Theses</h2>
         <span>Status, conviction, risk</span>
       </div>
       <div class="thesis-grid" id="theses"></div>
-    </section>
+    </div>
 
-    <section>
-      <div class="section-head">
-        <h2>Weekly Recommendation</h2>
-        <span>Review only</span>
+    <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
+      <div class="placeholder-view">
+        <h2>Bottlenecks</h2>
+        <p>coming soon (P4). The bottleneck graph will render here later.</p>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th data-help="Біржовий тікер">Ticker</th>
-              <th class="num" data-help="Поточна частка позиції у портфелі">Current</th>
-              <th class="num" data-help="Цільова частка за поточним режимом ринку">Target</th>
-              <th class="num" data-help="Відхилення поточної частки від цільової">Delta</th>
-              <th data-help="Рекомендована дія: BUY / SELL / HOLD">Action</th>
-              <th class="num" data-help="Рекомендована сума угоди в доларах">Dollars</th>
-              <th class="num" data-help="Рекомендована кількість акцій">Shares</th>
-              <th data-help="Яке правило портфеля спрацювало (людською мовою)">Rule</th>
-              <th data-help="Статус схвалення — виконання вручну в Robinhood">Approval</th>
-            </tr>
-          </thead>
-          <tbody id="recommendation-body"></tbody>
-        </table>
-      </div>
-    </section>
+    </div>
   </main>
 
   <script src="cockpit.js"></script>

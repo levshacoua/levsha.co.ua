@@ -17,6 +17,8 @@ const THESIS_STATUS_OPTIONS = [
   "insufficient-evidence",
 ];
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
+const COCKPIT_VIEWS = ["dashboard", "theses", "bottlenecks"];
+const DEFAULT_COCKPIT_VIEW = "dashboard";
 let gatePassword = "";
 let tooltipId = 0;
 let currentSnapshot = null;
@@ -68,6 +70,7 @@ async function decryptSnapshot(password) {
 function reveal() {
   document.getElementById("password-gate").style.display = "none";
   document.getElementById("cockpit").style.display = "block";
+  showCurrentView();
   resetTransactionForm();
 }
 
@@ -826,6 +829,32 @@ function formatDate(value) {
   });
 }
 
+function currentViewFromHash() {
+  const rawHash = String(location.hash || "").replace(/^#/, "");
+  return COCKPIT_VIEWS.includes(rawHash) ? rawHash : DEFAULT_COCKPIT_VIEW;
+}
+
+function ensureDefaultHash() {
+  if (COCKPIT_VIEWS.includes(String(location.hash || "").replace(/^#/, ""))) return;
+  location.replace(`#${DEFAULT_COCKPIT_VIEW}`);
+}
+
+function showCurrentView() {
+  const currentView = currentViewFromHash();
+  document.querySelectorAll("[data-view]").forEach(view => {
+    view.hidden = view.dataset.view !== currentView;
+  });
+  document.querySelectorAll("[data-view-link]").forEach(link => {
+    const isActive = link.dataset.viewLink === currentView;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
 const currency = new Intl.NumberFormat(undefined, {
   style: "currency",
   currency: "USD",
@@ -833,6 +862,9 @@ const currency = new Intl.NumberFormat(undefined, {
 });
 
 if (typeof document !== "undefined") {
+  ensureDefaultHash();
+  showCurrentView();
+  window.addEventListener("hashchange", showCurrentView);
   document.getElementById("unlock-btn").addEventListener("click", unlock);
   document.getElementById("password-input").addEventListener("keydown", event => {
     if (event.key === "Enter") unlock();

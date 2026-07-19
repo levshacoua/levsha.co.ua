@@ -165,10 +165,14 @@ select {
 }
 
 #cockpit > .topbar,
-#cockpit > section {
+#cockpit > .cockpit-view {
   max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.cockpit-view[hidden] {
+  display: none;
 }
 
 .topbar {
@@ -668,6 +672,25 @@ tr:last-child td {
 .thesis-card .risk {
   color: var(--muted);
   font-size: .82rem;
+  line-height: 1.5;
+}
+
+.placeholder-view {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px;
+}
+
+.placeholder-view h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.placeholder-view p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
   line-height: 1.5;
 }
 
