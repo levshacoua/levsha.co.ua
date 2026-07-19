@@ -131,7 +131,8 @@ select {
 }
 
 .metric,
-.thesis-card {
+.thesis-card,
+.transaction-form {
   background: var(--surface);
   border: 1px solid var(--line);
   padding: 16px;
@@ -376,7 +377,9 @@ tr:last-child td {
 }
 
 .thesis-field input,
-.thesis-field select {
+.thesis-field select,
+.transaction-field input,
+.transaction-field select {
   width: 100%;
   min-width: 0;
   min-height: 34px;
@@ -387,9 +390,43 @@ tr:last-child td {
 }
 
 .thesis-field input:focus,
-.thesis-field select:focus {
+.thesis-field select:focus,
+.transaction-field input:focus,
+.transaction-field select:focus {
   border-color: var(--line-strong);
   outline: 0;
+}
+
+.transaction-form {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr repeat(3, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.transaction-field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.transaction-field span {
+  color: var(--muted);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.transaction-field input:disabled {
+  opacity: .58;
+  cursor: not-allowed;
+}
+
+.transaction-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
 }
 
 .thesis-actions {
@@ -408,7 +445,20 @@ tr:last-child td {
   cursor: pointer;
 }
 
+.transaction-actions button {
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+}
+
 .thesis-actions button:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+.transaction-actions button:disabled {
   cursor: wait;
   opacity: .7;
 }
@@ -420,7 +470,19 @@ tr:last-child td {
   overflow-wrap: anywhere;
 }
 
+.transaction-save-state {
+  min-width: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .thesis-card[data-save-status="saving"] {
+  border-color: var(--line-strong);
+}
+
+.transaction-form[data-save-status="saving"] {
   border-color: var(--line-strong);
 }
 
@@ -428,7 +490,15 @@ tr:last-child td {
   color: var(--good);
 }
 
+.transaction-form[data-save-status="saved"] .transaction-save-state {
+  color: var(--good);
+}
+
 .thesis-card[data-save-status="error"] .thesis-save-state {
+  color: var(--bad);
+}
+
+.transaction-form[data-save-status="error"] .transaction-save-state {
   color: var(--bad);
 }
 
@@ -444,5 +514,10 @@ tr:last-child td {
   .topbar { align-items: stretch; flex-direction: column; gap: 14px; }
   .lock { width: 100%; }
   .section-head { align-items: start; flex-direction: column; gap: 4px; }
+  .transaction-form { grid-template-columns: 1fr; }
   .thesis-edit { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 641px) and (max-width: 980px) {
+  .transaction-form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

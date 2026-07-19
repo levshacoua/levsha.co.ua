@@ -30,6 +30,48 @@
 
     <section class="metrics" id="metrics"></section>
 
+    <section class="transaction-section">
+      <div class="section-head">
+        <h2>Add transaction</h2>
+        <span>Executed trade or deposit</span>
+      </div>
+      <form class="transaction-form" id="transaction-form" novalidate>
+        <label class="transaction-field">
+          <span>Action</span>
+          <select name="action" id="transaction-action" required>
+            <option value="buy">buy</option>
+            <option value="sell">sell</option>
+            <option value="deposit">deposit</option>
+            <option value="dividend">dividend</option>
+          </select>
+        </label>
+        <label class="transaction-field">
+          <span>Date</span>
+          <input name="date" id="transaction-date" type="date" required>
+        </label>
+        <label class="transaction-field">
+          <span>Ticker</span>
+          <input name="ticker" id="transaction-ticker" type="text" inputmode="latin" maxlength="12" autocomplete="off" required>
+        </label>
+        <label class="transaction-field">
+          <span>Shares</span>
+          <input name="shares" type="number" min="0" step="any" inputmode="decimal">
+        </label>
+        <label class="transaction-field">
+          <span>Price</span>
+          <input name="price" type="number" min="0" step="any" inputmode="decimal">
+        </label>
+        <label class="transaction-field">
+          <span>Amount USD</span>
+          <input name="amount_usd" type="number" min="0" step="any" inputmode="decimal" required>
+        </label>
+        <div class="transaction-actions">
+          <button type="submit" id="transaction-submit">Post</button>
+          <span class="transaction-save-state" id="transaction-state" role="status"></span>
+        </div>
+      </form>
+    </section>
+
     <section>
       <div class="section-head">
         <h2>Equity Portfolio</h2>

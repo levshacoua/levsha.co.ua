@@ -1,8 +1,11 @@
 const HELP_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
 const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
+const JOURNAL_ENDPOINT = "https://brain.levsha.co.ua/finance/journal";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
+const JOURNAL_PASSWORD_HEADER = THESIS_PASSWORD_HEADER;
 const TOOLTIP_EDGE_GAP = 8;
+const JOURNAL_ACTION_OPTIONS = ["buy", "sell", "deposit", "dividend"];
 const THESIS_STATUS_OPTIONS = [
   "strengthening",
   "valid",
@@ -18,6 +21,8 @@ let tooltipId = 0;
 const SUMMARY_HELP = {
   "Equity Value": "Сумарна вартість портфеля акцій",
   "Crypto Value": "Сумарна вартість крипто-портфеля",
+  "Equity Invested": "Чистий капітал з кишені в акціях: купівлі мінус продажі з журналу",
+  "Crypto Invested": "Чистий капітал з кишені в крипто: внесений invested_usd мінус крипто-продажі; рахується окремо від акцій",
   "Кеш на рахунку": "Реальний кеш на рахунку Robinhood зараз",
   "Щотижневий внесок": "Автоплатіж $50 щопʼятниці — додається до кешу коли надходить",
   "Доступно цього циклу": "Реальний кеш, який можна розмістити цього циклу без урахування рекомендованих продажів",
@@ -59,6 +64,7 @@ async function decryptSnapshot(password) {
 function reveal() {
   document.getElementById("password-gate").style.display = "none";
   document.getElementById("cockpit").style.display = "block";
+  resetTransactionForm();
 }
 
 async function unlock() {
@@ -78,6 +84,7 @@ async function unlock() {
 
 function render(snapshot) {
   decorateHelpLabels();
+  setupTransactionForm();
   renderMeta(snapshot);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
@@ -105,6 +112,8 @@ function renderMetrics(snapshot) {
   const metrics = [
     { label: "Equity Value", value: money(portfolio.total_value) },
     { label: "Crypto Value", value: money(crypto.total_value) },
+    { label: "Equity Invested", value: money(portfolio.equity_invested_net) },
+    { label: "Crypto Invested", value: money(crypto.invested_net) },
     { label: "Кеш на рахунку", value: cashAvailable },
     { label: "Щотижневий внесок", value: money(portfolio.weekly_contribution) },
     {
@@ -333,6 +342,182 @@ function setThesisState(card, state, status, message) {
   state.textContent = message;
 }
 
+function setupTransactionForm() {
+  const form = document.getElementById("transaction-form");
+  if (!form || form.dataset.ready === "true") return;
+
+  form.dataset.ready = "true";
+  const action = form.elements.action;
+  action.addEventListener("change", () => updateTransactionFields(form));
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    submitTransaction(form);
+  });
+  resetTransactionForm();
+}
+
+function resetTransactionForm() {
+  const form = document.getElementById("transaction-form");
+  if (!form) return;
+  form.reset();
+  form.elements.date.value = todayIsoDate();
+  updateTransactionFields(form);
+}
+
+function updateTransactionFields(form) {
+  const action = form.elements.action.value;
+  const isDeposit = action === "deposit";
+  const isTrade = action === "buy" || action === "sell";
+  const isDividend = action === "dividend";
+
+  form.elements.ticker.disabled = isDeposit;
+  form.elements.ticker.required = !isDeposit;
+  if (isDeposit) form.elements.ticker.value = "";
+
+  form.elements.shares.required = isTrade;
+  form.elements.price.required = isTrade;
+  form.elements.amount_usd.required = isTrade || isDeposit || isDividend;
+}
+
+async function submitTransaction(form) {
+  const state = document.getElementById("transaction-state");
+  const submit = document.getElementById("transaction-submit");
+  if (!gatePassword) {
+    setTransactionState(form, state, "error", "Unlock again before posting.");
+    return;
+  }
+
+  const draft = transactionValues(form);
+  const validation = validateJournalDraft(draft);
+  if (!validation.ok) {
+    setTransactionState(form, state, "error", validation.error);
+    return;
+  }
+
+  const payload = journalPayload(draft);
+  setTransactionControlsDisabled(form, submit, true);
+  setTransactionState(form, state, "saving", "Saving...");
+
+  try {
+    const response = await fetch(JOURNAL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [JOURNAL_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    resetTransactionForm();
+    setTransactionState(
+      form,
+      state,
+      "saved",
+      "Saved. It will appear here after the backend rebuilds and redeploys."
+    );
+  } catch (error) {
+    setTransactionState(form, state, "error", error.message || "Save failed");
+  } finally {
+    setTransactionControlsDisabled(form, submit, false);
+  }
+}
+
+function transactionValues(form) {
+  return {
+    action: form.elements.action.value,
+    date: form.elements.date.value,
+    ticker: form.elements.ticker.value,
+    shares: form.elements.shares.value,
+    price: form.elements.price.value,
+    amount_usd: form.elements.amount_usd.value,
+  };
+}
+
+function validateJournalDraft(values) {
+  const action = String(values.action || "").trim();
+  if (!JOURNAL_ACTION_OPTIONS.includes(action)) {
+    return { ok: false, error: "Choose a valid action." };
+  }
+  if (!isIsoDate(values.date)) {
+    return { ok: false, error: "Use an ISO date." };
+  }
+  if (action !== "deposit" && !String(values.ticker || "").trim()) {
+    return { ok: false, error: "Ticker is required." };
+  }
+
+  const requiredNumbers = ["amount_usd"];
+  if (action === "buy" || action === "sell") {
+    requiredNumbers.push("shares", "price");
+  }
+
+  for (const field of requiredNumbers) {
+    if (String(values[field] ?? "").trim() === "") {
+      return { ok: false, error: `${field} is required.` };
+    }
+  }
+
+  for (const field of ["shares", "price", "amount_usd"]) {
+    const raw = String(values[field] ?? "").trim();
+    if (raw === "") continue;
+    if (!isNonNegativeNumber(raw)) {
+      return { ok: false, error: `${field} must be non-negative.` };
+    }
+  }
+
+  return { ok: true, error: "" };
+}
+
+function journalPayload(values) {
+  const action = String(values.action).trim();
+  const payload = {
+    date: String(values.date).trim(),
+    action,
+    shares: numberOrZero(values.shares),
+    price: numberOrZero(values.price),
+    amount_usd: numberOrZero(values.amount_usd),
+  };
+  if (action !== "deposit") {
+    payload.ticker = String(values.ticker || "").trim().toUpperCase();
+  }
+  return payload;
+}
+
+function numberOrZero(value) {
+  const raw = String(value ?? "").trim();
+  return raw === "" ? 0 : Number(raw);
+}
+
+function isNonNegativeNumber(value) {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) && numberValue >= 0;
+}
+
+function isIsoDate(value) {
+  const text = String(value || "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
+  const date = new Date(`${text}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === text;
+}
+
+function todayIsoDate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function setTransactionControlsDisabled(form, submitButton, disabled) {
+  [...form.elements].forEach(control => {
+    control.disabled = disabled;
+  });
+  if (!disabled) updateTransactionFields(form);
+  submitButton.disabled = disabled;
+}
+
+function setTransactionState(form, state, status, message) {
+  form.dataset.saveStatus = status;
+  state.textContent = message;
+}
+
 async function responseErrorMessage(response) {
   try {
     const body = await response.json();
@@ -515,11 +700,22 @@ const currency = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 2,
 });
 
-document.getElementById("unlock-btn").addEventListener("click", unlock);
-document.getElementById("password-input").addEventListener("keydown", event => {
-  if (event.key === "Enter") unlock();
-});
-document.getElementById("lock-btn").addEventListener("click", () => {
-  gatePassword = "";
-  location.reload();
-});
+if (typeof document !== "undefined") {
+  document.getElementById("unlock-btn").addEventListener("click", unlock);
+  document.getElementById("password-input").addEventListener("keydown", event => {
+    if (event.key === "Enter") unlock();
+  });
+  document.getElementById("lock-btn").addEventListener("click", () => {
+    gatePassword = "";
+    location.reload();
+  });
+}
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    JOURNAL_ENDPOINT,
+    JOURNAL_PASSWORD_HEADER,
+    journalPayload,
+    validateJournalDraft,
+  };
+}
