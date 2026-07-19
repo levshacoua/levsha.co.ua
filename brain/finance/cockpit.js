@@ -2,6 +2,7 @@ const HELP_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>';
 const THESIS_ENDPOINT = "https://brain.levsha.co.ua/finance/thesis";
 const THESIS_PASSWORD_HEADER = "X-Finance-Gate-Password";
+const TOOLTIP_EDGE_GAP = 8;
 const THESIS_STATUS_OPTIONS = [
   "strengthening",
   "valid",
@@ -12,6 +13,7 @@ const THESIS_STATUS_OPTIONS = [
 ];
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
 let gatePassword = "";
+let tooltipId = 0;
 
 const SUMMARY_HELP = {
   "Equity Value": "Сумарна вартість портфеля акцій",
@@ -128,7 +130,7 @@ function renderEquities(rows) {
     coloredMoney(row.realized_pnl),
     pct(row.weight_pct),
     coloredPct(row.deviation_pct),
-    pill(row.latest_signal),
+    signalPill(row.latest_signal),
   ], [1, 2, 3, 4, 5, 6])));
 }
 
@@ -338,7 +340,7 @@ function renderRecommendation(rows) {
     pct(row.current_allocation),
     pct(row.target_allocation),
     coloredPct(row.delta),
-    pill(row.recommended_action),
+    signalPill(row.recommended_action),
     money(row.recommended_dollar_amount),
     number(row.recommended_share_quantity, 4),
     row.rule,
@@ -390,13 +392,73 @@ function helpTip(text) {
   const tooltip = document.createElement("span");
   tooltip.className = "tooltip";
   tooltip.setAttribute("role", "tooltip");
+  tooltip.id = `help-tooltip-${++tooltipId}`;
+  tooltip.hidden = true;
   tooltip.textContent = text;
-  wrapper.append(tooltip);
+  wrapper.setAttribute("aria-describedby", tooltip.id);
+  document.body.append(tooltip);
+
+  const show = () => {
+    tooltip.hidden = false;
+    tooltip.classList.add("is-visible");
+    positionTooltip(wrapper, tooltip);
+  };
+  const hide = () => {
+    tooltip.classList.remove("is-visible", "tooltip-down");
+    tooltip.hidden = true;
+  };
+  const reposition = () => {
+    if (!tooltip.hidden) positionTooltip(wrapper, tooltip);
+  };
+
+  wrapper.addEventListener("mouseenter", show);
+  wrapper.addEventListener("mouseleave", hide);
+  wrapper.addEventListener("focus", show);
+  wrapper.addEventListener("blur", hide);
+  wrapper.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      wrapper.blur();
+      hide();
+    }
+  });
+  window.addEventListener("resize", reposition);
+  window.addEventListener("scroll", reposition, true);
   return wrapper;
 }
 
-function pill(text) {
-  return el("span", "pill", text);
+function positionTooltip(anchor, tooltip) {
+  const anchorRect = anchor.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const gap = TOOLTIP_EDGE_GAP;
+  const centeredLeft = anchorRect.left + (anchorRect.width / 2) - (tooltipRect.width / 2);
+  const left = clamp(centeredLeft, gap, window.innerWidth - tooltipRect.width - gap);
+  const aboveTop = anchorRect.top - tooltipRect.height - gap;
+  const opensDown = aboveTop < gap;
+  const top = opensDown
+    ? anchorRect.bottom + gap
+    : aboveTop;
+
+  tooltip.classList.toggle("tooltip-down", opensDown);
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${Math.min(top, window.innerHeight - tooltipRect.height - gap)}px`;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function pill(text, extraClassName = "") {
+  return el("span", ["pill", extraClassName].filter(Boolean).join(" "), text);
+}
+
+function signalPill(text) {
+  const signal = String(text || "").trim().toUpperCase();
+  const className = {
+    BUY: "pill-signal-buy",
+    SELL: "pill-signal-sell",
+    HOLD: "pill-signal-hold",
+  }[signal] || "";
+  return pill(signal || text, className);
 }
 
 function money(value) {

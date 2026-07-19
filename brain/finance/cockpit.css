@@ -179,7 +179,8 @@ section {
 }
 
 .table-wrap {
-  overflow-x: auto;
+  max-height: min(72vh, 640px);
+  overflow: auto;
   border: 1px solid var(--line);
   background: var(--surface);
 }
@@ -187,7 +188,8 @@ section {
 table {
   width: 100%;
   min-width: 820px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 th,
@@ -200,7 +202,10 @@ td {
 }
 
 th {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--surface);
   color: var(--muted);
   font-size: .7rem;
   text-transform: uppercase;
@@ -244,10 +249,10 @@ tr:last-child td {
 }
 
 .tooltip {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  z-index: 20;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
   width: max-content;
   max-width: min(260px, 70vw);
   padding: 8px 10px;
@@ -264,42 +269,24 @@ tr:last-child td {
   white-space: normal;
   overflow-wrap: anywhere;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transform: translate(-50%, -4px);
-  transition: opacity .14s ease, transform .14s ease;
+  transform: translateY(-4px);
+  transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
 }
 
-.help-tip:focus .tooltip,
-.help-tip:hover .tooltip {
+.tooltip.is-visible {
   opacity: 1;
-  transform: translate(-50%, 0);
+  visibility: visible;
+  transform: translateY(0);
 }
 
-th:first-child .tooltip,
-td:first-child .tooltip,
-.metric:first-child .tooltip {
-  left: 0;
-  transform: translate(0, -4px);
+.tooltip.tooltip-down {
+  transform: translateY(4px);
 }
 
-th:first-child .help-tip:focus .tooltip,
-th:first-child .help-tip:hover .tooltip,
-td:first-child .help-tip:focus .tooltip,
-td:first-child .help-tip:hover .tooltip,
-.metric:first-child .help-tip:focus .tooltip,
-.metric:first-child .help-tip:hover .tooltip {
-  transform: translate(0, 0);
-}
-
-th:last-child .tooltip {
-  right: 0;
-  left: auto;
-  transform: translate(0, -4px);
-}
-
-th:last-child .help-tip:focus .tooltip,
-th:last-child .help-tip:hover .tooltip {
-  transform: translate(0, 0);
+.tooltip.tooltip-down.is-visible {
+  transform: translateY(0);
 }
 
 .pill {
@@ -311,6 +298,24 @@ th:last-child .help-tip:hover .tooltip {
   color: var(--accent);
   font-size: .76rem;
   text-transform: uppercase;
+}
+
+.pill-signal-buy {
+  border-color: rgba(82, 210, 115, .56);
+  background: rgba(82, 210, 115, .18);
+  color: #b7f5c7;
+}
+
+.pill-signal-sell {
+  border-color: rgba(255, 107, 107, .6);
+  background: rgba(255, 107, 107, .18);
+  color: #ffc4c4;
+}
+
+.pill-signal-hold {
+  border-color: rgba(180, 180, 180, .42);
+  background: rgba(180, 180, 180, .14);
+  color: #e0e0e0;
 }
 
 .pos { color: var(--good); }
