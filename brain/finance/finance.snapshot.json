@@ -942,7 +942,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-19T23:18:46.877744+00:00",
+  "generated_at": "2026-07-19T23:22:37.205557+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1065,6 +1065,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 2,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "Joby is making tangible progress on FAA certification, having begun flight testing its first FAA-conforming aircraft in March 2026 for Type Inspection Authorization (TIA).",
+        "The company has advanced to the final stage (Stage 5) of the FAA's type certification process after completing Stage 4 in late March 2026.",
+        "A White House-backed program selected Joby for early operations in up to 10 U.S. states in 2026, which could accelerate its path to commercial service ahead of full type certification.",
+        "Manufacturing capacity is expanding with facilities in California and Ohio, and the company is targeting production of four aircraft per month in 2027 with support from a new Toyota manufacturing joint venture.",
+        "The company ended Q1 2026 with a strong cash position of $2.5 billion, providing a financial runway into 2028 at the current burn rate.",
+        "Demand signals are emerging through partnerships, including plans to launch service in Dubai in 2026 and integrate with Uber's app, and an agreement to develop 25 vertiports across the U.S. with Metropolis Technologies."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.avitrader.com/2026/03/12/joby-advances-air-taxi-certification-with-faa-conforming-aircraft-tests/",
+        "https://ir.jobyaviation.com/news-events/news/news-details/2026/Joby-to-Begin-U.S.-Operations-in-2026-Under-White-House-Air-Taxi-Program/default.aspx",
+        "https://www.longyield.com/joby-aviation/joby-q1-2026-faa-stage-4-complete-nyc-flights",
+        "https://www.tipranks.com/news/joby-aviation-inc-joby-q1-2026-earnings-report-results-call-slides",
+        "https://www.trefis.com/stock/joby/articles/607860/joby-stock-drops-35-as-cash-burn-concerns-take-over/2026-05-05",
+        "https://ir.jobyaviation.com/news-events/news/news-details/2026/Jobys-First-FAA-Conforming-Aircraft-Takes-Flight/default.aspx",
+        "https://www.barchart.com/story/news/26093551/joby-aviations-certification-timeline-looks-intact-but-the-operating-reality-remains-hypothetical",
+        "https://www.jobsohio.com/news/posts/joby-aviation-doubles-down-on-ohio-scaling-manufacturing/"
+      ],
+      "suggested_status": "strengthening",
       "title": "JOBY - eVTOL urban air mobility"
     },
     {
@@ -1079,6 +1101,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 3,
+      "suggested_conviction_trend": "flat",
+      "suggested_evidence": [
+        "ADAS market penetration is projected to continue its strong growth, with global adoption in new vehicles expected to reach 94% by 2035.",
+        "Mobileye continues to secure significant design wins, including an expanded partnership with Volkswagen Group for premium brands and a deal with a major Western automaker for 17 models starting in 2026.",
+        "The company's 2024 revenue was significantly impacted by excess inventory at its Tier-1 customers, highlighting its exposure to auto-cycle volatility and supply chain dynamics.",
+        "The progression towards higher levels of autonomy (Level 3+) is slower than previously expected, with automakers focusing on more scalable Level 2+ systems where Mobileye's SuperVision is well-positioned.",
+        "Competition is intensifying from other chipmakers like Nvidia and Qualcomm, and Tier-1 suppliers. Additionally, some automakers are increasing their in-house ADAS development efforts.",
+        "Mobileye reported a record level of design wins in terms of future projected volume in Q1 2024, totaling over 26 million units."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://ir.mobileye.com/news-events/press-releases/news-details/2024/Mobileye-Releases-Fourth-Quarter-and-Full-Year-2023-Results-and-Provides-Business-Overview/default.aspx",
+        "https://ir.mobileye.com/news-events/press-releases/news-details/2024/Mobileye-Releases-Preliminary-FY2023-Financial-Results-and-Initial-2024-Outlook/default.aspx",
+        "https://www.volkswagen-newsroom.com/en/press-releases/volkswagen-group-intensifies-collaboration-with-mobileye-18155",
+        "https://ir.mobileye.com/news-events/press-releases/news-details/2024/Mobileye-reveals-new-wins-for-key-tech-platforms-with-large-global-automaker/default.aspx",
+        "https://www.coherentmarketinsights.com/market-insight/advance-driver-assistance-system-market-52",
+        "https://www.marketsandmarkets.com/Market-Reports/driver-assistance-systems-market-1201.html",
+        "https://pestleanalysis.com/mobileye-global-competitive-landscape/",
+        "https://www.counterpointresearch.com/global-adas-penetration-reach-94-2035-driven-level-2-plus-adoption-select-level-3-expansion-us-china/"
+      ],
+      "suggested_status": "mixed",
       "title": "MBLY - autonomous driving and ADAS adoption"
     },
     {
@@ -1093,6 +1137,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "HBM demand remains exceptionally strong, driven by AI accelerators, with supply expected to meet only about 60% of projected demand by the end of 2027.",
+        "The transition to next-generation AI platforms like NVIDIA's Rubin and various AI ASICs is set to significantly increase HBM capacity per chip, driving sustained demand growth through 2026 and 2027.",
+        "Micron has improved its competitive standing, overtaking Samsung in some HBM allocations and securing design wins with NVIDIA's Blackwell platform and AMD's Instinct MI350 series.",
+        "Micron's HBM market share was estimated at ~21% in Q2 2025 and Q1 2026, a significant increase from prior single-digit share.",
+        "The broader DRAM market is experiencing a historic upcycle, with contract prices for conventional DRAM surging in Q1 and Q2 2026, which reduces the risk of overall cyclicality overwhelming HBM-specific strength.",
+        "Suppliers are prioritizing HBM production, which consumes more wafer capacity than conventional DRAM, further tightening the overall memory market and supporting high prices."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://presenc-ai.com/p/hbm-market-share-2026-sk-hynix-62-micron-overtakes-samsung-hbm4-battle/",
+        "https://www.astutegroup.com/news/general/sk-hynix-holds-62-of-hbm-micron-overtakes-samsung-2026-battle-pivots-to-hbm4/",
+        "https://introl.io/blog/hbm-evolution-from-hbm3-to-hbm4-and-the-ai-memory-war",
+        "https://www.counterpointresearch.com/global-dram-hbm-market-share-quarterly/",
+        "https://www.digitimes.com/news/a20260710PD216/hbm-prices-set-to-double-in-2027-as-ai-demand-and-supply-deals-tighten-the-memory-market.html",
+        "https://www.seekingalpha.com/article/4704047-micron-set-for-next-stage-of-growth",
+        "https://www.trendforce.com/presscenter/news/20260603-12001.html",
+        "https://www.luminixai.com/insights/dram-cycle-mid-2026-update"
+      ],
+      "suggested_status": "strengthening",
       "title": "MU - HBM demand above qualified supply"
     },
     {
@@ -1107,6 +1173,28 @@
       ],
       "role": "core",
       "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "Azure remains a strong #2 in the cloud market at ~25% share and is gaining share on leader AWS, with Azure's growth rate outpacing AWS significantly (40% YoY for Azure vs. 19% for AWS in one Q1 2026 report).",
+        "Copilot adoption is showing strong top-line numbers, with over 20 million paid seats and usage by over 90% of the Fortune 500 as of mid-2026.",
+        "Evidence suggests Copilot is becoming a valued workflow tool, with studies showing measurable productivity gains, such as saving users an average of 14 to 26 minutes per day.",
+        "A key risk is that while license penetration is high, weekly active usage of Copilot seats is reported to be much lower, in the 20-30% range, indicating a gap between purchase and deep integration.",
+        "Microsoft is massively increasing AI infrastructure spending, with capex projected to be between $120B and $190B in 2026, up substantially from prior years.",
+        "This surge in spending is supported by a massive commercial backlog (remaining performance obligations) of $625 billion, indicating contracted future revenue and strong demand that currently exceeds capacity."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.panto.ai/data/microsoft-copilot-statistics/",
+        "https://kodekloud.com/blog/aws-vs-azure-vs-gcp/",
+        "https://www.usage.ai/blog/aws-vs-azure-vs-gcp-comparison",
+        "https://www.fool.com/investing/2026/05/14/the-real-reason-microsoft-just-went-all-in-on-ai/",
+        "https://dailyforex.com/news-and-analysis/2026/07/microsofts-azure-growth-accelerates-can-copilot-catch-up/",
+        "https://sesamedisk.com/blog/amazon-microsoft-google-meta-the-725-billion-2026-ai-infrastructure-buildout/",
+        "https://invezz.com/news/2026/07/17/microsoft-stock-falls-analysts-trim-price-targets-ahead-of-q4-earnings/",
+        "https://valueadd.vc/p/microsoft-copilot-enterprise-adoption-2026-real-usage-vs-hype"
+      ],
+      "suggested_status": "strengthening",
       "title": "MSFT - AI, Azure scale, and Copilot monetization"
     },
     {
@@ -1121,6 +1209,27 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 2,
+      "suggested_conviction_trend": "down",
+      "suggested_evidence": [
+        "Recent data from July 2026 shows MicroStrategy's (now branding as 'Strategy') market capitalization is trading at a discount to the net asset value (NAV) of its bitcoin holdings, a structural collapse of the premium that was central to the original thesis.",
+        "The company has paused its bitcoin accumulation, and in July 2026, sold stock to increase its cash reserves to $3 billion, signaling a shift in strategy to ensure it can cover debt and dividend obligations.",
+        "Financing risks have become more pronounced. The company has a complex and substantial debt structure, including multiple series of preferred stock with high dividend yields and convertible notes.",
+        "One of its key financing vehicles, the STRC preferred shares, has been trading below its par value, making it a less attractive option for raising new capital to purchase bitcoin.",
+        "The original thesis of MSTR acting as a simple leveraged equity proxy is breaking down as the company's financial engineering and debt obligations become more dominant factors in its valuation."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.barchart.com/story/news/25369628/michael-saylors-bitcoin-treasury-company-strategy-is-falling-apart",
+        "https://www.forbes.com/sites/digital-assets/2025/12/29/is-strategy-mstr-in-distress-the-balance-sheet-says-no/",
+        "https://www.binance.com/en/square/post/2026-06-04-how-much-debt-does-microstrategy-really-have-and-is-a-blowup-possible-5107621935619",
+        "https://www.cryptonews.net/news/bitcoin/strategys-mstr-falls-79-could-calls-become-a-weapon-if-strc-restarts/",
+        "https://www.coingape.com/mstr-stock-price-prediction-2026-wall-street-senior-analyst-targets-500/",
+        "https://www.proactiveinvestors.com/companies/news/1053424/strategy-inc-s-bitcoin-premium-has-disappeared-canaccord-1053424.html",
+        "https://www.bitbo.io/mstr-nav-premium",
+        "https://www.bitcoinquant.com/mstr-microstrategy-stock-bitcoin-treasury-analysis"
+      ],
+      "suggested_status": "weakening",
       "title": "MSTR - leveraged bitcoin treasury proxy"
     },
     {
@@ -1135,6 +1244,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "AI infrastructure spending is a top priority for hyperscalers, with projected 2026 capital expenditures ranging from $600 billion to over $700 billion, a significant increase from 2025.",
+        "Enterprise AI adoption is widespread, with reports in 2026 showing over 75% of organizations using AI in at least one business function, signaling a shift from experimentation to production.",
+        "Nvidia's CUDA ecosystem continues to have a strong lock-in effect due to its maturity, extensive libraries, and developer familiarity, creating significant switching costs for customers.",
+        "While AMD's Instinct GPUs and Intel's Gaudi accelerators are gaining traction as viable alternatives, particularly for inference, Nvidia maintains a dominant market share (around 80%) and a significant performance lead, especially in training.",
+        "Hyperscalers are increasingly deploying their own custom silicon for AI, which is expected to gradually reduce Nvidia's market share in terms of total accelerator units, particularly for internal inference workloads.",
+        "A significant supply chain bottleneck exists for High-Bandwidth Memory (HBM) and advanced packaging (CoWoS), with demand outstripping supply through 2026. This scarcity supports strong pricing for Nvidia's accelerators."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWuTETVraeIL8AkNkAqv-5z_bY4r_PK4DJii4XrdBS5gFs_oZ8DDaOi9O8X3BSf25AUzH0A9RoWGE-ra-N4Up2_Hn6iT6Q6fSUKe_ZQyjbn4PhABMOMMgUOJHDWPX93ZMYtdfbED3agIVTUFZd1cwFxKu8q0o0oH0-Prvb1bwhsjrWci0u6kwtj0DuXBQg0PSh",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMcTulcnA5pAWDKWwYLoAGT9SPNagxflA91qt0p7YZANKoQrJWFgfqvPhvbT-7ZZsSKaYHtB_51x04RJFNuHv7G580wCCX7kcKDNQbLAPfdr5XnNTbvsEO2YwVgDdCsbXJLaHKO3QQEAPFN6XHBti7tJ6al8m5ISSwdwWWgTMrBMpVpuBXvg6mHw==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFzBMKFidawtp_tuR0-wxn3v0HeUd9kyUzp0hiO30GUn-PH-V1cAjYQEIowjO_eoMTDaVLwnaoeLBc22d1emcJ4C6aCvolqnWEadUCWj5GeyxrjoNer5_L8ErLEm7C_0p6kQekKCsgoGH3m29lIbTZCzeH2FMnk0zgaJwvWjs7qIHiyEj0Ig==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbHknwBqyCE-xgMTR_lEPJ1WBweZp66n16BRk5ct4FSFxkMbGl1NTCi7rl3Ohrs5_I-cXnfF67JdRzYaCVFQeK61yqfiA0A7KX__7M9im_zbxOeuUWWYncgvG9hNtzQacyAcD1yB_RgzgG3seeWrWc_t6I3BrtH5WjowBJ23uBuq-So4zTX8prYi-FwsrU",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjZfyXsVl3X0lXhgwu5mPU9PfF3ccbyYtztzyhS51ebI5foM0wHT9QH0zA_cx3HlaTiSeYfwGcRPWI_854AgSFvmOb8VbKSxjRIRgPLm3s6yvnYuSr9qjLR59VUzLXbTQkscHAj_D--8qq2iQTzSrgL8KyVMjAvX0jil0nc4dHlXn8LItsKoqoQzYg_sHLwdf3zsjNPMYYWIe747btnJHipaXzXk8orfikZqYwkswZe4UXyIs_-Q==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5g0wMdKHU5v29p0oMI-1VKaE80H2NZbs9uHuEzph8JCANmUePJzpj3qcdSTAhAaygubO0B9SOQ5JQH-OWFdzDYlsJoEgoLnCnlzbR1xO6K1O7ndgVQNOrlpKwFmw-_Im1XrKJMzEpffEgeaxPgeiTb5pDDPfFvUzhaKQwRdwvVRFkZZKzKw==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHp5aHPzm0BN0nPjiER2Hp18vdjxPbpP7jjspUeO2-OCymnoQYegaj1xjU-P0a3wftgwTR_cQkKJlfSl_m20SSnguocRWKIwBvl5W6aS9dc14982nHwaz1gdrXCnQbF7Tug2nFbIIOYaBQuNcUX_-RcMGboe29xDMMjWXFHOg==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGr8T6UaBqzmmIYfPVn7H0i09dJ6asDlQOetfpDa_PJR4f0fWm86uj2_r_cIPLGXeay67bwT3tnXonQf8ilpjBc-ygaQRJTvbbbtJ0yuLYaDegmpBgwbg479snEz8hvGyqfP_oHdz__U3TKVJt14SjV6NPB_ArfMgwaJeZ_63jOjFbyRLGsLOtp2ktM_puFXnNXMsjUN7HAnkbyrbgkflmWeXGHlh1VRFdJzauk0WxOTYOa"
+      ],
+      "suggested_status": "strengthening",
       "title": "NVDA - AI compute and accelerator demand"
     },
     {
@@ -1149,6 +1280,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "D-Wave announced a peer-reviewed scientific breakthrough demonstrating its annealing quantum computer outperforming a top classical supercomputer on a useful, real-world magnetic materials simulation problem.",
+        "The company secured a $10 million, two-year Quantum Computing as a Service (QCaaS) agreement with a Fortune 100 company, indicating a move from experimental to production use cases.",
+        "Fiscal year 2025 revenue grew 179% to $24.6 million, and Q1 2026 bookings surged to a record $33.4 million, driven by system sales and growing enterprise QCaaS deals.",
+        "D-Wave is collaborating with Anduril and Davidson Technologies on U.S. air and missile defense applications, with initial results showing a 10x faster time-to-solution than classical methods.",
+        "The acquisition of Quantum Circuits Inc. in January 2026 has expanded D-Wave into a dual-platform company, with a detailed technical roadmap for both annealing and gate-model systems.",
+        "The company's cash position was $588.4 million at the end of Q1 2026, with management stating they have a 'fully funded plan to profitability', mitigating immediate funding concerns."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.dwavequantum.com/news/d-wave-first-to-demonstrate-quantum-supremacy-on-useful-real-world-problem/",
+        "https://www.forbes.com/sites/moorinsights/2025/03/13/d-wave-uses-quantum-to-solve-real-world-problem/",
+        "https://quantumzeitgeist.com/d-wave-secures-10m-qcaas-deal-with-fortune-100-company-20260127/",
+        "https://www.dwavequantum.com/news/anduril-davidson-and-d-wave-collaborate-to-develop-quantum-applications-for-us-air-and-missile-defense/",
+        "https://investors.dwavequantum.com/news/news-details/2026/D-Wave-Reports-Fourth-Quarter-and-Year-End-2025-Results/default.aspx",
+        "https://investors.dwavequantum.com/news/news-details/2026/D-Wave-Reports-First-Quarter-2026-Results/default.aspx",
+        "https://www.investing.com/news/stock-market-news/dwave-unveils-gatemodel-quantum-computing-roadmap-to-2032-432SI-3528246",
+        "https://www.businesswire.com/news/home/20260512530773/en/D-Wave-Reports-First-Quarter-2026-Results"
+      ],
+      "suggested_status": "strengthening",
       "title": "QBTS - quantum computing"
     },
     {
@@ -1163,6 +1316,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 3,
+      "suggested_conviction_trend": "flat",
+      "suggested_evidence": [
+        "Hypothesis of compounding from launch into broader space infrastructure is strengthening; Space Systems revenue now constitutes the majority of Rocket Lab's income and backlog.",
+        "Electron launch cadence has become frequent and reliable, supporting the core launch business.",
+        "The development of the larger Neutron rocket has faced persistent delays, with the first launch now targeted for late 2026, acting as a bottleneck to launching larger internal and customer spacecraft.",
+        "Space Systems revenue and backlog have grown significantly, indicating strong demand for integrated spacecraft solutions and improving revenue quality.",
+        "Major contracts with the Space Development Agency and other government entities for satellite design and manufacturing validate the demand for integrated services.",
+        "SpaceX's rideshare program presents a significant and ongoing pricing threat to Rocket Lab's dedicated small launch niche."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://investors.rocketlabusa.com/news/news-details/2026/Rocket-Lab-Announces-Fourth-Quarter-and-Full-Year-2025-Financial-Results-Posts-Record-Quarterly-Revenue-of-180M-Record-Annual-Revenue-of-602M-Delivering-Annual-Growth-of-38-and-Growing-Backlog-73-Year-on-Year-to-1.85B/default.aspx",
+        "https://www.northwiseproject.com/p/rklb-stock-forecast-2030-vertical-space-infrastructure",
+        "https://www.investing.com/news/stock-market-news/rocket-lab-q1-2026-slides-record-revenue-up-64-backlog-hits-22b-93CH-3430439",
+        "https://ill-defined.com/2024/03/29/starships-impacts-on-smallsat-launch-or-is-it-something-else/",
+        "https://spacenexus.com/compare/spacex-vs-rocket-lab",
+        "https://www.youtube.com/watch?v=sOub52pab0Q",
+        "https://seekingalpha.com/article/4679802-rocket-lab-this-1b-capital-raise-is-more-bullish-than-you-think",
+        "https://www.tradingview.com/news/zacks-20260609-060205500-can-rocket-lab-s-growing-launch-cadence-support-future-growth/"
+      ],
+      "suggested_status": "mixed",
       "title": "RKLB - small launch cadence and space infrastructure"
     },
     {
@@ -1177,6 +1352,27 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 3,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "CLINICAL PROGRESS: Recursion has five wholly-owned assets in clinical development. REC-4881 showed meaningful and durable polyp reduction in a Phase 2 trial for familial adenomatous polyposis (FAP), representing a potential clinical proof-of-concept for the platform. Other Phase 1 trials are underway for oncology candidates, including REC-1245 and REC-4539, with early data showing a well-tolerated safety profile.",
+        "FUNDING: The company reported $665.2 million in cash and equivalents as of March 31, 2026. Management has guided for a 2026 cash burn of less than $390 million and expects its cash runway to extend into early 2028 without additional financing.",
+        "PARTNERSHIPS: Recursion has active collaborations with major pharmaceutical companies including Roche, Genentech, and Sanofi, which provide external validation and non-dilutive capital. The company has delivered multiple milestones to partners, including a fifth milestone to Sanofi in Q1 2026 for a novel oncology program.",
+        "PLATFORM VALIDATION: The company is using its Recursion OS, powered by over 50 petabytes of proprietary biological data, to accelerate discovery. Management claims its AI platform allows it to synthesize 90% fewer compounds and advance programs to development candidates twice as fast as the industry standard. However, the platform has also produced clinical setbacks, including disappointing results for candidates targeting cerebral cavernous malformation and neurofibromatosis type II.",
+        "FINANCIAL PERFORMANCE: Q1 2026 revenue was $6.5 million, a significant miss against analyst expectations and a decrease from the prior year. The business model relies heavily on partnership milestone payments, which can be inconsistent."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.recursion.com/",
+        "https://www.investing.com/news/stock-market-news/recursion-q1-2026-slides-ai-pipeline-advances-amid-revenue-challenges-93CH-4113222",
+        "https://stocktitan.net/news/RXRX/recursion-reports-first-quarter-financial-results-and-provides-yfnchj6p6zef.html",
+        "https://www.biopharmadive.com/news/ai-drug-discovery-clinical-trials-recursion-insitro/720516/",
+        "https://www.fool.com/earnings/call-transcripts/2026/05/07/recursion-rxrx-q1-2026-earnings-call-transcript/",
+        "https://seekingalpha.com/article/4688975-recursion-outlines-runway-into-early-2028-while-maintaining-2026-cash-operating-expenses-under-390m",
+        "https://albert.substack.com/p/recursion-pharma-at-jpm26",
+        "https://www.recursion.com/partners"
+      ],
+      "suggested_status": "mixed",
       "title": "RXRX - AI-driven drug discovery"
     },
     {
@@ -1191,6 +1387,28 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 2,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "Tempus is demonstrating strong adoption and revenue growth, reporting Q1 2026 revenue of $348.1 million (up 36.1% YoY) and raising full-year guidance to ~$1.6 billion.",
+        "The company has secured major multi-year partnerships with large pharmaceutical companies like Merck and Gilead for its AI platform and real-world data, with some deals reportedly in the nine-figure range.",
+        "Evidence of clinical utility is emerging from studies presented at ASCO and publications in journals like Nature Digital Medicine, showing Tempus's AI models can predict clinical outcomes and improve diagnostic precision.",
+        "Health systems like Northwestern Medicine and the UK's NHS are adopting Tempus's platform and tests, indicating growing clinical integration.",
+        "Reimbursement remains a significant uncertainty and a key risk highlighted by analysts, with concerns over potential Medicare cuts for some tests.",
+        "The company faces significant legal and regulatory risk related to data privacy, with class-action lawsuits alleging improper use of patient genetic data acquired from Ambry Genetics."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.businesswire.com/news/home/20260505495589/en/Tempus-Reports-First-Quarter-2026-Results",
+        "https://www.allmind.ai/news/tempus-ai-s-expanding-ties-boost-novel-r-d-efforts-and-market-reach",
+        "https://www.intuitionlabs.ai/post/tempus-ai-rwd-deals-merck-gilead-2026-pricing-analysis",
+        "https://www.biospace.com/article/releases/tempus-announces-initial-results-from-its-multimodal-foundation-model-efforts-for-novel-and-scalable-insight-generation-in-oncology/",
+        "https://www.stocktitan.net/news/TEM/tempus-highlights-landmark-publication-demonstrating-safe-real-world-deployment-of-paige-prostate-ai-suite-in-the-uk-national-health-33v4ws5d4n4g.html",
+        "https://www.fisherphillips.com/news-and-insights/ai-companys-acquisition-of-genetic-testing-firm-sparks-landmark-privacy-lawsuit-what-employers-and-medtech-should-know.html",
+        "https://www.investing.com/news/stock-market-news/tempus-ai-earnings-up-next-can-growth-quiet-reimbursement-fears-3428989",
+        "https://www.crowell.com/en/insights/client-alerts/genetic-data-and-artificial-intelligence-training-following-acquisitions-emerging-litigation-risk-and-a-rapidly-expanding-state-regulatory-landscape"
+      ],
+      "suggested_status": "mixed",
       "title": "TEM - health AI and precision medicine"
     },
     {
@@ -1205,10 +1423,32 @@
       ],
       "role": "speculative",
       "status": "insufficient-evidence",
+      "suggested_conviction": 4,
+      "suggested_conviction_trend": "up",
+      "suggested_evidence": [
+        "Global uranium demand is projected to rise significantly by 2040, with a 212 million pound supply gap to fill, requiring the development of new mines.",
+        "Uranium supply is facing constraints, with major producers like Kazakhstan's Kazatomprom and Cameco experiencing production downgrades and challenges.",
+        "The long-term uranium contract price reached an 18-year high in Q1 2026, indicating utilities are paying a premium to secure future supply.",
+        "A global nuclear power renaissance is underway, with 75 reactors under construction and significant investment flowing into the sector.",
+        "UEC has commenced production at its Burke Hollow project and is expanding wellfield development at Christensen Ranch, aiming for increased production in fiscal 2026.",
+        "UEC maintains a strong balance sheet with $794 million in liquid assets, including $488 million in cash, and no debt, providing financial flexibility."
+      ],
+      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
+      "suggested_sources": [
+        "https://www.cruxinvestor.com/posts/212m-pound-supply-gap-energy-security-tightens-uranium-supply-as-2040-demand-outpaces-production",
+        "https://www.sprott.com/insights/uranium-enters-2026-with-renewed-strength-and-strategic-tailwinds/",
+        "https://www.dataintelligence.com/news/world-nuclear-association-outlines-uranium-market-2026-supply-demand-outlook-following-global-nuclear-energy-renewal",
+        "https://seekingalpha.com/article/4663989-uranium-energy-nuanced-potential-for-2026",
+        "https://www.marketbeat.com/stocks/NASDAQ/UEC/price-target/",
+        "https://public.com/stocks/UEC/analysis",
+        "https://www.benzinga.com/stocks/uec/analyst-ratings",
+        "https://www.natural-resource-investors.com/posts/problems-developing-with-uranium-supply"
+      ],
+      "suggested_status": "strengthening",
       "title": "UEC - uranium supply tightening into nuclear buildout"
     }
   ],
-  "theses_last_verify": "",
+  "theses_last_verify": "2026-07-19T23:17:21+00:00",
   "watchlist": [],
   "weekly_autopay_active": true,
   "weekly_contribution_usd": "50",
