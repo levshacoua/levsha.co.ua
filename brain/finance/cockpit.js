@@ -19,10 +19,13 @@ const THESIS_STATUS_OPTIONS = [
 const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
 const COCKPIT_VIEWS = ["dashboard", "theses", "bottlenecks"];
 const DEFAULT_COCKPIT_VIEW = "dashboard";
+const SVG_NS = "http://www.w3.org/2000/svg";
 let gatePassword = "";
 let tooltipId = 0;
 let currentSnapshot = null;
 let autopayState = { weekly_autopay_active: true, weekly_contribution_usd: 50 };
+let bottleneckView = { scale: 1, x: 0, y: 0, selectedId: null, nodes: [], edges: [] };
+let bottleneckPointer = null;
 
 const SUMMARY_HELP = {
   "Equity Value": "Сумарна вартість портфеля акцій",
@@ -100,6 +103,7 @@ function render(snapshot) {
   renderEquities(snapshot.equity_portfolio.positions);
   renderCrypto(snapshot.crypto.positions);
   renderTheses(snapshot.theses);
+  renderBottlenecks(snapshot.bottlenecks || { nodes: [], edges: [] });
   renderRecommendation(snapshot.weekly_recommendation.positions);
 }
 
@@ -646,6 +650,315 @@ function setTransactionControlsDisabled(form, submitButton, disabled) {
 function setTransactionState(form, state, status, message) {
   form.dataset.saveStatus = status;
   state.textContent = message;
+}
+
+function renderBottlenecks(graph) {
+  const nodes = [...(graph.nodes || [])].sort(
+    (left, right) => Number(right.composite_strength) - Number(left.composite_strength)
+  );
+  const edges = graph.edges || [];
+  bottleneckView.nodes = nodes;
+  bottleneckView.edges = edges;
+  if (!bottleneckView.selectedId || !nodes.some(node => node.id === bottleneckView.selectedId)) {
+    bottleneckView.selectedId = nodes[0]?.id || null;
+  }
+
+  const empty = document.getElementById("bottleneck-empty");
+  const shell = document.querySelector(".bottleneck-shell");
+  const list = document.getElementById("bottleneck-list");
+  if (!nodes.length) {
+    if (empty) empty.hidden = false;
+    if (shell) shell.hidden = true;
+    if (list) list.replaceChildren();
+    return;
+  }
+  if (empty) empty.hidden = true;
+  if (shell) shell.hidden = false;
+
+  renderBottleneckGraph(nodes, edges);
+  renderBottleneckDetail(nodes.find(node => node.id === bottleneckView.selectedId) || nodes[0]);
+  renderBottleneckList(nodes);
+  setupBottleneckControls();
+}
+
+function renderBottleneckGraph(nodes, edges) {
+  const svg = document.getElementById("bottleneck-graph");
+  if (!svg) return;
+  const width = Math.max(svg.clientWidth || 720, 320);
+  const height = Math.max(svg.clientHeight || 460, 320);
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+  const layout = bottleneckLayout(nodes, width, height);
+  const defs = svgNode("defs");
+  const marker = svgNode("marker", {
+    id: "bottleneck-arrow",
+    viewBox: "0 0 10 10",
+    refX: "9",
+    refY: "5",
+    markerWidth: "6",
+    markerHeight: "6",
+    orient: "auto-start-reverse",
+  });
+  marker.append(svgNode("path", { d: "M 0 0 L 10 5 L 0 10 z", class: "bottleneck-arrow" }));
+  defs.append(marker);
+
+  const viewport = svgNode("g", {
+    transform: `translate(${bottleneckView.x} ${bottleneckView.y}) scale(${bottleneckView.scale})`,
+  });
+  const edgeLayer = svgNode("g", { class: "bottleneck-edges" });
+  edges.forEach(edge => {
+    const from = layout.get(edge.from);
+    const to = layout.get(edge.to);
+    if (!from || !to) return;
+    const path = svgNode("path", {
+      class: "bottleneck-edge",
+      d: edgePath(from, to),
+      "marker-end": "url(#bottleneck-arrow)",
+    });
+    edgeLayer.append(path);
+  });
+
+  const nodeLayer = svgNode("g", { class: "bottleneck-nodes" });
+  nodes.forEach(node => {
+    const point = layout.get(node.id);
+    const radius = 17 + (Number(node.composite_strength || 0) / 100) * 18;
+    const group = svgNode("g", {
+      class: `bottleneck-node lifecycle-${cssToken(node.lifecycle)}${node.id === bottleneckView.selectedId ? " is-selected" : ""}`,
+      tabindex: "0",
+      role: "button",
+      "aria-label": node.title,
+      transform: `translate(${point.x} ${point.y})`,
+    });
+    group.append(
+      svgNode("circle", { r: String(radius) }),
+      svgText("text", nodeLabel(node.title), { y: String(radius + 17), "text-anchor": "middle" }),
+      svgText("text", String(node.composite_strength), {
+        y: "5",
+        "text-anchor": "middle",
+        class: "bottleneck-strength",
+      })
+    );
+    group.addEventListener("click", () => selectBottleneck(node.id));
+    group.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectBottleneck(node.id);
+      }
+    });
+    nodeLayer.append(group);
+  });
+
+  viewport.append(edgeLayer, nodeLayer);
+  svg.replaceChildren(defs, viewport);
+  setupBottleneckPan(svg);
+}
+
+function bottleneckLayout(nodes, width, height) {
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radiusX = Math.max(110, width * 0.34);
+  const radiusY = Math.max(90, height * 0.30);
+  const layout = new Map();
+  nodes.forEach((node, index) => {
+    const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / Math.max(nodes.length, 1));
+    layout.set(node.id, {
+      x: centerX + Math.cos(angle) * radiusX,
+      y: centerY + Math.sin(angle) * radiusY,
+    });
+  });
+  return layout;
+}
+
+function edgePath(from, to) {
+  const midX = (from.x + to.x) / 2;
+  const midY = (from.y + to.y) / 2;
+  return `M ${from.x} ${from.y} Q ${midX} ${midY - 28} ${to.x} ${to.y}`;
+}
+
+function selectBottleneck(id) {
+  bottleneckView.selectedId = id;
+  renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
+  renderBottleneckDetail(bottleneckView.nodes.find(node => node.id === id));
+  renderBottleneckList(bottleneckView.nodes);
+}
+
+function renderBottleneckDetail(node) {
+  const root = document.getElementById("bottleneck-detail");
+  if (!root || !node) return;
+  const scores = Object.entries(node.scores || {});
+  const signals = node.disappearing_signals || [];
+  const companies = [...(node.candidate_companies || [])].sort(
+    (left, right) => Number(right.beneficiary_probability_pct) - Number(left.beneficiary_probability_pct)
+  );
+  root.replaceChildren(
+    el("div", "bottleneck-kicker", `${node.lifecycle} / ${node.type}`),
+    el("h3", "", node.title),
+    bottleneckMetaRow([
+      `${node.composite_strength}/100 strength`,
+      `${node.monetization} monetization`,
+    ]),
+    bottleneckScores(scores),
+    bottleneckSignals(signals),
+    bottleneckCompanies(companies)
+  );
+}
+
+function bottleneckMetaRow(items) {
+  const row = document.createElement("div");
+  row.className = "bottleneck-meta";
+  row.replaceChildren(...items.map(item => pill(item)));
+  return row;
+}
+
+function bottleneckScores(scores) {
+  const section = document.createElement("section");
+  section.className = "bottleneck-detail-section";
+  section.append(el("h4", "", "Scores"));
+  const grid = document.createElement("div");
+  grid.className = "bottleneck-score-grid";
+  scores.forEach(([name, value]) => {
+    const item = document.createElement("div");
+    item.className = "bottleneck-score";
+    item.append(el("span", "", name.replaceAll("_", " ")), el("b", "", `${value}/5`));
+    grid.append(item);
+  });
+  section.append(grid);
+  return section;
+}
+
+function bottleneckSignals(signals) {
+  const section = document.createElement("section");
+  section.className = "bottleneck-detail-section";
+  section.append(el("h4", "", "Disappearing signals"));
+  const list = document.createElement("ul");
+  list.replaceChildren(...signals.map(signal => {
+    const item = document.createElement("li");
+    item.textContent = signal;
+    return item;
+  }));
+  section.append(list);
+  return section;
+}
+
+function bottleneckCompanies(companies) {
+  const section = document.createElement("section");
+  section.className = "bottleneck-detail-section";
+  section.append(el("h4", "", "Candidate companies"));
+  const list = document.createElement("div");
+  list.className = "bottleneck-companies";
+  if (!companies.length) {
+    list.append(el("p", "muted", "No candidate companies yet."));
+  }
+  companies.forEach(company => {
+    const item = document.createElement("article");
+    item.className = "bottleneck-company";
+    if (company.held_position) item.classList.add("is-held");
+    if (company.linked_thesis) item.classList.add("has-thesis");
+    item.append(
+      el("strong", "", company.ticker),
+      el("span", "bottleneck-company-probability", `${company.beneficiary_probability_pct}%`),
+      el("p", "", company.note || "")
+    );
+    const flags = [];
+    if (company.held_position) flags.push("held");
+    if (company.linked_thesis) flags.push("thesis");
+    if (flags.length) item.append(bottleneckMetaRow(flags));
+    list.append(item);
+  });
+  section.append(list);
+  return section;
+}
+
+function renderBottleneckList(nodes) {
+  const root = document.getElementById("bottleneck-list");
+  if (!root) return;
+  root.replaceChildren(...nodes.map(node => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "bottleneck-list-item";
+    button.classList.toggle("is-selected", node.id === bottleneckView.selectedId);
+    button.append(
+      el("strong", "", node.title),
+      el("span", "", `${node.composite_strength}/100 / ${node.lifecycle}`)
+    );
+    button.addEventListener("click", () => selectBottleneck(node.id));
+    return button;
+  }));
+}
+
+function setupBottleneckControls() {
+  const zoomIn = document.getElementById("bottleneck-zoom-in");
+  const zoomOut = document.getElementById("bottleneck-zoom-out");
+  const reset = document.getElementById("bottleneck-zoom-reset");
+  if (!zoomIn || zoomIn.dataset.ready === "true") return;
+  zoomIn.dataset.ready = "true";
+  zoomOut.dataset.ready = "true";
+  reset.dataset.ready = "true";
+  zoomIn.addEventListener("click", () => zoomBottleneckGraph(1.18));
+  zoomOut.addEventListener("click", () => zoomBottleneckGraph(0.84));
+  reset.addEventListener("click", resetBottleneckGraph);
+  window.addEventListener("resize", () => renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges));
+}
+
+function setupBottleneckPan(svg) {
+  if (svg.dataset.panReady === "true") return;
+  svg.dataset.panReady = "true";
+  svg.addEventListener("pointerdown", event => {
+    bottleneckPointer = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      viewX: bottleneckView.x,
+      viewY: bottleneckView.y,
+    };
+    svg.setPointerCapture(event.pointerId);
+  });
+  svg.addEventListener("pointermove", event => {
+    if (!bottleneckPointer || bottleneckPointer.id !== event.pointerId) return;
+    bottleneckView.x = bottleneckPointer.viewX + event.clientX - bottleneckPointer.x;
+    bottleneckView.y = bottleneckPointer.viewY + event.clientY - bottleneckPointer.y;
+    renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
+  });
+  svg.addEventListener("pointerup", () => {
+    bottleneckPointer = null;
+  });
+  svg.addEventListener("wheel", event => {
+    event.preventDefault();
+    zoomBottleneckGraph(event.deltaY < 0 ? 1.08 : 0.92);
+  }, { passive: false });
+}
+
+function zoomBottleneckGraph(factor) {
+  bottleneckView.scale = clamp(bottleneckView.scale * factor, 0.55, 2.6);
+  renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
+}
+
+function resetBottleneckGraph() {
+  bottleneckView.scale = 1;
+  bottleneckView.x = 0;
+  bottleneckView.y = 0;
+  renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
+}
+
+function svgNode(tag, attributes = {}) {
+  const node = document.createElementNS(SVG_NS, tag);
+  Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
+  return node;
+}
+
+function svgText(tag, text, attributes = {}) {
+  const node = svgNode(tag, attributes);
+  node.textContent = text;
+  return node;
+}
+
+function nodeLabel(title) {
+  const words = String(title || "").split(/\s+/).filter(Boolean);
+  return words.slice(0, 4).join(" ");
+}
+
+function cssToken(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
 async function responseErrorMessage(response) {

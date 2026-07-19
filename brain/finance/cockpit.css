@@ -694,6 +694,261 @@ tr:last-child td {
   line-height: 1.5;
 }
 
+.bottleneck-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.bottleneck-graph-panel,
+.bottleneck-detail {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.bottleneck-graph-panel {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.bottleneck-toolbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+
+.bottleneck-toolbar button {
+  min-width: 34px;
+  min-height: 34px;
+  border: 1px solid var(--line-strong);
+  background: rgba(17, 17, 17, .92);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.bottleneck-graph {
+  display: block;
+  width: 100%;
+  height: 500px;
+  cursor: grab;
+  background:
+    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bottleneck-edge {
+  fill: none;
+  stroke: rgba(210, 220, 230, .32);
+  stroke-width: 1.5;
+}
+
+.bottleneck-arrow {
+  fill: rgba(210, 220, 230, .5);
+}
+
+.bottleneck-node {
+  cursor: pointer;
+  outline: 0;
+}
+
+.bottleneck-node circle {
+  fill: #5aa9e6;
+  stroke: rgba(255, 255, 255, .7);
+  stroke-width: 1.3;
+  transition: stroke-width .14s, filter .14s;
+}
+
+.bottleneck-node text {
+  fill: var(--fg);
+  font-size: .72rem;
+  font-weight: 400;
+  paint-order: stroke;
+  stroke: rgba(13, 13, 13, .88);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.bottleneck-node .bottleneck-strength {
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.bottleneck-node:hover circle,
+.bottleneck-node:focus-visible circle,
+.bottleneck-node.is-selected circle {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 10px rgba(0, 172, 237, .5));
+}
+
+.bottleneck-node.lifecycle-emerging circle { fill: #66c2a5; }
+.bottleneck-node.lifecycle-accelerating circle { fill: #00aced; }
+.bottleneck-node.lifecycle-entrenched circle { fill: #b8a1ff; }
+.bottleneck-node.lifecycle-peaking circle { fill: #ffd166; }
+.bottleneck-node.lifecycle-weakening circle,
+.bottleneck-node.lifecycle-resolved circle,
+.bottleneck-node.lifecycle-displaced circle { fill: #8a8a8a; }
+
+.bottleneck-detail {
+  padding: 18px;
+  overflow-wrap: anywhere;
+}
+
+.bottleneck-kicker {
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bottleneck-detail h3 {
+  margin: 8px 0 12px;
+  font-size: 1.04rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.bottleneck-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.bottleneck-detail-section {
+  margin-top: 20px;
+}
+
+.bottleneck-detail-section h4 {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.bottleneck-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.bottleneck-score {
+  display: grid;
+  gap: 5px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--surface-2);
+  padding: 10px;
+}
+
+.bottleneck-score span {
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.3;
+}
+
+.bottleneck-score b {
+  font-size: .95rem;
+  font-weight: 500;
+}
+
+.bottleneck-detail-section ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.45;
+}
+
+.bottleneck-companies {
+  display: grid;
+  gap: 8px;
+}
+
+.bottleneck-company {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--surface-2);
+  padding: 11px;
+}
+
+.bottleneck-company.is-held,
+.bottleneck-company.has-thesis {
+  border-color: var(--line-strong);
+}
+
+.bottleneck-company strong {
+  font-weight: 600;
+}
+
+.bottleneck-company-probability {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.bottleneck-company p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.4;
+}
+
+.bottleneck-company .bottleneck-meta {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.bottleneck-list {
+  display: none;
+}
+
+.bottleneck-list-item {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bottleneck-list-item.is-selected {
+  border-color: var(--line-strong);
+  background: rgba(0, 172, 237, .1);
+}
+
+.bottleneck-list-item strong,
+.bottleneck-list-item span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.bottleneck-list-item strong {
+  margin-bottom: 5px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.bottleneck-list-item span {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
 @media (max-width: 640px) {
   .gate-content { padding: 32px 28px; }
   #cockpit { padding: 34px 16px 56px; }
@@ -705,6 +960,15 @@ tr:last-child td {
   .autopay-save-state { justify-self: start; }
   .transaction-form { grid-template-columns: 1fr; }
   .thesis-edit { grid-template-columns: 1fr; }
+  .bottleneck-shell { grid-template-columns: 1fr; }
+  .bottleneck-graph-panel { min-height: 360px; }
+  .bottleneck-graph { height: 360px; }
+  .bottleneck-score-grid { grid-template-columns: 1fr; }
+  .bottleneck-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+  }
 }
 
 @media (max-width: 900px) {

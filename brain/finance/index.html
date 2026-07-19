@@ -188,9 +188,25 @@
     </div>
 
     <div class="cockpit-view" id="view-bottlenecks" data-view="bottlenecks" hidden>
-      <div class="placeholder-view">
+      <div class="section-head">
         <h2>Bottlenecks</h2>
-        <p>coming soon (P4). The bottleneck graph will render here later.</p>
+        <span>Dependency graph</span>
+      </div>
+      <div class="bottleneck-shell">
+        <section class="bottleneck-graph-panel" aria-label="Bottleneck dependency graph">
+          <div class="bottleneck-toolbar">
+            <button type="button" id="bottleneck-zoom-out" title="Zoom out" aria-label="Zoom out">-</button>
+            <button type="button" id="bottleneck-zoom-reset" title="Reset graph view" aria-label="Reset graph view">Reset</button>
+            <button type="button" id="bottleneck-zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+          </div>
+          <svg id="bottleneck-graph" class="bottleneck-graph" role="img" aria-label="Interactive bottleneck graph"></svg>
+        </section>
+        <aside class="bottleneck-detail" id="bottleneck-detail" aria-live="polite"></aside>
+      </div>
+      <div class="bottleneck-list" id="bottleneck-list" aria-label="Bottleneck list"></div>
+      <div class="placeholder-view" id="bottleneck-empty" hidden>
+        <h2>Bottlenecks</h2>
+        <p>No bottleneck files are present in this snapshot.</p>
       </div>
     </div>
   </main>
