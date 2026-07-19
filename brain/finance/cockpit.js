@@ -20,6 +20,16 @@ const THESIS_TREND_OPTIONS = ["up", "flat", "down"];
 const COCKPIT_VIEWS = ["dashboard", "theses", "bottlenecks"];
 const DEFAULT_COCKPIT_VIEW = "dashboard";
 const SVG_NS = "http://www.w3.org/2000/svg";
+const BOTTLENECK_DRAG_THRESHOLD_PX = 4;
+const BOTTLENECK_LIFECYCLES = [
+  "emerging",
+  "accelerating",
+  "entrenched",
+  "peaking",
+  "weakening",
+  "resolved",
+  "displaced",
+];
 let gatePassword = "";
 let tooltipId = 0;
 let currentSnapshot = null;
@@ -676,6 +686,7 @@ function renderBottlenecks(graph) {
   if (shell) shell.hidden = false;
 
   renderBottleneckGraph(nodes, edges);
+  renderBottleneckLegend(nodes, edges);
   renderBottleneckDetail(nodes.find(node => node.id === bottleneckView.selectedId) || nodes[0]);
   renderBottleneckList(nodes);
   setupBottleneckControls();
@@ -726,6 +737,7 @@ function renderBottleneckGraph(nodes, edges) {
       class: `bottleneck-node lifecycle-${cssToken(node.lifecycle)}${node.id === bottleneckView.selectedId ? " is-selected" : ""}`,
       tabindex: "0",
       role: "button",
+      "data-bottleneck-node": node.id,
       "aria-label": node.title,
       transform: `translate(${point.x} ${point.y})`,
     });
@@ -751,6 +763,39 @@ function renderBottleneckGraph(nodes, edges) {
   viewport.append(edgeLayer, nodeLayer);
   svg.replaceChildren(defs, viewport);
   setupBottleneckPan(svg);
+}
+
+function renderBottleneckLegend(nodes, edges) {
+  const root = document.getElementById("bottleneck-legend");
+  if (!root) return;
+  const usedLifecycles = new Set(nodes.map(node => node.lifecycle).filter(Boolean));
+  const lifecycleItems = BOTTLENECK_LIFECYCLES.filter(lifecycle => usedLifecycles.has(lifecycle));
+  const colorList = document.createElement("div");
+  colorList.className = "bottleneck-legend-swatches";
+  colorList.replaceChildren(...lifecycleItems.map(lifecycle => {
+    const item = document.createElement("span");
+    item.className = "bottleneck-legend-swatch-item";
+    item.append(el("span", `bottleneck-legend-swatch lifecycle-${cssToken(lifecycle)}`, ""), lifecycle);
+    return item;
+  }));
+
+  root.replaceChildren(
+    bottleneckLegendItem("size", "Node size", "bottleneck strength (composite 0-100)"),
+    bottleneckLegendItem("color", "Node colour", colorList),
+    bottleneckLegendItem("line", "Line", `dependency (depends_on)${edges.length ? "" : " - none in this snapshot"}`)
+  );
+}
+
+function bottleneckLegendItem(kind, label, value) {
+  const item = document.createElement("div");
+  item.className = `bottleneck-legend-item is-${kind}`;
+  const marker = document.createElement("span");
+  marker.className = "bottleneck-legend-marker";
+  const body = document.createElement("span");
+  body.className = "bottleneck-legend-text";
+  body.append(el("b", "", label), typeof value === "string" ? document.createTextNode(value) : value);
+  item.append(marker, body);
+  return item;
 }
 
 function bottleneckLayout(nodes, width, height) {
@@ -904,28 +949,51 @@ function setupBottleneckPan(svg) {
   if (svg.dataset.panReady === "true") return;
   svg.dataset.panReady = "true";
   svg.addEventListener("pointerdown", event => {
+    if (event.button !== undefined && event.button !== 0) return;
     bottleneckPointer = {
       id: event.pointerId,
       x: event.clientX,
       y: event.clientY,
       viewX: bottleneckView.x,
       viewY: bottleneckView.y,
+      dragged: false,
+      targetId: bottleneckNodeIdFromTarget(event.target),
     };
-    svg.setPointerCapture(event.pointerId);
   });
   svg.addEventListener("pointermove", event => {
     if (!bottleneckPointer || bottleneckPointer.id !== event.pointerId) return;
-    bottleneckView.x = bottleneckPointer.viewX + event.clientX - bottleneckPointer.x;
-    bottleneckView.y = bottleneckPointer.viewY + event.clientY - bottleneckPointer.y;
+    const dx = event.clientX - bottleneckPointer.x;
+    const dy = event.clientY - bottleneckPointer.y;
+    if (!bottleneckPointer.dragged) {
+      if (Math.hypot(dx, dy) < BOTTLENECK_DRAG_THRESHOLD_PX) return;
+      bottleneckPointer.dragged = true;
+      svg.setPointerCapture(event.pointerId);
+    }
+    event.preventDefault();
+    bottleneckView.x = bottleneckPointer.viewX + dx;
+    bottleneckView.y = bottleneckPointer.viewY + dy;
     renderBottleneckGraph(bottleneckView.nodes, bottleneckView.edges);
   });
-  svg.addEventListener("pointerup", () => {
+  svg.addEventListener("pointerup", event => {
+    if (!bottleneckPointer || bottleneckPointer.id !== event.pointerId) return;
+    const pointer = bottleneckPointer;
     bottleneckPointer = null;
+    if (pointer.dragged) return;
+    const id = bottleneckNodeIdFromTarget(event.target) || pointer.targetId;
+    if (id) selectBottleneck(id);
+  });
+  svg.addEventListener("pointercancel", event => {
+    if (bottleneckPointer?.id === event.pointerId) bottleneckPointer = null;
   });
   svg.addEventListener("wheel", event => {
     event.preventDefault();
     zoomBottleneckGraph(event.deltaY < 0 ? 1.08 : 0.92);
   }, { passive: false });
+}
+
+function bottleneckNodeIdFromTarget(target) {
+  const node = target instanceof Element ? target.closest("[data-bottleneck-node]") : null;
+  return node?.dataset.bottleneckNode || node?.id || null;
 }
 
 function zoomBottleneckGraph(factor) {
