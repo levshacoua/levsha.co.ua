@@ -20,7 +20,7 @@ const SUMMARY_HELP = {
   "Crypto Value": "Сумарна вартість крипто-портфеля",
   "Кеш на рахунку": "Реальний кеш на рахунку Robinhood зараз",
   "Щотижневий внесок": "Автоплатіж $50 щопʼятниці — додається до кешу коли надходить",
-  "Доступно цього циклу": "Скільки можна розмістити цього циклу = кеш + виручка від рекомендованих продажів",
+  "Доступно цього циклу": "Реальний кеш, який можна розмістити цього циклу без урахування рекомендованих продажів",
 };
 
 async function deriveKey(password, salt) {
@@ -96,7 +96,12 @@ function renderMetrics(snapshot) {
   const portfolio = snapshot.equity_portfolio;
   const crypto = snapshot.crypto;
   const cashAvailable = money(portfolio.cash_available);
-  const totalSellCash = money(portfolio.total_sell_cash);
+  const recommendedSellProceeds = money(
+    portfolio.recommended_sell_proceeds ?? portfolio.total_sell_cash
+  );
+  const deployableIfSellsExecuted = money(
+    portfolio.deployable_if_sells_executed ?? portfolio.available_buy_cash
+  );
   const metrics = [
     { label: "Equity Value", value: money(portfolio.total_value) },
     { label: "Crypto Value", value: money(crypto.total_value) },
@@ -104,8 +109,9 @@ function renderMetrics(snapshot) {
     { label: "Щотижневий внесок", value: money(portfolio.weekly_contribution) },
     {
       label: "Доступно цього циклу",
-      value: money(portfolio.available_buy_cash),
-      help: `${SUMMARY_HELP["Доступно цього циклу"]} = кеш ${cashAvailable} + виручка від рекомендованих продажів ${totalSellCash}`,
+      value: cashAvailable,
+      secondary: `+${recommendedSellProceeds} якщо виконаєш рекомендовані продажі`,
+      help: `${SUMMARY_HELP["Доступно цього циклу"]}. Умовно доступно після рекомендованих продажів: ${deployableIfSellsExecuted}`,
     },
   ];
   const root = document.getElementById("metrics");
@@ -116,6 +122,9 @@ function renderMetrics(snapshot) {
       labelWithHelp(metric.label, metric.help || SUMMARY_HELP[metric.label]),
       el("div", "value", metric.value)
     );
+    if (metric.secondary) {
+      item.append(el("div", "secondary", metric.secondary));
+    }
     return item;
   }));
 }
@@ -340,7 +349,7 @@ function renderRecommendation(rows) {
     pct(row.current_allocation),
     pct(row.target_allocation),
     coloredPct(row.delta),
-    signalPill(row.recommended_action),
+    signalPill(row.advisory === "review" ? "REVIEW" : row.recommended_action),
     money(row.recommended_dollar_amount),
     number(row.recommended_share_quantity, 4),
     row.rule,
@@ -457,6 +466,7 @@ function signalPill(text) {
     BUY: "pill-signal-buy",
     SELL: "pill-signal-sell",
     HOLD: "pill-signal-hold",
+    REVIEW: "pill-signal-review",
   }[signal] || "";
   return pill(signal || text, className);
 }

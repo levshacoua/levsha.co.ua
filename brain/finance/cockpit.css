@@ -153,6 +153,13 @@ select {
   font-weight: 400;
 }
 
+.metric .secondary {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
 section {
   margin-top: 34px;
 }
@@ -316,6 +323,12 @@ tr:last-child td {
   border-color: rgba(180, 180, 180, .42);
   background: rgba(180, 180, 180, .14);
   color: #e0e0e0;
+}
+
+.pill-signal-review {
+  border-color: rgba(255, 199, 95, .62);
+  background: rgba(255, 199, 95, .17);
+  color: #ffe2a8;
 }
 
 .pos { color: var(--good); }
