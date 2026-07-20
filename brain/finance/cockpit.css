@@ -1148,7 +1148,10 @@ tr:last-child td {
 }
 
 .dependency-candidate strong {
+  flex-shrink: 0;
   font-weight: 600;
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 
 .dependency-candidate p {
@@ -1227,9 +1230,14 @@ tr:last-child td {
 }
 
 .discovery-buy-rec-title strong {
-  min-width: 0;
-  overflow-wrap: anywhere;
+  flex-shrink: 0;
+  overflow-wrap: normal;
+  white-space: nowrap;
   font-size: 1rem;
+}
+
+.discovery-buy-rec-title .bottleneck-meta {
+  min-width: 0;
 }
 
 .source-links {
@@ -1384,10 +1392,15 @@ tr:last-child td {
 }
 
 .watchlist-title strong {
-  min-width: 0;
-  overflow-wrap: anywhere;
+  flex-shrink: 0;
+  overflow-wrap: normal;
+  white-space: nowrap;
   font-size: 1rem;
   font-weight: 600;
+}
+
+.watchlist-title .bottleneck-meta {
+  min-width: 0;
 }
 
 .watchlist-flags:empty {
