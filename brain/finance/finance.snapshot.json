@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:46:16.709303+00:00",
+  "generated_at": "2026-07-20T02:47:02.969564+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1924,7 +1924,18 @@
     }
   ],
   "theses_last_verify": "2026-07-20T02:39:40+00:00",
-  "watchlist": [],
+  "watchlist": [
+    {
+      "bottleneck": "",
+      "held_position": false,
+      "id": "spcx",
+      "linked_thesis": false,
+      "source": "idea",
+      "status": "watching",
+      "thesis": "",
+      "ticker": "SPCX"
+    }
+  ],
   "weekly_autopay_active": true,
   "weekly_contribution_usd": "50",
   "weekly_recommendation": {
