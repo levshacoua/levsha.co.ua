@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:34:50.467015+00:00",
+  "generated_at": "2026-07-20T02:36:57.113390+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1637,8 +1637,8 @@
       "title": "RXRX - AI-driven drug discovery"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 2,
+      "conviction_trend": "up",
       "horizon": "<owner to set>",
       "id": "tem-health-ai-precision-medicine",
       "key_risk": "health AI adoption stalls",
@@ -1647,29 +1647,7 @@
         "TEM"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 3,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "\u0417\u043d\u0430\u0447\u043d\u0435 \u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f \u0434\u043e\u0445\u043e\u0434\u0456\u0432: \u0434\u043e\u0445\u0456\u0434 \u0443 \u043f\u0435\u0440\u0448\u043e\u043c\u0443 \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0456 2026 \u0440\u043e\u043a\u0443 \u0437\u0440\u0456\u0441 \u043d\u0430 36,1% \u043f\u043e\u0440\u0456\u0432\u043d\u044f\u043d\u043e \u0437 \u0430\u043d\u0430\u043b\u043e\u0433\u0456\u0447\u043d\u0438\u043c \u043f\u0435\u0440\u0456\u043e\u0434\u043e\u043c \u043c\u0438\u043d\u0443\u043b\u043e\u0433\u043e \u0440\u043e\u043a\u0443 \u0434\u043e 348,1 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0430 \u0434\u043e\u043b\u0430\u0440\u0456\u0432, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u0432\u0438\u0441\u043e\u043a\u0438\u0439 \u043f\u043e\u043f\u0438\u0442 \u043d\u0430 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0443.",
-        "\u0420\u043e\u0437\u0448\u0438\u0440\u0435\u043d\u043d\u044f \u043f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u0442\u0432\u0430: \u0443\u043a\u043b\u0430\u0434\u0435\u043d\u043e \u043d\u043e\u0432\u0456 \u0442\u0430 \u0440\u043e\u0437\u0448\u0438\u0440\u0435\u043d\u043e \u0456\u0441\u043d\u0443\u044e\u0447\u0456 \u0431\u0430\u0433\u0430\u0442\u043e\u0440\u0456\u0447\u043d\u0456 \u0443\u0433\u043e\u0434\u0438 \u0437 \u0432\u0435\u043b\u0438\u043a\u0438\u043c\u0438 \u0444\u0430\u0440\u043c\u0430\u0446\u0435\u0432\u0442\u0438\u0447\u043d\u0438\u043c\u0438 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f\u043c\u0438, \u0442\u0430\u043a\u0438\u043c\u0438 \u044f\u043a Merck, Gilead \u0442\u0430 Daiichi Sankyo, \u0434\u043b\u044f \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f \u0434\u0430\u043d\u0438\u0445 \u0442\u0430 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0438 \u0428\u0406 Tempus, \u0449\u043e \u043f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0443\u0454 \u043f\u043e\u043f\u0438\u0442 \u0437 \u0431\u043e\u043a\u0443 \u0433\u0430\u043b\u0443\u0437\u0456.",
-        "\u041f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0435\u043d\u043d\u044f \u043a\u043b\u0456\u043d\u0456\u0447\u043d\u043e\u0457 \u043a\u043e\u0440\u0438\u0441\u0442\u0456: \u0434\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f, \u043e\u043f\u0443\u0431\u043b\u0456\u043a\u043e\u0432\u0430\u043d\u0435 \u0432 Nature Digital Medicine, \u043f\u043e\u043a\u0430\u0437\u0430\u043b\u043e, \u0449\u043e \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442 Paige Prostate AI \u0432\u0456\u0434 Tempus, \u0440\u043e\u0437\u0433\u043e\u0440\u043d\u0443\u0442\u0438\u0439 \u0443 \u041d\u0430\u0446\u0456\u043e\u043d\u0430\u043b\u044c\u043d\u0456\u0439 \u0441\u043b\u0443\u0436\u0431\u0456 \u043e\u0445\u043e\u0440\u043e\u043d\u0438 \u0437\u0434\u043e\u0440\u043e\u0432'\u044f \u0412\u0435\u043b\u0438\u043a\u043e\u0431\u0440\u0438\u0442\u0430\u043d\u0456\u0457, \u043f\u0456\u0434\u0432\u0438\u0449\u0438\u0432 \u0442\u043e\u0447\u043d\u0456\u0441\u0442\u044c \u0434\u0456\u0430\u0433\u043d\u043e\u0441\u0442\u0438\u043a\u0438 \u0442\u0430 \u0435\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c \u0440\u043e\u0431\u043e\u0442\u0438, \u0449\u043e \u0454 \u0434\u043e\u043a\u0430\u0437\u043e\u043c \u0439\u043e\u0433\u043e \u043f\u0440\u0430\u043a\u0442\u0438\u0447\u043d\u043e\u0457 \u043a\u043e\u0440\u0438\u0441\u0442\u0456.",
-        "\u041f\u043e\u0437\u0438\u0442\u0438\u0432\u043d\u0456 \u0440\u0456\u0448\u0435\u043d\u043d\u044f \u0449\u043e\u0434\u043e \u0432\u0456\u0434\u0448\u043a\u043e\u0434\u0443\u0432\u0430\u043d\u043d\u044f: CMS \u0441\u0445\u0432\u0430\u043b\u0438\u043b\u0430 \u0432\u0456\u0434\u0448\u043a\u043e\u0434\u0443\u0432\u0430\u043d\u043d\u044f \u0437\u0430 \u0430\u043b\u0433\u043e\u0440\u0438\u0442\u043c \u0415\u041a\u0413-\u0410\u0424 \u0432\u0456\u0434 Tempus, \u0449\u043e \u0454 \u043f\u043e\u0437\u0438\u0442\u0438\u0432\u043d\u0438\u043c \u043f\u0440\u0435\u0446\u0435\u0434\u0435\u043d\u0442\u043e\u043c \u0434\u043b\u044f \u043c\u0430\u0439\u0431\u0443\u0442\u043d\u0456\u0445 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0456\u0432, \u0445\u043e\u0447\u0430 \u0432\u0456\u0434\u0448\u043a\u043e\u0434\u0443\u0432\u0430\u043d\u043d\u044f \u0434\u043b\u044f \u043a\u043b\u044e\u0447\u043e\u0432\u0438\u0445 \u0442\u0435\u0441\u0442\u0456\u0432 \u0437\u0430\u043b\u0438\u0448\u0430\u0454\u0442\u044c\u0441\u044f \u043d\u0435\u0432\u0438\u0437\u043d\u0430\u0447\u0435\u043d\u0438\u043c.",
-        "\u0417\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f \u0432\u043f\u0440\u043e\u0432\u0430\u0434\u0436\u0435\u043d\u043d\u044f \u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0430\u0445 \u043e\u0445\u043e\u0440\u043e\u043d\u0438 \u0437\u0434\u043e\u0440\u043e\u0432'\u044f: \u0441\u043f\u0456\u0432\u043f\u0440\u0430\u0446\u044f \u0437 Keck Medicine of USC \u0434\u043b\u044f \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u0457 \u0434\u0456\u0430\u0433\u043d\u043e\u0441\u0442\u0438\u043a\u0438 Tempus, \u043f\u0456\u0434\u0431\u043e\u0440\u0443 \u043a\u043b\u0456\u043d\u0456\u0447\u043d\u0438\u0445 \u0432\u0438\u043f\u0440\u043e\u0431\u0443\u0432\u0430\u043d\u044c \u0442\u0430 \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0456\u0432 \u0428\u0406 \u0432 \u0434\u043e\u0433\u043b\u044f\u0434 \u0437\u0430 \u043f\u0430\u0446\u0456\u0454\u043d\u0442\u0430\u043c\u0438.",
-        "\u0417\u043d\u0430\u0447\u043d\u0438\u0439 \u0441\u0443\u0434\u043e\u0432\u0438\u0439 \u0440\u0438\u0437\u0438\u043a: \u041a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u0437\u0456\u0442\u043a\u043d\u0443\u043b\u0430\u0441\u044f \u0437 \u043e\u0431'\u0454\u0434\u043d\u0430\u043d\u0438\u043c \u043a\u043e\u043b\u0435\u043a\u0442\u0438\u0432\u043d\u0438\u043c \u043f\u043e\u0437\u043e\u0432\u043e\u043c \u0449\u043e\u0434\u043e \u043d\u0435\u043f\u0440\u0430\u0432\u043e\u043c\u0456\u0440\u043d\u043e\u0433\u043e \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f \u0433\u0435\u043d\u0435\u0442\u0438\u0447\u043d\u0438\u0445 \u0434\u0430\u043d\u0438\u0445 \u043f\u0430\u0446\u0456\u0454\u043d\u0442\u0456\u0432 \u0432\u0456\u0434 Ambry Genetics \u0434\u043b\u044f \u043d\u0430\u0432\u0447\u0430\u043d\u043d\u044f \u043c\u043e\u0434\u0435\u043b\u0435\u0439 \u0428\u0406 \u0431\u0435\u0437 \u0437\u0433\u043e\u0434\u0438, \u0449\u043e \u0441\u0442\u0432\u043e\u0440\u044e\u0454 \u0441\u0435\u0440\u0439\u043e\u0437\u043d\u0456 \u0440\u0435\u0433\u0443\u043b\u044f\u0442\u043e\u0440\u043d\u0456 \u0442\u0430 \u0440\u0435\u043f\u0443\u0442\u0430\u0446\u0456\u0439\u043d\u0456 \u0440\u0438\u0437\u0438\u043a\u0438."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXq7FlHE_cGlLSU-HAuVQ7vTCo1RBxyyhOHIS_y75Xho4Adq-_aBOZpnzqgypegHjLsBZPPm0pVl676_-sI2nZhShVnycvTnCPALbFzI3uQwiuT_aJAvIJ3Qcf9HsrUk9grscHtcI0PVD_y0qgKsaSrw9G7shFBepG_7KMx-bv481Dyd5HgjTwH5xSTa-jd8leIKmxO-uQrFF3RHIPnbsqZCYg",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGs9BEcM_jyf-0L4nS3ZmPjN1vodZyjb3dXU0XDqTtP7Fa7mxRiNfA4H-BVehqDeQXutOcOXlUBWFG5pEEL7NU8lJC3bITZxuiEmKjOJQODDy39nMeFhkfJs-MAqvhX-oJwedB_OFsGp7NUKNCJLRW_w8nUYYpU0371NxtgbcrEosN62sQKBtQCXlCQfPi2Hb8K25WMio0YrGvziXBiNd6aIxbUZ4sjUq17tCn0VZnnFDtsOyGUD64-HtLC37lKBPNSDq8=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtGHds526ZdpjnRMljF9Ctf50CTzum8mLqyyFZAdxCLSA_lC_RYOB4QcMRobsJjs5wNBxrZwP40LgU4lGLoyJNqY9YFUQMyvLEpgtMYBqV17oGU9rM00njalSjVbiJhiCZW8XPxrLTJayUhFgQxCf6ETEBUgO_p2EnquzvsD5OPBMrkGK7GhQC9UqGjaCqdiGGj5TE1VPMpIQvj6HxlQViRZVowQalsvjwn864ag8dpWQ=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSqBN0KlvZW6twHWToWKcQEBEy89O5FA_zZGs3N1fWaFMTlVy6sC07lfTlDQSgnNDTHFUP-vnLsyLWG8nKDPkNDx-cjVLavwB1XYfoMpxb_0txpHw_E_wtAlX5qpBpAWQDNdGZmwXD5vXZfdu9pkMxzQZZOgKpt5Gpll6E7XZf0FEjGDb9VW4qa8tqoElcxBrxuvOeo9JTVrm4i0SQp-Vrnu3wM7hGJZl6XcNqz-Rhktz5Pqk=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUgicvLYkzFNjL2MPHxTvMVtgStY7yYHFPQgWJjRCRVGmWHPueoE58ehq25Xya_SiOMi0FshmsFybCu90jp1F2jy3lApw1rrubOVqgYMTPtOd_3v87Nay6IRe7dOLVJyGlkC1RyeK9M5w78M9-SdvBkvpHPWlCNwKsiiVWOKKsEn4sC3AZnyMS_UrwxoRkDHWYvM4R5ZXdMvTupqq8mcTJ6wGXX-kpooehZPV9cFYYGlkjOck=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGVLybzjVUY--_WnM-P2Y0rCoymLYVYWxp1TkUYqF6MKs-Cf3j6vqJR7iHp1TCRo7zoLVHTSYLDVrRPi_PvhB3c4WxCc3vu9h--tiqY6NPr0Fkw5hbtOlMfTtKVLUQZSHi9YdYRTWt1Cm584LhtvvBNFcEU2fq1m7pC2KGKgPft-xmuaZz0Hdp2DBcUh5kfEBdcE_1TAg1qoICU0JRjWDaq6FmvF7t8oAYvDWEcEqkiuesf7IQSlg==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4ZvGxNIQwktDp13Ovkf6LOTQI1CDRUhgKHM31NJUQgCAoCYxJVSjWgh9aCThPMZ9Fa-InPcxOluBW95gqxbFU1kqni_jYUVXYqh4LyAHKE-nsqWrv_s8XK-jZgfRR0L2cQJgAwXsLtvS672L5vUdSYnfoA_GIr3NbPiCRBW_oL42STFojSBJNilkCf-gzOQ8=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHyCYAOyc6O5GJU9BjJrDjOwJFeHhSuvSS7L5RzBtVHS9B1yTFNn0DRUUdX4o96OaNwXYCItVIoXfTlk0rRoYCdrpjuVwEcwsGm9OjevnKmNe_-MJEjE6BhmNfNJgL1RuC7NWW5"
-      ],
-      "suggested_status": "mixed",
+      "status": "mixed",
       "title": "TEM - health AI and precision medicine"
     },
     {
@@ -1994,14 +1972,14 @@
         "current_price": "52.47",
         "delta": "0.01",
         "key_risk": "tem-health-ai-precision-medicine: health AI adoption stalls",
-        "linked_thesis_status": "tem-health-ai-precision-medicine: insufficient-evidence",
+        "linked_thesis_status": "tem-health-ai-precision-medicine: mixed",
         "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "within_band",
         "target_allocation": "2.00",
-        "thesis_conviction": "tem-health-ai-precision-medicine: 1/5 flat",
+        "thesis_conviction": "tem-health-ai-precision-medicine: 2/5 up",
         "thesis_links": [
           "tem-health-ai-precision-medicine"
         ],
