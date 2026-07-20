@@ -554,8 +554,7 @@ async function saveThesisEdit(row, form, card, meta, saveButton, state) {
       throw new Error(await responseErrorMessage(response));
     }
     Object.assign(row, draft);
-    setThesisState(card, state, "saved", "Saved");
-    window.setTimeout(() => window.location.reload(), 700);
+    setThesisState(card, state, "saved", "Збережено — на сайті оновиться за ~1 хв.");
   } catch (error) {
     Object.assign(row, previous);
     applyThesisValues(form, previous);

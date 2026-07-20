@@ -426,7 +426,7 @@ tr:last-child td {
 
 .thesis-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 
@@ -555,9 +555,14 @@ tr:last-child td {
   padding: 7px 8px;
 }
 
-.transaction-field input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: .82;
+#transaction-date {
+  color-scheme: dark;
+}
+
+#transaction-date::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.25);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .thesis-field input:focus,
