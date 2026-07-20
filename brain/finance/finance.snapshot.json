@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:25:17.837287+00:00",
+  "generated_at": "2026-07-20T02:28:16.609109+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1581,8 +1581,8 @@
       "title": "MSTR - leveraged bitcoin treasury proxy"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 4,
+      "conviction_trend": "up",
       "horizon": "<owner to set>",
       "id": "nvda-ai-compute",
       "key_risk": "sustained AI accelerator oversupply",
@@ -1591,29 +1591,7 @@
         "NVDA"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 4,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "\u041f\u043e\u043f\u0438\u0442 \u043d\u0430 \u043f\u0440\u0438\u0441\u043a\u043e\u0440\u044e\u0432\u0430\u0447\u0456 Nvidia \u0437\u043d\u0430\u0447\u043d\u043e \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0443\u0454 \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u044e \u0432 2026 \u0440\u043e\u0446\u0456, \u043f\u0440\u0438\u0447\u043e\u043c\u0443 \u043a\u043b\u044e\u0447\u043e\u0432\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438, \u0442\u0430\u043a\u0456 \u044f\u043a \u043f\u0430\u043a\u0443\u0432\u0430\u043d\u043d\u044f CoWoS \u0442\u0430 \u043f\u0430\u043c'\u044f\u0442\u044c HBM, \u043f\u043e\u0432\u043d\u0456\u0441\u0442\u044e \u0440\u043e\u0437\u043f\u0440\u043e\u0434\u0430\u043d\u0456 \u043d\u0430 \u0432\u0435\u0441\u044c \u0440\u0456\u043a.",
-        "\u0406\u043d\u0432\u0435\u0441\u0442\u0438\u0446\u0456\u0457 \u0432 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0443 \u0448\u0442\u0443\u0447\u043d\u043e\u0433\u043e \u0456\u043d\u0442\u0435\u043b\u0435\u043a\u0442\u0443 \u0437 \u0431\u043e\u043a\u0443 \u0433\u0456\u043f\u0435\u0440\u0441\u043a\u0435\u0439\u043b\u0435\u0440\u0456\u0432 (Amazon, Google, Microsoft, Meta) \u0440\u0456\u0437\u043a\u043e \u0437\u0440\u043e\u0441\u0442\u0430\u044e\u0442\u044c, \u0456, \u0437\u0430 \u043f\u0440\u043e\u0433\u043d\u043e\u0437\u0430\u043c\u0438, \u0443 2026 \u0440\u043e\u0446\u0456 \u0432\u043e\u043d\u0438 \u0432\u0438\u0442\u0440\u0430\u0442\u044f\u0442\u044c \u043d\u0430 \u043d\u0438\u0445 450-700 \u043c\u0456\u043b\u044c\u044f\u0440\u0434\u0456\u0432 \u0434\u043e\u043b\u0430\u0440\u0456\u0432, \u0449\u043e \u043f\u0456\u0434\u043a\u0440\u0435\u0441\u043b\u044e\u0454 \u0457\u0445\u043d\u044e \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u0447\u043d\u0443 \u043f\u0440\u0456\u043e\u0440\u0438\u0442\u0435\u0442\u043d\u0456\u0441\u0442\u044c.",
-        "Nvidia \u0437\u0431\u0435\u0440\u0456\u0433\u0430\u0454 \u0434\u043e\u043c\u0456\u043d\u0443\u044e\u0447\u0443 \u0447\u0430\u0441\u0442\u043a\u0443 \u0440\u0438\u043d\u043a\u0443 (\u043f\u0440\u0438\u0431\u043b\u0438\u0437\u043d\u043e 80-86%) \u0443 \u0441\u0435\u043a\u0442\u043e\u0440\u0456 \u043f\u0440\u0438\u0441\u043a\u043e\u0440\u044e\u0432\u0430\u0447\u0456\u0432 \u0428\u0406, \u043d\u0435\u0437\u0432\u0430\u0436\u0430\u044e\u0447\u0438 \u043d\u0430 \u043f\u043e\u0441\u0438\u043b\u0435\u043d\u043d\u044f \u043a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0446\u0456\u0457.",
-        "\u0415\u043a\u043e\u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043d\u043e\u0433\u043e \u0437\u0430\u0431\u0435\u0437\u043f\u0435\u0447\u0435\u043d\u043d\u044f CUDA \u0437\u0430\u043b\u0438\u0448\u0430\u0454\u0442\u044c\u0441\u044f \u0437\u043d\u0430\u0447\u043d\u043e\u044e \u043a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0442\u043d\u043e\u044e \u043f\u0435\u0440\u0435\u0432\u0430\u0433\u043e\u044e, \u0441\u0442\u0432\u043e\u0440\u044e\u044e\u0447\u0438 \u0432\u0438\u0441\u043e\u043a\u0456 \u0432\u0438\u0442\u0440\u0430\u0442\u0438 \u043d\u0430 \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044f \u0434\u043b\u044f \u043a\u043b\u0456\u0454\u043d\u0442\u0456\u0432 \u0447\u0435\u0440\u0435\u0437 \u0433\u043b\u0438\u0431\u043e\u043a\u0443 \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u044e \u0432 \u0440\u043e\u0431\u043e\u0447\u0456 \u043f\u0440\u043e\u0446\u0435\u0441\u0438 \u0440\u043e\u0437\u0440\u043e\u0431\u043a\u0438 \u0428\u0406.",
-        "\u0425\u043e\u0447\u0430 \u0433\u0456\u043f\u0435\u0440\u0441\u043a\u0435\u0439\u043b\u0435\u0440\u0438 \u0440\u043e\u0437\u0440\u043e\u0431\u043b\u044f\u044e\u0442\u044c \u0432\u043b\u0430\u0441\u043d\u0456 \u0447\u0456\u043f\u0438 \u0428\u0406 \u0434\u043b\u044f \u043e\u043f\u0442\u0438\u043c\u0456\u0437\u0430\u0446\u0456\u0457 \u0432\u0438\u0442\u0440\u0430\u0442, \u0432\u043e\u043d\u0438 \u043e\u0434\u043d\u043e\u0447\u0430\u0441\u043d\u043e \u043f\u0440\u043e\u0434\u043e\u0432\u0436\u0443\u044e\u0442\u044c \u043c\u0430\u0441\u043e\u0432\u043e \u0437\u0430\u043a\u0443\u043f\u043e\u0432\u0443\u0432\u0430\u0442\u0438 \u0433\u0440\u0430\u0444\u0456\u0447\u043d\u0456 \u043f\u0440\u043e\u0446\u0435\u0441\u043e\u0440\u0438 Nvidia, \u0449\u043e \u0432\u043a\u0430\u0437\u0443\u0454 \u043d\u0430 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044e \\\"\u0456 \u0442\u0435, \u0456 \u0456\u043d\u0448\u0435\\\", \u0430 \u043d\u0435 \u043d\u0430 \u043f\u043e\u0432\u043d\u0443 \u0437\u0430\u043c\u0456\u043d\u0443.",
-        "\u041a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0442\u0438, \u0442\u0430\u043a\u0456 \u044f\u043a AMD \u0442\u0430 Intel, \u0437\u0430\u0432\u043e\u0439\u043e\u0432\u0443\u044e\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0456\u0457, \u0430\u043b\u0435 \u043d\u0430\u0440\u0430\u0437\u0456 \u043d\u0435 \u0441\u0442\u0430\u043d\u043e\u0432\u043b\u044f\u0442\u044c \u0437\u0430\u0433\u0440\u043e\u0437\u0438 \u0434\u043e\u043c\u0456\u043d\u0443\u0432\u0430\u043d\u043d\u044e Nvidia \u0432 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0456 \u0432\u0438\u0441\u043e\u043a\u043e\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0433\u043e \u043d\u0430\u0432\u0447\u0430\u043d\u043d\u044f \u0428\u0406."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxiZM9kuPMdMiXJvJuPNDflyco89ms4FauI7PTFS1-4aABggRMP6M1KAxE62q02ElF9898VB5L0q-7CYV4jcUZmW6TAJ7ZorGDd_Nw729NOdDnQ5PxSPRtqKLq9us1OId9g51GAd0wkOk1u-tCLZ659iRJDplvSVX4IsifucyHVZc_oT1zIUQffZgZ70pVKJXPyZSO5-g4BqOTrs1AO9mVMzsfH80nHTTRpQ==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlnTqMCY_sAVRx7MGoWM80myd4idEVNcznM8Iaw6lu0aMJDgtNXRNCDPePii1Jj4_Tg54Y18HJ11WtzHhuIZTISnhEBROQZvtFM_ITRkRZJpL6gn4uCm5gJqmSPtOMvKkoG0qiUFOhbcif1iLXI7Ujcf1YKQWAMFFocQB71qABMa3ncJLz",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHIaUS2QiP6URmccU4F-LukGoykiOi94BHrqCosihdW4Adj27AejXENqkEt5U-89gI1agRsHyWF5JZCzYsnrM8i3OgqbBUYdy91-xPTn0Qf4ul4f0IICgyTKtQKgC2JW5F-pwnSJ0JIESZW6817DNWUR8aeZpkrLsysvTgzhdPG8vJ7n5t9w2hyBe6G8E8P36qI8DSuJbRpf3RET2N9-Qc8l1l6-KVIwOhi7Ku1IFRt_2dU6So=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXhHQdEkTMK_1KymbZOev7UvveHb4p_pEvgpsHgu2LAJLNjOi6CSQx6YlpJZK7wajffjZNy86jrWUtehHLDrbOZlQmjjHyZsbKhpD_sTrzg85pKoOKyuWRrXW1kw1FOmnkJ-zZokZYoRTmwM6bgbps0h7v9lV_ZJBUqN_h3u8MUCr3ihKqOidyBNLAVfcFbaDmH04kSloNsyFLzTdy0sAVDgPIZJtWi1BuY-LX2BX2sOcrgW6C",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtaQFJRjWZ0uNiXR07J6lowfsSn6CtAwh1jnxuOhnpjKrhPJyXXTDK5hwsmpYq_we8Ze_jGWnDS2w5N_BUshKdd33wMdhLW0oc7YlgRXHcYVVNL6G1obgK31I9isUdWUlOzPjofyEBsXhrXavwS_Tne8ZMrVgcwxsd6Kfhbp71lsKovw9cQ16E_XeYtE3VbpM0_faKE2i4FFx2i7Gfm_v1Gsp3_h1JMNe3ouTlcKQe6-TPbu2J8i04-Xm28g==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0z82gG6kklGO1f2v4wUOUKFnE0R9cMaPgc8ZYcsLpsDogoLCAa8tYx1b4ABT6SJ0yoz2WM3E2hkmFvhFfTd4sYpW9F00xAMRzCMxhuR-65oTicE75Ey6MApLGLd1a_xbKSGKP7QmR0EhVajIXo3txZRvmP9htPl-zZsY0Gdj5Hg==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9PItLJKe25hL6ZGD7niKUJh-Bn9HVcYIaQuwuD9p20MlN6_S3pp7HcNKnReRTf31zs__U9prc3xD7jJb5umOYNk98hFwGWviYRQNukETsKCh1fvDaXnAr6efydaCnn5RhGWy0OFBILJIN",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnqsOEiw9420ivq_lXZmWbzyZAJpQrAt5jwTqKjoPalWcbU7KJ2TM4N3VMsOZpzngFyLtzNU_U_hpLH71mHUdW90m1P41SO3Es535jk4MpjgC0IKgEZC100wvoGqSLs6Os-deHskWHH6W2rp51pITls9BtBEZlgDMVPb7ub74XCuG4HiacX26TP0b1orc="
-      ],
-      "suggested_status": "strengthening",
+      "status": "strengthening",
       "title": "NVDA - AI compute and accelerator demand"
     },
     {
@@ -1992,14 +1970,14 @@
         "current_price": "202.81",
         "delta": "-2.92",
         "key_risk": "nvda-ai-compute: sustained AI accelerator oversupply",
-        "linked_thesis_status": "nvda-ai-compute: insufficient-evidence",
+        "linked_thesis_status": "nvda-ai-compute: strengthening",
         "portfolio_rule_explanation": "within-band rule fired: allocation is inside the rebalance band, so the engine recommends holding. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "within_band",
         "target_allocation": "18.00",
-        "thesis_conviction": "nvda-ai-compute: 1/5 flat",
+        "thesis_conviction": "nvda-ai-compute: 4/5 up",
         "thesis_links": [
           "nvda-ai-compute"
         ],
