@@ -784,7 +784,7 @@
   "discovery": {
     "buy_recs": [],
     "candidates": [],
-    "last_run": "2026-07-19T23:18:16+00:00",
+    "last_run": "2026-07-20T01:05:52+00:00",
     "trends": []
   },
   "equity_portfolio": {
@@ -1026,7 +1026,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T01:10:40.695594+00:00",
+  "generated_at": "2026-07-20T01:16:26.099539+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
