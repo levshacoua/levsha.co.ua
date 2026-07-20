@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:31:54.157256+00:00",
+  "generated_at": "2026-07-20T02:34:50.467015+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1623,7 +1623,7 @@
       "title": "RKLB - small launch cadence and space infrastructure"
     },
     {
-      "conviction": 1,
+      "conviction": 2,
       "conviction_trend": "flat",
       "horizon": "<owner to set>",
       "id": "rxrx-ai-drug-discovery",
@@ -1633,27 +1633,7 @@
         "RXRX"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 2,
-      "suggested_conviction_trend": "flat",
-      "suggested_evidence": [
-        "\u0424\u0406\u041d\u0410\u041d\u0421\u041e\u0412\u0418\u0419 \u0421\u0422\u0410\u041d: \u041a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u043f\u043e\u0432\u0456\u0434\u043e\u043c\u0438\u043b\u0430 \u043f\u0440\u043e \u043d\u0430\u044f\u0432\u043d\u0456\u0441\u0442\u044c $665.2 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0456\u0432 \u0433\u043e\u0442\u0456\u0432\u043a\u0438 \u0441\u0442\u0430\u043d\u043e\u043c \u043d\u0430 31 \u0431\u0435\u0440\u0435\u0437\u043d\u044f 2026 \u0440\u043e\u043a\u0443, \u0437 \u043f\u0440\u043e\u0433\u043d\u043e\u0437\u043e\u0432\u0430\u043d\u0438\u043c \u0433\u0440\u043e\u0448\u043e\u0432\u0438\u043c \u0437\u0430\u043f\u0430\u0441\u043e\u043c \u0434\u043e \u043f\u043e\u0447\u0430\u0442\u043a\u0443 2028 \u0440\u043e\u043a\u0443 \u0431\u0435\u0437 \u043d\u0435\u043e\u0431\u0445\u0456\u0434\u043d\u043e\u0441\u0442\u0456 \u0434\u043e\u0434\u0430\u0442\u043a\u043e\u0432\u043e\u0433\u043e \u0444\u0456\u043d\u0430\u043d\u0441\u0443\u0432\u0430\u043d\u043d\u044f. \u041a\u0435\u0440\u0456\u0432\u043d\u0438\u0446\u0442\u0432\u043e \u043f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u043b\u043e \u043f\u0440\u043e\u0433\u043d\u043e\u0437 \u043e\u043f\u0435\u0440\u0430\u0446\u0456\u0439\u043d\u0438\u0445 \u0432\u0438\u0442\u0440\u0430\u0442 \u043d\u0430 2026 \u0440\u0456\u043a \u043d\u0430 \u0440\u0456\u0432\u043d\u0456 \u043c\u0435\u043d\u0448\u0435 $390 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0456\u0432, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u0444\u0456\u043d\u0430\u043d\u0441\u043e\u0432\u0443 \u0434\u0438\u0441\u0446\u0438\u043f\u043b\u0456\u043d\u0443.",
-        "\u041a\u041b\u0406\u041d\u0406\u0427\u041d\u0418\u0419 \u041f\u0420\u041e\u0413\u0420\u0415\u0421: \u0421\u043f\u043e\u0441\u0442\u0435\u0440\u0456\u0433\u0430\u044e\u0442\u044c\u0441\u044f \u0437\u043c\u0456\u0448\u0430\u043d\u0456, \u0430\u043b\u0435 \u043e\u0431\u043d\u0430\u0434\u0456\u0439\u043b\u0438\u0432\u0456 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0438. REC-4881 \u043f\u043e\u043a\u0430\u0437\u0430\u0432 \u043f\u043e\u0437\u0438\u0442\u0438\u0432\u043d\u0456 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0438 \u0443 \u0444\u0430\u0437\u0456 2 \u0434\u043b\u044f \u043b\u0456\u043a\u0443\u0432\u0430\u043d\u043d\u044f \u0441\u0456\u043c\u0435\u0439\u043d\u043e\u0433\u043e \u0430\u0434\u0435\u043d\u043e\u043c\u0430\u0442\u043e\u0437\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u0456\u043f\u043e\u0437\u0443 (FAP), \u0456 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u0432\u0437\u0430\u0454\u043c\u043e\u0434\u0456\u0454 \u0437 FDA \u0449\u043e\u0434\u043e \u043c\u043e\u0436\u043b\u0438\u0432\u043e\u0433\u043e \u0440\u0435\u0454\u0441\u0442\u0440\u0430\u0446\u0456\u0439\u043d\u043e\u0433\u043e \u0448\u043b\u044f\u0445\u0443. \u0412\u043e\u0434\u043d\u043e\u0447\u0430\u0441, \u0434\u043e\u0445\u0456\u0434 \u0437\u0430 \u043f\u0435\u0440\u0448\u0438\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2026 \u0440\u043e\u043a\u0443 \u0443 \u0440\u043e\u0437\u043c\u0456\u0440\u0456 $6.5 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0456\u0432 \u0437\u043d\u0430\u0447\u043d\u043e \u043d\u0435 \u0432\u0438\u043f\u0440\u0430\u0432\u0434\u0430\u0432 \u043e\u0447\u0456\u043a\u0443\u0432\u0430\u043d\u044c, \u0449\u043e \u043f\u0456\u0434\u043a\u0440\u0435\u0441\u043b\u044e\u0454 \u043d\u0435\u0441\u0442\u0430\u0431\u0456\u043b\u044c\u043d\u0456\u0441\u0442\u044c \u0434\u043e\u0445\u043e\u0434\u0456\u0432 \u0432\u0456\u0434 \u043f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u0442\u0432.",
-        "\u041f\u0410\u0420\u0422\u041d\u0415\u0420\u0421\u0422\u0412\u0410: \u041f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u0442\u0432\u0430 \u0437 \u0432\u0435\u043b\u0438\u043a\u0438\u043c\u0438 \u0444\u0430\u0440\u043c\u0430\u0446\u0435\u0432\u0442\u0438\u0447\u043d\u0438\u043c\u0438 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f\u043c\u0438, \u0442\u0430\u043a\u0438\u043c\u0438 \u044f\u043a Sanofi \u0442\u0430 Roche, \u043f\u0440\u043e\u0434\u043e\u0432\u0436\u0443\u044e\u0442\u044c \u0434\u0456\u044f\u0442\u0438, \u0437\u0430\u0431\u0435\u0437\u043f\u0435\u0447\u0443\u044e\u0447\u0438 \u0437\u043e\u0432\u043d\u0456\u0448\u043d\u044e \u0432\u0430\u043b\u0456\u0434\u0430\u0446\u0456\u044e \u0442\u0430 \u043d\u0430\u0434\u0445\u043e\u0434\u0436\u0435\u043d\u043d\u044f \u043a\u0430\u043f\u0456\u0442\u0430\u043b\u0443. \u0423 \u043f\u0435\u0440\u0448\u043e\u043c\u0443 \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0456 2026 \u0440\u043e\u043a\u0443 \u0431\u0443\u043b\u043e \u0434\u043e\u0441\u044f\u0433\u043d\u0443\u0442\u043e \u043f'\u044f\u0442\u043e\u0433\u043e \u0435\u0442\u0430\u043f\u0443 \u0441\u043f\u0456\u0432\u043f\u0440\u0430\u0446\u0456 \u0437 Sanofi, \u0449\u043e \u043f\u0440\u0438\u043d\u0435\u0441\u043b\u043e $4 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0438. \u0417\u0430\u0433\u0430\u043b\u044c\u043d\u0456 \u043d\u0430\u0434\u0445\u043e\u0434\u0436\u0435\u043d\u043d\u044f \u0432\u0456\u0434 \u043f\u0430\u0440\u0442\u043d\u0435\u0440\u0456\u0432 \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0438\u043b\u0438 $500 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0456\u0432.",
-        "\u0412\u0410\u041b\u0406\u0414\u0410\u0426\u0406\u042f \u041f\u041b\u0410\u0422\u0424\u041e\u0420\u041c\u0418: \u041f\u043e\u0437\u0438\u0442\u0438\u0432\u043d\u0456 \u0434\u0430\u043d\u0456 \u0449\u043e\u0434\u043e REC-4881 \u0454 \u043f\u0435\u0440\u0448\u0438\u043c \u043a\u043b\u0456\u043d\u0456\u0447\u043d\u0438\u043c \u043f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0435\u043d\u043d\u044f\u043c \u043a\u043e\u043d\u0446\u0435\u043f\u0446\u0456\u0457 \u0434\u043b\u044f \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0438 \u0428\u0406 Recursion. \u041e\u0434\u043d\u0430\u043a \u0437\u0430\u0433\u0430\u043b\u044c\u043d\u0430 \u0435\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u0438 \u0443 \u0441\u0442\u0430\u0431\u0456\u043b\u044c\u043d\u043e\u043c\u0443 \u0441\u0442\u0432\u043e\u0440\u0435\u043d\u043d\u0456 \u0443\u0441\u043f\u0456\u0448\u043d\u0438\u0445 \u043a\u043b\u0456\u043d\u0456\u0447\u043d\u0438\u0445 \u043a\u0430\u043d\u0434\u0438\u0434\u0430\u0442\u0456\u0432 \u0449\u0435 \u043d\u0435 \u0434\u043e\u0432\u0435\u0434\u0435\u043d\u0430, \u043e\u0441\u043a\u0456\u043b\u044c\u043a\u0438 \u0456\u043d\u0448\u0456 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u0438 \u0437\u043d\u0430\u0445\u043e\u0434\u044f\u0442\u044c\u0441\u044f \u043d\u0430 \u0440\u0430\u043d\u043d\u0456\u0445 \u0441\u0442\u0430\u0434\u0456\u044f\u0445, \u0430 \u0432 \u043c\u0438\u043d\u0443\u043b\u043e\u043c\u0443 \u0431\u0443\u043b\u0438 \u043d\u0435\u0432\u0434\u0430\u0447\u0456."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-wKaab5q7ze_sB3r7W_GF5ggvU3nEmooG3w9DeZAGxO-vmgsQZ_dsBn4ia22DmB5c2ZVxcm4k8K5sOBpP-Uobm9Jmn3C-WWx3mlD9nwWtTHWuKIbbQ9ge1gZCYteCmi_5ealRoZ39pd2OMmU63Y1bwAgQMKw23ayXwgLOO9KlNUbJuMW6Huj05zBC3khGFeuaShO9lAVzURFPyNP2SRhXYdE17eGyM2FQuVc67FbqVBqp5ZZAaX8lCA==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRw0ut8et-Jp_ddAMrp-YFP-V2aiKAo8vhB_bvHMwBnY2hqhwj1LqAmEP8Tqgko-c3TdAwCDERcdMcWDTrvTfIZKJISLywBAFdWXCLzOHs_8POkPVnqSlTdQ1za_MMYxklkPN0tHRZL7IlfKzlcUkQD05wOTXON4eqs8FGCdFgEay1SoUt0fvN3meyAOOQ2JLTSNaecuhFtb-0L13f8Z1La9_j9Ww03ckUcbDZBGArqs4=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHmqbsdHWE5PwWugo50C6CXuM64iiI3B3C5f06-PRzSGTt6ozcfKZS3rfTLwYFc1TT72tVquJyFqw3x5NULSRVxM42Wwg28jj0TGduAWl6vR5YS55zU3L6M_y0tlWryR6PUV2w3SNTNsJesxJX8XfsLB6-_lgzfZ-VU7rx0kNIVxSXJiQh5Nr3uFUe_ni_vjoczafPaHsmGdI_Zg5BgGwHvbAYUoooDhiumgCZnSRUnIXWQz1MbTPK0Wg==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgF1m2H75Sjlp355XvV7wSYhyHIBnX_0GPwcZQGIRNo-hsB0KOdbCASuD-gbWtmnrsDFZx8Tdzo78Db4yJWLAv4U_3y1aof606MmqZ-zSJ56-YQOUNIk2kZjNFQeCbS6H1Qg==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFL1gHodOQbbzWkH3oN31IFVu8x8jltSps_YgjmseEEpFcxKm5Q8SaGG_QM8jiSLdzFDXM4LejeYE4xEDWT946991iT9NRsXCQAc3PRVP0qc7JA76AhMZs3ZbD6ZCM5e-pi9E3Dw7Gf8bS2hUimh2TwTlujKy0sPR5L51369uicj7OB70SGmuuVnmcjgb_iN1FhO6mj08qpxjY-kibOREhwNb5IEYi18u7_pPzz0GhOs20IREc=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnxNtCqe0OEmCSInzk9rofxP7xDLgxmVCcyZs3AOTlLdv_lb_lT4i5K-m7VKeH592COdbAc8Ip5V0isab54GYK-yfL8p8d0m1p126-AW5AZAqQWNf8mKilnZtK9qSTGUfXFvuFj1gnbg42eRnDDcuhsKAHCqggIygQ27CwWVW-l1GnZqYzUgOj3N_MmlwpwLvlUMf_b3rVef4qu9TPcXR8hYY9EBlPwjd2uknHK9eBPcYMcU4MprLNDr__R6E=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJZbpt2sigue6gyVu9lq9nPDwoKncNOPJ2YQq7UtgPSiZSFVjpjIO1HLuczIZc0mcm4w0MxF9eDCM57IuEVnDbmiGdzLJ34tSvudqdj1HUel7rlt2fp3SdODgiNw6D49MiMKpXbGXKgnVU0pjCRfFwR3JAio2gliK3z3CDwPyud5Xd_04ca-GqcP3SGRU-MhEhDy56j1SjgXdZJ4ZC7snTsL962SSQQPHO4rx4V41MGA==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3aAc8hgo5NZP74bKvkXQrl5EaW3h5CHGMCUpiANxUvMuqovS3-qgQL6tlqvzxvqlylh7izX6V_-l-dxRXBv9KWyANykDZdDADlxu201fGpsTreOQ7SCUgCpB7tyQ_wFwpaIrflQRWIzKRUA6CUzDFipSwZnfBHgkgo_KwD_OzMA5a9ATYIL-1askJTwA="
-      ],
-      "suggested_status": "mixed",
+      "status": "mixed",
       "title": "RXRX - AI-driven drug discovery"
     },
     {
@@ -1992,14 +1972,14 @@
         "current_price": "2.95",
         "delta": "-0.59",
         "key_risk": "rxrx-ai-drug-discovery: platform fails to produce validated clinical candidates",
-        "linked_thesis_status": "rxrx-ai-drug-discovery: insufficient-evidence",
+        "linked_thesis_status": "rxrx-ai-drug-discovery: mixed",
         "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "never_sell_below_cost",
         "target_allocation": "2.00",
-        "thesis_conviction": "rxrx-ai-drug-discovery: 1/5 flat",
+        "thesis_conviction": "rxrx-ai-drug-discovery: 2/5 flat",
         "thesis_links": [
           "rxrx-ai-drug-discovery"
         ],
