@@ -543,6 +543,7 @@ tr:last-child td {
 .thesis-field select,
 .transaction-field input,
 .transaction-field select,
+.cash-control input,
 .watchlist-field input,
 .watchlist-field select {
   width: 100%;
@@ -569,6 +570,7 @@ tr:last-child td {
 .thesis-field select:focus,
 .transaction-field input:focus,
 .transaction-field select:focus,
+.cash-control input:focus,
 .watchlist-field input:focus,
 .watchlist-field select:focus,
 .autopay-amount input:focus {
@@ -635,6 +637,44 @@ tr:last-child td {
   justify-self: end;
   color: var(--muted);
   font-size: .78rem;
+}
+
+.cash-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.cash-control input {
+  min-height: 32px;
+}
+
+.cash-control button {
+  min-height: 32px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--accent);
+  padding: 6px 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cash-control button:disabled,
+.cash-control input:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+.cash-control-state {
+  grid-column: 1 / -1;
+  min-width: 0;
+  min-height: 1em;
+  color: var(--muted);
+  font-size: .74rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .transaction-form {
@@ -798,6 +838,10 @@ tr:last-child td {
   border-color: var(--line-strong);
 }
 
+.cash-control[data-save-status="saving"] .cash-control-state {
+  color: var(--muted);
+}
+
 #view-bottlenecks[data-save-status="saving"] .discovery-advisory {
   border-color: var(--line-strong);
 }
@@ -822,6 +866,10 @@ tr:last-child td {
   color: var(--good);
 }
 
+.cash-control[data-save-status="saved"] .cash-control-state {
+  color: var(--good);
+}
+
 #view-bottlenecks[data-save-status="saved"] .discovery-run-state {
   color: var(--good);
 }
@@ -843,6 +891,10 @@ tr:last-child td {
 }
 
 .autopay-control[data-save-status="error"] .autopay-save-state {
+  color: var(--bad);
+}
+
+.cash-control[data-save-status="error"] .cash-control-state {
   color: var(--bad);
 }
 
@@ -1464,6 +1516,9 @@ tr:last-child td {
   .autopay-control { grid-template-columns: 1fr; }
   .autopay-control p { grid-column: auto; }
   .autopay-save-state { justify-self: start; }
+  .cash-control { grid-template-columns: 1fr 1fr; }
+  .cash-control input,
+  .cash-control-state { grid-column: 1 / -1; }
   .transaction-form { grid-template-columns: 1fr; }
   .watchlist-form { grid-template-columns: 1fr; }
   .watchlist-title { align-items: start; flex-direction: column; }

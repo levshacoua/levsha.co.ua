@@ -204,6 +204,9 @@ function renderMetrics(snapshot) {
       labelWithHelp(metric.label, metric.help || SUMMARY_HELP[metric.label]),
       el("div", "value", metric.value)
     );
+    if (metric.label === "Кеш на рахунку") {
+      item.append(cashControl());
+    }
     if (metric.secondary) {
       item.append(el("div", "secondary", metric.secondary));
     }
@@ -950,6 +953,117 @@ function isIsoDate(value) {
 
 function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
+}
+
+function cashControl() {
+  const form = document.createElement("form");
+  form.className = "cash-control";
+  form.setAttribute("aria-label", "Додати або зняти кеш");
+  form.dataset.saveStatus = "";
+
+  const amount = document.createElement("input");
+  amount.name = "amount_usd";
+  amount.type = "number";
+  amount.min = "0";
+  amount.step = "any";
+  amount.inputMode = "decimal";
+  amount.placeholder = "USD";
+  amount.required = true;
+  amount.disabled = !gatePassword;
+
+  const add = document.createElement("button");
+  add.type = "submit";
+  add.name = "cash_action";
+  add.value = "deposit";
+  add.textContent = "＋ Додати";
+  add.disabled = !gatePassword;
+
+  const withdraw = document.createElement("button");
+  withdraw.type = "submit";
+  withdraw.name = "cash_action";
+  withdraw.value = "withdrawal";
+  withdraw.textContent = "− Зняти";
+  withdraw.disabled = !gatePassword;
+
+  const state = el("span", "cash-control-state", gatePassword ? "" : "Розблокуй cockpit.");
+  state.setAttribute("role", "status");
+
+  form.append(amount, add, withdraw, state);
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    submitCashControl(form, event.submitter?.value || "deposit");
+  });
+  return form;
+}
+
+async function submitCashControl(form, action) {
+  const state = form.querySelector(".cash-control-state");
+  if (!gatePassword) {
+    setCashControlState(form, state, "error", "Розблокуй cockpit ще раз перед збереженням.");
+    return;
+  }
+
+  const validation = validateCashControlDraft(action, form.elements.amount_usd.value);
+  if (!validation.ok) {
+    setCashControlState(form, state, "error", validation.error);
+    return;
+  }
+
+  const payload = cashControlPayload(action, form.elements.amount_usd.value);
+  setCashControlDisabled(form, true);
+  setCashControlState(form, state, "saving", "Збереження...");
+
+  try {
+    const response = await fetch(JOURNAL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [JOURNAL_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(await responseErrorMessage(response));
+    }
+    form.reset();
+    setCashControlState(form, state, "saved", "Збережено — оновиться за ~1 хв");
+  } catch (error) {
+    setCashControlState(form, state, "error", error.message || "Не вдалося зберегти");
+  } finally {
+    setCashControlDisabled(form, false);
+  }
+}
+
+function validateCashControlDraft(action, amountUsd) {
+  if (!["deposit", "withdrawal"].includes(action)) {
+    return { ok: false, error: "Невірна дія." };
+  }
+  if (String(amountUsd ?? "").trim() === "") {
+    return { ok: false, error: "Вкажи суму." };
+  }
+  if (!isNonNegativeNumber(amountUsd) || Number(amountUsd) === 0) {
+    return { ok: false, error: "Сума має бути більше 0." };
+  }
+  return { ok: true, error: "" };
+}
+
+function cashControlPayload(action, amountUsd) {
+  return {
+    date: todayIsoDate(),
+    action,
+    amount_usd: Number(amountUsd),
+  };
+}
+
+function setCashControlDisabled(form, disabled) {
+  [...form.elements].forEach(control => {
+    control.disabled = disabled || !gatePassword;
+  });
+}
+
+function setCashControlState(form, state, status, message) {
+  form.dataset.saveStatus = status;
+  if (state) state.textContent = message;
 }
 
 function setTransactionControlsDisabled(form, submitButton, disabled) {
@@ -2039,5 +2153,7 @@ if (typeof module !== "undefined") {
     validateWatchlistDraft,
     watchlistPayload,
     validateJournalDraft,
+    validateCashControlDraft,
+    cashControlPayload,
   };
 }
