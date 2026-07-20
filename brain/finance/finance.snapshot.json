@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:20:16.009097+00:00",
+  "generated_at": "2026-07-20T02:22:51.664421+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1553,8 +1553,8 @@
       "title": "MU - HBM demand above qualified supply"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 4,
+      "conviction_trend": "up",
       "horizon": "<owner to set>",
       "id": "msft-ai-cloud-copilot",
       "key_risk": "Azure share or relevance weakens structurally",
@@ -1563,29 +1563,7 @@
         "MSFT"
       ],
       "role": "core",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 4,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "Azure \u0443\u0442\u0440\u0438\u043c\u0443\u0454 \u0441\u0442\u0456\u0439\u043a\u0443 \u043f\u043e\u0437\u0438\u0446\u0456\u044e \u21162 \u043d\u0430 \u0440\u0438\u043d\u043a\u0443 \u0445\u043c\u0430\u0440\u043d\u0438\u0445 \u043f\u043e\u0441\u043b\u0443\u0433 \u0456\u0437 \u0447\u0430\u0441\u0442\u043a\u043e\u044e ~25% \u0441\u0442\u0430\u043d\u043e\u043c \u043d\u0430 1 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2026 \u0440\u043e\u043a\u0443, \u043f\u0440\u0438 \u0446\u044c\u043e\u043c\u0443 \u0442\u0435\u043c\u043f\u0438 \u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f (39-40% \u0440/\u0440) \u0437\u043d\u0430\u0447\u043d\u043e \u0432\u0438\u043f\u0435\u0440\u0435\u0434\u0436\u0430\u044e\u0442\u044c \u043b\u0456\u0434\u0435\u0440\u0430 \u0440\u0438\u043d\u043a\u0443 AWS (~19-28%).",
-        "\u0417\u0430\u043b\u0438\u0448\u043e\u043a \u043a\u043e\u043c\u0435\u0440\u0446\u0456\u0439\u043d\u0438\u0445 \u0437\u043e\u0431\u043e\u0432'\u044f\u0437\u0430\u043d\u044c (RPO) \u0437\u0440\u0456\u0441 \u043d\u0430 110% \u0434\u043e $625 \u043c\u0456\u043b\u044c\u044f\u0440\u0434\u0456\u0432 \u0441\u0442\u0430\u043d\u043e\u043c \u043d\u0430 2-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2026 \u0444\u0456\u043d\u0430\u043d\u0441\u043e\u0432\u043e\u0433\u043e \u0440\u043e\u043a\u0443, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u0437\u043d\u0430\u0447\u043d\u0438\u0439 \u0437\u0430\u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u043e\u0432\u0430\u043d\u0438\u0439 \u043c\u0430\u0439\u0431\u0443\u0442\u043d\u0456\u0439 \u0434\u043e\u0445\u0456\u0434, \u0445\u043e\u0447\u0430 \u043f\u0440\u0438\u0431\u043b\u0438\u0437\u043d\u043e 45% \u0446\u0456\u0454\u0457 \u0441\u0443\u043c\u0438 \u043f\u043e\u0432'\u044f\u0437\u0430\u043d\u043e \u0437 OpenAI.",
-        "Microsoft \u0437\u043d\u0430\u0447\u043d\u043e \u043d\u0430\u0440\u043e\u0449\u0443\u0454 \u043a\u0430\u043f\u0456\u0442\u0430\u043b\u044c\u043d\u0456 \u0432\u0438\u0442\u0440\u0430\u0442\u0438 \u043d\u0430 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0443 \u0428\u0406, \u043f\u0440\u043e\u0433\u043d\u043e\u0437\u0443\u044e\u0447\u0438 \u0432\u0438\u0442\u0440\u0430\u0442\u0438 \u043d\u0430 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u043d\u0438\u0439 2026 \u0440\u0456\u043a \u0443 \u0440\u043e\u0437\u043c\u0456\u0440\u0456 \u0431\u043b\u0438\u0437\u044c\u043a\u043e $190 \u043c\u0456\u043b\u044c\u044f\u0440\u0434\u0456\u0432 \u0434\u043b\u044f \u0437\u0430\u0434\u043e\u0432\u043e\u043b\u0435\u043d\u043d\u044f \u043f\u043e\u043f\u0438\u0442\u0443.",
-        "\u041a\u0456\u043b\u044c\u043a\u0456\u0441\u0442\u044c \u043f\u043b\u0430\u0442\u043d\u0438\u0445 \u043c\u0456\u0441\u0446\u044c Copilot \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0438\u043b\u0430 20 \u043c\u0456\u043b\u044c\u0439\u043e\u043d\u0456\u0432 \u0441\u0442\u0430\u043d\u043e\u043c \u043d\u0430 \u043a\u0432\u0456\u0442\u0435\u043d\u044c 2026 \u0440\u043e\u043a\u0443, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u043f\u043e\u0447\u0430\u0442\u043a\u043e\u0432\u0435 \u0432\u043f\u0440\u043e\u0432\u0430\u0434\u0436\u0435\u043d\u043d\u044f \u043d\u0430 \u043f\u0456\u0434\u043f\u0440\u0438\u0454\u043c\u0441\u0442\u0432\u0430\u0445.",
-        "\u0406\u0441\u043d\u0443\u0454 \u0437\u043d\u0430\u0447\u043d\u0438\u0439 \u0440\u043e\u0437\u0440\u0438\u0432 \u043c\u0456\u0436 \u043f\u0440\u0438\u0434\u0431\u0430\u043d\u0438\u043c\u0438 \u043b\u0456\u0446\u0435\u043d\u0437\u0456\u044f\u043c\u0438 Copilot \u0442\u0430 \u0430\u043a\u0442\u0438\u0432\u043d\u0438\u043c \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f\u043c: \u0434\u0430\u043d\u0456 \u043f\u043e\u043a\u0430\u0437\u0443\u044e\u0442\u044c, \u0449\u043e \u043a\u043e\u0435\u0444\u0456\u0446\u0456\u0454\u043d\u0442 \u043f\u043e\u0441\u0442\u0456\u0439\u043d\u043e\u0433\u043e \u0449\u043e\u0442\u0438\u0436\u043d\u0435\u0432\u043e\u0433\u043e \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f \u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c \u043b\u0438\u0448\u0435 30-55% \u0432\u0456\u0434 \u043f\u0440\u0438\u0434\u0431\u0430\u043d\u0438\u0445 \u043c\u0456\u0441\u0446\u044c, \u0449\u043e \u0432\u043a\u0430\u0437\u0443\u0454 \u043d\u0430 \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0438 \u0437 \u0433\u043b\u0438\u0431\u043e\u043a\u043e\u044e \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u0454\u044e \u0432 \u0440\u043e\u0431\u043e\u0447\u0456 \u043f\u0440\u043e\u0446\u0435\u0441\u0438.",
-        "\u0417\u0433\u0456\u0434\u043d\u043e \u0437 \u043e\u043f\u0438\u0442\u0443\u0432\u0430\u043d\u043d\u044f\u043c Gallup \u0437\u0430 1-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2026 \u0440\u043e\u043a\u0443, \u0445\u043e\u0447\u0430 50% \u0441\u043f\u0456\u0432\u0440\u043e\u0431\u0456\u0442\u043d\u0438\u043a\u0456\u0432 \u0443 \u0421\u0428\u0410 \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u043e\u0432\u0443\u044e\u0442\u044c \u0428\u0406 \u043d\u0430 \u0440\u043e\u0431\u043e\u0442\u0456, \u043b\u0438\u0448\u0435 13% \u0440\u043e\u0431\u043b\u044f\u0442\u044c \u0446\u0435 \u0449\u043e\u0434\u0435\u043d\u043d\u043e, \u0434\u0435 \u0441\u043f\u043e\u0441\u0442\u0435\u0440\u0456\u0433\u0430\u0454\u0442\u044c\u0441\u044f \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448\u0438\u0439 \u043f\u0440\u0438\u0440\u0456\u0441\u0442 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u0456."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxw9OfQQUPYVbTTfdxj8y7kUlfOIfnSpJ9fAyieHUk1hJbWm5HSzgdXn13hPrJqk2jUlxjxbMzMCqwg1DVjtIhPaE4KRiDoAlV9OZW2ZORnfkumxkk3odT6Eu_BTTBHi_jnjfTUv0daipdZthraACz5Y2d74YUtg==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBKHbhwrUPRBXsOQjMVLSraYMOxE1__fmQZYjXZODsDNxVkl6UCh9gnDU2A8bLwOBU8cg-nfZVCtqcBsWEj8wL1MZpTQ5KfMHVAcQ6_No7OY1sbvTWLTEQquCAQ55NOQZ-CvH-9Edvgi2lilmcadcFiyRRSPdI2gUmkv1WyLpGhyPkvYs7ow==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFuLrJC8mlncOXCaGtWpGrSy5po_oEl33D7Gf2VboGLwM24RBzdYLDdXHo1WBX1yXgCVwNLqusKmVu18whvEaT7IphGKOV8C_alNhUXFbCLYFore0e1X2lJm3kgFVKxbmgCKyyMx2x4Ri4nSHY9jk5BAtw6ZZHUB0Ykae3y9IDqwEbkMOZXPMNczIJVjudcFCmJBChowWg4QR4ETyGz2cQHEcmlKgEQfteOLzC9hBFXLtyvgcVZMR0=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUAtWDqHW7n5ubFIrbq0peS9Tzzc4AFfDS-Od6L1wOl2O6KqO9_urR_L0Leq8KENFFzm8keOsUWAPkQCojxBZj-BaNF-xeTXl8V-dehtgwzge6K7OdQ24xWRazxqcRaeXXGFjLHATT799QFTPlWX2QH1p2ZD_ep-jUnuirMBKrPXcnmeesQkrx2M0-4kCTT9qSrtDs5IyAaszO5LpU8BcH1mbmpWk9Pf4qXte8YFqOpB63MCOn7mfU3w59QXnM-cdnWQ==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWFlcf-Fzs20OT0iyIfsyJeQmyAu7eshodvdnqrUoKyFvECSGjsSs1KMqGk2_-q8lmppF5gkPGSXk_OLZ_bkSfRexnK5qWRef9v5sgq6MgSrcljCTSFtBIqyGZXukZDHToyQ4bc-UPU_tss4jMYZxrMmj9-jikvt0ryNtUTE6d7s0iIl6m_uH5IxRNIgShYrWlfRLU1tlF2_kX",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEoFubiAqID_A7CTCGWJRYpZyr_ctKQXPDtVukqDRsE4vRRzsDaZOXuI3_ZWK72mUN9HBPskLpYoyKtW-zcF8t__ZJGowWqB13oD5j7rMhCCXopxmYMiZKOHMB5UDThy0FEo2toTmo-g9AxVA5FXxpT6QmP-B8tKSBCoXE5RVK3f4B1rGBzq0bH0a4ArwJTl7PVvtqCMFo-XCg5hXecSh6FDryvimf2R424",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlU-FUlDGAFnS3ZMHUhrcQid8bVse0-QPgQ30EzTLL5RIS79Sb3q6VZNEGpduOHVJpOsIErZSt1xBOPuDHg-qM_j_GXFhoRZFNzYiKOhi_BwLFFxjEE-TTQN8U1YytjkAuqdMb-c3ygSphBoMsv-_auAeLpHoGhXSM8Klty0CEYMKk7SJ_l8i-07Y8hmKyq5a4EIjoWcGw_ro=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJlavK9idngLIMSrgSihe-nkuw3339njlkCHltorWzH6gmcXaNkMcPJWdjEmZLKb5alkUStohdOeTHrEFxe93amRGcxlyjPsWglKYjYauOUJCN-dMzpyedlei9yFzzgBGNeh75qCDY7buZrRWKY3Gc3GJKH4yWV2UjpthWtrcSYHkfApB5qJ1bR59is6cPiQipUrZB2g=="
-      ],
-      "suggested_status": "strengthening",
+      "status": "strengthening",
       "title": "MSFT - AI, Azure scale, and Copilot monetization"
     },
     {
@@ -1970,14 +1948,14 @@
         "current_price": "393.82",
         "delta": "6.85",
         "key_risk": "msft-ai-cloud-copilot: Azure share or relevance weakens structurally",
-        "linked_thesis_status": "msft-ai-cloud-copilot: insufficient-evidence",
+        "linked_thesis_status": "msft-ai-cloud-copilot: strengthening",
         "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "never_sell_below_cost",
         "target_allocation": "18.00",
-        "thesis_conviction": "msft-ai-cloud-copilot: 1/5 flat",
+        "thesis_conviction": "msft-ai-cloud-copilot: 4/5 up",
         "thesis_links": [
           "msft-ai-cloud-copilot"
         ],
