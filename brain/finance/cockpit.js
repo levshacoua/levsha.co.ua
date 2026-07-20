@@ -155,6 +155,7 @@ function render(snapshot) {
   setupThesesVerifyRun();
   setupDiscoveryRun();
   renderMeta(snapshot);
+  renderCoverageWarnings(snapshot.coverage_warnings || []);
   renderMetrics(snapshot);
   renderEquities(snapshot.equity_portfolio.positions);
   renderCrypto(snapshot.crypto.positions);
@@ -170,6 +171,23 @@ function renderMeta(snapshot) {
   const portfolio = snapshot.equity_portfolio;
   document.getElementById("snapshot-meta").textContent =
     `${formatDate(snapshot.generated_at)} · ${portfolio.market_mode} · thesis fields editable`;
+}
+
+function renderCoverageWarnings(warnings) {
+  const root = document.getElementById("coverage-warnings");
+  if (!root) return;
+  const text = coverageWarningText(warnings);
+  root.hidden = !text;
+  root.textContent = text;
+}
+
+function coverageWarningText(warnings) {
+  if (!Array.isArray(warnings) || !warnings.length) return "";
+  const tickers = warnings
+    .map(warning => String(warning?.ticker || "").trim().toUpperCase())
+    .filter(Boolean);
+  if (!tickers.length) return "";
+  return `⚠ Позиції без тези: ${tickers.join(", ")} — додайте тезу (coverage gate).`;
 }
 
 function renderMetrics(snapshot) {
@@ -2165,5 +2183,6 @@ if (typeof module !== "undefined") {
     validateJournalDraft,
     validateCashControlDraft,
     cashControlPayload,
+    coverageWarningText,
   };
 }
