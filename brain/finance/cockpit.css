@@ -226,6 +226,11 @@ select {
   padding: 16px;
 }
 
+.metric {
+  min-width: 0;
+  overflow: hidden;
+}
+
 .metric .label {
   display: flex;
   align-items: center;
@@ -450,20 +455,64 @@ tr:last-child td {
 }
 
 .thesis-suggestion {
-  display: grid;
-  gap: 8px;
   border: 1px solid var(--line);
   background: var(--surface-2);
-  padding: 10px;
+  min-width: 0;
 }
 
-.thesis-suggestion-kicker,
+.thesis-suggestion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.thesis-suggestion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.thesis-suggestion-summary::before {
+  content: "○";
+  color: var(--accent);
+  font-size: .72rem;
+}
+
+.thesis-suggestion[open] .thesis-suggestion-summary::before {
+  content: "⌄";
+}
+
+.thesis-suggestion-title,
 .thesis-suggestion-label,
 .thesis-suggestion-evidence-label {
   color: var(--muted);
   font-size: .68rem;
   letter-spacing: .12em;
   text-transform: uppercase;
+}
+
+.thesis-suggestion-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.thesis-suggestion-hint {
+  color: var(--muted);
+  font-size: .72rem;
+  white-space: nowrap;
+}
+
+.thesis-suggestion[open] .thesis-suggestion-hint {
+  display: none;
+}
+
+.thesis-suggestion-body {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 10px 10px;
 }
 
 .thesis-suggestion-row {
@@ -641,17 +690,24 @@ tr:last-child td {
 
 .cash-control {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: 7px;
   margin-top: 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .cash-control input {
+  grid-column: 1 / -1;
   min-height: 32px;
+  box-sizing: border-box;
 }
 
 .cash-control button {
+  min-width: 0;
+  max-width: 100%;
   min-height: 32px;
   border: 1px solid var(--line-strong);
   background: transparent;
@@ -659,6 +715,7 @@ tr:last-child td {
   padding: 6px 9px;
   cursor: pointer;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .cash-control button:disabled,
@@ -1516,9 +1573,6 @@ tr:last-child td {
   .autopay-control { grid-template-columns: 1fr; }
   .autopay-control p { grid-column: auto; }
   .autopay-save-state { justify-self: start; }
-  .cash-control { grid-template-columns: 1fr 1fr; }
-  .cash-control input,
-  .cash-control-state { grid-column: 1 / -1; }
   .transaction-form { grid-template-columns: 1fr; }
   .watchlist-form { grid-template-columns: 1fr; }
   .watchlist-title { align-items: start; flex-direction: column; }

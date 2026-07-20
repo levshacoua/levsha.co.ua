@@ -316,12 +316,21 @@ function thesisEditForm(row, card, meta) {
 function thesisSuggestion(row, form, card) {
   if (!hasThesisSuggestion(row)) return document.createDocumentFragment();
 
-  const root = document.createElement("div");
+  const root = document.createElement("details");
   root.className = "thesis-suggestion";
   const sufficient = thesisSuggestionHasEvidence(row);
   const reviewedAt = row.suggested_reviewed_at ? ` · ${row.suggested_reviewed_at}` : "";
-  root.append(el("div", "thesis-suggestion-kicker", `AI пропозиція${reviewedAt}`));
-  root.append(
+
+  const summary = document.createElement("summary");
+  summary.className = "thesis-suggestion-summary";
+  summary.append(
+    el("span", "thesis-suggestion-title", `AI пропозиція${reviewedAt}`),
+    el("span", "thesis-suggestion-hint", "розгорнути")
+  );
+
+  const body = document.createElement("div");
+  body.className = "thesis-suggestion-body";
+  body.append(
     thesisSuggestionCompare(
       "Conviction",
       `${row.conviction}/5`,
@@ -339,8 +348,8 @@ function thesisSuggestion(row, form, card) {
   );
 
   const evidence = thesisSuggestionEvidence(row.suggested_evidence);
-  if (evidence.childNodes.length) root.append(evidence);
-  root.append(sourceLinks(row.suggested_sources || []));
+  if (evidence.childNodes.length) body.append(evidence);
+  body.append(sourceLinks(row.suggested_sources || []));
 
   const actions = document.createElement("div");
   actions.className = "thesis-suggestion-actions";
@@ -362,7 +371,8 @@ function thesisSuggestion(row, form, card) {
     state.textContent = "Заповнено. Перевір і натисни Save.";
   });
   actions.append(accept, state);
-  root.append(actions);
+  body.append(actions);
+  root.append(summary, body);
   return root;
 }
 
