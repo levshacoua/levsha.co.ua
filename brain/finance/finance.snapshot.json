@@ -1334,8 +1334,8 @@
         "realized_pnl": "94.41",
         "target_pct": "10.00",
         "ticker": "MU",
-        "trade_quantity": "0.0471",
-        "trade_value": "40.05",
+        "trade_quantity": "0.0182",
+        "trade_value": "15.5",
         "unrealized_pnl": "64.33",
         "value": "114.87",
         "weight_pct": "6.41"
@@ -1382,8 +1382,8 @@
         "realized_pnl": "0",
         "target_pct": "10.00",
         "ticker": "RKLB",
-        "trade_quantity": "0.1476",
-        "trade_value": "9.99",
+        "trade_quantity": "0.5108",
+        "trade_value": "34.54",
         "unrealized_pnl": "-1.65",
         "value": "67.68",
         "weight_pct": "3.78"
@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:29:49.463398+00:00",
+  "generated_at": "2026-07-20T02:31:54.157256+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1609,8 +1609,8 @@
       "title": "QBTS - quantum computing"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 4,
+      "conviction_trend": "up",
       "horizon": "<owner to set>",
       "id": "rklb-launch-space-infrastructure",
       "key_risk": "persistent launch cadence misses",
@@ -1619,29 +1619,7 @@
         "RKLB"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 4,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "\u0413\u0456\u043f\u043e\u0442\u0435\u0437\u0430 \u043f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0443\u0454\u0442\u044c\u0441\u044f: \u0434\u043e\u0445\u0456\u0434 \u0432\u0456\u0434 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u0438\u0445 \u0441\u0438\u0441\u0442\u0435\u043c (Space Systems) \u0437\u043d\u0430\u0447\u043d\u043e \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0443\u0454 \u0434\u043e\u0445\u0456\u0434 \u0432\u0456\u0434 \u0437\u0430\u043f\u0443\u0441\u043a\u0456\u0432, \u0430 \u0437\u0430\u0433\u0430\u043b\u044c\u043d\u0438\u0439 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u044c \u0437\u0430\u043c\u043e\u0432\u043b\u0435\u043d\u044c \u0434\u043e\u0441\u044f\u0433 \u0440\u0435\u043a\u043e\u0440\u0434\u043d\u0438\u0445 $2.2 \u043c\u0456\u043b\u044c\u044f\u0440\u0434\u0430 \u0432 \u043f\u0435\u0440\u0448\u043e\u043c\u0443 \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0456 2026 \u0440\u043e\u043a\u0443, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u0443\u0441\u043f\u0456\u0448\u043d\u0438\u0439 \u043f\u0435\u0440\u0435\u0445\u0456\u0434 \u0434\u043e \u0448\u0438\u0440\u0448\u043e\u0457 \u043a\u043e\u0441\u043c\u0456\u0447\u043d\u043e\u0457 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0438.",
-        "\u0427\u0430\u0441\u0442\u043e\u0442\u0430 \u0437\u0430\u043f\u0443\u0441\u043a\u0456\u0432 Electron \u0441\u0442\u0430\u0431\u0456\u043b\u0456\u0437\u0443\u0432\u0430\u043b\u0430\u0441\u044f \u0456 \u0441\u0442\u0430\u043b\u0430 \u043d\u0430\u0434\u0456\u0439\u043d\u043e\u044e; \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u0432\u0438\u043a\u043e\u043d\u0430\u043b\u0430 21 \u043c\u0456\u0441\u0456\u044e \u0443 2025 \u0440\u043e\u0446\u0456 \u0437\u0456 100% \u0443\u0441\u043f\u0456\u0448\u043d\u0456\u0441\u0442\u044e \u0442\u0430 \u043c\u0430\u0454 \u0432\u0435\u043b\u0438\u043a\u0438\u0439 \u043f\u043e\u0440\u0442\u0444\u0435\u043b\u044c \u043c\u0430\u0439\u0431\u0443\u0442\u043d\u0456\u0445 \u0437\u0430\u043c\u043e\u0432\u043b\u0435\u043d\u044c.",
-        "\u041f\u043e\u043f\u0438\u0442 \u043d\u0430 \u0456\u043d\u0442\u0435\u0433\u0440\u043e\u0432\u0430\u043d\u0456 \u043f\u043e\u0441\u043b\u0443\u0433\u0438 \u0437\u0430\u043b\u0438\u0448\u0430\u0454\u0442\u044c\u0441\u044f \u0432\u0438\u0441\u043e\u043a\u0438\u043c, \u0449\u043e \u043f\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0443\u0454\u0442\u044c\u0441\u044f \u0440\u0435\u043a\u043e\u0440\u0434\u043d\u0438\u043c \u043f\u0456\u0434\u043f\u0438\u0441\u0430\u043d\u043d\u044f\u043c 31 \u043d\u043e\u0432\u043e\u0433\u043e \u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u0443 \u043d\u0430 Electron/HASTE \u0442\u0430 5 \u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u0456\u0432 \u043d\u0430 Neutron \u043b\u0438\u0448\u0435 \u0432 \u043f\u0435\u0440\u0448\u043e\u043c\u0443 \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0456 2026 \u0440\u043e\u043a\u0443.",
-        "\u0424\u0456\u043d\u0430\u043d\u0441\u043e\u0432\u0438\u0439 \u0441\u0442\u0430\u043d \u0432\u0438\u0433\u043b\u044f\u0434\u0430\u0454 \u043c\u0456\u0446\u043d\u0438\u043c, \u0437 \u0434\u043e\u0441\u0442\u0443\u043f\u043e\u043c \u0434\u043e \u043b\u0456\u043a\u0432\u0456\u0434\u043d\u043e\u0441\u0442\u0456 \u043f\u043e\u043d\u0430\u0434 $2 \u043c\u0456\u043b\u044c\u044f\u0440\u0434\u0438 \u0441\u0442\u0430\u043d\u043e\u043c \u043d\u0430 \u043a\u0456\u043d\u0435\u0446\u044c \u043f\u0435\u0440\u0448\u043e\u0433\u043e \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0443 2026 \u0440\u043e\u043a\u0443, \u0449\u043e \u0437\u043c\u0435\u043d\u0448\u0443\u0454 \u0440\u0438\u0437\u0438\u043a\u0438, \u043f\u043e\u0432'\u044f\u0437\u0430\u043d\u0456 \u0437 \u0444\u0456\u043d\u0430\u043d\u0441\u0443\u0432\u0430\u043d\u043d\u044f\u043c, \u043f\u043e\u043f\u0440\u0438 \u043f\u043e\u0442\u043e\u0447\u043d\u0456 \u0437\u0431\u0438\u0442\u043a\u0438.",
-        "\u041a\u043e\u043d\u043a\u0443\u0440\u0435\u043d\u0442\u043d\u0438\u0439 \u0442\u0438\u0441\u043a \u0437 \u0431\u043e\u043a\u0443 SpaceX \u0443 \u043d\u0456\u0448\u0456 \u043c\u0430\u043b\u0438\u0445 \u0437\u0430\u043f\u0443\u0441\u043a\u0456\u0432 \u0454 \u043a\u0435\u0440\u043e\u0432\u0430\u043d\u0438\u043c, \u043e\u0441\u043a\u0456\u043b\u044c\u043a\u0438 Rocket Lab \u0443\u0441\u043f\u0456\u0448\u043d\u043e \u0434\u0438\u0444\u0435\u0440\u0435\u043d\u0446\u0456\u044e\u0454 \u0441\u0435\u0431\u0435, \u043f\u0440\u043e\u043f\u043e\u043d\u0443\u044e\u0447\u0438 \u0433\u043d\u0443\u0447\u043a\u0456\u0441\u0442\u044c \u0441\u043f\u0435\u0446\u0456\u0430\u043b\u0456\u0437\u043e\u0432\u0430\u043d\u0438\u0445 \u043c\u0456\u0441\u0456\u0439, \u043d\u0430 \u0432\u0456\u0434\u043c\u0456\u043d\u0443 \u0432\u0456\u0434 \u043c\u0435\u043d\u0448 \u0433\u043d\u0443\u0447\u043a\u0438\u0445 \u0441\u043f\u0456\u043b\u044c\u043d\u0438\u0445 \u0437\u0430\u043f\u0443\u0441\u043a\u0456\u0432 (rideshare).",
-        "\u0420\u043e\u0437\u0440\u043e\u0431\u043a\u0430 \u0431\u0456\u043b\u044c\u0448\u043e\u0457 \u0440\u0430\u043a\u0435\u0442\u0438 Neutron \u0441\u0442\u0438\u043a\u0430\u0454\u0442\u044c\u0441\u044f \u0456\u0437 \u0437\u0430\u0442\u0440\u0438\u043c\u043a\u0430\u043c\u0438, \u0456 \u043f\u0435\u0440\u0448\u0438\u0439 \u0437\u0430\u043f\u0443\u0441\u043a \u0442\u0435\u043f\u0435\u0440 \u0437\u0430\u043f\u043b\u0430\u043d\u043e\u0432\u0430\u043d\u0438\u0439 \u043d\u0435 \u0440\u0430\u043d\u0456\u0448\u0435 \u043a\u0456\u043d\u0446\u044f 2026 \u0440\u043e\u043a\u0443, \u0449\u043e \u0454 \u043a\u043b\u044e\u0447\u043e\u0432\u043e\u044e \u043f\u0435\u0440\u0435\u0448\u043a\u043e\u0434\u043e\u044e \u0434\u043b\u044f \u0440\u043e\u0437\u0448\u0438\u0440\u0435\u043d\u043d\u044f \u043c\u043e\u0436\u043b\u0438\u0432\u043e\u0441\u0442\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u0457."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0FIwiMpsUP36zZZTajj7oAZ1JZf8VzSz21g0wE3zqXo6NC5WHiDtfOcd3_Qhg3rIoVDigAL65r4NbjdpKtR5Hbi6VRCDsDtiVjOXtZpfko_GZQFhAZtSFF2gPVsJFmu1yxqWz4WTr62NZwQfenh2wdZPgS10axo7YAKxw0GP_u7W79196aC0YHqSZh06LBibUeK6lxfXPVi-vzquDE9AT5dI=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFT7LckHsflRUKT1sltaOKe6K5ujdsq_Ly4xB_y-kNHF9xdJjmoXP1ol5IIt_Feacsb9CyJC_Ykjh8OoHmHaYJkgBK461g-F9YfL1XEqZSX_J14TMKXpOd-1flu_LjWtqRkHNZK8nsBjyhoo6nxvLU434bw90WJSv-XOGY_pOQFANPlhIDzh7ATv0jDJSykAZNUtRDkmn8dtCD_Oet2-m3T5vdVo4u_YrbpV9hdsQUwZ1lirvQteUTnm4AO",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFn_xBAGorUvbf8b0FC-mAv2zgfIqp_flrXvrsEe-MNScmHEO-nFll81KgDUxRA_Fj7XMqMMsDtU3Fvb1-BPg9htNeerdgYxN1K-FIkhzjwbU-7aZbGD0AV5QyPBY_4wrHpBiAdRqR8Xql61TjTlpeH-wgKnl8",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPGtAJ3mBNZg8mFz-yfxTrSZvgbxIhFUwFERtfIc6BVpPFmsix-RmPBKgrf7x07in_TomSX4Z6bmXBVRcvioGx8UqQr0wAtoNeDJwKmcw-zy7qv3EuUIVVYa7iyZuTnog413zuBa7jeVoagw==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1N8frNyX-dk7lg3RaYMHSjufyFuQovNCQBFdnZq4zPlwp1Teq-bZb2aay8PTFhoAoxjQsxqxor-GCIef4BlVkkKAORC11fxvy_hXfHa9PpoaYYPDbfW8yf0HfEqBWh8afyYSGN3LMvXyNzoHxMT725fZe2Q==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5ZN7XM1p2tHh_UHvDc6PfY_Vg5Xyaj0HzGLe5MT2xyIajSiZmEJU-jak21FASPXIKlmf12rzhxfgVwiZriGGIBjW6GiAdvjymIxlthRi646hz7gw1W1hKZgSevMKfc5HpkydbB-3Yh108_KA=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTMH1giF5PP1_Hwx_Getjse4cFWLW0BZwIaE4YuwZuoySzlmo8C3wkuF8lrS-TVM6xFw81YEcx25OGoHgK4aTd49l16IvWpQFEwmUh-hGni2zI-tflxhReID8lvQ9HKNmNhbJzGhLxHUF9",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFlm-3MnJs76v3I4bwwOPJ_MZCbB8O6GboKtZkp0DXCrwKzA2XCwl1SAolNNlImih7BY-2Xb-3vWSTlNd5RpIgx_DIuc8OKWf_v37wBA_742ucfEbTOLEi95jQkOK4KDI56lEpT1FV4TI4qHbxL6W7VkAarrjTtD76x2K9BdPpiR3CzfhO2--k="
-      ],
-      "suggested_status": "strengthening",
+      "status": "strengthening",
       "title": "RKLB - small launch cadence and space infrastructure"
     },
     {
@@ -1927,10 +1905,10 @@
         "delta": "-3.59",
         "key_risk": "micron-hbm: sustained HBM oversupply",
         "linked_thesis_status": "micron-hbm: strengthening",
-        "portfolio_rule_explanation": "deviation buy rule fired: current allocation is below target by more than the configured buy threshold. Action: BUY; amount: $40.05; shares: 0.0471.",
+        "portfolio_rule_explanation": "deviation buy rule fired: current allocation is below target by more than the configured buy threshold. Action: BUY; amount: $15.50; shares: 0.0182.",
         "recommended_action": "BUY",
-        "recommended_dollar_amount": "40.05",
-        "recommended_share_quantity": "0.0471",
+        "recommended_dollar_amount": "15.50",
+        "recommended_share_quantity": "0.0182",
         "rule": "deviation_buy",
         "target_allocation": "10.00",
         "thesis_conviction": "micron-hbm: 4/5 up",
@@ -1992,14 +1970,14 @@
         "current_price": "67.62",
         "delta": "-6.22",
         "key_risk": "rklb-launch-space-infrastructure: persistent launch cadence misses",
-        "linked_thesis_status": "rklb-launch-space-infrastructure: insufficient-evidence",
-        "portfolio_rule_explanation": "deviation buy rule fired: current allocation is below target by more than the configured buy threshold. Action: BUY; amount: $9.99; shares: 0.1476.",
+        "linked_thesis_status": "rklb-launch-space-infrastructure: strengthening",
+        "portfolio_rule_explanation": "deviation buy rule fired: current allocation is below target by more than the configured buy threshold. Action: BUY; amount: $34.54; shares: 0.5108.",
         "recommended_action": "BUY",
-        "recommended_dollar_amount": "9.99",
-        "recommended_share_quantity": "0.1476",
+        "recommended_dollar_amount": "34.54",
+        "recommended_share_quantity": "0.5108",
         "rule": "deviation_buy",
         "target_allocation": "10.00",
-        "thesis_conviction": "rklb-launch-space-infrastructure: 1/5 flat",
+        "thesis_conviction": "rklb-launch-space-infrastructure: 4/5 up",
         "thesis_links": [
           "rklb-launch-space-infrastructure"
         ],
