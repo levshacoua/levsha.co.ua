@@ -784,28 +784,6 @@
   "dependency_candidates": [
     {
       "beneficiary_probability_pct": 90,
-      "chokepoint": "\u041e\u0431\u043c\u0435\u0436\u0435\u043d\u043d\u044f \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043d\u043e\u0457 \u0437\u0434\u0430\u0442\u043d\u043e\u0441\u0442\u0456 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0438 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 CO2 \u0442\u0430 \u0434\u043e\u0437\u0432\u043e\u043b\u0456\u0432 \u043d\u0430 \u0441\u0432\u0435\u0440\u0434\u043b\u043e\u0432\u0438\u043d\u0438 \u041a\u043b\u0430\u0441\u0443 VI",
-      "held_position": false,
-      "in_watchlist": true,
-      "linked_thesis": false,
-      "note": "# KMI buy-rec advisory\n\nKinder Morgan \u0454 \u043e\u0434\u043d\u0438\u043c \u0437 \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448\u0438\u0445 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0435\u0440\u0456\u0432 CO2 \u0443 \u041f\u0456\u0432\u043d\u0456\u0447\u043d\u0456\u0439 \u0410\u043c\u0435\u0440\u0438\u0446\u0456, \u0449\u043e \u043c\u0430\u0454 \u0456\u0441\u043d\u0443\u044e\u0447\u0443 \u043c\u0435\u0440\u0435\u0436\u0443 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 \u0456 \u0430\u043a\u0442\u0438\u0432\u043d\u043e \u0440\u043e\u0437\u0448\u0438\u0440\u044e\u0454 \u0441\u0432\u043e\u044e \u0443\u0447\u0430\u0441\u0442\u044c \u0443 \u043f\u0440\u043e\u0435\u043a\u0442\u0430\u0445 CCUS, \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u043e\u0432\u0443\u044e\u0447\u0438 \u0441\u0432\u0456\u0439 \u0434\u043e\u0441\u0432\u0456\u0434 \u0443 \u0437\u0431\u0435\u0440\u0456\u0433\u0430\u043d\u043d\u0456 \u0442\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u0456.\n\n\ud83d\udd17 \u041f\u043e\u0432'\u044f\u0437\u0430\u043d\u0435: [[10_CURRENT_STATE]]",
-      "source": "bottleneck-scan",
-      "source_urls": [
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFfSePK2J3WyYnIHxOCqzGw7-83RJ-KBNfzFE_lrF2K3nrWkC8JwlF_8YifbM7qdZPGw4CFcFl__dEajwdLxpx7_UDf26sYC2A9FKB3KTRyvCB1dmim6Z_LqLGcJOJLDCObMOwGyMZz3b2moJk=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPA_95dNqr-brMcmCzgJ6Mm2zAnKdlIgqX80lpSqnbVzjcTuLj5SF4_kQyx3JlYRIbobr8gvK-JxmdWy-bY3-UYroIqUafaM6r9Sfv8TE1YAAoAh2xqwO0nciq6VIQfy3qN8S2vFX2f0Yshb2L5vTZ9Nl0YadZCmAweKPmmis1wDrNutQI57EsDm-lkJKKe0RPnXgi4p_rS0LMQtspTSduzvmbz1RcyYQ=",
-        "https://www.kindermorgan.com/pages/investor/kmi-history/",
-        "https://en.wikipedia.org/wiki/Kinder_Morgan",
-        "https://www.nyse.com/quote/XNYS:KMI",
-        "https://www.google.com/finance/quote/KMI:NYSE",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEl47N5cofanAFpG4fI7sjj8DE5HoiKYL7znIvh6aL33FJaGMzlx47JieyIe9RsjJpHZZy8ZctrolrzwvCPExZEYBHHjXboOizj83bYFsv_DvCPk205-Nepe6upSOZ3S5xUtgQO4Ut6cA==",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF8dR8A9tFr4aJmhIs1jcE0Ohn6nmucWazScTjOo5iHIJNRftxhs_uKFvnaDE2RquEhnntTrb3vUoQDMh2VRL4mAmT9PPPwCv8DCKEVvygHmcDOLI9c9DIUHmljt6i7-BRebuFyj3A=",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOur2ZsSZjNk7bWHjP_euXE9jjUSU5f_OD_z4oy0zwFw-Fq6FJH7D0cIyBMFXH2w9Lg1PNLTj2f879zlEhaYSsbR6O4nv3o5avO_94IpTfBY2oMLg8tbMwxbl1W3HIAmGLuF63nI5N5MugE-w57eZ-SoaWAjS_qQNxS7Y="
-      ],
-      "ticker": "KMI",
-      "trend": "\u0406\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u044f \u0442\u0430 \u043f\u043e\u0441\u0442\u0456\u0439\u043d\u043e\u0457 \u0441\u0435\u043a\u0432\u0435\u0441\u0442\u0440\u0430\u0446\u0456\u0457 CO2 (\u0441\u0432\u0435\u0440\u0434\u043b\u043e\u0432\u0438\u043d\u0438 \u041a\u043b\u0430\u0441\u0443 VI)"
-    },
-    {
-      "beneficiary_probability_pct": 90,
       "chokepoint": "\u041f\u0435\u0440\u0435\u0434\u043e\u0432\u0456 \u043e\u043f\u0442\u0438\u0447\u043d\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0442\u0430 \u0432\u0438\u0440\u043e\u0431\u043d\u0438\u0447\u0456 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456",
       "held_position": false,
       "in_watchlist": true,
@@ -918,10 +896,10 @@
         "beneficiary_probability_pct": 90,
         "chokepoint": "\u041e\u0431\u043c\u0435\u0436\u0435\u043d\u043d\u044f \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043d\u043e\u0457 \u0437\u0434\u0430\u0442\u043d\u043e\u0441\u0442\u0456 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0438 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 CO2 \u0442\u0430 \u0434\u043e\u0437\u0432\u043e\u043b\u0456\u0432 \u043d\u0430 \u0441\u0432\u0435\u0440\u0434\u043b\u043e\u0432\u0438\u043d\u0438 \u041a\u043b\u0430\u0441\u0443 VI",
         "held": false,
-        "held_position": false,
+        "held_position": true,
         "id": "kmi",
         "in_watchlist": true,
-        "linked_thesis": false,
+        "linked_thesis": true,
         "rationale": "# KMI buy-rec advisory\n\nKinder Morgan \u0454 \u043e\u0434\u043d\u0438\u043c \u0437 \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448\u0438\u0445 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0435\u0440\u0456\u0432 CO2 \u0443 \u041f\u0456\u0432\u043d\u0456\u0447\u043d\u0456\u0439 \u0410\u043c\u0435\u0440\u0438\u0446\u0456, \u0449\u043e \u043c\u0430\u0454 \u0456\u0441\u043d\u0443\u044e\u0447\u0443 \u043c\u0435\u0440\u0435\u0436\u0443 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 \u0456 \u0430\u043a\u0442\u0438\u0432\u043d\u043e \u0440\u043e\u0437\u0448\u0438\u0440\u044e\u0454 \u0441\u0432\u043e\u044e \u0443\u0447\u0430\u0441\u0442\u044c \u0443 \u043f\u0440\u043e\u0435\u043a\u0442\u0430\u0445 CCUS, \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u043e\u0432\u0443\u044e\u0447\u0438 \u0441\u0432\u0456\u0439 \u0434\u043e\u0441\u0432\u0456\u0434 \u0443 \u0437\u0431\u0435\u0440\u0456\u0433\u0430\u043d\u043d\u0456 \u0442\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u0456.\n\n\ud83d\udd17 \u041f\u043e\u0432'\u044f\u0437\u0430\u043d\u0435: [[10_CURRENT_STATE]]",
         "source_urls": [
           "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFfSePK2J3WyYnIHxOCqzGw7-83RJ-KBNfzFE_lrF2K3nrWkC8JwlF_8YifbM7qdZPGw4CFcFl__dEajwdLxpx7_UDf26sYC2A9FKB3KTRyvCB1dmim6Z_LqLGcJOJLDCObMOwGyMZz3b2moJk=",
@@ -1057,28 +1035,6 @@
     "candidates": [
       {
         "beneficiary_probability_pct": 90,
-        "chokepoint": "\u041e\u0431\u043c\u0435\u0436\u0435\u043d\u043d\u044f \u043f\u0440\u043e\u043f\u0443\u0441\u043a\u043d\u043e\u0457 \u0437\u0434\u0430\u0442\u043d\u043e\u0441\u0442\u0456 \u0456\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0438 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 CO2 \u0442\u0430 \u0434\u043e\u0437\u0432\u043e\u043b\u0456\u0432 \u043d\u0430 \u0441\u0432\u0435\u0440\u0434\u043b\u043e\u0432\u0438\u043d\u0438 \u041a\u043b\u0430\u0441\u0443 VI",
-        "held_position": false,
-        "in_watchlist": true,
-        "linked_thesis": false,
-        "note": "# KMI buy-rec advisory\n\nKinder Morgan \u0454 \u043e\u0434\u043d\u0438\u043c \u0437 \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448\u0438\u0445 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0435\u0440\u0456\u0432 CO2 \u0443 \u041f\u0456\u0432\u043d\u0456\u0447\u043d\u0456\u0439 \u0410\u043c\u0435\u0440\u0438\u0446\u0456, \u0449\u043e \u043c\u0430\u0454 \u0456\u0441\u043d\u0443\u044e\u0447\u0443 \u043c\u0435\u0440\u0435\u0436\u0443 \u0442\u0440\u0443\u0431\u043e\u043f\u0440\u043e\u0432\u043e\u0434\u0456\u0432 \u0456 \u0430\u043a\u0442\u0438\u0432\u043d\u043e \u0440\u043e\u0437\u0448\u0438\u0440\u044e\u0454 \u0441\u0432\u043e\u044e \u0443\u0447\u0430\u0441\u0442\u044c \u0443 \u043f\u0440\u043e\u0435\u043a\u0442\u0430\u0445 CCUS, \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u043e\u0432\u0443\u044e\u0447\u0438 \u0441\u0432\u0456\u0439 \u0434\u043e\u0441\u0432\u0456\u0434 \u0443 \u0437\u0431\u0435\u0440\u0456\u0433\u0430\u043d\u043d\u0456 \u0442\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u0456.\n\n\ud83d\udd17 \u041f\u043e\u0432'\u044f\u0437\u0430\u043d\u0435: [[10_CURRENT_STATE]]",
-        "source": "bottleneck-scan",
-        "source_urls": [
-          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFfSePK2J3WyYnIHxOCqzGw7-83RJ-KBNfzFE_lrF2K3nrWkC8JwlF_8YifbM7qdZPGw4CFcFl__dEajwdLxpx7_UDf26sYC2A9FKB3KTRyvCB1dmim6Z_LqLGcJOJLDCObMOwGyMZz3b2moJk=",
-          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPA_95dNqr-brMcmCzgJ6Mm2zAnKdlIgqX80lpSqnbVzjcTuLj5SF4_kQyx3JlYRIbobr8gvK-JxmdWy-bY3-UYroIqUafaM6r9Sfv8TE1YAAoAh2xqwO0nciq6VIQfy3qN8S2vFX2f0Yshb2L5vTZ9Nl0YadZCmAweKPmmis1wDrNutQI57EsDm-lkJKKe0RPnXgi4p_rS0LMQtspTSduzvmbz1RcyYQ=",
-          "https://www.kindermorgan.com/pages/investor/kmi-history/",
-          "https://en.wikipedia.org/wiki/Kinder_Morgan",
-          "https://www.nyse.com/quote/XNYS:KMI",
-          "https://www.google.com/finance/quote/KMI:NYSE",
-          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEl47N5cofanAFpG4fI7sjj8DE5HoiKYL7znIvh6aL33FJaGMzlx47JieyIe9RsjJpHZZy8ZctrolrzwvCPExZEYBHHjXboOizj83bYFsv_DvCPk205-Nepe6upSOZ3S5xUtgQO4Ut6cA==",
-          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF8dR8A9tFr4aJmhIs1jcE0Ohn6nmucWazScTjOo5iHIJNRftxhs_uKFvnaDE2RquEhnntTrb3vUoQDMh2VRL4mAmT9PPPwCv8DCKEVvygHmcDOLI9c9DIUHmljt6i7-BRebuFyj3A=",
-          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOur2ZsSZjNk7bWHjP_euXE9jjUSU5f_OD_z4oy0zwFw-Fq6FJH7D0cIyBMFXH2w9Lg1PNLTj2f879zlEhaYSsbR6O4nv3o5avO_94IpTfBY2oMLg8tbMwxbl1W3HIAmGLuF63nI5N5MugE-w57eZ-SoaWAjS_qQNxS7Y="
-        ],
-        "ticker": "KMI",
-        "trend": "\u0406\u043d\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u044f \u0442\u0430 \u043f\u043e\u0441\u0442\u0456\u0439\u043d\u043e\u0457 \u0441\u0435\u043a\u0432\u0435\u0441\u0442\u0440\u0430\u0446\u0456\u0457 CO2 (\u0441\u0432\u0435\u0440\u0434\u043b\u043e\u0432\u0438\u043d\u0438 \u041a\u043b\u0430\u0441\u0443 VI)"
-      },
-      {
-        "beneficiary_probability_pct": 90,
         "chokepoint": "\u041f\u0435\u0440\u0435\u0434\u043e\u0432\u0456 \u043e\u043f\u0442\u0438\u0447\u043d\u0456 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u0438 \u0442\u0430 \u0432\u0438\u0440\u043e\u0431\u043d\u0438\u0447\u0456 \u043f\u043e\u0442\u0443\u0436\u043d\u043e\u0441\u0442\u0456",
         "held_position": false,
         "in_watchlist": true,
@@ -1200,12 +1156,12 @@
     ]
   },
   "equity_portfolio": {
-    "available_buy_cash": "100.04",
-    "cash_available": "100.04",
+    "available_buy_cash": "34.61",
+    "cash_available": "34.61",
     "conviction_budget_remaining_usd": "0",
     "conviction_budget_usd": "0",
-    "deployable_if_sells_executed": "150.1",
-    "equity_invested_net": "1695.66",
+    "deployable_if_sells_executed": "84.67",
+    "equity_invested_net": "1761.09",
     "market_mode": "risk_on",
     "positions": [
       {
@@ -1238,8 +1194,8 @@
         "shares": "0.0751",
         "target_pct": "10.00",
         "ticker": "ASML",
-        "trade_quantity": "0.0172",
-        "trade_value": "30.12",
+        "trade_quantity": "0.0059",
+        "trade_value": "10.42",
         "unrealized_pnl": "15.66",
         "value": "131.24",
         "weight_pct": "7.32"
@@ -1281,19 +1237,37 @@
         "weight_pct": "1.09"
       },
       {
+        "advisory": null,
+        "conviction_override_usd": "0",
+        "cost_basis": "65.43",
+        "deviation_pct": "0.00",
+        "latest_signal": "HOLD",
+        "pnl_pct": "-100.00",
+        "price": "0",
+        "realized_pnl": "0",
+        "shares": "2",
+        "target_pct": "0.00",
+        "ticker": "KMI",
+        "trade_quantity": "0",
+        "trade_value": "0",
+        "unrealized_pnl": "-65.43",
+        "value": "0",
+        "weight_pct": "0.00"
+      },
+      {
         "advisory": "winner running (+28.30%, weight 5.44% / cap 20.00%, thesis mixed) -- consider a manual trim",
         "conviction_override_usd": "0",
         "cost_basis": "76.04",
         "deviation_pct": "-2.56",
-        "latest_signal": "BUY",
+        "latest_signal": "HOLD",
         "pnl_pct": "28.30",
         "price": "9.22",
         "realized_pnl": "0",
         "shares": "10.581279",
         "target_pct": "8.00",
         "ticker": "MBLY",
-        "trade_quantity": "0.6031",
-        "trade_value": "5.56",
+        "trade_quantity": "0",
+        "trade_value": "0",
         "unrealized_pnl": "21.52",
         "value": "97.56",
         "weight_pct": "5.44"
@@ -1346,8 +1320,8 @@
         "shares": "0.13531",
         "target_pct": "10.00",
         "ticker": "MU",
-        "trade_quantity": "0.0289",
-        "trade_value": "24.54",
+        "trade_quantity": "0.01",
+        "trade_value": "8.49",
         "unrealized_pnl": "64.33",
         "value": "114.87",
         "weight_pct": "6.41"
@@ -1364,8 +1338,8 @@
         "shares": "1.332221",
         "target_pct": "18.00",
         "ticker": "NVDA",
-        "trade_quantity": "0.1728",
-        "trade_value": "35.06",
+        "trade_quantity": "0.0598",
+        "trade_value": "12.13",
         "unrealized_pnl": "10.93",
         "value": "270.19",
         "weight_pct": "15.08"
@@ -1466,7 +1440,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T16:24:23.698653+00:00",
+  "generated_at": "2026-07-20T16:26:47.827220+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1611,6 +1585,20 @@
       ],
       "suggested_status": "strengthening",
       "title": "JOBY - eVTOL urban air mobility"
+    },
+    {
+      "conviction": 1,
+      "conviction_trend": "flat",
+      "horizon": "",
+      "id": "kmi-thesis",
+      "key_risk": "",
+      "last_reviewed": "2026-07-20",
+      "linked_tickers": [
+        "KMI"
+      ],
+      "role": "speculative",
+      "status": "insufficient-evidence",
+      "title": "KMI investment thesis"
     },
     {
       "conviction": 3,
@@ -1951,12 +1939,12 @@
   "watchlist": [
     {
       "bottleneck": "",
-      "held_position": false,
+      "held_position": true,
       "id": "kmi",
-      "linked_thesis": false,
+      "linked_thesis": true,
       "source": "bottleneck-scan",
-      "status": "watching",
-      "thesis": "",
+      "status": "promoted",
+      "thesis": "kmi-thesis",
       "ticker": "KMI"
     },
     {
@@ -1983,11 +1971,11 @@
   "weekly_autopay_active": true,
   "weekly_contribution_usd": "50",
   "weekly_recommendation": {
-    "available_buy_cash": "100.04",
-    "cash_available": "100.04",
+    "available_buy_cash": "34.61",
+    "cash_available": "34.61",
     "conviction_budget_remaining_usd": "0.00",
     "conviction_budget_usd": "0.00",
-    "deployable_if_sells_executed": "150.10",
+    "deployable_if_sells_executed": "84.67",
     "generated_on": "2026-07-20",
     "market_mode": "risk_on",
     "positions": [
@@ -2023,10 +2011,10 @@
         "delta": "-2.68",
         "key_risk": "asml-euv-critical-supplier: credible EUV competitor qualifies at leading customers",
         "linked_thesis_status": "asml-euv-critical-supplier: strengthening",
-        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $30.12; shares: 0.0172.",
+        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $10.42; shares: 0.0059.",
         "recommended_action": "BUY",
-        "recommended_dollar_amount": "30.12",
-        "recommended_share_quantity": "0.0172",
+        "recommended_dollar_amount": "10.42",
+        "recommended_share_quantity": "0.0059",
         "rule": "new_position",
         "target_allocation": "10.00",
         "thesis_conviction": "asml-euv-critical-supplier: 4/5 flat",
@@ -2080,6 +2068,28 @@
         "ticker": "JOBY"
       },
       {
+        "advisory": null,
+        "approval_status": "pending",
+        "average_cost": "32.72",
+        "conviction_override_usd": "0.00",
+        "current_allocation": "0.00",
+        "current_price": "0.00",
+        "delta": "0.00",
+        "key_risk": "kmi-thesis: ",
+        "linked_thesis_status": "kmi-thesis: insufficient-evidence",
+        "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "never_sell_below_cost",
+        "target_allocation": "0.00",
+        "thesis_conviction": "kmi-thesis: 1/5 flat",
+        "thesis_links": [
+          "kmi-thesis"
+        ],
+        "ticker": "KMI"
+      },
+      {
         "advisory": "winner running (+28.30%, weight 5.44% / cap 20.00%, thesis mixed) -- consider a manual trim",
         "approval_status": "pending",
         "average_cost": "7.19",
@@ -2089,11 +2099,11 @@
         "delta": "-2.56",
         "key_risk": "mbly-adas-adoption: OEM design wins deteriorate",
         "linked_thesis_status": "mbly-adas-adoption: mixed",
-        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $5.56; shares: 0.6031.",
-        "recommended_action": "BUY",
-        "recommended_dollar_amount": "5.56",
-        "recommended_share_quantity": "0.6031",
-        "rule": "new_position",
+        "portfolio_rule_explanation": "review advisory fired: winner is running, so manual trim review is surfaced without automatic SELL sizing. Action: HOLD; amount: $0.00; shares: 0.",
+        "recommended_action": "HOLD",
+        "recommended_dollar_amount": "0.00",
+        "recommended_share_quantity": "0",
+        "rule": "winner_thesis_review",
         "target_allocation": "8.00",
         "thesis_conviction": "mbly-adas-adoption: 3/5 flat",
         "thesis_links": [
@@ -2155,10 +2165,10 @@
         "delta": "-3.59",
         "key_risk": "micron-hbm: sustained HBM oversupply",
         "linked_thesis_status": "micron-hbm: strengthening",
-        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $24.54; shares: 0.0289.",
+        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $8.49; shares: 0.0100.",
         "recommended_action": "BUY",
-        "recommended_dollar_amount": "24.54",
-        "recommended_share_quantity": "0.0289",
+        "recommended_dollar_amount": "8.49",
+        "recommended_share_quantity": "0.0100",
         "rule": "new_position",
         "target_allocation": "10.00",
         "thesis_conviction": "micron-hbm: 4/5 up",
@@ -2177,10 +2187,10 @@
         "delta": "-2.92",
         "key_risk": "nvda-ai-compute: sustained AI accelerator oversupply",
         "linked_thesis_status": "nvda-ai-compute: strengthening",
-        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $35.06; shares: 0.1728.",
+        "portfolio_rule_explanation": "conviction buy rule fired: this position has a positive price and eligible conviction-driven buy aggression. Action: BUY; amount: $12.13; shares: 0.0598.",
         "recommended_action": "BUY",
-        "recommended_dollar_amount": "35.06",
-        "recommended_share_quantity": "0.1728",
+        "recommended_dollar_amount": "12.13",
+        "recommended_share_quantity": "0.0598",
         "rule": "new_position",
         "target_allocation": "18.00",
         "thesis_conviction": "nvda-ai-compute: 4/5 up",
