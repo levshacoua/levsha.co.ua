@@ -1026,7 +1026,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T01:09:48.091232+00:00",
+  "generated_at": "2026-07-20T01:10:40.695594+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1059,8 +1059,8 @@
       "title": "ASML - EUV lithography critical supplier"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 3,
+      "conviction_trend": "up",
       "horizon": "<owner to set>",
       "id": "crsp-gene-editing-therapies",
       "key_risk": "material safety setbacks in gene-editing programs",
@@ -1069,29 +1069,7 @@
         "CRSP"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 3,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "CASGEVY, the first approved CRISPR-based therapy, is seeing a significant ramp-up in commercial adoption, with revenues of $115.8 million in 2025 and a projection of nearly tripling in 2026.",
-        "Patient uptake for CASGEVY is increasing, with over 500 patients having initiated treatment by Q1 2026, a significant increase from the previous year.",
-        "CRISPR Therapeutics is expanding its pipeline beyond its initial approved therapy, with promising clinical data in cardiovascular diseases (CTX310) and autoimmune diseases (zugo-cel).",
-        "The regulatory environment is becoming more defined and potentially favorable, with the FDA issuing draft guidance for gene-editing therapies and proposing a 'plausible mechanism pathway' to potentially speed up approvals for platform technologies.",
-        "A material safety setback occurred in a competitor's (Intellia Therapeutics) CRISPR trial, with a clinical hold placed on two Phase 3 trials following a patient death due to liver toxicity.",
-        "Payer coverage for CASGEVY has improved significantly, with approximately 90% of eligible U.S. patients having reimbursed access."
-      ],
-      "suggested_reviewed_at": "2026-07-19T23:17:21+00:00",
-      "suggested_sources": [
-        "https://www.businesswire.com/news/home/20260112005316/en/CRISPR-Therapeutics-Highlights-Strategic-Priorities-and-Anticipated-2026-Milestones",
-        "https://www.packgene.com/vertex-and-crispr-project-nearly-3x-growth-for-casgevy-in-2026-as-patient-access-expands/",
-        "https://endpts.com/vertex-crispr-set-lofty-goal-for-casgevy-gene-therapy-as-patient-starts-ramp/",
-        "https://www.biospace.com/article/releases/crispr-therapeutics-provides-business-update-and-reports-first-quarter-2026-financial-results/",
-        "https://www.biopharmadive.com/news/vertex-crispr-casgevy-earnings-rebound/703621/",
-        "https://innovativegenomics.org/news/crispr-clinical-trials-2026/",
-        "https://www.marketbeat.com/stocks/NASDAQ/CRSP/price-target/",
-        "https://public.com/stocks/CRSP/analyst-ratings"
-      ],
-      "suggested_status": "strengthening",
+      "status": "strengthening",
       "title": "CRSP - CRISPR gene-editing therapies"
     },
     {
@@ -1555,14 +1533,14 @@
         "current_price": "47.78",
         "delta": "-0.32",
         "key_risk": "crsp-gene-editing-therapies: material safety setbacks in gene-editing programs",
-        "linked_thesis_status": "crsp-gene-editing-therapies: insufficient-evidence",
+        "linked_thesis_status": "crsp-gene-editing-therapies: strengthening",
         "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "never_sell_below_cost",
         "target_allocation": "2.00",
-        "thesis_conviction": "crsp-gene-editing-therapies: 1/5 flat",
+        "thesis_conviction": "crsp-gene-editing-therapies: 3/5 up",
         "thesis_links": [
           "crsp-gene-editing-therapies"
         ],
