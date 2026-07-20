@@ -1442,7 +1442,7 @@
     "total_value": "1792.19",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-20T02:28:16.609109+00:00",
+  "generated_at": "2026-07-20T02:29:49.463398+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1595,8 +1595,8 @@
       "title": "NVDA - AI compute and accelerator demand"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
+      "conviction": 2,
+      "conviction_trend": "down",
       "horizon": "<owner to set>",
       "id": "qbts-quantum-computing",
       "key_risk": "customer adoption remains experimental",
@@ -1605,29 +1605,7 @@
         "QBTS"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 2,
-      "suggested_conviction_trend": "flat",
-      "suggested_evidence": [
-        "\u0412\u0438\u0440\u0443\u0447\u043a\u0430 \u0437\u0430 2 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2024 \u0440\u043e\u043a\u0443 \u0437\u0440\u043e\u0441\u043b\u0430 \u043d\u0430 28% \u0443 \u0440\u0456\u0447\u043d\u043e\u043c\u0443 \u043e\u0431\u0447\u0438\u0441\u043b\u0435\u043d\u043d\u0456 \u0434\u043e 2,2 \u043c\u043b\u043d \u0434\u043e\u043b\u0430\u0440\u0456\u0432, \u0430\u043b\u0435 \u043e\u0431\u0441\u044f\u0433 \u0437\u0430\u043c\u043e\u0432\u043b\u0435\u043d\u044c (bookings) \u0437\u0440\u0456\u0441 \u043b\u0438\u0448\u0435 \u043d\u0430 6%, \u0449\u043e \u0441\u0432\u0456\u0434\u0447\u0438\u0442\u044c \u043f\u0440\u043e \u0441\u043f\u043e\u0432\u0456\u043b\u044c\u043d\u0435\u043d\u043d\u044f \u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f.",
-        "\u041a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u0437\u0430\u043b\u0438\u0448\u0430\u0454\u0442\u044c\u0441\u044f \u0437\u0431\u0438\u0442\u043a\u043e\u0432\u043e\u044e, \u0445\u043e\u0447\u0430 \u0432\u0430\u043b\u043e\u0432\u0438\u0439 \u043f\u0440\u0438\u0431\u0443\u0442\u043e\u043a \u0437\u0430 GAAP \u0437\u0440\u0456\u0441 \u043d\u0430 97% \u0434\u043e 1,4 \u043c\u043b\u043d \u0434\u043e\u043b\u0430\u0440\u0456\u0432 \u0437\u0430\u0432\u0434\u044f\u043a\u0438 \u0432\u0438\u0449\u0456\u0439 \u0432\u0438\u0440\u0443\u0447\u0446\u0456 \u0442\u0430 \u0435\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u0456.",
-        "\u0417\u0430\u043b\u0438\u0448\u043e\u043a \u0433\u0440\u043e\u0448\u043e\u0432\u0438\u0445 \u043a\u043e\u0448\u0442\u0456\u0432 \u043d\u0430 \u043a\u0456\u043d\u0435\u0446\u044c \u0434\u0440\u0443\u0433\u043e\u0433\u043e \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0443 \u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0432 40,9 \u043c\u043b\u043d \u0434\u043e\u043b\u0430\u0440\u0456\u0432, \u0449\u043e \u0454 \u043e\u0434\u043d\u0438\u043c \u0437 \u043d\u0430\u0439\u0432\u0438\u0449\u0438\u0445 \u043f\u043e\u043a\u0430\u0437\u043d\u0438\u043a\u0456\u0432 \u0432 \u0456\u0441\u0442\u043e\u0440\u0456\u0457 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u0457.",
-        "\u041a\u0456\u043b\u044c\u043a\u0456\u0441\u0442\u044c \u043a\u043b\u0456\u0454\u043d\u0442\u0456\u0432 \u0437\u0440\u043e\u0441\u043b\u0430 \u0434\u043e 130 \u0437\u0430 \u043e\u0441\u0442\u0430\u043d\u043d\u0456 \u0447\u043e\u0442\u0438\u0440\u0438 \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u0438 \u043f\u043e\u0440\u0456\u0432\u043d\u044f\u043d\u043e \u0437\u0456 114 \u0443 \u043f\u043e\u043f\u0435\u0440\u0435\u0434\u043d\u044c\u043e\u043c\u0443 \u043f\u0435\u0440\u0456\u043e\u0434\u0456, \u0430\u043b\u0435 \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f \u0437\u0430\u043b\u0438\u0448\u0430\u0454\u0442\u044c\u0441\u044f \u043f\u0435\u0440\u0435\u0432\u0430\u0436\u043d\u043e \u0435\u043a\u0441\u043f\u0435\u0440\u0438\u043c\u0435\u043d\u0442\u0430\u043b\u044c\u043d\u0438\u043c, \u0430 \u043d\u0435 \u043f\u043e\u0432\u043d\u043e\u0446\u0456\u043d\u043d\u0438\u043c \u043a\u043e\u043c\u0435\u0440\u0446\u0456\u0439\u043d\u0438\u043c \u0432\u043f\u0440\u043e\u0432\u0430\u0434\u0436\u0435\u043d\u043d\u044f\u043c.",
-        "\u041f\u0440\u043e\u0434\u043e\u0432\u0436\u0443\u0454\u0442\u044c\u0441\u044f \u0442\u0435\u0445\u043d\u0456\u0447\u043d\u0438\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0441, \u0432\u043a\u043b\u044e\u0447\u0430\u044e\u0447\u0438 \u0440\u043e\u0437\u0440\u043e\u0431\u043a\u0443 \u043f\u0440\u043e\u0442\u043e\u0442\u0438\u043f\u0443 Advantage2 \u0442\u0430 \u0434\u043e\u0440\u043e\u0436\u043d\u044e \u043a\u0430\u0440\u0442\u0443 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0456\u0432 Quantum AI \u0434\u043b\u044f \u0456\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0456\u0457 \u0437 AI/ML.",
-        "\u041d\u0435\u0437\u0432\u0430\u0436\u0430\u044e\u0447\u0438 \u043d\u0430 \u0437\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f \u0432\u0438\u0440\u0443\u0447\u043a\u0438 \u0442\u0430 \u043a\u043b\u0456\u0454\u043d\u0442\u0441\u044c\u043a\u043e\u0457 \u0431\u0430\u0437\u0438, \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u0432\u0441\u0435 \u0449\u0435 \u0441\u0442\u0438\u043a\u0430\u0454\u0442\u044c\u0441\u044f \u0437\u0456 \u0437\u043d\u0430\u0447\u043d\u0438\u043c \u0442\u0438\u0441\u043a\u043e\u043c \u043d\u0430 \u0444\u0456\u043d\u0430\u043d\u0441\u0443\u0432\u0430\u043d\u043d\u044f \u0442\u0430 \u0432\u0438\u0441\u043e\u043a\u0438\u043c \u0440\u0456\u0432\u043d\u0435\u043c \u0432\u0438\u0442\u0440\u0430\u0442, \u0449\u043e \u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043f\u0456\u0434 \u0437\u0430\u0433\u0440\u043e\u0437\u0443 \u0434\u043e\u0432\u0433\u043e\u0441\u0442\u0440\u043e\u043a\u043e\u0432\u0443 \u043a\u043e\u043c\u0435\u0440\u0446\u0456\u0430\u043b\u0456\u0437\u0430\u0446\u0456\u044e \u0431\u0435\u0437 \u0434\u043e\u0434\u0430\u0442\u043a\u043e\u0432\u043e\u0433\u043e \u043a\u0430\u043f\u0456\u0442\u0430\u043b\u0443."
-      ],
-      "suggested_reviewed_at": "2026-07-20T02:00:40+00:00",
-      "suggested_sources": [
-        "https://investors.dwavequantum.com/news/news-details/2024/D-Wave-Reports-Second-Quarter-2024-Results/default.aspx",
-        "https://www.ainewswire.com/d-wave-quantum-inc-nyse-qbts-reports-strong-q2-2024-results/",
-        "https://www.tipranks.com/stocks/qbts/earnings",
-        "https://thequantuminsider.com/2024/07/29/d-wave-announces-roadmap-to-extend-leap-quantum-cloud-service-for-ai-ml/",
-        "https://seekingalpha.com/article/4720180-d-wave-quantum-inc-qbts-q2-2024-earnings-call-transcript",
-        "https://financefeeds.com/d-wave-qbts-stock-37-bull-case-vs-13-bear-case/",
-        "https://www.entrepreneur-loop.com/d-wave-ceo-cashes-out-quantum-computings-cash-burn-crisis/",
-        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFbQgr_V_wXahgv3nP3z8dDyQK6NaUoVChI5YqxWYkfKvw9kIcuaxcWXfoGj5XrM626J-L2n-lQwD3itJSWI6V28obzXIKonyhsWUmVNUMiYpCQZIU2gW2WKeus_uhFqOI0hjexgOEn1LXjnLVPWwo7QgSO4pZf0nNX_t2hN5MxtbpN87trxk42iJDqAwvXqv2nEYdU9eLYwUhWANBAVOVt_rc="
-      ],
-      "suggested_status": "weakening",
+      "status": "weakening",
       "title": "QBTS - quantum computing"
     },
     {
@@ -1992,14 +1970,14 @@
         "current_price": "16.73",
         "delta": "0.97",
         "key_risk": "qbts-quantum-computing: customer adoption remains experimental",
-        "linked_thesis_status": "qbts-quantum-computing: insufficient-evidence",
+        "linked_thesis_status": "qbts-quantum-computing: weakening",
         "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "never_sell_below_cost",
         "target_allocation": "0.00",
-        "thesis_conviction": "qbts-quantum-computing: 1/5 flat",
+        "thesis_conviction": "qbts-quantum-computing: 2/5 down",
         "thesis_links": [
           "qbts-quantum-computing"
         ],
