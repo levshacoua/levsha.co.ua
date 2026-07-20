@@ -220,6 +220,8 @@ function renderEquities(rows) {
   const body = document.getElementById("equity-body");
   body.replaceChildren(...rows.map(row => tr([
     row.ticker,
+    number(row.shares, 4),
+    money(row.price),
     money(row.value),
     money(row.cost_basis),
     coloredMoney(row.unrealized_pnl),
@@ -227,7 +229,7 @@ function renderEquities(rows) {
     pct(row.weight_pct),
     coloredPct(row.deviation_pct),
     signalPill(row.latest_signal),
-  ], [1, 2, 3, 4, 5, 6])));
+  ], [1, 2, 3, 4, 5, 6, 7, 8])));
 }
 
 function renderCrypto(rows) {
