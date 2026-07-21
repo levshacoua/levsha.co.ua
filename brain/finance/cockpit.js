@@ -295,12 +295,20 @@ function renderThesesLastVerify(lastVerify) {
 }
 
 function renderThesisMeta(meta, row) {
-  meta.replaceChildren(
+  const badges = [
     pill(row.status),
     pill(`${row.conviction}/5 ${row.conviction_trend}`),
-    pill(row.horizon),
-    pill(row.linked_tickers.join(", "))
-  );
+  ];
+  if (hasMeaningfulThesisHorizon(row.horizon)) {
+    badges.push(pill(row.horizon));
+  }
+  badges.push(pill(row.linked_tickers.join(", ")));
+  meta.replaceChildren(...badges);
+}
+
+function hasMeaningfulThesisHorizon(value) {
+  const horizon = String(value ?? "").trim();
+  return horizon !== "" && horizon !== "<owner to set>";
 }
 
 function thesisEditForm(row, card, meta) {
@@ -318,14 +326,22 @@ function thesisEditForm(row, card, meta) {
   const save = document.createElement("button");
   save.type = "submit";
   save.textContent = "Save";
+  const verify = document.createElement("button");
+  verify.type = "button";
+  verify.className = "thesis-verify-one";
+  verify.textContent = "AI-перевірити";
+  verify.disabled = !gatePassword;
   const state = el("span", "thesis-save-state", "");
   state.setAttribute("role", "status");
-  actions.append(save, state);
+  actions.append(save, verify, state);
   form.append(actions);
 
   form.addEventListener("submit", event => {
     event.preventDefault();
     saveThesisEdit(row, form, card, meta, save, state);
+  });
+  verify.addEventListener("click", () => {
+    runSingleThesisVerify(row.id, card, verify, state);
   });
 
   return form;
@@ -693,9 +709,56 @@ async function runThesesVerify() {
   }
 }
 
+async function runSingleThesisVerify(slug, card, button, state) {
+  const thesisSlug = String(slug || card?.dataset.thesisId || "").trim();
+  if (!gatePassword) {
+    setThesisState(card, state, "error", "Розблокуй cockpit ще раз перед запуском.");
+    if (button) button.disabled = true;
+    return;
+  }
+  if (!thesisSlug) {
+    setThesisState(card, state, "error", "Немає slug тези для перевірки.");
+    return;
+  }
+
+  button.disabled = true;
+  setThesisState(card, state, "saving", "Запускаю...");
+  try {
+    const response = await fetch(THESES_VERIFY_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [THESES_VERIFY_PASSWORD_HEADER]: gatePassword,
+      },
+      body: JSON.stringify({ slug: thesisSlug }),
+    });
+    if (response.status === 202) {
+      setThesisState(
+        card,
+        state,
+        "saved",
+        "Запущено. Перевірка тези триває ~кілька хвилин — онови сторінку пізніше."
+      );
+      return;
+    }
+    if (response.status === 409) {
+      setThesisState(card, state, "saved", "Вже виконується.");
+      return;
+    }
+    throw new Error(await responseErrorMessage(response));
+  } catch (error) {
+    setThesisState(card, state, "error", error.message || "Не вдалося запустити перевірку тези");
+  } finally {
+    button.disabled = !gatePassword;
+  }
+}
+
 function setThesesVerifyReadOnly(readOnly) {
   const button = document.getElementById("theses-verify-run");
   if (button) button.disabled = readOnly;
+  document.querySelectorAll(".thesis-verify-one").forEach(verifyButton => {
+    verifyButton.disabled = readOnly;
+  });
 }
 
 function setThesesVerifyState(status, message) {
@@ -1633,24 +1696,29 @@ function renderBottleneckGraph(nodes, edges) {
   const nodeLayer = svgNode("g", { class: "bottleneck-nodes" });
   nodes.forEach(node => {
     const point = layout.get(node.id);
-    const radius = 17 + (Number(node.composite_strength || 0) / 100) * 18;
+    const radius = node.held ? 19 : 17 + (Number(node.composite_strength || 0) / 100) * 18;
     const group = svgNode("g", {
-      class: `bottleneck-node lifecycle-${cssToken(node.lifecycle)}${node.id === bottleneckView.selectedId ? " is-selected" : ""}`,
+      class: `bottleneck-node lifecycle-${cssToken(node.lifecycle)}${node.held ? " is-held" : ""}${node.id === bottleneckView.selectedId ? " is-selected" : ""}`,
       tabindex: "0",
       role: "button",
       "data-bottleneck-node": node.id,
       "aria-label": node.title,
       transform: `translate(${point.x} ${point.y})`,
     });
-    group.append(
-      svgNode("circle", { r: String(radius) }),
-      svgText("text", nodeLabel(node.title), { y: String(radius + 17), "text-anchor": "middle" }),
-      svgText("text", String(node.composite_strength), {
+    const valueText = node.held ? "актив" : String(node.composite_strength);
+    group.append(svgNode(node.held ? "rect" : "circle", node.held ? {
+      x: String(-radius),
+      y: String(-radius),
+      width: String(radius * 2),
+      height: String(radius * 2),
+      rx: "5",
+    } : { r: String(radius) }),
+    svgText("text", nodeLabel(node.title), { y: String(radius + 17), "text-anchor": "middle" }),
+    svgText("text", valueText, {
         y: "5",
         "text-anchor": "middle",
         class: "bottleneck-strength",
-      })
-    );
+      }));
     group.addEventListener("click", () => selectBottleneck(node.id));
     group.addEventListener("keydown", event => {
       if (event.key === "Enter" || event.key === " ") {
@@ -1686,6 +1754,7 @@ function renderBottleneckLegend(nodes, edges) {
   root.replaceChildren(
     bottleneckLegendItem("size", "Розмір вузла", "сила вузького місця (composite 0-100)"),
     bottleneckLegendItem("color", "Колір вузла", colorList),
+    bottleneckLegendItem("held", "Позиція", "утримуваний актив з полем chokepoint"),
     bottleneckLegendItem("line", "Лінія", `залежність (depends_on)${edges.length ? "" : " - у цьому snapshot немає"}`)
   );
 }
@@ -1734,6 +1803,18 @@ function selectBottleneck(id) {
 function renderBottleneckDetail(node) {
   const root = document.getElementById("bottleneck-detail");
   if (!root || !node) return;
+  if (node.held) {
+    root.replaceChildren(
+      el("div", "bottleneck-kicker", "позиція у портфелі"),
+      el("h3", "", node.title),
+      bottleneckMetaRow([
+        `тікер: ${node.ticker || node.title}`,
+        `chokepoint: ${node.chokepoint || ""}`,
+        ...(node.linked_thesis ? ["теза"] : []),
+      ])
+    );
+    return;
+  }
   const scores = Object.entries(node.scores || {});
   const signals = node.disappearing_signals || [];
   const companies = [...(node.candidate_companies || [])].sort(
@@ -1825,10 +1906,14 @@ function renderBottleneckList(nodes) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "bottleneck-list-item";
+    if (node.held) button.classList.add("is-held");
     button.classList.toggle("is-selected", node.id === bottleneckView.selectedId);
+    const meta = node.held
+      ? `у портфелі / ${node.chokepoint || "без chokepoint"}`
+      : `${node.composite_strength}/100 / ${bottleneckDisplay(BOTTLENECK_LIFECYCLE_LABELS, node.lifecycle)}`;
     button.append(
       el("strong", "", node.title),
-      el("span", "", `${node.composite_strength}/100 / ${bottleneckDisplay(BOTTLENECK_LIFECYCLE_LABELS, node.lifecycle)}`)
+      el("span", "", meta)
     );
     button.addEventListener("click", () => selectBottleneck(node.id));
     return button;
@@ -2184,5 +2269,6 @@ if (typeof module !== "undefined") {
     validateCashControlDraft,
     cashControlPayload,
     coverageWarningText,
+    hasMeaningfulThesisHorizon,
   };
 }

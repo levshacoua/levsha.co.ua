@@ -1137,6 +1137,12 @@ tr:last-child td {
   border-left: 7px solid rgba(210, 220, 230, .5);
 }
 
+.bottleneck-legend-item.is-held .bottleneck-legend-marker {
+  border-radius: 5px;
+  background: #f2b84b;
+  border: 2px solid rgba(13, 13, 13, .55);
+}
+
 .bottleneck-legend-text {
   display: grid;
   gap: 3px;
@@ -1197,7 +1203,8 @@ tr:last-child td {
   outline: 0;
 }
 
-.bottleneck-node circle {
+.bottleneck-node circle,
+.bottleneck-node rect {
   fill: #5aa9e6;
   stroke: rgba(255, 255, 255, .7);
   stroke-width: 1.3;
@@ -1220,8 +1227,11 @@ tr:last-child td {
 }
 
 .bottleneck-node:hover circle,
+.bottleneck-node:hover rect,
 .bottleneck-node:focus-visible circle,
-.bottleneck-node.is-selected circle {
+.bottleneck-node:focus-visible rect,
+.bottleneck-node.is-selected circle,
+.bottleneck-node.is-selected rect {
   stroke-width: 3;
   filter: drop-shadow(0 0 10px rgba(0, 172, 237, .5));
 }
@@ -1233,6 +1243,17 @@ tr:last-child td {
 .bottleneck-node.lifecycle-weakening circle,
 .bottleneck-node.lifecycle-resolved circle,
 .bottleneck-node.lifecycle-displaced circle { fill: #8a8a8a; }
+
+.bottleneck-node.is-held rect {
+  fill: #f2b84b;
+  stroke: rgba(13, 13, 13, .72);
+}
+
+.bottleneck-node.is-held .bottleneck-strength {
+  fill: #17120a;
+  stroke: rgba(242, 184, 75, .55);
+  font-size: .68rem;
+}
 
 .bottleneck-detail {
   padding: 18px;
