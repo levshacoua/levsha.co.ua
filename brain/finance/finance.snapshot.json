@@ -1494,7 +1494,7 @@
     "total_value": "1882.53",
     "weekly_contribution": "50"
   },
-  "generated_at": "2026-07-23T00:09:32.641602+00:00",
+  "generated_at": "2026-07-23T00:13:44.968450+00:00",
   "schema_version": 2,
   "source": "leftys-finance/kb",
   "theses": [
@@ -1641,9 +1641,9 @@
       "title": "JOBY - eVTOL urban air mobility"
     },
     {
-      "conviction": 1,
-      "conviction_trend": "flat",
-      "horizon": "",
+      "conviction": 3,
+      "conviction_trend": "up",
+      "horizon": "<owner to set>",
       "id": "kmi-thesis",
       "key_risk": "",
       "last_reviewed": "2026-07-20",
@@ -1651,29 +1651,7 @@
         "KMI"
       ],
       "role": "speculative",
-      "status": "insufficient-evidence",
-      "suggested_conviction": 3,
-      "suggested_conviction_trend": "up",
-      "suggested_evidence": [
-        "\u041a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u043f\u043e\u0432\u0456\u0434\u043e\u043c\u0438\u043b\u0430 \u043f\u0440\u043e \u0440\u0435\u043a\u043e\u0440\u0434\u043d\u0456 \u0444\u0456\u043d\u0430\u043d\u0441\u043e\u0432\u0456 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0438 \u0437\u0430 2-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b 2026 \u0440\u043e\u043a\u0443, \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0438\u0432\u0448\u0438 \u043e\u0447\u0456\u043a\u0443\u0432\u0430\u043d\u043d\u044f \u0430\u043d\u0430\u043b\u0456\u0442\u0438\u043a\u0456\u0432 \u0449\u043e\u0434\u043e \u043f\u0440\u0438\u0431\u0443\u0442\u043a\u0443 \u0442\u0430 \u0434\u043e\u0445\u043e\u0434\u0443.",
-        "\u0421\u043a\u043e\u0440\u0438\u0433\u043e\u0432\u0430\u043d\u0438\u0439 \u043f\u0440\u0438\u0431\u0443\u0442\u043e\u043a \u043d\u0430 \u0430\u043a\u0446\u0456\u044e (EPS) \u0437\u0440\u0456\u0441 \u043d\u0430 32% \u043f\u043e\u0440\u0456\u0432\u043d\u044f\u043d\u043e \u0437 \u0430\u043d\u0430\u043b\u043e\u0433\u0456\u0447\u043d\u0438\u043c \u043f\u0435\u0440\u0456\u043e\u0434\u043e\u043c \u043c\u0438\u043d\u0443\u043b\u043e\u0433\u043e \u0440\u043e\u043a\u0443, \u0430 \u0441\u043a\u043e\u0440\u0438\u0433\u043e\u0432\u0430\u043d\u0438\u0439 \u043f\u043e\u043a\u0430\u0437\u043d\u0438\u043a EBITDA \u2013 \u043d\u0430 12%.",
-        "\u041a\u0435\u0440\u0456\u0432\u043d\u0438\u0446\u0442\u0432\u043e \u043f\u0456\u0434\u0432\u0438\u0449\u0438\u043b\u043e \u043f\u0440\u043e\u0433\u043d\u043e\u0437 \u043d\u0430 \u0432\u0435\u0441\u044c 2026 \u0440\u0456\u043a, \u043e\u0447\u0456\u043a\u0443\u044e\u0447\u0438, \u0449\u043e \u0441\u043a\u043e\u0440\u0438\u0433\u043e\u0432\u0430\u043d\u0438\u0439 EBITDA \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0438\u0442\u044c \u0431\u044e\u0434\u0436\u0435\u0442 \u0431\u0456\u043b\u044c\u0448 \u043d\u0456\u0436 \u043d\u0430 5%, \u0430 \u0441\u043a\u043e\u0440\u0438\u0433\u043e\u0432\u0430\u043d\u0438\u0439 EPS \u2013 \u0431\u0456\u043b\u044c\u0448 \u043d\u0456\u0436 \u043d\u0430 12%.",
-        "\u0417\u0440\u043e\u0441\u0442\u0430\u043d\u043d\u044f \u0437\u0443\u043c\u043e\u0432\u043b\u0435\u043d\u0435 \u0432\u0438\u0441\u043e\u043a\u0438\u043c \u043f\u043e\u043f\u0438\u0442\u043e\u043c \u043d\u0430 \u043f\u0440\u0438\u0440\u043e\u0434\u043d\u0438\u0439 \u0433\u0430\u0437, \u0449\u043e \u043f\u043e\u0432'\u044f\u0437\u0430\u043d\u043e \u0437\u0456 \u0437\u0431\u0456\u043b\u044c\u0448\u0435\u043d\u043d\u044f\u043c \u0435\u043a\u0441\u043f\u043e\u0440\u0442\u0443 \u0417\u041f\u0413 (LNG), \u0432\u0438\u0440\u043e\u0431\u043d\u0438\u0446\u0442\u0432\u043e\u043c \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u0435\u043d\u0435\u0440\u0433\u0456\u0457 \u0442\u0430 \u043f\u0440\u043e\u043c\u0438\u0441\u043b\u043e\u0432\u0438\u043c \u0432\u0438\u043a\u043e\u0440\u0438\u0441\u0442\u0430\u043d\u043d\u044f\u043c.",
-        "\u041e\u0431\u0441\u044f\u0433\u0438 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u0443\u0432\u0430\u043d\u043d\u044f \u043f\u0440\u0438\u0440\u043e\u0434\u043d\u043e\u0433\u043e \u0433\u0430\u0437\u0443 \u0437\u0440\u043e\u0441\u043b\u0438 \u043d\u0430 7%, \u0430 \u043e\u0431\u0441\u044f\u0433\u0438 \u0437\u0431\u043e\u0440\u0443 \u2013 \u043d\u0430 26% \u0443 \u043f\u043e\u0440\u0456\u0432\u043d\u044f\u043d\u043d\u0456 \u0437 2-\u043c \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u043e\u043c 2025 \u0440\u043e\u043a\u0443.",
-        "\u041a\u043e\u043c\u043f\u0430\u043d\u0456\u044f \u043f\u0456\u0434\u0442\u0440\u0438\u043c\u0443\u0454 \u0441\u0442\u0430\u0431\u0456\u043b\u044c\u043d\u0443 \u0434\u0438\u0432\u0456\u0434\u0435\u043d\u0434\u043d\u0443 \u043f\u043e\u043b\u0456\u0442\u0438\u043a\u0443, \u043e\u0433\u043e\u043b\u043e\u0441\u0438\u0432\u0448\u0438 \u043f\u0440\u043e \u043f\u0456\u0434\u0432\u0438\u0449\u0435\u043d\u043d\u044f \u043a\u0432\u0430\u0440\u0442\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u0434\u0438\u0432\u0456\u0434\u0435\u043d\u0434\u0443 \u043d\u0430 2% \u043f\u043e\u0440\u0456\u0432\u043d\u044f\u043d\u043e \u0437 \u043c\u0438\u043d\u0443\u043b\u0438\u043c \u0440\u043e\u043a\u043e\u043c."
-      ],
-      "suggested_reviewed_at": "2026-07-23T00:09:16+00:00",
-      "suggested_sources": [
-        "https://www.businesswire.com/news/home/20260722363013/en/Kinder-Morgan-Reports-Second-Quarter-2026-Financial-Results",
-        "https://www.investing.com/news/stock-market-news/kinder-morgan-tops-q2-estimates-on-strong-natural-gas-demand-432SI-3652873",
-        "https://www.reuters.com/business/energy/kinder-morgan-tops-second-quarter-profit-estimates-higher-gas-volumes-power-2026-07-22/",
-        "https://www.zacks.com/stock/news/2311451/kinder-morgan-kmi-tops-q2-earnings-and-revenue-estimates",
-        "https://www.rextag.com/insights/how-kinder-morgans-network-lines-up-with-lng-and-power-demand-growth/",
-        "https://www.gurufocus.com/news/2607519/is-kinder-morgan-inc-kmi-overvalued-after-q2-earnings-beat-eps-of-037-and-revenue-of-448-billion",
-        "https://www.marketbeat.com/stocks/NYSE/KMI/dividend/",
-        "https://simplywall.st/stocks/us/energy/nyse-kmi/kinder-morgan/news/kinder-morgan-nysekmi-takes-on-some-risk-with-its-use-of-de"
-      ],
-      "suggested_status": "strengthening",
+      "status": "strengthening",
       "title": "KMI investment thesis"
     },
     {
@@ -2152,14 +2130,14 @@
         "current_price": "32.49",
         "delta": "3.45",
         "key_risk": "kmi-thesis: ",
-        "linked_thesis_status": "kmi-thesis: insufficient-evidence",
+        "linked_thesis_status": "kmi-thesis: strengthening",
         "portfolio_rule_explanation": "never-sell-below-cost rule fired: price is below average cost, so no sell is recommended even if allocation is high. Action: HOLD; amount: $0.00; shares: 0.",
         "recommended_action": "HOLD",
         "recommended_dollar_amount": "0.00",
         "recommended_share_quantity": "0",
         "rule": "never_sell_below_cost",
         "target_allocation": "0.00",
-        "thesis_conviction": "kmi-thesis: 1/5 flat",
+        "thesis_conviction": "kmi-thesis: 3/5 up",
         "thesis_links": [
           "kmi-thesis"
         ],
