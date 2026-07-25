@@ -85,6 +85,7 @@ const SUMMARY_HELP = {
   "Кеш на рахунку": "Реальний кеш на рахунку Robinhood зараз",
   "Щотижневий внесок": "Автоплатіж $50 щопʼятниці — додається до кешу коли надходить",
   "Доступно цього циклу": "Реальний кеш, який можна розмістити цього циклу без урахування рекомендованих продажів",
+  "Дивіденди": "Дивідендний дохід з акцій (звичайний дохід)",
 };
 
 async function deriveKey(password, salt) {
@@ -193,6 +194,7 @@ function coverageWarningText(warnings) {
 function renderMetrics(snapshot) {
   const portfolio = snapshot.equity_portfolio;
   const crypto = snapshot.crypto;
+  const skippedCashEntries = portfolio.journal_skipped_entries || [];
   const cashAvailable = money(portfolio.cash_available);
   const recommendedSellProceeds = money(
     portfolio.recommended_sell_proceeds ?? portfolio.total_sell_cash
@@ -206,6 +208,9 @@ function renderMetrics(snapshot) {
     { label: "Equity Invested", value: money(portfolio.equity_invested_net) },
     { label: "Crypto Invested", value: money(crypto.invested_net) },
     { label: "Кеш на рахунку", value: cashAvailable },
+    ...(Number(portfolio.dividend_income || 0) > 0
+      ? [{ label: "Дивіденди", value: money(portfolio.dividend_income) }]
+      : []),
     { label: "Щотижневий внесок", value: money(weeklyContributionMetricValue(snapshot)) },
     {
       label: "Доступно цього циклу",
@@ -223,6 +228,16 @@ function renderMetrics(snapshot) {
       el("div", "value", metric.value)
     );
     if (metric.label === "Кеш на рахунку") {
+      const warning = cashJournalWarning(skippedCashEntries);
+      if (warning) {
+        item.classList.add("metric-cash-degraded");
+        item.append(warning);
+      }
+      const fallback = cashFallbackWarning(portfolio.cash_source);
+      if (fallback) {
+        item.classList.add("metric-cash-degraded");
+        item.append(fallback);
+      }
       item.append(cashControl());
     }
     if (metric.secondary) {
@@ -230,6 +245,45 @@ function renderMetrics(snapshot) {
     }
     return item;
   }));
+}
+
+function cashJournalWarning(entries) {
+  const text = cashJournalWarningText(entries);
+  if (!text) return null;
+  const warning = el("div", "cash-journal-warning", text);
+  warning.setAttribute("role", "status");
+  return warning;
+}
+
+function cashJournalWarningText(entries) {
+  if (!Array.isArray(entries) || !entries.length) return "";
+  const filenames = entries
+    .map(entry => String(entry?.filename || entry?.path || "").split(/[\\/]/).pop().trim())
+    .filter(Boolean);
+  if (!filenames.length) return "";
+  const count = filenames.length;
+  const plural = count === 1 ? "запис журналу" : "записів журналу";
+  return `Увага: ${count} ${plural} не вдалося прочитати — кеш неповний: ${filenames.join(", ")}`;
+}
+
+function cashFallbackWarningText(cashSource) {
+  if (cashSource === "manual_fallback") {
+    return "Кеш не виведено з журналу транзакцій — використано ручне значення з налаштувань";
+  }
+  return "";
+}
+
+function cashFallbackWarning(cashSource) {
+  const text = cashFallbackWarningText(cashSource);
+  if (!text) return null;
+  const warning = el("div", "cash-fallback-warning", text);
+  warning.setAttribute("role", "status");
+  return warning;
+}
+
+function hasDividendRow(snapshot) {
+  const portfolio = (snapshot && snapshot.equity_portfolio) || {};
+  return Number(portfolio.dividend_income || 0) > 0;
 }
 
 function weeklyContributionMetricValue(snapshot) {
@@ -2249,6 +2303,11 @@ if (typeof document !== "undefined") {
   });
 }
 
+function hasDividendRow(snapshot) {
+  const portfolio = (snapshot && snapshot.equity_portfolio) || {};
+  return Number(portfolio.dividend_income || 0) > 0;
+}
+
 if (typeof module !== "undefined") {
   module.exports = {
     JOURNAL_ENDPOINT,
@@ -2269,6 +2328,9 @@ if (typeof module !== "undefined") {
     validateCashControlDraft,
     cashControlPayload,
     coverageWarningText,
+    cashJournalWarningText,
+    cashFallbackWarningText,
     hasMeaningfulThesisHorizon,
+    hasDividendRow,
   };
 }
