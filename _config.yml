@@ -18,6 +18,7 @@ permalink: pretty
 
 # The hand-written business card and site chrome must pass through untouched.
 exclude:
+  - docs
   - Gemfile
   - Gemfile.lock
   - README.md

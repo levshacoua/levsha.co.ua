@@ -4,3 +4,6 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 vendor/
+
+# Brain orchestration artifacts must never land in this public repo
+docs/
