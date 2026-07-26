@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Comparison — Lefty's Brain</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <link rel="stylesheet" href="../../atlas/atlas.css">
+  <style>
+    .comparison-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .comparison-table th, .comparison-table td { border: 1px solid var(--atlas-line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    .comparison-table th { background: var(--atlas-surface); color: var(--atlas-muted); font-weight: 400; }
+    .comparison-table td { background: var(--atlas-bg); }
+    .comparison-table tr:nth-child(even) td { background: #0f0f0f; }
+    .model-name { font-weight: 400; }
+    .model-badge { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 400; margin-right: 4px; }
+    .badge-team { background: var(--atlas-accent); color: var(--atlas-bg); }
+    .badge-candidate { background: var(--atlas-partial); color: #fff; }
+    .model-meta { font-size: 11px; color: var(--atlas-muted); margin-top: 2px; }
+    .level-cell { min-width: 100px; }
+    .level-state { font-size: 11px; color: var(--atlas-muted); }
+    .level-pass { font-size: 11px; font-weight: 400; }
+    .level-pass.passed { color: var(--atlas-accent); }
+    .level-pass.failed { color: var(--atlas-error); }
+    .level-mean { font-size: 11px; color: var(--atlas-muted); }
+    .level-seconds { font-size: 11px; color: var(--atlas-muted); }
+    .level-na { font-size: 11px; color: var(--atlas-muted); font-style: italic; }
+    .level-queued { font-size: 11px; color: var(--atlas-partial); }
+    .level-running { font-size: 11px; color: var(--atlas-partial); }
+    .details-btn { background: var(--atlas-surface); border: 1px solid var(--atlas-line); color: var(--atlas-fg); padding: 2px 6px; font-size: 10px; cursor: pointer; margin-top: 4px; }
+    .details-btn:hover { border-color: var(--atlas-accent); }
+    .details-content { display: none; margin-top: 4px; padding: 6px; background: var(--atlas-surface); border: 1px solid var(--atlas-line); font-size: 11px; }
+    .details-content.show { display: block; }
+    .judge-item { margin-bottom: 4px; }
+    .judge-item.unparseable { color: var(--atlas-error); }
+    .judge-score { font-weight: 400; }
+    .judge-comment { color: var(--atlas-muted); font-size: 10px; margin-top: 2px; }
+    .judge-rec { color: var(--atlas-accent); font-size: 10px; margin-top: 2px; }
+    .action-btn { background: var(--atlas-accent); color: var(--atlas-bg); border: none; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+    .action-btn:disabled { background: var(--atlas-partial); color: #fff; cursor: not-allowed; }
+    .action-btn.error { background: var(--atlas-error); color: #fff; }
+    .sample-banner { display: none; background: var(--atlas-partial); color: #fff; padding: 10px; text-align: center; font-size: 12px; margin-bottom: 20px; }
+    .sample-banner.show { display: block; }
+    @media (max-width: 780px) {
+      .comparison-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div id="password-gate">
+    <div class="gate-content">
+      <h1>Model Comparison</h1>
+      <p>LevSha.co.ua — Enter password to view</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+      <button id="unlock-btn">Unlock</button>
+      <div id="error-msg">Incorrect password</div>
+    </div>
+  </div>
+
+  <div id="app" style="display: none;">
+    <header>
+      <h1>Model Comparison — <span id="project-name"></span></h1>
+      <nav class="site-nav" aria-label="Brain surfaces">
+        <section class="site-nav-group" aria-labelledby="comparison-nav-brain">
+          <h2 id="comparison-nav-brain">Brain</h2>
+          <a href="/brain/">Hub</a>
+          <a href="/brain/team/">Team</a>
+          <a href="/brain/atlas/">Global Atlas</a>
+          <a href="/brain/team/comparison/" aria-current="page">Comparison</a>
+        </section>
+        <section class="site-nav-group" aria-labelledby="comparison-nav-kobos">
+          <h2 id="comparison-nav-kobos">KOBOS</h2>
+          <a href="/brain/kobos/atlas/">KOBOS · Atlas</a>
+        </section>
+        <section class="site-nav-group" aria-labelledby="comparison-nav-finance">
+          <h2 id="comparison-nav-finance">Lefty's Finance</h2>
+          <a href="/brain/finance/#dashboard">Dashboard</a>
+          <a href="/brain/finance/#theses">Theses</a>
+          <a href="/brain/finance/#bottlenecks">Bottlenecks</a>
+        </section>
+      </nav>
+      <div id="generated"></div>
+    </header>
+
+    <div class="sample-banner" id="sample-banner">⚠️ Using sample data (comparison.enc.json not found)</div>
+
+    <div style="padding: 20px;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Kind</th>
+            <th>Location</th>
+            <th>Context (k)</th>
+            <th>$In/1M</th>
+            <th>$Out/1M</th>
+            <th class="level-cell">Level 1</th>
+            <th class="level-cell">Level 2</th>
+            <th class="level-cell">Level 3</th>
+          </tr>
+        </thead>
+        <tbody id="comparison-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="comparison.js"></script>
+</body>
+</html>

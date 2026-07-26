@@ -1,0 +1,165 @@
+{
+  "generated": "2026-07-26T12:00:00+00:00",
+  "exam_version": "v1",
+  "models": [
+    {
+      "id": "gemini-2.5-pro",
+      "kind": "gemini",
+      "local_or_cloud": "cloud",
+      "context": 1000000,
+      "usd_in_per_m": 0.0,
+      "usd_out_per_m": 0.0,
+      "team_role": "reviewer",
+      "status": "team",
+      "capability_note": null,
+      "levels": {
+        "1": {
+          "state": "not_taken",
+          "passed": null,
+          "wall_seconds": null,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": null,
+          "judged_at": null
+        },
+        "2": {
+          "state": "done",
+          "passed": true,
+          "wall_seconds": 5.0,
+          "tokens_in": 100,
+          "tokens_out": 20,
+          "implementation_na": false,
+          "mean": 9.0,
+          "judges": [
+            {
+              "judge": "codex",
+              "score": 9,
+              "comment": "The artifacts show a focused implementation and passing gates.",
+              "recommendation": "Use this model for reviewer duties where evidence quality matters."
+            }
+          ],
+          "exam_id": "101",
+          "judged_at": "2026-07-26T12:05:00+00:00"
+        },
+        "3": {
+          "state": "not_taken",
+          "passed": null,
+          "wall_seconds": null,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": null,
+          "judged_at": null
+        }
+      }
+    },
+    {
+      "id": "glm-4.7-flash",
+      "kind": "aider",
+      "local_or_cloud": "cloud",
+      "context": 200000,
+      "usd_in_per_m": null,
+      "usd_out_per_m": null,
+      "team_role": null,
+      "status": "candidate",
+      "capability_note": null,
+      "levels": {
+        "1": {
+          "state": "done",
+          "passed": true,
+          "wall_seconds": 2.0,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": "102",
+          "judged_at": null
+        },
+        "2": {
+          "state": "not_taken",
+          "passed": null,
+          "wall_seconds": null,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": null,
+          "judged_at": null
+        },
+        "3": {
+          "state": "not_taken",
+          "passed": null,
+          "wall_seconds": null,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": null,
+          "judged_at": null
+        }
+      }
+    },
+    {
+      "id": "qwen3:8b",
+      "kind": "ollama",
+      "local_or_cloud": "local",
+      "context": 32768,
+      "usd_in_per_m": 0.0,
+      "usd_out_per_m": 0.0,
+      "team_role": "nightly, secretary",
+      "status": "team",
+      "capability_note": "text-only: L2 N/A, L3 analysis only",
+      "levels": {
+        "1": {
+          "state": "not_taken",
+          "passed": null,
+          "wall_seconds": null,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": false,
+          "mean": null,
+          "judges": [],
+          "exam_id": null,
+          "judged_at": null
+        },
+        "2": {
+          "state": "done",
+          "passed": false,
+          "wall_seconds": 0.1,
+          "tokens_in": null,
+          "tokens_out": null,
+          "implementation_na": true,
+          "mean": null,
+          "judges": [],
+          "exam_id": "103",
+          "judged_at": null
+        },
+        "3": {
+          "state": "needs-rejudge",
+          "passed": null,
+          "wall_seconds": 9.2,
+          "tokens_in": 77,
+          "tokens_out": 31,
+          "implementation_na": true,
+          "mean": null,
+          "judges": [
+            {
+              "judge": "codex",
+              "status": "unparseable"
+            }
+          ],
+          "exam_id": "104",
+          "judged_at": "2026-07-26T12:10:00+00:00"
+        }
+      }
+    }
+  ]
+}
