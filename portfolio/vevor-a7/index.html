@@ -1,0 +1,48 @@
+---
+layout: portfolio
+title: "Bringing a bricked laser back to life"
+nav: portfolio
+stealth: true
+sitemap: false
+description: "Reverse engineering the VEVOR A7 10W laser engraver (AtomStack YZ-102 board): multimeter-mapped pinout, custom grblHAL firmware, SD jobs and a web remote — a Lefty Design engineering case study."
+---
+
+<section class="pf-title">
+  <p class="pf-crumbs"><a href="/portfolio/">Projects</a> / Engineering</p>
+  <h1>Bringing a bricked laser back to life</h1>
+  <p>A budget laser engraver with closed firmware, an undocumented board and no way to run it wirelessly. Three days of reverse engineering later: open firmware, LightBurn over Wi-Fi, jobs from an SD card — and the first published solution for this hardware.</p>
+</section>
+
+<section class="pf-prose">
+  <h2>The problem</h2>
+  <p>The VEVOR A7 10W ships with locked vendor firmware: no home Wi-Fi, a crippled network protocol, no SD workflow. The controller inside is an AtomStack YZ-102 — an ESP32-S3 board with no public documentation at all. Owners of bricked machines were stuck: community forum threads ended with "nobody has a working firmware for this board".</p>
+
+  <h2>The process</h2>
+  <p>No schematics, so the board gave up its secrets one measurement at a time:</p>
+  <ul>
+    <li>Full flash backup first — every step stayed reversible</li>
+    <li>MicroPython as a diagnostic REPL living on the board itself</li>
+    <li>Motors turned out to hang off a 74HC595 shift register — found by voltage bisection with a multimeter, not a logic analyzer</li>
+    <li>A hidden hardware watchdog: the stepper drivers ignore everything until a charge pump is fed a continuous square wave — and one axis needs minutes to wake, which looks exactly like dead hardware</li>
+    <li>The laser pin boots frozen by a hardware HOLD; the firmware has to release it or the diode glows at power-on</li>
+    <li>An upstream grblHAL bug killing PWM on ESP32-S3 — found, fixed, and submitted back to the project</li>
+  </ul>
+
+  <h2>The result</h2>
+  <p>Custom grblHAL firmware purpose-built for this board: homing, laser control, Wi-Fi with a permanent address, LightBurn over the network, SD card jobs with automatic homing — and a self-hosted web remote that runs on the controller itself, so any phone on the network can start, pause and stop jobs.</p>
+  <p>The full hardware map, firmware and guide are published as open source — the first public solution for this controller.</p>
+  <p>
+    <a class="pf-cta" href="https://github.com/levshacoua/vevor-a7-grblhal">Read the guide on GitHub →</a><br>
+    <a class="pf-cta" href="https://buymeacoffee.com/leftys.design" style="display:inline-block;margin-top:8px">Support the work →</a>
+  </p>
+</section>
+
+<section class="pf-prose">
+  <h2>Try the web remote</h2>
+  <p>This is the actual remote UI that ships on the laser, running here against a simulated machine. Pick a file and press Run — the machine homes itself first, exactly like the real one.</p>
+  <div class="demo-frame">
+    <div class="demo-chrome"><span></span><span></span><span></span><i>leftys-laser.local/run.html</i></div>
+    <iframe src="/portfolio/vevor-a7/demo/" title="Laser web remote simulator" loading="lazy"></iframe>
+  </div>
+  <p style="margin-top:10px"><a class="pf-cta" href="/portfolio/vevor-a7/demo/" target="_blank" rel="noopener">Open full-screen →</a></p>
+</section>
