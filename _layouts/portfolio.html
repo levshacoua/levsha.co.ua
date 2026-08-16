@@ -19,7 +19,7 @@
     <header class="pf-header">
       <a class="logo-link" href="/"><img class="logo" src="/assets/logo.svg" alt="Lefty design"></a>
       <a class="pf-nav-item n1" href="/portfolio/" {% if page.nav == 'portfolio' %}aria-current="page"{% endif %}>Portfolio</a>
-      <a class="pf-nav-item n2" href="/cv/" {% if page.nav == 'cv' %}aria-current="page"{% endif %}>CV</a>
+      <a class="pf-nav-item n2" href="/cv/" {% if page.nav == 'cv' %}aria-current="page"{% endif %}>About</a>
       <a class="pf-nav-item n3" href="mailto:lefty.ss.design@gmail.com">Contact</a>
     </header>
 
@@ -32,6 +32,14 @@
 
   <span class="pf-copyright">Copyright © EST. 2016</span>
 
+  <script>
+    // Freeze rest-state widths so the hover tracking change never shifts neighbours.
+    document.fonts.ready.then(() => {
+      document.querySelectorAll('.pf-nav-item, .pf-filters button').forEach(el => {
+        el.style.minWidth = Math.ceil(el.getBoundingClientRect().width) + 'px';
+      });
+    });
+  </script>
   <script src="/assets/strings.js"></script>
 </body>
 </html>

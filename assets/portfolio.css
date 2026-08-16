@@ -38,25 +38,33 @@ body {
 
 /* header — logo hangs on string 1, nav items ON strings (like the mockup) */
 .pf-header { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; padding: 22px 0 72px; }
-.pf-header .logo-link { grid-column: 2 / 3; justify-self: start; padding-left: 4px; }
-.pf-header .logo { height: 40px; display: block; }
+.pf-header .logo-link { grid-column: 2 / 3; justify-self: start; }
+.pf-header .logo { height: 40px; display: block; transform: translateX(-28%); }
 
-/* nav & tab hover language: wide tracking at rest, tightens to 1px on hover,
-   gradient underline draws under the label (mockup btn/tab/select) */
+/* nav & tab hover language: wide tracking at rest, tightens to 1px on hover;
+   gradient underline starts AT the string and runs to the end of the label.
+   Buttons get a fixed min-width from JS so tightening never moves neighbours. */
 .pf-nav-item {
-  position: relative; font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
+  position: relative; display: inline-block; font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
   color: var(--ink-dim); text-decoration: none; padding: 0 0 10px 4px;
   transition: color 0.25s, letter-spacing 0.25s;
 }
 .pf-nav-item::after {
-  content: ""; position: absolute; left: 4px; right: 100%; bottom: 0; height: 2px;
+  content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
   border-radius: 1px;
   background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
-  transition: right 0.3s ease;
+  transition: width 0.3s ease;
+}
+.pf-nav-item::before { /* glow node on the string for the current page */
+  content: ""; position: absolute; left: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--accent); opacity: 0;
+  box-shadow: 0 0 6px 1px rgba(0, 172, 237, 0.75);
+  transition: opacity 0.25s;
 }
 .pf-nav-item:hover { color: var(--ink); letter-spacing: 1px; }
-.pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { right: 12%; }
+.pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { width: 100%; }
 .pf-nav-item[aria-current="page"] { color: var(--accent); }
+.pf-nav-item[aria-current="page"]::before { opacity: 1; }
 .pf-nav-item.n1 { grid-column: 3; }
 .pf-nav-item.n2 { grid-column: 4; }
 .pf-nav-item.n3 { grid-column: 5; }
@@ -71,7 +79,7 @@ body {
 .pf-filters button {
   font: inherit; font-size: 13px; letter-spacing: 3.5px; text-transform: uppercase;
   color: var(--ink-dim); background: none; border: 0; cursor: pointer; white-space: nowrap;
-  justify-self: start; padding: 0 0 10px 4px; position: relative;
+  justify-self: start; text-align: left; padding: 0 0 10px 4px; position: relative;
   transition: color 0.25s, letter-spacing 0.25s;
 }
 .pf-filters button:nth-child(1) { grid-column: 3; }
@@ -80,14 +88,21 @@ body {
 .pf-filters button:nth-child(4) { grid-column: 6; }
 .pf-filters button:nth-child(5) { grid-column: 7; }
 .pf-filters button::after {
-  content: ""; position: absolute; left: 4px; right: 100%; bottom: 0; height: 2px;
+  content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
   border-radius: 1px;
   background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
-  transition: right 0.3s ease;
+  transition: width 0.3s ease;
+}
+.pf-filters button::before { /* glow node on the string for the active tab */
+  content: ""; position: absolute; left: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--accent); opacity: 0;
+  box-shadow: 0 0 6px 1px rgba(0, 172, 237, 0.75);
+  transition: opacity 0.25s;
 }
 .pf-filters button:hover { color: var(--ink); letter-spacing: 1px; }
-.pf-filters button:hover::after, .pf-filters button.active::after { right: 12%; }
+.pf-filters button:hover::after, .pf-filters button.active::after { width: 100%; }
 .pf-filters button.active { color: var(--ink); }
+.pf-filters button.active::before { opacity: 1; }
 
 /* project blocks hang on alternating strings; a node dot marks the hang point */
 .pf-list { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; row-gap: 88px; }
