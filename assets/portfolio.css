@@ -28,13 +28,6 @@ body {
 /* live strings (strings.js) */
 .strings { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .strings .string { fill: none; stroke: var(--string); stroke-width: 1; }
-/* second strings layer above the header veil so the strings never vanish */
-.strings-top {
-  z-index: 5;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-  clip-path: inset(0 0 calc(100% - 110px) 0);
-}
 
 /* string grid: column LINES 2..8 = strings 1..7 */
 .sgrid {
@@ -49,15 +42,6 @@ body {
   position: fixed; top: 0; left: 0; right: 0; z-index: 6;
   display: grid; grid-template-columns: 9.14% 13.59% 13.6% 13.67% 13.59% 13.6% 13.59% auto;
   align-items: center; padding: 22px 0 14px;
-}
-.header-veil { /* content dissolves into transparency as it slides under */
-  position: fixed; top: 0; left: 0; right: 0; height: 110px; z-index: 5;
-  pointer-events: none;
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  background: rgba(13, 13, 13, 0.42);
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
 }
 .pf-header .logo-link { grid-column: 2 / 3; justify-self: start; }
 .pf-header .logo { height: 40px; display: block; transform: translateX(-28%); }
@@ -91,7 +75,13 @@ body {
 .pf-nav-item.n2 { grid-column: 6; } /* About ends on string 6 */
 .pf-nav-item.n3 { grid-column: 7; } /* Contact ends on string 7 */
 
-/* push page content below the floating header */
+/* content scrolls inside a fixed container; its mask dissolves whatever
+   approaches the header — the strings behind stay untouched */
+.page-scroll {
+  position: fixed; inset: 0; overflow-y: auto; z-index: 1;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 34px, #000 128px);
+  mask-image: linear-gradient(to bottom, transparent 34px, #000 128px);
+}
 .sgrid { padding-top: 108px; }
 
 /* page intro hangs on string 2 */
@@ -191,8 +181,7 @@ body {
 .magic-circle .mc-square,
 .magic-circle .mc-diamond  { animation: mc-spin 150s linear infinite reverse; } /* squares in sync */
 .magic-circle .mc-mid      { animation: mc-spin 90s  linear infinite reverse; stroke: rgba(0, 172, 237, 0.34); }
-.magic-circle .mc-triangle { animation: mc-spin 70s linear infinite; }
-.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; }
+.magic-circle .mc-triangles { animation: mc-spin 150s linear infinite; } /* opposite of the squares */
 .magic-circle .mc-core     { animation: mc-spin 40s  linear infinite; stroke: rgba(0, 172, 237, 0.45); }
 @keyframes mc-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .magic-circle .mc { animation: none; } }

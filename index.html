@@ -1,73 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lefty design — Design &amp; Development</title>
-  <meta name="description" content="Lefty design — design and development. Contacts: +1 (662) 848 7443, lefty.ss.design@gmail.com, telegram @Lefty_s_design">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-</head>
-<body>
-  <main class="page">
-    <!-- background grid -->
-    <div class="grid" aria-hidden="true">
-      <span style="left:9.14%"></span>
-      <span style="left:22.73%"></span>
-      <span style="left:36.33%"></span>
-      <span style="left:50%"></span>
-      <span style="left:63.59%"></span>
-      <span style="left:77.19%"></span>
-      <span style="left:90.78%"></span>
-    </div>
-    <div class="band-h" aria-hidden="true"></div>
-    <div class="band-v" aria-hidden="true"></div>
+---
+layout: portfolio
+title: Selected work
+nav: projects
+description: "Lefty Design — selected work: web & apps, CNC & laser fabrication, woodworking, engineering. Live, clickable prototypes, not screenshots."
+---
 
-    <!-- header -->
-    <header class="header">
-      <img class="logo" src="assets/logo.svg" alt="Lefty design">
-    </header>
+<section class="pf-title">
+  <h1>Selected work</h1>
+  <p>Design that ships and hardware that runs — live, clickable prototypes, not screenshots.</p>
+</section>
 
-    <!-- centered copy -->
-    <section class="about">
-      <div class="block">
-        <h2 class="label">What is this?</h2>
-        <p class="value">Design Development</p>
-      </div>
-      <div class="block">
-        <h2 class="label">Contacts</h2>
-        <p class="value">
-          <a href="tel:+16628487443">+1 (662) 848 7443</a><br>
-          <a href="mailto:lefty.ss.design@gmail.com">lefty.ss.design@gmail.com</a><br>
-          <a href="https://t.me/Lefty_s_design">telegram: @Lefty_s_design</a>
-        </p>
-        <a class="tg" href="https://t.me/Lefty_s_design" aria-label="Telegram">
-          <img src="assets/telegram.svg" alt="">
-        </a>
-      </div>
-    </section>
+<div class="pf-filters" role="group" aria-label="Filter projects">
+  <button class="active" data-tag="all">All</button>
+  <button data-tag="web-apps">Web &amp; Apps</button>
+  <button data-tag="cnc-laser">CNC &amp; Laser</button>
+  <button data-tag="woodworking">Woodworking</button>
+  <button data-tag="engineering">Engineering</button>
+</div>
 
-    <!-- rotated copyright -->
-    <p class="copyright">Copyright © EST. 2016</p>
+<div class="pf-list">
 
-    <!-- geometric illustration, bottom right -->
-    <div class="illo" aria-hidden="true">
-      <div class="diamond"></div>
-      <img class="shape" src="assets/rect3.png"   style="left:89px;  top:45px;  width:190px; height:190px; transform:rotate(45deg)">
-      <img class="shape" src="assets/oval3.svg"   style="left:48px;  top:4px;   width:272px; height:272px">
-      <img class="shape" src="assets/oval4.png"   style="left:53px;  top:9px;   width:262px; height:262px">
-      <img class="shape" src="assets/oval5.svg"   style="left:116px; top:72px;  width:136px; height:136px">
-      <img class="shape" src="assets/triangle.svg"  style="left:126px; top:72px;  width:117px; height:104px">
-      <img class="shape" src="assets/triangle1.svg" style="left:155px; top:123px; width:60px;  height:53px; transform:scaleY(-1)">
-      <img class="shape" src="assets/oval6.png"   style="left:130px; top:86px;  width:108px; height:108px">
-      <img class="shape" src="assets/oval7.svg"   style="left:172px; top:128px; width:24px;  height:24px">
-      <img class="shape" src="assets/oval8.svg"   style="left:182px; top:138px; width:10px;  height:10px">
-      <img class="shape" src="assets/oval9.png"   style="left:173px; top:129px; width:22px;  height:22px">
-      <img class="shape" src="assets/oval10.png"  style="left:176px; top:132px; width:16px;  height:16px">
-    </div>
-  </main>
-</body>
-</html>
+  <a class="pf-item" data-tags="engineering cnc-laser" href="/projects/vevor-a7/">
+    <h2>Bringing a bricked laser back to life</h2>
+    <p>Full reverse engineering of an undocumented laser engraver board: multimeter-mapped pinout, custom firmware, and a web remote — first published solution for this hardware.</p>
+    <div class="pf-tags"><span>Engineering</span><span>CNC &amp; Laser</span></div>
+    <span class="soon-note">Case study + live demo</span>
+  </a>
+
+  <a class="pf-item soon" data-tags="web-apps" href="/projects/cabinet-calculator/">
+    <h2>Custom Cabinet Quote Builder</h2>
+    <p>A live pricing configurator for a US cabinet manufacturer — materials, finishes and sizes priced in real time, embedded in the production store.</p>
+    <div class="pf-tags"><span>Web &amp; Apps</span></div>
+    <span class="soon-note">Case study in progress</span>
+  </a>
+
+  <a class="pf-item soon" data-tags="web-apps" href="/projects/microapps/">
+    <h2>Private-by-design micro-apps</h2>
+    <p>A studio of small iOS apps — no accounts, no ads, no data collection. Branded visual system on a shared native skeleton.</p>
+    <div class="pf-tags"><span>Web &amp; Apps</span></div>
+    <span class="soon-note">Case study in progress</span>
+  </a>
+
+  <a class="pf-item soon" data-tags="woodworking cnc-laser" href="/projects/woodworking/">
+    <h2>Woodworking &amp; engraving</h2>
+    <p>Custom wood pieces cut on industrial CNC (Biesse Rover K, BOSS Router) and finished with laser engraving.</p>
+    <div class="pf-tags"><span>Woodworking</span><span>CNC &amp; Laser</span></div>
+    <span class="soon-note">Case study in progress</span>
+  </a>
+
+</div>
+
+<script>
+  const chips = document.querySelectorAll('.pf-filters button');
+  const items = document.querySelectorAll('.pf-item');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    const tag = chip.dataset.tag;
+    items.forEach(item => {
+      item.style.display = (tag === 'all' || item.dataset.tags.split(' ').includes(tag)) ? '' : 'none';
+    });
+  }));
+</script>
