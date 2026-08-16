@@ -81,7 +81,11 @@ body {
   position: fixed; inset: 0; overflow-y: auto; z-index: 1;
   -webkit-mask-image: linear-gradient(to bottom, transparent 34px, #000 128px);
   mask-image: linear-gradient(to bottom, transparent 34px, #000 128px);
+  /* classic scrollbars steal container width and shift the grid off the
+     strings — hide the bar (scrolling still works), keep full width */
+  scrollbar-width: none;
 }
+.page-scroll::-webkit-scrollbar { display: none; }
 .sgrid { padding-top: 108px; }
 
 /* page intro hangs on string 2 */
