@@ -154,3 +154,9 @@ body {
   .pf-footer { grid-column: 2 / 8; }
   .pf-copyright { display: none; }
 }
+
+/* phones: tabs become a vertical list hanging on string 1 — still on a string */
+@media (max-width: 560px) {
+  .pf-filters { grid-auto-flow: row; row-gap: 20px; }
+  .pf-filters button:nth-child(n) { grid-column: 2; grid-row: auto; margin-top: 0; }
+}
