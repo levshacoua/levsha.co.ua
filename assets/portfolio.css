@@ -1,0 +1,81 @@
+/* LevSha.co.ua — portfolio chrome.
+   Tokens lifted from the business-card page (Figma node 3932:10682);
+   refine against the Figma portfolio file when it is connected. */
+
+:root {
+  --bg: #0d0d0d;
+  --ink: #ffffff;
+  --ink-dim: rgba(255, 255, 255, 0.56);
+  --accent: rgb(0, 172, 237);
+  --string: rgba(0, 172, 237, 0.2);
+  --string-soft: rgba(0, 172, 237, 0.05);
+  --card-line: rgba(255, 255, 255, 0.14);
+  --font: -apple-system, "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 300;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+/* background strings, same rhythm as the card page */
+.strings { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.strings span { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--string); }
+
+.shell { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 24px 96px; }
+
+/* header */
+.pf-header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0 64px; }
+.pf-header .logo { height: 40px; display: block; }
+.pf-nav { display: flex; gap: 28px; font-size: 15px; letter-spacing: 0.02em; }
+.pf-nav a { color: var(--ink-dim); text-decoration: none; transition: color 0.2s; }
+.pf-nav a:hover, .pf-nav a[aria-current="page"] { color: var(--ink); }
+
+/* page title block */
+.pf-title { margin-bottom: 48px; }
+.pf-title h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 200; letter-spacing: 0.01em; }
+.pf-title p { margin-top: 12px; color: var(--ink-dim); max-width: 52ch; line-height: 1.55; }
+
+/* filter chips */
+.pf-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+.pf-filters button {
+  font: inherit; font-size: 14px; color: var(--ink-dim);
+  background: none; border: 1px solid var(--card-line); border-radius: 999px;
+  padding: 7px 16px; cursor: pointer; transition: all 0.2s;
+}
+.pf-filters button:hover { color: var(--ink); border-color: var(--ink-dim); }
+.pf-filters button.active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+
+/* case grid */
+.pf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.pf-card {
+  position: relative; display: flex; flex-direction: column; gap: 14px;
+  border: 1px solid var(--card-line); border-radius: 14px; padding: 22px;
+  color: inherit; text-decoration: none; min-height: 220px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.pf-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.pf-card.soon { opacity: 0.45; pointer-events: none; }
+.pf-card h2 { font-size: 20px; font-weight: 400; line-height: 1.3; }
+.pf-card p { color: var(--ink-dim); font-size: 14.5px; line-height: 1.5; flex: 1; }
+.pf-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-tags span {
+  font-size: 12px; color: var(--accent);
+  border: 1px solid var(--string); border-radius: 999px; padding: 3px 10px;
+}
+.pf-card .soon-note { font-size: 12px; color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* footer */
+.pf-footer { margin-top: 96px; color: var(--ink-dim); font-size: 13.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.pf-footer a { color: inherit; }
+
+@media (max-width: 560px) {
+  .pf-header { padding-bottom: 40px; }
+  .pf-nav { gap: 18px; }
+}
