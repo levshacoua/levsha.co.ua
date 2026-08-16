@@ -1,16 +1,14 @@
 /* LevSha strings engine v1
    Seven vertical "strings" (the site grid, Figma node 4005:8298) rendered as
-   SVG paths. The cursor bends a nearby string; crossing it plucks it and the
-   string rings with a damped vibration, like a guitar string.
+   SVG paths. Crossing a string with the cursor plucks it and the string
+   rings with a damped vibration, like a guitar string.
    Layout stays in CSS — elements align to the same percentages. */
 
 (function () {
   const POSITIONS = [9.14, 22.73, 36.33, 50, 63.59, 77.19, 90.78]; // % of width
-  const PULL_RADIUS = 110;   // px: how close the cursor must be to bend a string
-  const MAX_PULL = 46;       // px: max magnetic bend
+  const MAX_PULL = 46;       // px: max pluck amplitude
   const DAMPING = 0.986;     // per-frame amplitude decay while ringing
   const FREQ = 0.35;         // base oscillation frequency, rad per frame
-  const SPRING = 0.12;       // how fast the bend follows the cursor
 
   const svg = document.getElementById('strings-svg');
   if (!svg) return;
@@ -26,8 +24,6 @@
     return {
       pct, path,
       x: W * pct / 100,
-      bend: 0,        // current control-point offset (px)
-      target: 0,      // magnetic target while cursor is near
       amp: 0,         // ringing amplitude after a pluck
       phase: 0,
       grabY: 0.5,     // where along the string the cursor acts (0..1)
@@ -58,15 +54,7 @@
       }
       s.prevSide = side;
 
-      // magnetic bend while the cursor hovers near (not while ringing hard)
-      const dist = Math.abs(mouseX - s.x);
-      s.target = dist < PULL_RADIUS
-        ? (mouseX - s.x) * (1 - dist / PULL_RADIUS) * (MAX_PULL / PULL_RADIUS) * 2.2
-        : 0;
-      if (s.target !== 0) s.grabY = Math.max(0.08, Math.min(0.92, mouseY / H));
-      s.bend += (s.target - s.bend) * SPRING;
-
-      // ringing
+      // ringing only — the string reacts when the cursor passes through it
       let ring = 0;
       if (s.amp > 0.15) {
         s.phase += FREQ;
@@ -74,7 +62,7 @@
         ring = Math.sin(s.phase) * s.amp;
       } else s.amp = 0;
 
-      const off = reduceMotion ? 0 : s.bend + ring;
+      const off = reduceMotion ? 0 : ring;
       const cy = s.grabY * H;
       s.path.setAttribute('d',
         `M ${s.x} 0 Q ${s.x + off} ${cy} ${s.x} ${H}`);

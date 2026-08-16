@@ -20,30 +20,30 @@ description: "Selected work by Lefty design: web & apps, CNC & laser fabrication
   <button data-tag="engineering">Engineering</button>
 </div>
 
-<div class="pf-grid">
+<div class="pf-list">
 
-  <a class="pf-card soon" data-tags="engineering cnc-laser" href="/portfolio/vevor-a7/">
+  <a class="pf-item soon" data-tags="engineering cnc-laser" href="/portfolio/vevor-a7/">
     <h2>Bringing a bricked laser back to life</h2>
     <p>Full reverse engineering of an undocumented laser engraver board: multimeter-mapped pinout, custom firmware, and a web remote — first published solution for this hardware.</p>
     <div class="pf-tags"><span>Engineering</span><span>CNC &amp; Laser</span></div>
     <span class="soon-note">Case study in progress</span>
   </a>
 
-  <a class="pf-card soon" data-tags="web-apps" href="/portfolio/cabinet-calculator/">
+  <a class="pf-item soon" data-tags="web-apps" href="/portfolio/cabinet-calculator/">
     <h2>Custom Cabinet Quote Builder</h2>
     <p>A live pricing configurator for a US cabinet manufacturer — materials, finishes and sizes priced in real time, embedded in the production store.</p>
     <div class="pf-tags"><span>Web &amp; Apps</span></div>
     <span class="soon-note">Case study in progress</span>
   </a>
 
-  <a class="pf-card soon" data-tags="web-apps" href="/portfolio/microapps/">
+  <a class="pf-item soon" data-tags="web-apps" href="/portfolio/microapps/">
     <h2>Private-by-design micro-apps</h2>
     <p>A studio of small iOS apps — no accounts, no ads, no data collection. Branded visual system on a shared native skeleton.</p>
     <div class="pf-tags"><span>Web &amp; Apps</span></div>
     <span class="soon-note">Case study in progress</span>
   </a>
 
-  <a class="pf-card soon" data-tags="woodworking cnc-laser" href="/portfolio/woodworking/">
+  <a class="pf-item soon" data-tags="woodworking cnc-laser" href="/portfolio/woodworking/">
     <h2>Woodworking &amp; engraving</h2>
     <p>Custom wood pieces cut on industrial CNC (Biesse Rover K, BOSS Router) and finished with laser engraving.</p>
     <div class="pf-tags"><span>Woodworking</span><span>CNC &amp; Laser</span></div>
@@ -54,13 +54,13 @@ description: "Selected work by Lefty design: web & apps, CNC & laser fabrication
 
 <script>
   const chips = document.querySelectorAll('.pf-filters button');
-  const cards = document.querySelectorAll('.pf-card');
+  const items = document.querySelectorAll('.pf-item');
   chips.forEach(chip => chip.addEventListener('click', () => {
     chips.forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     const tag = chip.dataset.tag;
-    cards.forEach(card => {
-      card.style.display = (tag === 'all' || card.dataset.tags.split(' ').includes(tag)) ? '' : 'none';
+    items.forEach(item => {
+      item.style.display = (tag === 'all' || item.dataset.tags.split(' ').includes(tag)) ? '' : 'none';
     });
   }));
 </script>
