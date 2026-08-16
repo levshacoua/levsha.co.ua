@@ -11,6 +11,7 @@
   const FREQ = 0.35;         // base oscillation frequency, rad per frame
 
   const svg = document.getElementById('strings-svg');
+  const svgTop = document.getElementById('strings-svg-top');
   if (!svg) return;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -21,8 +22,14 @@
     const path = document.createElementNS(NS, 'path');
     path.setAttribute('class', 'string');
     svg.appendChild(path);
+    let pathTop = null;
+    if (svgTop) {
+      pathTop = document.createElementNS(NS, 'path');
+      pathTop.setAttribute('class', 'string');
+      svgTop.appendChild(pathTop);
+    }
     return {
-      pct, path,
+      pct, path, pathTop,
       x: W * pct / 100,
       amp: 0,         // ringing amplitude after a pluck
       phase: 0,
@@ -34,6 +41,7 @@
   function resize() {
     W = innerWidth; H = innerHeight;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    if (svgTop) svgTop.setAttribute('viewBox', `0 0 ${W} ${H}`);
     strings.forEach(s => { s.x = W * s.pct / 100; });
   }
   resize();
@@ -64,8 +72,9 @@
 
       const off = reduceMotion ? 0 : ring;
       const cy = s.grabY * H;
-      s.path.setAttribute('d',
-        `M ${s.x} 0 Q ${s.x + off} ${cy} ${s.x} ${H}`);
+      const d = `M ${s.x} 0 Q ${s.x + off} ${cy} ${s.x} ${H}`;
+      s.path.setAttribute('d', d);
+      if (s.pathTop) s.pathTop.setAttribute('d', d);
     });
     lastX = mouseX;
     requestAnimationFrame(frame);

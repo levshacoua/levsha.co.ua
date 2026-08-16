@@ -15,11 +15,13 @@
     <circle cx="136" cy="136" r="68" />
     <circle cx="136" cy="136" r="54" stroke-dasharray="1 6" />
   </g>
+  <!-- equilateral triangle inscribed in the r68 circle, centred at 136,136 -->
   <g class="mc mc-triangle">
-    <polygon points="136,77 194.5,178.5 77.5,178.5" />
+    <polygon points="136,68 194.89,170 77.11,170" />
   </g>
+  <!-- inverted medial triangle inscribed in the triangle above, same centre -->
   <g class="mc mc-triangle-inv">
-    <polygon points="106,172.5 166,172.5 136,225.5" />
+    <polygon points="106.56,119 165.44,119 136,170" />
   </g>
   <g class="mc mc-core">
     <circle cx="136" cy="136" r="12" />

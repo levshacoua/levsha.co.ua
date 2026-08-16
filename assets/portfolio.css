@@ -28,6 +28,13 @@ body {
 /* live strings (strings.js) */
 .strings { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .strings .string { fill: none; stroke: var(--string); stroke-width: 1; }
+/* second strings layer above the header veil so the strings never vanish */
+.strings-top {
+  z-index: 5;
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  clip-path: inset(0 0 calc(100% - 110px) 0);
+}
 
 /* string grid: column LINES 2..8 = strings 1..7 */
 .sgrid {
@@ -78,7 +85,7 @@ body {
 }
 .pf-nav-item:hover { color: var(--ink); letter-spacing: 1px; }
 .pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { width: 100%; }
-.pf-nav-item[aria-current="page"] { color: var(--accent); }
+.pf-nav-item[aria-current="page"] { color: var(--accent); letter-spacing: 1px; }
 .pf-nav-item[aria-current="page"]::before { opacity: 1; }
 .pf-nav-item.n1 { grid-column: 5; } /* Projects ends on string 5 */
 .pf-nav-item.n2 { grid-column: 6; } /* About ends on string 6 */
@@ -91,6 +98,16 @@ body {
 .pf-title { grid-column: 3 / 7; padding-left: 4px; margin-bottom: 56px; }
 .pf-title h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 200; letter-spacing: 0.01em; }
 .pf-title p { margin-top: 12px; color: var(--ink-dim); max-width: 52ch; line-height: 1.55; }
+
+/* prose sections (About) hang on string 2 like the title block */
+.pf-prose { grid-column: 3 / 7; padding-left: 4px; margin-bottom: 64px; }
+.pf-prose h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.04em; margin-bottom: 14px; }
+.pf-prose p { color: var(--ink-dim); max-width: 56ch; line-height: 1.6; margin-top: 10px; }
+.pf-prose ul { list-style: none; margin: 14px 0; }
+.pf-prose li { color: var(--ink-dim); line-height: 1.9; padding-left: 18px; position: relative; }
+.pf-prose li::before { content: ""; position: absolute; left: 0; top: 0.82em; width: 5px; height: 5px; border-radius: 50%; border: 1px solid var(--accent); }
+.pf-cta { color: var(--accent); text-decoration: none; letter-spacing: 0.06em; }
+.pf-cta:hover { text-decoration: underline; }
 
 /* filter tabs on strings — text + thin select line, like btn/tab/select */
 .pf-filters { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; margin-bottom: 72px; }
@@ -164,8 +181,8 @@ body {
 .magic-circle .mc-square,
 .magic-circle .mc-diamond  { animation: mc-spin 150s linear infinite reverse; } /* squares in sync */
 .magic-circle .mc-mid      { animation: mc-spin 90s  linear infinite reverse; stroke: rgba(0, 172, 237, 0.34); }
-.magic-circle .mc-triangle { animation: mc-spin 70s linear infinite; transform-origin: 136px 144.7px; }
-.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; transform-origin: 136px 190.2px; }
+.magic-circle .mc-triangle { animation: mc-spin 70s linear infinite; }
+.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; }
 .magic-circle .mc-core     { animation: mc-spin 40s  linear infinite; stroke: rgba(0, 172, 237, 0.45); }
 @keyframes mc-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .magic-circle .mc { animation: none; } }
