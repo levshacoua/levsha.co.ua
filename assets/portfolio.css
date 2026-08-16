@@ -36,28 +36,42 @@ body {
   grid-template-columns: 9.14% 13.59% 13.6% 13.67% 13.59% 13.6% 13.59% auto;
 }
 
-/* header — logo hangs on string 1, nav items ON strings (like the mockup) */
-.pf-header { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; padding: 22px 0 72px; }
+/* floating header — logo hangs on string 1; nav items right-aligned, each
+   ENDING on one of the last three strings (mirrored underline + node) */
+.pf-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 6;
+  display: grid; grid-template-columns: 9.14% 13.59% 13.6% 13.67% 13.59% 13.6% 13.59% auto;
+  align-items: center; padding: 22px 0 14px;
+}
+.header-veil { /* content dissolves into transparency as it slides under */
+  position: fixed; top: 0; left: 0; right: 0; height: 110px; z-index: 5;
+  pointer-events: none;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  background: rgba(13, 13, 13, 0.42);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+}
 .pf-header .logo-link { grid-column: 2 / 3; justify-self: start; }
 .pf-header .logo { height: 40px; display: block; transform: translateX(-28%); }
 
-/* nav & tab hover language: wide tracking at rest, tightens to 1px on hover;
-   gradient underline starts AT the string and runs to the end of the label.
-   Buttons get a fixed min-width from JS so tightening never moves neighbours. */
+/* nav & tab hover language: wide tracking at rest, tightens to 1px on hover.
+   Nav items are right-anchored: the glow node sits on the string at the text
+   end and the gradient underline grows leftwards from it. */
 .pf-nav-item {
-  position: relative; display: inline-block; justify-self: start; align-self: start;
-  font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
-  color: var(--ink-dim); text-decoration: none; padding: 0 0 10px 4px;
+  position: relative; display: inline-block; justify-self: end; align-self: center;
+  font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase; text-align: right;
+  color: var(--ink-dim); text-decoration: none; padding: 0 4px 10px 0;
   transition: color 0.25s, letter-spacing 0.25s;
 }
 .pf-nav-item::after {
-  content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+  content: ""; position: absolute; right: 0; bottom: 0; height: 2px; width: 0;
   border-radius: 1px;
-  background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
+  background: linear-gradient(270deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
   transition: width 0.3s ease;
 }
 .pf-nav-item::before { /* glow node on the string for the current page */
-  content: ""; position: absolute; left: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
+  content: ""; position: absolute; right: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
   border-radius: 50%; background: var(--accent); opacity: 0;
   box-shadow: 0 0 6px 1px rgba(0, 172, 237, 0.75);
   transition: opacity 0.25s;
@@ -66,9 +80,12 @@ body {
 .pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { width: 100%; }
 .pf-nav-item[aria-current="page"] { color: var(--accent); }
 .pf-nav-item[aria-current="page"]::before { opacity: 1; }
-.pf-nav-item.n1 { grid-column: 3; }
-.pf-nav-item.n2 { grid-column: 4; }
-.pf-nav-item.n3 { grid-column: 5; }
+.pf-nav-item.n1 { grid-column: 5; } /* Projects ends on string 5 */
+.pf-nav-item.n2 { grid-column: 6; } /* About ends on string 6 */
+.pf-nav-item.n3 { grid-column: 7; } /* Contact ends on string 7 */
+
+/* push page content below the floating header */
+.sgrid { padding-top: 108px; }
 
 /* page intro hangs on string 2 */
 .pf-title { grid-column: 3 / 7; padding-left: 4px; margin-bottom: 56px; }
@@ -144,11 +161,11 @@ body {
 }
 .magic-circle .mc { fill: none; stroke: rgba(0, 172, 237, 0.28); stroke-width: 1; transform-origin: 136px 136px; }
 .magic-circle .mc-outer    { animation: mc-spin 240s linear infinite; stroke: rgba(0, 172, 237, 0.18); }
-.magic-circle .mc-square   { animation: mc-spin 150s linear infinite reverse; }
-.magic-circle .mc-diamond  { animation: mc-spin 110s linear infinite; }
+.magic-circle .mc-square,
+.magic-circle .mc-diamond  { animation: mc-spin 150s linear infinite reverse; } /* squares in sync */
 .magic-circle .mc-mid      { animation: mc-spin 90s  linear infinite reverse; stroke: rgba(0, 172, 237, 0.34); }
-.magic-circle .mc-triangle { animation: mc-spin 70s  linear infinite; }
-.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; }
+.magic-circle .mc-triangle { animation: mc-spin 70s linear infinite; transform-origin: 136px 144.7px; }
+.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; transform-origin: 136px 190.2px; }
 .magic-circle .mc-core     { animation: mc-spin 40s  linear infinite; stroke: rgba(0, 172, 237, 0.45); }
 @keyframes mc-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .magic-circle .mc { animation: none; } }

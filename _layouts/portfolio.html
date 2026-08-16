@@ -15,14 +15,15 @@
 <body>
   <svg id="strings-svg" class="strings" aria-hidden="true" preserveAspectRatio="none"></svg>
 
-  <div class="sgrid">
-    <header class="pf-header">
-      <a class="logo-link" href="/"><img class="logo" src="/assets/logo.svg" alt="Lefty design"></a>
-      <a class="pf-nav-item n1" href="/portfolio/" {% if page.nav == 'portfolio' %}aria-current="page"{% endif %}>Portfolio</a>
-      <a class="pf-nav-item n2" href="/cv/" {% if page.nav == 'cv' %}aria-current="page"{% endif %}>About</a>
-      <a class="pf-nav-item n3" href="mailto:lefty.ss.design@gmail.com">Contact</a>
-    </header>
+  <div class="header-veil" aria-hidden="true"></div>
+  <header class="pf-header">
+    <a class="logo-link" href="/"><img class="logo" src="/assets/logo.svg" alt="Lefty design"></a>
+    <a class="pf-nav-item n1" href="/portfolio/" {% if page.nav == 'portfolio' %}aria-current="page"{% endif %}>Projects</a>
+    <a class="pf-nav-item n2" href="/about/" {% if page.nav == 'about' %}aria-current="page"{% endif %}>About</a>
+    <a class="pf-nav-item n3" href="mailto:lefty.ss.design@gmail.com">Contact</a>
+  </header>
 
+  <div class="sgrid">
     {{ content }}
 
     <footer class="pf-footer">
