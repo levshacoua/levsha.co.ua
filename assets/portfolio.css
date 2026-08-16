@@ -141,7 +141,7 @@ body {
 .pf-filters button:hover { color: var(--ink); letter-spacing: 1px; }
 .pf-filters button:hover::after, .pf-filters button.active::after { width: 100%; }
 .pf-filters button:hover::before, .pf-filters button.active::before { right: calc(100% - 2.5px); opacity: 1; }
-.pf-filters button.active { color: var(--ink); }
+.pf-filters button.active { color: var(--accent); letter-spacing: 1px; }
 
 /* project blocks hang on alternating strings; a node dot marks the hang point */
 .pf-list { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; row-gap: 88px; }
