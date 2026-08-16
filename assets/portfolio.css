@@ -55,22 +55,22 @@ body {
   color: var(--ink-dim); text-decoration: none; padding: 0 4px 10px 0;
   transition: color 0.25s, letter-spacing 0.25s;
 }
-.pf-nav-item::after {
-  content: ""; position: absolute; right: 0; bottom: 0; height: 2px; width: 0;
+.pf-nav-item::after { /* trail: anchored at the text side, drawn toward the string */
+  content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
   border-radius: 1px;
   background: linear-gradient(270deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
   transition: width 0.3s ease;
 }
-.pf-nav-item::before { /* glow node on the string for the current page */
-  content: ""; position: absolute; right: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
+.pf-nav-item::before { /* glow dot: draws the line and latches onto the string */
+  content: ""; position: absolute; left: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
   border-radius: 50%; background: var(--accent); opacity: 0;
   box-shadow: 0 0 6px 1px rgba(0, 172, 237, 0.75);
-  transition: opacity 0.25s;
+  transition: left 0.3s ease, opacity 0.15s;
 }
 .pf-nav-item:hover { color: var(--ink); letter-spacing: 1px; }
 .pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { width: 100%; }
+.pf-nav-item:hover::before, .pf-nav-item[aria-current="page"]::before { left: calc(100% - 2.5px); opacity: 1; }
 .pf-nav-item[aria-current="page"] { color: var(--accent); letter-spacing: 1px; }
-.pf-nav-item[aria-current="page"]::before { opacity: 1; }
 .pf-nav-item.n1 { grid-column: 5; } /* Projects ends on string 5 */
 .pf-nav-item.n2 { grid-column: 6; } /* About ends on string 6 */
 .pf-nav-item.n3 { grid-column: 7; } /* Contact ends on string 7 */
@@ -126,22 +126,22 @@ body {
 .pf-filters button:nth-child(3) { grid-column: 5; }
 .pf-filters button:nth-child(4) { grid-column: 6; }
 .pf-filters button:nth-child(5) { grid-column: 7; }
-.pf-filters button::after {
-  content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+.pf-filters button::after { /* trail: anchored at the text end, drawn toward the string */
+  content: ""; position: absolute; right: 0; bottom: 0; height: 2px; width: 0;
   border-radius: 1px;
   background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
   transition: width 0.3s ease;
 }
-.pf-filters button::before { /* glow node on the string for the active tab */
-  content: ""; position: absolute; left: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
+.pf-filters button::before { /* glow dot: draws the line and latches onto the string */
+  content: ""; position: absolute; right: -2.5px; bottom: -1.5px; width: 5px; height: 5px;
   border-radius: 50%; background: var(--accent); opacity: 0;
   box-shadow: 0 0 6px 1px rgba(0, 172, 237, 0.75);
-  transition: opacity 0.25s;
+  transition: right 0.3s ease, opacity 0.15s;
 }
 .pf-filters button:hover { color: var(--ink); letter-spacing: 1px; }
 .pf-filters button:hover::after, .pf-filters button.active::after { width: 100%; }
+.pf-filters button:hover::before, .pf-filters button.active::before { right: calc(100% - 2.5px); opacity: 1; }
 .pf-filters button.active { color: var(--ink); }
-.pf-filters button.active::before { opacity: 1; }
 
 /* project blocks hang on alternating strings; a node dot marks the hang point */
 .pf-list { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; row-gap: 88px; }

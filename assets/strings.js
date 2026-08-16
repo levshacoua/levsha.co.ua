@@ -7,7 +7,7 @@
 (function () {
   const POSITIONS = [9.14, 22.73, 36.33, 50, 63.59, 77.19, 90.78]; // % of width
   const MAX_PULL = 46;       // px: max pluck amplitude
-  const DAMPING = 0.986;     // per-frame amplitude decay while ringing
+  const DAMPING = 0.981;   // per-frame decay (ring time trimmed by ~25%)
   const FREQ = 0.35;         // base oscillation frequency, rad per frame
 
   const svg = document.getElementById('strings-svg');
