@@ -8,7 +8,7 @@
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/portfolio.css">
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
 </head>
@@ -17,7 +17,7 @@
 
   <div class="sgrid">
     <header class="pf-header">
-      <a href="/" style="grid-column: 1 / 3;"><img class="logo" src="/assets/logo.svg" alt="Lefty design"></a>
+      <a class="logo-link" href="/"><img class="logo" src="/assets/logo.svg" alt="Lefty design"></a>
       <a class="pf-nav-item n1" href="/portfolio/" {% if page.nav == 'portfolio' %}aria-current="page"{% endif %}>Portfolio</a>
       <a class="pf-nav-item n2" href="/cv/" {% if page.nav == 'cv' %}aria-current="page"{% endif %}>CV</a>
       <a class="pf-nav-item n3" href="mailto:lefty.ss.design@gmail.com">Contact</a>

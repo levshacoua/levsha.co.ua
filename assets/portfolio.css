@@ -11,7 +11,7 @@
   --brand-blue: #0072ff;
   --string: rgba(0, 172, 237, 0.2);
   --hairline: rgba(255, 255, 255, 0.14);
-  --font: -apple-system, "SF Pro Display", "Inter", "Helvetica Neue", sans-serif;
+  --font: "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,26 +36,43 @@ body {
   grid-template-columns: 9.14% 13.59% 13.6% 13.67% 13.59% 13.6% 13.59% auto;
 }
 
-/* header — logo left of string 1, nav items ON strings (like the mockup) */
+/* header — logo hangs on string 1, nav items ON strings (like the mockup) */
 .pf-header { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; padding: 22px 0 72px; }
-.pf-header .logo { grid-column: 1 / 2; justify-self: end; padding-right: 14px; height: 40px; }
-.pf-nav-item { font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); text-decoration: none; transition: color 0.2s; padding-left: 10px; }
-.pf-nav-item:hover, .pf-nav-item[aria-current="page"] { color: var(--ink); }
+.pf-header .logo-link { grid-column: 2 / 3; justify-self: start; padding-left: 4px; }
+.pf-header .logo { height: 40px; display: block; }
+
+/* nav & tab hover language: wide tracking at rest, tightens to 1px on hover,
+   gradient underline draws under the label (mockup btn/tab/select) */
+.pf-nav-item {
+  position: relative; font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--ink-dim); text-decoration: none; padding: 0 0 10px 4px;
+  transition: color 0.25s, letter-spacing 0.25s;
+}
+.pf-nav-item::after {
+  content: ""; position: absolute; left: 4px; right: 100%; bottom: 0; height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
+  transition: right 0.3s ease;
+}
+.pf-nav-item:hover { color: var(--ink); letter-spacing: 1px; }
+.pf-nav-item:hover::after, .pf-nav-item[aria-current="page"]::after { right: 12%; }
+.pf-nav-item[aria-current="page"] { color: var(--accent); }
 .pf-nav-item.n1 { grid-column: 3; }
 .pf-nav-item.n2 { grid-column: 4; }
 .pf-nav-item.n3 { grid-column: 5; }
 
 /* page intro hangs on string 2 */
-.pf-title { grid-column: 3 / 7; padding-left: 10px; margin-bottom: 56px; }
+.pf-title { grid-column: 3 / 7; padding-left: 4px; margin-bottom: 56px; }
 .pf-title h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 200; letter-spacing: 0.01em; }
 .pf-title p { margin-top: 12px; color: var(--ink-dim); max-width: 52ch; line-height: 1.55; }
 
 /* filter tabs on strings — text + thin select line, like btn/tab/select */
 .pf-filters { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; margin-bottom: 72px; }
 .pf-filters button {
-  font: inherit; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-dim); background: none; border: 0; cursor: pointer;
-  justify-self: start; padding: 0 0 8px 10px; position: relative; transition: color 0.2s;
+  font: inherit; font-size: 13px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--ink-dim); background: none; border: 0; cursor: pointer; white-space: nowrap;
+  justify-self: start; padding: 0 0 10px 4px; position: relative;
+  transition: color 0.25s, letter-spacing 0.25s;
 }
 .pf-filters button:nth-child(1) { grid-column: 3; }
 .pf-filters button:nth-child(2) { grid-column: 4; }
@@ -63,18 +80,20 @@ body {
 .pf-filters button:nth-child(4) { grid-column: 6; }
 .pf-filters button:nth-child(5) { grid-column: 7; }
 .pf-filters button::after {
-  content: ""; position: absolute; left: 10px; right: 100%; bottom: 0; height: 1px;
-  background: var(--accent); transition: right 0.25s;
+  content: ""; position: absolute; left: 4px; right: 100%; bottom: 0; height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--accent) 0 4px, rgba(0,172,237,0.9) 30%, rgba(123,47,255,0.55) 75%, transparent 100%);
+  transition: right 0.3s ease;
 }
-.pf-filters button:hover { color: var(--ink); }
+.pf-filters button:hover { color: var(--ink); letter-spacing: 1px; }
+.pf-filters button:hover::after, .pf-filters button.active::after { right: 12%; }
 .pf-filters button.active { color: var(--ink); }
-.pf-filters button.active::after { right: 0; }
 
 /* project blocks hang on alternating strings; a node dot marks the hang point */
 .pf-list { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; row-gap: 88px; }
 .pf-item {
   position: relative; color: inherit; text-decoration: none;
-  padding: 18px 32px 0 22px; display: block;
+  padding: 18px 28px 0 12px; display: block;
 }
 .pf-item::before { /* hang node on the string */
   content: ""; position: absolute; left: -3.5px; top: 0;
@@ -94,7 +113,7 @@ body {
 .pf-item.soon { opacity: 0.45; pointer-events: none; }
 
 /* footer: contact hangs on string 2; copyright runs vertically along string 7 */
-.pf-footer { grid-column: 3 / 7; padding: 120px 0 48px 10px; color: var(--ink-dim); font-size: 13.5px; }
+.pf-footer { grid-column: 3 / 7; padding: 120px 0 48px 4px; color: var(--ink-dim); font-size: 13.5px; }
 .pf-footer a { color: inherit; }
 .pf-copyright {
   position: fixed; right: calc(9.22% - 34px); bottom: 32px; z-index: 1;
@@ -102,11 +121,19 @@ body {
   color: var(--ink-dim); text-transform: uppercase;
 }
 
+/* narrow screens: long labels leave their string columns before they can
+   collide — tabs become a wrapping row hung on string 1 */
+@media (max-width: 1180px) {
+  .pf-filters { display: flex; flex-wrap: wrap; gap: 18px 34px; grid-column: 2 / 8; padding-left: 4px; }
+}
+@media (max-width: 900px) {
+  .pf-nav-item { letter-spacing: 2px; font-size: 13px; }
+  .pf-nav-item:hover { letter-spacing: 1px; }
+}
 @media (max-width: 720px) {
   .pf-header .logo { height: 32px; }
-  .pf-nav-item { letter-spacing: 0.1em; font-size: 12.5px; }
+  .pf-nav-item { font-size: 12.5px; }
   .pf-title { grid-column: 2 / 8; }
-  .pf-filters { display: flex; flex-wrap: wrap; gap: 18px; padding-left: 9.14%; }
   .pf-item:nth-child(odd), .pf-item:nth-child(even) { grid-column: 2 / 9; }
   .pf-footer { grid-column: 2 / 8; }
   .pf-copyright { display: none; }
