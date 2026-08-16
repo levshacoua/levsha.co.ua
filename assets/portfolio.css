@@ -45,7 +45,8 @@ body {
    gradient underline starts AT the string and runs to the end of the label.
    Buttons get a fixed min-width from JS so tightening never moves neighbours. */
 .pf-nav-item {
-  position: relative; display: inline-block; font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
+  position: relative; display: inline-block; justify-self: start; align-self: start;
+  font-size: 14px; letter-spacing: 3.5px; text-transform: uppercase;
   color: var(--ink-dim); text-decoration: none; padding: 0 0 10px 4px;
   transition: color 0.25s, letter-spacing 0.25s;
 }
@@ -79,7 +80,7 @@ body {
 .pf-filters button {
   font: inherit; font-size: 13px; letter-spacing: 3.5px; text-transform: uppercase;
   color: var(--ink-dim); background: none; border: 0; cursor: pointer; white-space: nowrap;
-  justify-self: start; text-align: left; padding: 0 0 10px 4px; position: relative;
+  justify-self: start; align-self: start; text-align: left; padding: 0 0 10px 4px; position: relative;
   transition: color 0.25s, letter-spacing 0.25s;
 }
 .pf-filters button:nth-child(1) { grid-column: 3; }
@@ -135,6 +136,23 @@ body {
   writing-mode: vertical-rl; letter-spacing: 0.2em; font-size: 11.5px;
   color: var(--ink-dim); text-transform: uppercase;
 }
+
+/* magic circle — calm, barely-there, always turning (mockup node 4005:8299) */
+.magic-circle {
+  position: fixed; right: -48px; bottom: -48px; width: 260px; height: 260px;
+  z-index: 0; pointer-events: none; opacity: 0.55;
+}
+.magic-circle .mc { fill: none; stroke: rgba(0, 172, 237, 0.28); stroke-width: 1; transform-origin: 136px 136px; }
+.magic-circle .mc-outer    { animation: mc-spin 240s linear infinite; stroke: rgba(0, 172, 237, 0.18); }
+.magic-circle .mc-square   { animation: mc-spin 150s linear infinite reverse; }
+.magic-circle .mc-diamond  { animation: mc-spin 110s linear infinite; }
+.magic-circle .mc-mid      { animation: mc-spin 90s  linear infinite reverse; stroke: rgba(0, 172, 237, 0.34); }
+.magic-circle .mc-triangle { animation: mc-spin 70s  linear infinite; }
+.magic-circle .mc-triangle-inv { animation: mc-spin 55s linear infinite reverse; }
+.magic-circle .mc-core     { animation: mc-spin 40s  linear infinite; stroke: rgba(0, 172, 237, 0.45); }
+@keyframes mc-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .magic-circle .mc { animation: none; } }
+@media (max-width: 720px) { .magic-circle { width: 180px; height: 180px; right: -40px; bottom: -40px; opacity: 0.4; } }
 
 /* narrow screens: tabs NEVER leave their strings — they stagger onto two
    baseline levels through the string (mockup node 4005:8298, SOME TEXT rows) */

@@ -1,0 +1,29 @@
+<!-- Magic circle (Figma node 4005:8299, geometry from node metadata).
+     Each .mc-* group slowly rotates about its own axis; directions alternate. -->
+<svg class="magic-circle" viewBox="0 0 272 272" aria-hidden="true">
+  <g class="mc mc-outer">
+    <circle cx="136" cy="136" r="135.5" />
+    <circle cx="136" cy="136" r="131" />
+  </g>
+  <g class="mc mc-square">
+    <rect x="40.2" y="40.2" width="191.6" height="191.6" />
+  </g>
+  <g class="mc mc-diamond">
+    <rect x="40.2" y="40.2" width="191.6" height="191.6" transform="rotate(45 136 136)" />
+  </g>
+  <g class="mc mc-mid">
+    <circle cx="136" cy="136" r="68" />
+    <circle cx="136" cy="136" r="54" />
+  </g>
+  <g class="mc mc-triangle">
+    <polygon points="136,77 194.5,178.5 77.5,178.5" />
+  </g>
+  <g class="mc mc-triangle-inv">
+    <polygon points="106,172.5 166,172.5 136,225.5" />
+  </g>
+  <g class="mc mc-core">
+    <circle cx="136" cy="136" r="12" />
+    <circle cx="136" cy="136" r="8" />
+    <circle cx="136" cy="136" r="2" />
+  </g>
+</svg>
